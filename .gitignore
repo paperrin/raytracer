@@ -1,0 +1,7 @@
+*.swp
+*.dSYM
+obj
+rtv1
+*.a
+glfw/build
+bin
