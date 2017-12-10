@@ -32,7 +32,8 @@ LIB_DIRS	=	./libft/			\
 				./glfw/build/src/
 
 LIBS		=	-lft \
-				-lglfw3 -framework Cocoa -framework OpenGL -framework IOKit -framework CoreVideo
+				-lglfw3 -framework Cocoa -framework OpenGL -framework IOKit \
+				-framework CoreVideo -framework OpenCL
 
 INC_PARAMS	=	$(INC_DIRS:%=-I%)
 

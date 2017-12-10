@@ -6,7 +6,7 @@
 #    By: paperrin <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/12/04 23:22:26 by paperrin          #+#    #+#              #
-#    Updated: 2017/12/10 14:42:39 by paperrin         ###   ########.fr        #
+#    Updated: 2017/12/10 15:28:13 by paperrin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,6 +14,7 @@ cmake_minimum_required(VERSION 2.8)
 
 project(rt)
 
+# \/ GLFW & OpenGL \/
 set(GLFW_BUILD_DOCS OFF CACHE BOOL "" FORCE)
 set(GLFW_BUILD_TESTS OFF CACHE BOOL "" FORCE)
 set(GLFW_BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
@@ -22,6 +23,14 @@ find_package(OpenGL REQUIRED)
 if (NOT ${OPENGL_FOUND})
 	message("OpenGL not found")
 endif()
+# /\ GLFW & OpenGL /\
+
+# \/ OpenCL \/
+find_package(OpenCL REQUIRED)
+if (NOT ${OPENCL_FOUND})
+	message("OpenCL not found")
+endif()
+# /\ OpenCL /\
 
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/glfw)
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/libft)
@@ -31,6 +40,11 @@ include_directories(
 	${CMAKE_CURRENT_SOURCE_DIR}/libft/include
 	${CMAKE_CURRENT_SOURCE_DIR}/glfw/include
 	${OPENGL_INCLUDE_DIR}
+	${OpenCL_INCLUDE_DIRS}
+)
+
+link_directories(
+	${OpenCL_LIBRARY}
 )
 
 SET(SRC_FILES
@@ -49,9 +63,15 @@ SET(SRC_FILES
 )
 add_executable(rt ${SRC_FILES})
 
+target_include_directories(rt
+	PUBLIC
+	${CMAKE_CURRENT_SOURCE_DIR}
+)
+
 target_link_libraries(rt
 	ft
 	glfw
 	${OPENGL_LIBRARY}
 	${OPENGL_glu_LIBRARY}
+	${OpenCL_LIBRARY}
 )

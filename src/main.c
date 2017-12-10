@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/09 16:14:42 by paperrin          #+#    #+#             */
-/*   Updated: 2017/12/10 14:38:52 by paperrin         ###   ########.fr       */
+/*   Updated: 2017/12/10 15:36:28 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void		app_destroy(t_app *app, int exit_status)
 
 int			main(int ac, char **av)
 {
-	t_app		app;
+	t_app				app;
 
 	(void)ac;
 	(void)av;
