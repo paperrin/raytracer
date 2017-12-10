@@ -1,7 +1,8 @@
-*.swp
-*.dSYM
-obj
-rtv1
 *.a
-glfw/build
-bin
+*.dSYM
+*.swp
+libft/obj/
+glfw/build/
+bin/
+obj/
+rt

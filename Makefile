@@ -10,7 +10,7 @@
 #                                                                              #
 # **************************************************************************** #
 
-NAME		=	rtv1
+NAME		=	rt
 
 CC			=	gcc
 
@@ -39,9 +39,6 @@ INC_PARAMS	=	$(INC_DIRS:%=-I%)
 LIB_PARAMS	=	$(LIB_DIRS:%=-L%)
 
 CFILES		=	\
-				camera/camera.c					\
-				camera/camera_render.c			\
-				\
 				graphics/window.c								\
 				graphics/window_render.c						\
 				graphics/window_callback.c						\
@@ -51,15 +48,9 @@ CFILES		=	\
 				graphics/window_callback_mouse_scroll.c			\
 				graphics/image.c								\
 				\
-				objs/obj_f.c				\
-				objs/obj_sphere.c			\
-				objs/obj_cylinder.c			\
-				objs/obj_plane.c			\
+				callbacks/callback_key.c						\
 				\
-				event.c					\
-				render.c				\
-				solve_quadratic.c		\
-				main.c					\
+				main.c
 
 
 SRC			=	$(CFILES:%=$(SRC_DIR)%)

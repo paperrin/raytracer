@@ -6,13 +6,13 @@
 #    By: paperrin <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/12/04 23:22:26 by paperrin          #+#    #+#              #
-#    Updated: 2017/12/06 22:25:40 by paperrin         ###   ########.fr        #
+#    Updated: 2017/12/10 14:42:39 by paperrin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 cmake_minimum_required(VERSION 2.8)
 
-project(rtv1)
+project(rt)
 
 set(GLFW_BUILD_DOCS OFF CACHE BOOL "" FORCE)
 set(GLFW_BUILD_TESTS OFF CACHE BOOL "" FORCE)
@@ -42,20 +42,14 @@ SET(SRC_FILES
 	src/graphics/window_callback_mouse_button.c
 	src/graphics/window_callback_mouse_scroll.c
 	src/graphics/image.c
-	src/objs/obj_f.c
-	src/objs/obj_sphere.c
-	src/objs/obj_cylinder.c
-	src/objs/obj_plane.c
-	src/camera/camera.c
-	src/camera/camera_render.c
-	src/main.c
-	src/event.c
-	src/render.c
-	src/solve_quadratic.c
-)
-add_executable(rtv1 ${SRC_FILES})
 
-target_link_libraries(rtv1
+	src/callbacks/callback_key.c
+	
+	src/main.c
+)
+add_executable(rt ${SRC_FILES})
+
+target_link_libraries(rt
 	ft
 	glfw
 	${OPENGL_LIBRARY}
