@@ -49,6 +49,10 @@ CFILES		=	\
 				graphics/window_callback_mouse_scroll.c			\
 				graphics/image.c								\
 				\
+				opencl/opencl_get_device_info.c					\
+				opencl/opencl_init.c							\
+				opencl/opencl_print_device_info.c				\
+				\
 				callbacks/callback_key.c						\
 				\
 				main.c
