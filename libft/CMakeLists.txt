@@ -6,7 +6,7 @@
 #    By: paperrin <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/12/04 23:06:12 by paperrin          #+#    #+#              #
-#    Updated: 2017/12/07 18:09:14 by paperrin         ###   ########.fr        #
+#    Updated: 2017/12/13 17:17:17 by paperrin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -195,6 +195,8 @@ SET(SRC_FILES
 	src/graph/ft_graph_pop.c
 	src/instream/ft_input_stream.c
 	src/instream/ft_input_stream_file.c
+	src/file/ft_file_get_size.c
+	src/file/ft_file_to_string.c
 )
 
 add_library(ft ${SRC_FILES})

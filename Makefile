@@ -16,7 +16,7 @@ CC			=	gcc
 
 CFLAGS		=	-g -O3 -Wall -Wextra -Werror -std=c89 -pedantic \
 				-Wmissing-prototypes -Wstrict-prototypes \
-				-Wold-style-definition -Wno-long-long
+				-Wold-style-definition -Wno-long-long -fsanitize=address
 
 RM			=	rm -rf
 
@@ -65,7 +65,7 @@ OBJ_SUBDIR	=	$(sort $(dir $(OBJ)))
 all				:	libs $(OBJ_DIR) $(NAME)
 
 $(NAME)			:	$(OBJ) ./libft/libft.a
-						$(CC) $(OBJ) -o $@ $(LIBS) $(LIB_PARAMS)
+						$(CC) $(OBJ) -o $@ $(LIBS) $(LIB_PARAMS) $(CFLAGS)
 
 libs			:	glfw
 					make -C ./libft/
