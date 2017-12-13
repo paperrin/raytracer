@@ -73,9 +73,10 @@ libs			:	glfw
 glfw			:
 						@if [ ! -d "./glfw/build" ]; then \
 							mkdir -p ./glfw/build; \
-							cd ./glfw/build; cmake ..; \
+							cd ./glfw/build; \
+							cmake ..; \
 						fi
-						make -C ./glfw/build/src
+						make -C ./glfw/build
 
 $(OBJ_DIR)%.o	:	$(SRC_DIR)%.c
 						mkdir -p $(OBJ_DIR)
