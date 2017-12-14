@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/10 15:33:54 by paperrin          #+#    #+#             */
-/*   Updated: 2017/12/13 18:15:06 by alngo            ###   ########.fr       */
+/*   Updated: 2017/12/14 13:34:12 by alngo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ typedef struct			s_device_info
 typedef struct			s_opencl
 {
 	cl_int				err;
-	cl_device_id		cpu;
 	cl_device_id		device;
 	t_device_info		device_info;
 	cl_context			context;
