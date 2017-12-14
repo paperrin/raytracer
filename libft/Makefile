@@ -16,7 +16,7 @@ CC			=	gcc
 
 CFLAGS		=	-g -O3 -Wall -Wextra -Werror -std=c89 -pedantic \
 				-Wmissing-prototypes -Wstrict-prototypes \
-				-Wold-style-definition -Wno-long-long
+				-Wold-style-definition -Wno-long-long -fsanitize=address
 
 RM			=	rm -rf
 
@@ -203,7 +203,9 @@ CFILES		=	ft_swap.c			\
 				graph/ft_graph_push.c				\
 				graph/ft_graph_pop.c				\
 				instream/ft_input_stream.c				\
-				instream/ft_input_stream_file.c
+				instream/ft_input_stream_file.c			\
+				file/ft_file_get_size.c			\
+				file/ft_file_to_string.c
 
 SRC			=	$(CFILES:%=$(SRC_DIR)%)
 
