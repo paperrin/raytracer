@@ -6,7 +6,7 @@
 #    By: paperrin <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/12/04 23:22:26 by paperrin          #+#    #+#              #
-#    Updated: 2017/12/13 18:15:39 by alngo            ###   ########.fr        #
+#    Updated: 2017/12/14 22:11:08 by alngo            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -60,10 +60,13 @@ SET(SRC_FILES
 	src/opencl/opencl_get_device_info.c
 	src/opencl/opencl_init.c
 	src/opencl/opencl_print_device_info.c
+	src/opencl/opencl_print_device_info.c
+	src/opencl/opencl_kernel_init.c
 
 	src/callbacks/callback_key.c
 	
 	src/main.c
+	src/catch_error.c
 )
 add_executable(rt ${SRC_FILES})
 

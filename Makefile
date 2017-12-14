@@ -52,10 +52,13 @@ CFILES		=	\
 				opencl/opencl_get_device_info.c					\
 				opencl/opencl_init.c							\
 				opencl/opencl_print_device_info.c				\
+				opencl/opencl_release_all.c						\
+				opencl/opencl_kernel_init.c						\
 				\
 				callbacks/callback_key.c						\
 				\
-				main.c
+				main.c											\
+				catch_error.c
 
 
 SRC			=	$(CFILES:%=$(SRC_DIR)%)
