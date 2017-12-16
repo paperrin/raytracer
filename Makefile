@@ -49,9 +49,16 @@ CFILES		=	\
 				graphics/window_callback_mouse_scroll.c			\
 				graphics/image.c								\
 				\
+				opencl/opencl_get_device_info.c					\
+				opencl/opencl_init.c							\
+				opencl/opencl_print_device_info.c				\
+				opencl/opencl_release_all.c						\
+				opencl/opencl_kernel_init.c						\
+				\
 				callbacks/callback_key.c						\
 				\
-				main.c
+				main.c											\
+				catch_error.c
 
 
 SRC			=	$(CFILES:%=$(SRC_DIR)%)
@@ -73,9 +80,10 @@ libs			:	glfw
 glfw			:
 						@if [ ! -d "./glfw/build" ]; then \
 							mkdir -p ./glfw/build; \
-							cd ./glfw/build; cmake ..; \
+							cd ./glfw/build; \
+							cmake ..; \
 						fi
-						make -C ./glfw/build/src
+						make -C ./glfw/build
 
 $(OBJ_DIR)%.o	:	$(SRC_DIR)%.c
 						mkdir -p $(OBJ_DIR)
