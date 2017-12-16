@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/09 16:14:42 by paperrin          #+#    #+#             */
-/*   Updated: 2017/12/14 19:58:46 by alngo            ###   ########.fr       */
+/*   Updated: 2017/12/16 15:10:41 by alngo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int			main(int ac, char **av)
 {
 	t_app				app;
 	t_opencl			ocl;
-	t_kernel			kernel;
+	t_ocl_kernel		kernel;
 	const float					input[5] = {1, 2, 3, 4, 5};
 	float						output[5];
 	cl_mem						d_input;

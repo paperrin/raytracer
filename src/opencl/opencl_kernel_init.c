@@ -6,7 +6,7 @@
 /*   By: alngo <alngo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/14 19:59:51 by alngo             #+#    #+#             */
-/*   Updated: 2017/12/14 23:08:54 by alngo            ###   ########.fr       */
+/*   Updated: 2017/12/16 15:07:19 by alngo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static char		*path_get_file_name(char const *const path)
 	return (ft_strndup(file_name, i));
 }
 
-static int		print_program_build_info(t_opencl *ocl, t_kernel *kernel)
+static int		print_program_build_info(t_opencl *ocl, t_ocl_kernel *kernel)
 {
 	cl_int	err;
 	size_t	len;
@@ -57,7 +57,7 @@ static int		print_program_build_info(t_opencl *ocl, t_kernel *kernel)
 	return (1);
 }
 
-int				opencl_kernel_init(t_opencl *ocl, t_kernel *kernel
+int				opencl_kernel_init(t_opencl *ocl, t_ocl_kernel *kernel
 		, char const *const path, char const *const flags)
 {
 	cl_int	err;
