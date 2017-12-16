@@ -6,7 +6,7 @@
 #    By: paperrin <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/12/04 23:22:26 by paperrin          #+#    #+#              #
-#    Updated: 2017/12/14 22:11:08 by alngo            ###   ########.fr        #
+#    Updated: 2017/12/16 23:11:15 by paperrin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,6 +35,7 @@ endif()
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/glfw)
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/libft)
 
+
 include_directories(
 	${CMAKE_CURRENT_SOURCE_DIR}/include
 	${CMAKE_CURRENT_SOURCE_DIR}/libft/include
@@ -46,6 +47,12 @@ include_directories(
 link_directories(
 	${OpenCL_LIBRARY}
 )
+
+function(files_import)
+	foreach(file ${ARGN})
+		configure_file("${file}" "${file}" COPYONLY)
+	endforeach()
+endfunction()
 
 SET(SRC_FILES
 	src/graphics/window.c
@@ -60,13 +67,23 @@ SET(SRC_FILES
 	src/opencl/opencl_get_device_info.c
 	src/opencl/opencl_init.c
 	src/opencl/opencl_print_device_info.c
-	src/opencl/opencl_print_device_info.c
+	src/opencl/opencl_release_all.c
 	src/opencl/opencl_kernel_init.c
+	src/opencl/opencl_kernel_create_from_file.c
+	src/opencl/opencl_kernel_destroy.c
 
 	src/callbacks/callback_key.c
-	
+
+	src/vec/vec3r.c
+
+	src/obj/obj_sphere.c
+
 	src/main.c
 	src/catch_error.c
+)
+files_import(
+	include/shared.h
+	src/cl/kernel_ray_gen.cl
 )
 add_executable(rt ${SRC_FILES})
 

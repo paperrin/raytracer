@@ -1,18 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   opencl_kernel_init.c                               :+:      :+:    :+:   */
+/*   vec3r.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alngo <alngo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/12/14 19:59:51 by alngo             #+#    #+#             */
-/*   Updated: 2017/12/16 22:00:34 by paperrin         ###   ########.fr       */
+/*   Created: 2017/12/16 16:31:07 by paperrin          #+#    #+#             */
+/*   Updated: 2017/12/16 19:20:13 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "opencl.h"
+#include "vec.h"
 
-void		opencl_kernel_init(t_ocl_kernel *kernel, t_opencl *ocl)
+t_real3		vec3r(t_real x, t_real y, t_real z)
 {
-	kernel->ocl = ocl;
+	t_real3		vec;
+
+	vec.s[0] = x;
+	vec.s[1] = y;
+	vec.s[2] = z;
+	return (vec);
 }
+

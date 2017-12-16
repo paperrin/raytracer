@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/13 14:25:38 by paperrin          #+#    #+#             */
-/*   Updated: 2017/12/16 15:43:21 by paperrin         ###   ########.fr       */
+/*   Updated: 2017/12/16 17:28:12 by alngo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,15 +17,38 @@
 ** Please care of data packing when changing data types / structure order
 */
 
-typedef t_real			cl_float;
-typedef t_real2			cl_float2;
-typedef t_real3			cl_float3;
-typedef t_real4			cl_float4;
-typedef t_real8			cl_float8;
-typedef t_real16		cl_float16;
 
-typedef t_obj_type		cl_short;
-typedef t_mat_id		cl_short;
+# ifdef IS_KERNEL
+
+typedef	float			cl_float;
+typedef	float2			cl_float2;
+typedef	float3			cl_float3;
+typedef	float4			cl_float4;
+typedef	float8			cl_float8;
+typedef	float16			cl_float16;
+typedef short			cl_short;
+typedef int2			cl_int2;
+typedef uint2			cl_uint2;
+
+# endif
+
+typedef cl_float		t_real;
+typedef cl_float2		t_real2;
+typedef cl_float3		t_real3;
+typedef cl_float4		t_real4;
+typedef cl_float8		t_real8;
+typedef cl_float16		t_real16;
+
+typedef cl_short		t_obj_type;
+typedef cl_short		t_mat_id;
+
+typedef enum			e_obj_type
+{
+	type_sphere,
+	type_plane,
+	type_cylinder,
+	type_cone
+}						t_e_obj_type;
 
 typedef struct			s_plane
 {
@@ -67,7 +90,7 @@ typedef union			u_obj_container
 
 typedef struct			s_obj
 {
-	t_obj_type			type;
+	t_obj_type		type;
 	t_mat_id			material;
 	t_obj_container		as;
 }						t_obj;

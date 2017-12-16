@@ -1,6 +1,7 @@
 *.a
 *.dSYM
 *.swp
+.DS_Store
 libft/obj/
 glfw/build/
 bin/

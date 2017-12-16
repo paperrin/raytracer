@@ -54,8 +54,14 @@ CFILES		=	\
 				opencl/opencl_print_device_info.c				\
 				opencl/opencl_release_all.c						\
 				opencl/opencl_kernel_init.c						\
+				opencl/opencl_kernel_create_from_file.c			\
+				opencl/opencl_kernel_destroy.c					\
 				\
 				callbacks/callback_key.c						\
+				\
+				vec/vec3r.c										\
+				\
+				obj/obj_sphere.c								\
 				\
 				main.c											\
 				catch_error.c
@@ -69,7 +75,7 @@ OBJ_SUBDIR	=	$(sort $(dir $(OBJ)))
 
 # # # # #
 
-all				:	libs $(OBJ_DIR) $(NAME)
+all				:	libs $(NAME)
 
 $(NAME)			:	$(OBJ) ./libft/libft.a
 						$(CC) $(OBJ) -o $@ $(LIBS) $(LIB_PARAMS) $(CFLAGS)
@@ -85,11 +91,10 @@ glfw			:
 						fi
 						make -C ./glfw/build
 
-$(OBJ_DIR)%.o	:	$(SRC_DIR)%.c
-						mkdir -p $(OBJ_DIR)
+$(OBJ_DIR)%.o	:	$(SRC_DIR)%.c subdirs
 						$(CC) $(CFLAGS) $(INC_PARAMS) -MMD -MP -c $< -o $@
 
-$(OBJ_DIR)		:
+subdirs			:
 					mkdir -p $(OBJ_DIR)
 					mkdir -p $(OBJ_SUBDIR)
 
@@ -123,4 +128,4 @@ norm			:
 
 -include $(OBJ:.o=.d)
 
-.PHONY : all, clean, fclean, re, norm, glfw
+.PHONY : all, libs, glfw, subdirs, clean, fclean, re, norm

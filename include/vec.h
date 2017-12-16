@@ -1,18 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   opencl_kernel_init.c                               :+:      :+:    :+:   */
+/*   vec.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alngo <alngo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/12/14 19:59:51 by alngo             #+#    #+#             */
-/*   Updated: 2017/12/16 22:00:34 by paperrin         ###   ########.fr       */
+/*   Created: 2017/12/16 16:32:50 by paperrin          #+#    #+#             */
+/*   Updated: 2017/12/16 19:20:15 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "opencl.h"
+#ifndef VEC_H
+# define VEC_H
 
-void		opencl_kernel_init(t_ocl_kernel *kernel, t_opencl *ocl)
-{
-	kernel->ocl = ocl;
-}
+# include "opencl.h"
+# include "shared.h"
+
+t_real3		vec3r(t_real x, t_real y, t_real z);
+
+#endif
