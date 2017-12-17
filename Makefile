@@ -75,39 +75,38 @@ OBJ_SUBDIR	=	$(sort $(dir $(OBJ)))
 
 # # # # #
 
-all				:	libs $(NAME)
+all				:	libs subdirs $(NAME)
 
 $(NAME)			:	$(OBJ) ./libft/libft.a
 						$(CC) $(OBJ) -o $@ $(LIBS) $(LIB_PARAMS) $(CFLAGS)
 
-libs			:	glfw
-					make -C ./libft/
-
-glfw			:
+libs			:
 						@if [ ! -d "./glfw/build" ]; then \
 							mkdir -p ./glfw/build; \
 							cd ./glfw/build; \
 							cmake ..; \
+							cd ../..; \
+							make -C ./glfw/build; \
 						fi
-						make -C ./glfw/build
+						make -C ./libft/
 
-$(OBJ_DIR)%.o	:	$(SRC_DIR)%.c subdirs
+$(OBJ_DIR)%.o	:	$(SRC_DIR)%.c
+						make subdirs
 						$(CC) $(CFLAGS) $(INC_PARAMS) -MMD -MP -c $< -o $@
 
 subdirs			:
-					mkdir -p $(OBJ_DIR)
-					mkdir -p $(OBJ_SUBDIR)
+						@mkdir -p $(OBJ_DIR)
+						@mkdir -p $(OBJ_SUBDIR)
 
 clean			:
 						$(RM) $(OBJ_DIR)
-						make -C ./libft/ clean
+
+fclean			:	clean
+						$(RM) $(NAME)
 						@if [ -d "./glfw/build/src" ]; then \
 							make -C ./glfw/build/src clean; \
 						fi
 						$(RM) ./glfw/build
-
-fclean			:	clean
-						$(RM) $(NAME)
 						make -C ./libft/ fclean
 
 re				:	fclean all
@@ -128,4 +127,4 @@ norm			:
 
 -include $(OBJ:.o=.d)
 
-.PHONY : all, libs, glfw, subdirs, clean, fclean, re, norm
+.PHONY : all, libs, subdirs, clean, fclean, re, norm

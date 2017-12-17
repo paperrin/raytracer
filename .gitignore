@@ -2,8 +2,8 @@
 *.dSYM
 *.swp
 .DS_Store
-./libft/obj/
-./glfw/build/
-./bin/
-./obj/
-./rt
+glfw/build/
+bin/
+obj/
+!src/obj/
+rt
