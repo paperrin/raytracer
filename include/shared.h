@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/13 14:25:38 by paperrin          #+#    #+#             */
-/*   Updated: 2017/12/17 19:23:18 by paperrin         ###   ########.fr       */
+/*   Updated: 2017/12/17 21:44:19 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ typedef	float8			cl_float8;
 typedef	float16			cl_float16;
 typedef char			cl_uchar;
 typedef short			cl_short;
+typedef int				cl_int;
 typedef int2			cl_int2;
 typedef uint			cl_uint;
 typedef uint2			cl_uint2;
@@ -42,6 +43,7 @@ typedef cl_float8		t_real8;
 typedef cl_float16		t_real16;
 
 typedef cl_short		t_obj_type;
+typedef cl_int			t_obj_id;
 typedef cl_short		t_mat_id;
 
 typedef enum			e_obj_type
@@ -114,7 +116,7 @@ typedef struct			s_ray
 
 typedef struct			s_hit
 {
-	cl_uint				obj_id;
+	t_obj_id			obj_id;
 	t_real				t;
 }						t_hit;
 
