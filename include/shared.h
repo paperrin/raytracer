@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/13 14:25:38 by paperrin          #+#    #+#             */
-/*   Updated: 2017/12/16 17:28:12 by alngo            ###   ########.fr       */
+/*   Updated: 2017/12/17 19:23:18 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,10 @@ typedef	float3			cl_float3;
 typedef	float4			cl_float4;
 typedef	float8			cl_float8;
 typedef	float16			cl_float16;
+typedef char			cl_uchar;
 typedef short			cl_short;
 typedef int2			cl_int2;
+typedef uint			cl_uint;
 typedef uint2			cl_uint2;
 
 # endif
@@ -90,7 +92,7 @@ typedef union			u_obj_container
 
 typedef struct			s_obj
 {
-	t_obj_type		type;
+	t_obj_type			type;
 	t_mat_id			material;
 	t_obj_container		as;
 }						t_obj;
@@ -101,12 +103,27 @@ typedef struct			s_camera
 	t_real3				dir;
 	t_real3				up;
 	t_real3				right;
+	t_real				pxl_ratio;
 }						t_camera;
 
-typedef struct			s_view
+typedef struct			s_ray
 {
-	cl_int2				pos;
-	cl_uint2			size;
-}						t_view;
+	t_real3				origin;
+	t_real3				dir;
+}						t_ray;
+
+typedef struct			s_hit
+{
+	cl_uint				obj_id;
+	t_real				t;
+}						t_hit;
+
+typedef struct			s_ray_state
+{
+	t_ray				ray;
+	cl_uchar			view_id;
+	cl_uint				pxl_id;
+	cl_uchar			type;
+}						t_ray_state;
 
 #endif

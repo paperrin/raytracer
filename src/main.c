@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/09 16:14:42 by paperrin          #+#    #+#             */
-/*   Updated: 2017/12/17 00:29:25 by paperrin         ###   ########.fr       */
+/*   Updated: 2017/12/17 19:30:54 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,21 +44,23 @@ int			main(int ac, char **av)
 	cl_int						err;
 	const size_t				work_size = APP_WIDTH * APP_HEIGHT;
 	t_obj						*obj;
-	cl_uint2					screen_size;
-	cl_mem		i_cam;
-	cl_mem		i_screen_size;
-	cl_mem		o_ray_origins;
-	cl_mem		o_ray_dirs;
-	t_real3		h_ray_dirs[APP_WIDTH * APP_HEIGHT];
-	int			id;
+	cl_uint2		screen_size;
+	cl_mem			i_cam;
+	cl_mem			i_screen_size;
+	cl_mem			o_ray_states;
+	t_ray_state		*h_ray_states;
+	int				id;
 
 	(void)ac;
 	(void)av;
 
+	if (!(h_ray_states = (t_ray_state*)malloc(sizeof(t_ray_state) * APP_WIDTH * APP_HEIGHT)))
+		return (EXIT_FAILURE);
+
 	if (!(opencl_init(&ocl)))
 		return (EXIT_FAILURE);
 	opencl_kernel_init(&kernel, &ocl);
-	opencl_kernel_create_from_file(&kernel, "./src/cl/kernel_ray_gen.cl", "-I ./include/", 3);
+	opencl_kernel_create_from_file(&kernel, "./src/cl/kernel_ray_gen_primary.cl", "-I ./include/", 3);
 
 	app.scene.v_obj = ft_vector_create(sizeof(t_obj), NULL, NULL);
 	if (!(obj = (t_obj*)ft_vector_push_back(&app.scene.v_obj, NULL)))
@@ -69,45 +71,40 @@ int			main(int ac, char **av)
 	app.cam.up = vec3r(0, 1, 0);
 	app.cam.right = vec3r(1, 0, 0);
 
-	i_cam = clCreateBuffer(ocl.context, CL_MEM_READ_ONLY | CL_MEM_COPY_HOST_PTR, sizeof(app.cam), (void*)&app.cam, &err);
-	if (err != CL_SUCCESS)
-		return (catch_error(err));
-	clSetKernelArg(kernel.kernel, 0, sizeof(cl_mem), (void*)&i_cam);
-
 	screen_size.s[0] = APP_WIDTH;
 	screen_size.s[1] = APP_HEIGHT;
 	i_screen_size = clCreateBuffer(ocl.context, CL_MEM_READ_ONLY | CL_MEM_COPY_HOST_PTR, sizeof(screen_size), (void*)&screen_size, &err);
 	if (err != CL_SUCCESS)
 		return (catch_error(err));
-	clSetKernelArg(kernel.kernel, 1, sizeof(cl_mem), (void*)&i_screen_size);
+	clSetKernelArg(kernel.kernel, 0, sizeof(cl_mem), (void*)&i_screen_size);
+
+	i_cam = clCreateBuffer(ocl.context, CL_MEM_READ_ONLY | CL_MEM_COPY_HOST_PTR, sizeof(app.cam), (void*)&app.cam, &err);
+	if (err != CL_SUCCESS)
+		return (catch_error(err));
+	clSetKernelArg(kernel.kernel, 1, sizeof(cl_mem), (void*)&i_cam);
 
 /*
 	kernel_arg_set(kernel, kernel_arg_dup(ocl, flags, size, src), id);
 */
 
-	o_ray_origins = clCreateBuffer(ocl.context, CL_MEM_WRITE_ONLY, sizeof(t_real3) * work_size, NULL, &err);
+	o_ray_states = clCreateBuffer(ocl.context, CL_MEM_WRITE_ONLY, sizeof(t_ray_state) * work_size, NULL, &err);
 	if (err != CL_SUCCESS)
 		return (catch_error(err));
-	clSetKernelArg(kernel.kernel, 2, sizeof(cl_mem), (void*)&o_ray_origins);
-
-	o_ray_dirs = clCreateBuffer(ocl.context, CL_MEM_WRITE_ONLY, sizeof(t_real3) * work_size, NULL, &err);
-	if (err != CL_SUCCESS)
-		return (catch_error(err));
-	clSetKernelArg(kernel.kernel, 3, sizeof(cl_mem), (void*)&o_ray_dirs);
+	clSetKernelArg(kernel.kernel, 2, sizeof(cl_mem), (void*)&o_ray_states);
 
 	clEnqueueNDRangeKernel(ocl.cmd_queue, kernel.kernel, 1, 0, &work_size, 0, 0, 0, 0);
-	clEnqueueReadBuffer(ocl.cmd_queue, o_ray_dirs, CL_TRUE, 0, work_size * sizeof(t_real3), h_ray_dirs, 0, NULL, NULL);
+	clEnqueueReadBuffer(ocl.cmd_queue, o_ray_states, CL_TRUE, 0, work_size * sizeof(t_ray_state), h_ray_states, 0, NULL, NULL);
 
 
 	id = 0;
-	printf("%f\n", h_ray_dirs[id].s[0]);
-	printf("%f\n", h_ray_dirs[id].s[1]);
-	printf("%f\n", h_ray_dirs[id].s[2]);
+	printf("%f\n", h_ray_states[id].ray.dir.s[0]);
+	printf("%f\n", h_ray_states[id].ray.dir.s[1]);
+	printf("%f\n", h_ray_states[id].ray.dir.s[2]);
 
 	id = APP_WIDTH * APP_HEIGHT - 1;
-	printf("%f\n", h_ray_dirs[id].s[0]);
-	printf("%f\n", h_ray_dirs[id].s[1]);
-	printf("%f\n", h_ray_dirs[id].s[2]);
+	printf("%f\n", h_ray_states[id].ray.dir.s[0]);
+	printf("%f\n", h_ray_states[id].ray.dir.s[1]);
+	printf("%f\n", h_ray_states[id].ray.dir.s[2]);
 
 	opencl_release_all(&ocl);
 

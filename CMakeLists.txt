@@ -6,7 +6,7 @@
 #    By: paperrin <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/12/04 23:22:26 by paperrin          #+#    #+#              #
-#    Updated: 2017/12/16 23:11:15 by paperrin         ###   ########.fr        #
+#    Updated: 2017/12/17 19:44:40 by paperrin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -83,7 +83,11 @@ SET(SRC_FILES
 )
 files_import(
 	include/shared.h
-	src/cl/kernel_ray_gen.cl
+	src/cl/kernel_ray_gen_primary.cl
+	src/cl/kernel_ray_trace.cl
+	src/cl/kernel_compute_texels.cl
+	src/cl/kernel_ray_gen_next.cl
+	src/cl/kernel_combine_texels.cl
 )
 add_executable(rt ${SRC_FILES})
 
