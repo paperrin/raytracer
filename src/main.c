@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/09 16:14:42 by paperrin          #+#    #+#             */
-/*   Updated: 2017/12/17 00:29:25 by paperrin         ###   ########.fr       */
+/*   Updated: 2017/12/17 17:28:00 by alngo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,8 @@ int			main(int ac, char **av)
 
 	if (!(opencl_init(&ocl)))
 		return (EXIT_FAILURE);
-	opencl_kernel_init(&kernel, &ocl);
-	opencl_kernel_create_from_file(&kernel, "./src/cl/kernel_ray_gen.cl", "-I ./include/", 3);
+	opencl_kernel_set_ocl_nb_args(&kernel, &ocl, 3);
+	opencl_kernel_load_from_file(&kernel, "./src/cl/kernel_ray_gen.cl", "-I ./include/");
 
 	app.scene.v_obj = ft_vector_create(sizeof(t_obj), NULL, NULL);
 	if (!(obj = (t_obj*)ft_vector_push_back(&app.scene.v_obj, NULL)))
