@@ -1,18 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   opencl_kernel_init.c                               :+:      :+:    :+:   */
+/*   internal_opencl.h                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alngo <alngo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/12/14 19:59:51 by alngo             #+#    #+#             */
-/*   Updated: 2017/12/16 22:00:34 by paperrin         ###   ########.fr       */
+/*   Created: 2017/12/17 17:42:46 by alngo             #+#    #+#             */
+/*   Updated: 2017/12/17 17:47:57 by alngo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "opencl.h"
+#ifndef INTERNAL_OPENCL_H
+# define INTERNAL_OPENCL_H
 
-void		opencl_kernel_init(t_ocl_kernel *kernel, t_opencl *ocl)
-{
-	kernel->ocl = ocl;
-}
+# include "opencl.h"
+
+int						internal_print_program_build_info(t_opencl *ocl
+		, t_ocl_kernel *kernel);
+char					*internal_add_compile_options(char const *const flags);
+char					*internal_path_get_file_name(char const *const path);
+
+#endif

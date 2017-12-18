@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/10 15:33:54 by paperrin          #+#    #+#             */
-/*   Updated: 2017/12/16 22:15:48 by paperrin         ###   ########.fr       */
+/*   Updated: 2017/12/17 17:43:18 by alngo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,14 +53,14 @@ typedef struct			s_ocl_kernel
 cl_char					*opencl_get_device_info(cl_device_id device
 		, cl_device_info param_name);
 int						opencl_init(t_opencl *ocl);
+int						opencl_kernel_destroy(t_ocl_kernel *kernel);
+int						opencl_kernel_load_from_file(t_ocl_kernel *kernel
+		, char const *const path, char const *const flags);
+int						opencl_kernel_set_ocl_nb_args(t_ocl_kernel *kernel
+		, t_opencl *ocl, unsigned char nb_args);
 void					opencl_print_device_info(
 		t_ocl_device_info const *info);
 void					opencl_release_all(t_opencl *ocl);
-cl_int					catch_error(cl_int err_code);
-void					*catch_perror(cl_int err_code);
-int						opencl_kernel_destroy(t_ocl_kernel *kernel);
-int				opencl_kernel_create_from_file(t_ocl_kernel *kernel
-		, char const *const path, char const *const flags, unsigned char nb_arg);
-void		opencl_kernel_init(t_ocl_kernel *kernel, t_opencl *ocl);
+void					opencl_release_all(t_opencl *ocl);
 
 #endif

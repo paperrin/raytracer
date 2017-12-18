@@ -6,7 +6,7 @@
 #    By: paperrin <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/12/04 23:22:26 by paperrin          #+#    #+#              #
-#    Updated: 2017/12/17 19:44:40 by paperrin         ###   ########.fr        #
+#    Updated: 2017/12/18 21:22:00 by paperrin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -64,13 +64,14 @@ SET(SRC_FILES
 	src/graphics/window_callback_mouse_scroll.c
 	src/graphics/image.c
 
-	src/opencl/opencl_get_device_info.c
+	src/opencl/opencl_get_device_info.c	
 	src/opencl/opencl_init.c
+	src/opencl/opencl_kernel_destroy.c
+	src/opencl/opencl_kernel_load_from_file.c
+	src/opencl/opencl_kernel_load_from_file_utils.c
+	src/opencl/opencl_kernel_set_ocl_nb_args.c
 	src/opencl/opencl_print_device_info.c
 	src/opencl/opencl_release_all.c
-	src/opencl/opencl_kernel_init.c
-	src/opencl/opencl_kernel_create_from_file.c
-	src/opencl/opencl_kernel_destroy.c
 
 	src/callbacks/callback_key.c
 

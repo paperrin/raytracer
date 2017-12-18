@@ -6,11 +6,12 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/16 19:33:51 by paperrin          #+#    #+#             */
-/*   Updated: 2017/12/16 22:18:40 by paperrin         ###   ########.fr       */
+/*   Updated: 2017/12/17 17:32:30 by alngo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "opencl.h"
+#include "rt.h"
 
 int				opencl_kernel_destroy(t_ocl_kernel *kernel)
 {

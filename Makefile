@@ -51,11 +51,12 @@ CFILES		=	\
 				\
 				opencl/opencl_get_device_info.c					\
 				opencl/opencl_init.c							\
+				opencl/opencl_kernel_destroy.c					\
+				opencl/opencl_kernel_load_from_file.c			\
+				opencl/opencl_kernel_load_from_file_utils.c		\
+				opencl/opencl_kernel_set_ocl_nb_args.c			\
 				opencl/opencl_print_device_info.c				\
 				opencl/opencl_release_all.c						\
-				opencl/opencl_kernel_init.c						\
-				opencl/opencl_kernel_create_from_file.c			\
-				opencl/opencl_kernel_destroy.c					\
 				\
 				callbacks/callback_key.c						\
 				\

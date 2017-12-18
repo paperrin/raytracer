@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/09 16:36:38 by paperrin          #+#    #+#             */
-/*   Updated: 2017/12/17 22:56:57 by paperrin         ###   ########.fr       */
+/*   Updated: 2017/12/18 21:06:27 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,13 @@ typedef struct		s_scene
 
 typedef struct		s_app
 {
-	t_window	win;
-	t_scene		scene;
-	t_camera	cam;
-	t_image		draw_buf;
+	t_window		win;
+	t_scene			scene;
+	t_camera		cam;
+	t_image			draw_buf;
+
+	t_ocl_kernel	kernel_ray_gen;
+	t_ocl_kernel	kernel_ray_trace;
 }					t_app;
 
 int					app_create(t_app *app);
