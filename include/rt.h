@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/09 16:36:38 by paperrin          #+#    #+#             */
-/*   Updated: 2017/12/18 21:06:27 by paperrin         ###   ########.fr       */
+/*   Updated: 2017/12/21 15:17:42 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,9 @@ void				app_destroy(t_app *app, int exit_status);
 
 void				callback_key(void *user_ptr, int key, int action);
 
-cl_int				catch_error(cl_int err_code);
-void				*catch_perror(cl_int err_code);
+int					error_cl_code(cl_int err_code);
+void				*perror_cl_code(cl_int err_code);
+int					error_string(char const *const error_str);
 
 t_obj				obj_sphere(t_real3 pos, t_real radius, t_mat_id material);
 

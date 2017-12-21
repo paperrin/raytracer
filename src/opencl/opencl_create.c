@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   opencl_init.c                                      :+:      :+:    :+:   */
+/*   opencl_create.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alngo <alngo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/12/13 18:04:50 by alngo             #+#    #+#             */
-/*   Updated: 2017/12/16 19:23:10 by paperrin         ###   ########.fr       */
+/*   Created: 2017/12/21 15:56:38 by paperrin          #+#    #+#             */
+/*   Updated: 2017/12/21 15:56:41 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static int			set_and_print_device_info(t_opencl *ocl)
 	return (1);
 }
 
-int					opencl_init(t_opencl *ocl)
+int					opencl_create(t_opencl *ocl)
 {
 	cl_int			err;
 

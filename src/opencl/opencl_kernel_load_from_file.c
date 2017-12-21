@@ -6,7 +6,7 @@
 /*   By: alngo <alngo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/17 17:17:06 by alngo             #+#    #+#             */
-/*   Updated: 2017/12/17 17:48:17 by alngo            ###   ########.fr       */
+/*   Updated: 2017/12/21 15:22:16 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,12 @@ static int				opencl_kernel_create_program_with_source(
 	char				*src;
 
 	if (!(src = ft_file_to_string(path)))
-		return (catch_error(CL_UNKNOWN_ERROR_CODE));
+		return (error_cl_code(CL_UNKNOWN_ERROR_CODE));
 	kernel->program = clCreateProgramWithSource(kernel->ocl->context
 					, 1, (char const **)&src, 0, &err);
 	free(src);
 	if (err != CL_SUCCESS)
-		return (catch_error(err));
+		return (error_cl_code(err));
 	return (1);
 }
 
@@ -56,11 +56,11 @@ static int				opencl_kernel_create(
 	char				*file_name;
 
 	if (!(file_name = internal_path_get_file_name(path)))
-		return (catch_error(CL_OUT_OF_HOST_MEMORY));
+		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
 	kernel->kernel = clCreateKernel(kernel->program, file_name, &err);
 	free(file_name);
 	if (err != CL_SUCCESS)
-		return (catch_error(err));
+		return (error_cl_code(err));
 	return (1);
 }
 

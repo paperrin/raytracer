@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   opencl_release_all.c                               :+:      :+:    :+:   */
+/*   opencl_destroy.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alngo <alngo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/12/14 17:31:55 by alngo             #+#    #+#             */
-/*   Updated: 2017/12/16 15:06:38 by alngo            ###   ########.fr       */
+/*   Created: 2017/12/21 15:57:01 by paperrin          #+#    #+#             */
+/*   Updated: 2017/12/21 15:57:03 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "opencl.h"
 
-void	opencl_release_all(t_opencl *ocl)
+void	opencl_destroy(t_opencl *ocl)
 {
 	if (ocl->device_info.device_name)
 		free(ocl->device_info.device_name);

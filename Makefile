@@ -50,13 +50,13 @@ CFILES		=	\
 				graphics/image.c								\
 				\
 				opencl/opencl_get_device_info.c					\
-				opencl/opencl_init.c							\
+				opencl/opencl_create.c							\
 				opencl/opencl_kernel_destroy.c					\
 				opencl/opencl_kernel_load_from_file.c			\
 				opencl/opencl_kernel_load_from_file_utils.c		\
-				opencl/opencl_kernel_set_ocl_nb_args.c			\
+				opencl/opencl_kernel_create_n_args.c			\
 				opencl/opencl_print_device_info.c				\
-				opencl/opencl_release_all.c						\
+				opencl/opencl_destroy.c							\
 				\
 				callbacks/callback_key.c						\
 				\
@@ -65,7 +65,7 @@ CFILES		=	\
 				obj/obj_sphere.c								\
 				\
 				main.c											\
-				catch_error.c
+				error.c
 
 
 SRC			=	$(CFILES:%=$(SRC_DIR)%)

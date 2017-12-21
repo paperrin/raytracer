@@ -1,19 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   catch_error.c                                      :+:      :+:    :+:   */
+/*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alngo <alngo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/12/14 20:17:52 by alngo             #+#    #+#             */
-/*   Updated: 2017/12/14 22:55:39 by alngo            ###   ########.fr       */
+/*   Created: 2017/12/21 15:09:38 by paperrin          #+#    #+#             */
+/*   Updated: 2017/12/21 15:20:53 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
 #include "global.h"
 
-cl_int		catch_error(cl_int err_code)
+int			error_cl_code(cl_int err_code)
 {
 	size_t		i;
 
@@ -25,8 +25,14 @@ cl_int		catch_error(cl_int err_code)
 	return (0);
 }
 
-void		*catch_perror(cl_int err_code)
+void		*perror_cl_code(cl_int err_code)
 {
-	catch_error(err_code);
+	error_cl_code(err_code);
 	return (NULL);
+}
+
+int			error_string(char const *const str_error)
+{
+	ft_putendl(str_error);
+	return (0);
 }

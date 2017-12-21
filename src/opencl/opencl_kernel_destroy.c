@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/16 19:33:51 by paperrin          #+#    #+#             */
-/*   Updated: 2017/12/17 17:32:30 by alngo            ###   ########.fr       */
+/*   Updated: 2017/12/21 15:13:17 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,9 @@ int				opencl_kernel_destroy(t_ocl_kernel *kernel)
 	cl_int		err;
 
 	if ((err = clReleaseProgram(kernel->program)) != CL_SUCCESS)
-		return (catch_error(err));
+		return (error_cl_code(err));
 	if ((err = clReleaseKernel(kernel->kernel)) != CL_SUCCESS)
-		return (catch_error(err));
+		return (error_cl_code(err));
 	while (kernel->args_size-- > 0)
 		clReleaseMemObject(kernel->args[kernel->args_size]);
 	return (1);
