@@ -6,43 +6,50 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/18 21:50:02 by paperrin          #+#    #+#             */
-/*   Updated: 2017/12/18 21:53:18 by paperrin         ###   ########.fr       */
+/*   Updated: 2017/12/22 18:29:51 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
 
-int			kernel_ray_gen_primary_init(t_app *app)
+int			kernel_ray_gen_primary_create(t_app *app)
 {
-	if (!(h_ray_states = (t_ray_state*)malloc(sizeof(t_ray_state) * work_size)))
-		return (catch_error(CL_OUT_OF_HOST_MEMORY));
-	opencl_kernel_set_ocl_nb_args(&app->kernel_ray_gen, &ocl, 3);
-	if (!opencl_kernel_load_from_file(&app->kernel_ray_gen, "./src/cl/kernel_ray_gen_primary.cl", "-I ./include/"))
-		return (EXIT_FAILURE);
+	cl_uint2			screen_size;
+
+	app->kernel_ray_gen.work_size = APP_WIDTH * APP_HEIGHT;
+	if (!opencl_kernel_create_n_args(&app->kernel_ray_gen, &app->ocl, 3))
+		return (0);
+	if (!opencl_kernel_load_from_file(&app->kernel_ray_gen
+				, "./src/cl/kernel_ray_gen_primary.cl", "-I ./include/"))
+		return (0);
 	screen_size.s[0] = APP_WIDTH;
 	screen_size.s[1] = APP_HEIGHT;
-	i_screen_size = clCreateBuffer(ocl.context, CL_MEM_READ_ONLY | CL_MEM_COPY_HOST_PTR, sizeof(screen_size), (void*)&screen_size, &err);
-	if (err != CL_SUCCESS)
-		return (catch_error(err));
-	clSetKernelArg(app->kernel_ray_gen.kernel, 0, sizeof(cl_mem), (void*)&i_screen_size);
-
-	i_cam = clCreateBuffer(ocl.context, CL_MEM_READ_ONLY | CL_MEM_COPY_HOST_PTR, sizeof(app->cam), (void*)&app->cam, &err);
-	if (err != CL_SUCCESS)
-		return (catch_error(err));
-	clSetKernelArg(app->kernel_ray_gen.kernel, 1, sizeof(cl_mem), (void*)&i_cam);
-
-	o_ray_states = clCreateBuffer(ocl.context, CL_MEM_WRITE_ONLY, sizeof(t_ray_state) * work_size, NULL, &err);
-	if (err != CL_SUCCESS)
-		return (catch_error(err));
-	clSetKernelArg(app->kernel_ray_gen.kernel, 2, sizeof(cl_mem), (void*)&o_ray_states);
-
-	clEnqueueNDRangeKernel(ocl.cmd_queue, app->kernel_ray_gen.kernel, 1, 0, &work_size, 0, 0, 0, 0);
-	clEnqueueReadBuffer(ocl.cmd_queue, o_ray_states, CL_TRUE, 0, work_size * sizeof(t_ray_state), h_ray_states, 0, NULL, NULL);
-
-
-
+	opencl_kernel_arg_select_id(&app->kernel_ray_gen, 0);
+	if (!opencl_kernel_arg_selected_create(&app->kernel_ray_gen
+				, CL_MEM_READ_ONLY | CL_MEM_COPY_HOST_PTR
+				, sizeof(screen_size), (void*)&screen_size))
+		return (0);
+	opencl_kernel_arg_select_id(&app->kernel_ray_gen, 2);
+	if (!opencl_kernel_arg_selected_create(&app->kernel_ray_gen
+			, CL_MEM_READ_WRITE
+			, sizeof(t_ray_state) * app->kernel_ray_gen.work_size, NULL))
+		return (0);
+	return (1);
 }
 
 int			kernel_ray_gen_primary_launch(t_app *app)
 {
+	opencl_kernel_arg_select_id(&app->kernel_ray_gen, 1);
+	if (!opencl_kernel_arg_selected_create(&app->kernel_ray_gen
+				, CL_MEM_READ_ONLY | CL_MEM_COPY_HOST_PTR
+				, sizeof(app->cam), (void*)&app->cam))
+		return (0);
+	clEnqueueNDRangeKernel(app->ocl.cmd_queue, app->kernel_ray_gen.kernel, 1, 0
+			, &app->kernel_ray_gen.work_size, 0, 0, 0, 0);
+	return (1);
+}
+
+void		kernel_ray_gen_primary_destroy(t_app *app)
+{
+	opencl_kernel_destroy(&app->kernel_ray_gen);
 }

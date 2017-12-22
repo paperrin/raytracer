@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/10 15:33:54 by paperrin          #+#    #+#             */
-/*   Updated: 2017/12/21 15:55:55 by paperrin         ###   ########.fr       */
+/*   Updated: 2017/12/22 17:23:47 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,22 +44,34 @@ typedef struct			s_opencl
 typedef struct			s_ocl_kernel
 {
 	t_opencl			*ocl;
+	size_t				work_size;
+	size_t				selected_arg_id;
 	cl_program			program;
 	cl_kernel			kernel;
 	cl_mem				*args;
 	unsigned char		args_size;
 }						t_ocl_kernel;
 
+int						opencl_create(t_opencl *ocl);
+void					opencl_destroy(t_opencl *ocl);
 cl_char					*opencl_get_device_info(cl_device_id device
 		, cl_device_info param_name);
-int						opencl_create(t_opencl *ocl);
-int						opencl_kernel_destroy(t_ocl_kernel *kernel);
-int						opencl_kernel_load_from_file(t_ocl_kernel *kernel
-		, char const *const path, char const *const flags);
-int						opencl_kernel_create_n_args(t_ocl_kernel *kernel
-		, t_opencl *ocl, unsigned char nb_args);
 void					opencl_print_device_info(
 		t_ocl_device_info const *info);
-void					opencl_destroy(t_opencl *ocl);
+
+int						opencl_kernel_create_n_args(t_ocl_kernel *kernel
+		, t_opencl *ocl, unsigned char nb_args);
+int						opencl_kernel_load_from_file(t_ocl_kernel *kernel
+		, char const *const path, char const *const flags);
+int						opencl_kernel_destroy(t_ocl_kernel *kernel);
+
+void					opencl_kernel_arg_select_id(t_ocl_kernel *kernel
+		, size_t id);
+int						opencl_kernel_arg_selected_create(t_ocl_kernel *kernel
+		, cl_mem_flags flags, size_t size, void *host_ptr);
+void					opencl_kernel_arg_selected_use_kernel_arg_id(
+		t_ocl_kernel *kernel, t_ocl_kernel *kernel_src, size_t id);
+void					opencl_kernel_arg_selected_destroy(
+		t_ocl_kernel *kernel);
 
 #endif

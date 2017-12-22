@@ -6,7 +6,7 @@
 #    By: paperrin <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/12/04 23:22:26 by paperrin          #+#    #+#              #
-#    Updated: 2017/12/21 16:50:05 by paperrin         ###   ########.fr        #
+#    Updated: 2017/12/22 18:16:28 by paperrin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -72,6 +72,10 @@ SET(SRC_FILES
 	src/opencl/opencl_kernel_create_n_args.c
 	src/opencl/opencl_print_device_info.c
 	src/opencl/opencl_destroy.c
+	src/opencl/opencl_kernel_arg.c
+
+	src/kernel/kernel_ray_gen_primary.c
+	src/kernel/kernel_ray_trace.c
 
 	src/callbacks/callback_key.c
 

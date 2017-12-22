@@ -57,6 +57,10 @@ CFILES		=	\
 				opencl/opencl_kernel_create_n_args.c			\
 				opencl/opencl_print_device_info.c				\
 				opencl/opencl_destroy.c							\
+				opencl/opencl_kernel_arg.c						\
+				\
+				kernel/kernel_ray_gen_primary.c					\
+				kernel/kernel_ray_trace.c						\
 				\
 				callbacks/callback_key.c						\
 				\

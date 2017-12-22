@@ -4,8 +4,14 @@
 
 	[[ 2017 ]]
 	@ 21 Dec:
-			~C renamed opencl_(create/destroy) & opencl_kernel_create_n_args
-					functions for clarity sake
+			~C Renamed opencl_(create/destroy), opencl_kernel_create_n_args,
+					error_cl_code functions for clarity sake
+			+C Added error_string for custom errors
+	@ 22 Dec:
+			+F Real time render / camera movement implemented !
+			+C Added kernel arg helpers in src/opencl/opencl_kernel_arg.c for
+					easier arg manipulation
+			~C Much better code organization
 
 #----------------------
 # Legend :
@@ -21,13 +27,13 @@
 #   TO-DO :                                                                   |
 #-----------------------------------------------------------------------------'
 
-	[/] Real time render / camera movement :
-		[/] Move kernel initialization / launch codes to
+	[/T] Real time render / camera movement :
+		[X] Move kernel initialization / launch codes to
 				src/kernel/kernel_XXXXX.c
 		[ ] Camera rotation :
 			[ ] Needs new Matrix implementation
 			[ ] Be certain that the view renders only when it changed
-		[ ] Kernel arg helpers to ease their manipulation
+		[?] Kernel arg helpers to ease their manipulation
 
 #------------------------------------
 # Legend :
