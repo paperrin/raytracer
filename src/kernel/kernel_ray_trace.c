@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/22 18:06:33 by paperrin          #+#    #+#             */
-/*   Updated: 2017/12/22 18:29:31 by paperrin         ###   ########.fr       */
+/*   Updated: 2017/12/22 19:25:32 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,14 +57,12 @@ int				kernel_ray_trace_launch(t_app *app)
 	clEnqueueReadBuffer(app->ocl.cmd_queue, app->kernel_ray_trace.args[3]
 			, CL_TRUE, 0, work_size * sizeof(t_hit), app->hits, 0, NULL, NULL);
 	i = -1;
+	ft_bzero(app->draw_buf.pixels, sizeof(t_clrf_rgb) * APP_WIDTH * APP_HEIGHT);
 	while (++i < work_size)
 	{
 		if (app->hits[i].t >= 0)
 			image_set_pixel(&app->draw_buf, i % APP_WIDTH, i / APP_WIDTH
 					, ft_clrf_rgb(1, 0, 0));
-		else
-			image_set_pixel(&app->draw_buf, i % APP_WIDTH, i / APP_WIDTH
-					, ft_clrf_rgb(0, 0, 0));
 	}
 	return (1);
 }

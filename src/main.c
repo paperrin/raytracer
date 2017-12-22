@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/09 16:14:42 by paperrin          #+#    #+#             */
-/*   Updated: 2017/12/22 18:30:38 by paperrin         ###   ########.fr       */
+/*   Updated: 2017/12/22 19:15:42 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,8 @@ int			app_create(t_app *app)
 		app_destroy(app, EXIT_FAILURE);
 	if (!kernel_ray_trace_create(app))
 		app_destroy(app, EXIT_FAILURE);
-	if (!render(app))
-		app_destroy(app, EXIT_FAILURE);
 	window_callback_key(&app->win, &callback_key);
-	window_loop(&app->win, app);
+	window_callback_loop(&app->win, &render, app);
 	return (1);
 }
 
@@ -41,16 +39,29 @@ void		app_destroy(t_app *app, int exit_status)
 	exit(exit_status);
 }
 
-int			render(t_app *app)
+void		render(void *user_ptr)
 {
+	static double		last_time = -1;
+	static size_t		n_frames = 0;
+	t_app				*app;
+
+	if (last_time < 0)
+		last_time = glfwGetTime();
+	app = (t_app*)user_ptr;
 	if (!kernel_ray_gen_primary_launch(app))
-		return (0);
+		app_destroy(app, EXIT_FAILURE);
 	if (!kernel_ray_trace_launch(app))
-		return (0);
+		app_destroy(app, EXIT_FAILURE);
 	window_clear(&app->win, ft_clrf_rgb(0, 0, 0));
 	image_put(&app->draw_buf, 0, 0);
 	window_swap_buffers(&app->win);
-	return (1);
+	n_frames++;
+	if (glfwGetTime() - last_time > 1)
+	{
+		last_time = glfwGetTime();
+		ft_printf("FPS: %lu\n", n_frames);
+		n_frames = 0;
+	}
 }
 
 int			main(int ac, char **av)

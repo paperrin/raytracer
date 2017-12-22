@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/18 21:50:02 by paperrin          #+#    #+#             */
-/*   Updated: 2017/12/22 18:29:51 by paperrin         ###   ########.fr       */
+/*   Updated: 2017/12/22 19:18:33 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ int			kernel_ray_gen_primary_create(t_app *app)
 int			kernel_ray_gen_primary_launch(t_app *app)
 {
 	opencl_kernel_arg_select_id(&app->kernel_ray_gen, 1);
+	opencl_kernel_arg_selected_destroy(&app->kernel_ray_gen);
 	if (!opencl_kernel_arg_selected_create(&app->kernel_ray_gen
 				, CL_MEM_READ_ONLY | CL_MEM_COPY_HOST_PTR
 				, sizeof(app->cam), (void*)&app->cam))

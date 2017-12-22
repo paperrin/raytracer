@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/09 16:36:38 by paperrin          #+#    #+#             */
-/*   Updated: 2017/12/22 18:30:59 by paperrin         ###   ########.fr       */
+/*   Updated: 2017/12/22 19:09:58 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int					error_string(char const *const error_str);
 
 t_obj				obj_sphere(t_real3 pos, t_real radius, t_mat_id material);
 
-int					render(t_app *app);
+void				render(void *user_ptr);
 
 
 int					kernel_ray_gen_primary_create(t_app *app);
