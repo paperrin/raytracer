@@ -1,10 +1,8 @@
 #include "shared.h"
 
 t_real				solve_quadratic(t_real3 abc, t_real *values);
-
 t_real				obj_ray_hit(constant t_obj *obj,
 		global t_ray *ray);
-
 t_real				obj_sphere_ray_hit(constant t_sphere *sphere,
 		global t_ray *ray);
 
@@ -12,9 +10,11 @@ kernel void			kernel_ray_trace(
 		global read_only t_ray_state *ray_states,
 		constant read_only t_obj *objs,
 		constant read_only uint *objs_size,
-		global write_only t_hit *hits)
+		global write_only t_hit *hits,
+		global read_write uint *n_hits)
 {
 	const int		gid = get_global_id(0);
+	uint			hit_id;
 	t_obj_id		i;
 	t_real			t;
 	t_real			t_nearest;
@@ -31,8 +31,13 @@ kernel void			kernel_ray_trace(
 			obj_id_nearest = i;
 		}
 	}
-	hits[gid].t = (t_nearest < 200000) ? t_nearest : -1;
-	hits[gid].obj_id = obj_id_nearest;
+	if (obj_id_nearest > -1)
+	{
+		hit_id = atomic_add(n_hits, 1);
+		hits[hit_id].px_id = gid;
+		hits[hit_id].t = (t_nearest < 200000) ? t_nearest : -1;
+		hits[hit_id].obj_id = obj_id_nearest;
+	}
 }
 
 t_real			solve_quadratic(t_real3 abc, t_real *values)

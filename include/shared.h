@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/13 14:25:38 by paperrin          #+#    #+#             */
-/*   Updated: 2017/12/17 21:44:19 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/01/05 15:53:09 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,6 +116,7 @@ typedef struct			s_ray
 
 typedef struct			s_hit
 {
+	cl_uint				px_id;
 	t_obj_id			obj_id;
 	t_real				t;
 }						t_hit;
