@@ -6,7 +6,7 @@
 #    By: paperrin <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/12/04 23:22:26 by paperrin          #+#    #+#              #
-#    Updated: 2017/12/22 18:16:28 by paperrin         ###   ########.fr        #
+#    Updated: 2018/01/13 23:16:47 by alngo            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -78,6 +78,9 @@ SET(SRC_FILES
 	src/kernel/kernel_ray_trace.c
 
 	src/callbacks/callback_key.c
+
+	src/camera/camera_translate.c
+	src/camera/camera_rotation.c
 
 	src/vec/vec3r.c
 
