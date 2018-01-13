@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/09 16:36:38 by paperrin          #+#    #+#             */
-/*   Updated: 2018/01/05 15:31:36 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/01/13 22:45:22 by alngo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include "shared.h"
 # include "vec.h"
 # include "image.h"
+# include "camera.h"
 
 # define APP_WIDTH 1600
 # define APP_HEIGHT 900

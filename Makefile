@@ -64,6 +64,10 @@ CFILES		=	\
 				\
 				callbacks/callback_key.c						\
 				\
+				camera/camera_translate.c						\
+				camera/camera_rotation.c						\
+				camera/ft_real3_rot.c						\
+				\
 				vec/vec3r.c										\
 				\
 				obj/obj_sphere.c								\
