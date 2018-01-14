@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/09 16:36:38 by paperrin          #+#    #+#             */
-/*   Updated: 2018/01/05 15:31:36 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/01/15 00:17:18 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,14 @@
 # include "vec.h"
 # include "image.h"
 
-# define APP_WIDTH 1600
-# define APP_HEIGHT 900
+# define APP_WIDTH 720
+# define APP_HEIGHT 480
 # define APP_TITLE "RT"
 
 typedef struct		s_scene
 {
 	t_vector		v_obj;
+	t_vector		v_light;
 }					t_scene;
 
 typedef struct		s_app
@@ -38,6 +39,8 @@ typedef struct		s_app
 	t_opencl		ocl;
 	t_ocl_kernel	kernel_ray_gen;
 	t_ocl_kernel	kernel_ray_trace;
+	t_ocl_kernel	kernel_compute_texels;
+	t_texel			*texels;
 	t_hit			*hits;
 	cl_uint			n_hits;
 }					t_app;
@@ -63,5 +66,9 @@ void				kernel_ray_gen_primary_destroy(t_app *app);
 int					kernel_ray_trace_create(t_app *app);
 int					kernel_ray_trace_launch(t_app *app);
 void				kernel_ray_trace_destroy(t_app *app);
+
+int					kernel_compute_texels_create(t_app *app);
+int					kernel_compute_texels_launch(t_app *app);
+void				kernel_compute_texels_destroy(t_app *app);
 
 #endif

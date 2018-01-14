@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/13 14:25:38 by paperrin          #+#    #+#             */
-/*   Updated: 2018/01/05 15:53:09 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/01/14 21:26:46 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,54 @@ typedef cl_float16		t_real16;
 typedef cl_short		t_obj_type;
 typedef cl_int			t_obj_id;
 typedef cl_short		t_mat_id;
+
+typedef struct			s_camera
+{
+	t_real3				pos;
+	t_real3				dir;
+	t_real3				up;
+	t_real3				right;
+	t_real				pxl_ratio;
+}						t_camera;
+
+/*
+** Rays
+*/
+
+typedef struct			s_ray
+{
+	t_real3				origin;
+	t_real3				dir;
+}						t_ray;
+
+typedef struct			s_hit
+{
+	cl_uint				px_id;
+	t_obj_id			obj_id;
+	t_real				t;
+}						t_hit;
+
+typedef struct			s_ray_state
+{
+	t_ray				ray;
+	cl_uchar			view_id;
+	cl_uint				pxl_id;
+	cl_uchar			type;
+}						t_ray_state;
+
+typedef struct			s_texel
+{
+	t_real				r;
+	t_real				g;
+	t_real				b;
+	t_real				factor;
+	cl_uint				px_id;
+	t_obj_id			obj_id;
+}						t_texel;
+
+/*
+** Objects
+*/
 
 typedef enum			e_obj_type
 {
@@ -99,34 +147,46 @@ typedef struct			s_obj
 	t_obj_container		as;
 }						t_obj;
 
-typedef struct			s_camera
+/*
+** Lights
+*/
+
+typedef enum			e_light_type
+{
+	light_type_point,
+	light_type_spot,
+	light_type_dir
+}						t_light_type;
+
+typedef struct			s_light_point
+{
+	t_real3				pos;
+}						t_light_point;
+
+typedef struct			s_light_spot
 {
 	t_real3				pos;
 	t_real3				dir;
-	t_real3				up;
-	t_real3				right;
-	t_real				pxl_ratio;
-}						t_camera;
+}						t_light_spot;
 
-typedef struct			s_ray
+typedef struct			s_light_dir
 {
-	t_real3				origin;
 	t_real3				dir;
-}						t_ray;
+}						t_light_dir;
 
-typedef struct			s_hit
+typedef union			u_light_container
 {
-	cl_uint				px_id;
-	t_obj_id			obj_id;
-	t_real				t;
-}						t_hit;
+	t_light_point		point;
+	t_light_spot		spot;
+	t_light_dir			dir;
+}						t_light_container;
 
-typedef struct			s_ray_state
+typedef struct			s_light
 {
-	t_ray				ray;
-	cl_uchar			view_id;
-	cl_uint				pxl_id;
-	cl_uchar			type;
-}						t_ray_state;
+	t_light_type		type;
+	t_real3				color;
+	t_real				intensity;
+	t_light_container	as;
+}						t_light;
 
 #endif
