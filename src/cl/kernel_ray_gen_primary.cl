@@ -1,7 +1,7 @@
 #include "shared.h"
 
 kernel void			kernel_ray_gen_primary(
-		global read_only uint2 *screen_size,
+		constant read_only uint2 *screen_size,
 		global read_only t_camera *cam,
 		global write_only t_ray_state *ray_states)
 {

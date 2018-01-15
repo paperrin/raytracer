@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/22 18:06:33 by paperrin          #+#    #+#             */
-/*   Updated: 2018/01/14 22:11:03 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/01/15 01:47:49 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,6 @@ int				kernel_ray_trace_create(t_app *app)
 {
 	cl_uint				objs_size;
 
-	if (!(app->hits = (t_hit*)malloc(sizeof(t_hit) * APP_WIDTH * APP_HEIGHT)))
-		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
 	app->kernel_ray_trace.work_size = APP_WIDTH * APP_HEIGHT;
 	if (!opencl_kernel_create_n_args(&app->kernel_ray_trace, &app->ocl, 5))
 		return (0);

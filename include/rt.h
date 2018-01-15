@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/09 16:36:38 by paperrin          #+#    #+#             */
-/*   Updated: 2018/01/15 00:17:18 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/01/15 01:52:08 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 
 # define APP_WIDTH 720
 # define APP_HEIGHT 480
-# define APP_TITLE "RT"
+# define APP_TITLE "R-T RT"
 
 typedef struct		s_scene
 {
@@ -40,8 +40,7 @@ typedef struct		s_app
 	t_ocl_kernel	kernel_ray_gen;
 	t_ocl_kernel	kernel_ray_trace;
 	t_ocl_kernel	kernel_compute_texels;
-	t_texel			*texels;
-	t_hit			*hits;
+	t_ocl_kernel	kernel_combine_texels;
 	cl_uint			n_hits;
 }					t_app;
 
@@ -70,5 +69,9 @@ void				kernel_ray_trace_destroy(t_app *app);
 int					kernel_compute_texels_create(t_app *app);
 int					kernel_compute_texels_launch(t_app *app);
 void				kernel_compute_texels_destroy(t_app *app);
+
+int					kernel_combine_texels_create(t_app *app);
+int					kernel_combine_texels_launch(t_app *app);
+void				kernel_combine_texels_destroy(t_app *app);
 
 #endif
