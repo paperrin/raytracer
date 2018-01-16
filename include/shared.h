@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/13 14:25:38 by paperrin          #+#    #+#             */
-/*   Updated: 2018/01/14 21:26:46 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/01/16 23:23:01 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,30 +65,14 @@ typedef struct			s_ray
 	t_real3				dir;
 }						t_ray;
 
-typedef struct			s_hit
-{
-	cl_uint				px_id;
-	t_obj_id			obj_id;
-	t_real				t;
-}						t_hit;
-
 typedef struct			s_ray_state
 {
 	t_ray				ray;
-	cl_uchar			view_id;
+	t_real				t;
+	t_real				importance;
 	cl_uint				pxl_id;
-	cl_uchar			type;
-}						t_ray_state;
-
-typedef struct			s_texel
-{
-	t_real				r;
-	t_real				g;
-	t_real				b;
-	t_real				factor;
-	cl_uint				px_id;
 	t_obj_id			obj_id;
-}						t_texel;
+}						t_ray_state;
 
 /*
 ** Objects

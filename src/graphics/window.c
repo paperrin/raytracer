@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/03 17:46:24 by paperrin          #+#    #+#             */
-/*   Updated: 2018/01/05 16:06:03 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/01/15 16:18:28 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int				window_create(t_window *win, unsigned int width,
 		return (0);
 	}
 	glfwMakeContextCurrent(win->glfw_win);
-	glfwSwapInterval(1);
+	glfwSwapInterval(0);
 	glfwGetFramebufferSize(win->glfw_win, &win->width, &win->height);
 	glViewport(0, 0, win->width, win->height);
 	glMatrixMode(GL_PROJECTION);
