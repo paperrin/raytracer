@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/09 16:14:42 by paperrin          #+#    #+#             */
-/*   Updated: 2018/01/13 23:46:34 by alngo            ###   ########.fr       */
+/*   Updated: 2018/01/16 23:01:45 by alngo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,10 +76,7 @@ int			main(int ac, char **av)
 	if (!(obj = (t_obj*)ft_vector_push_back(&app.scene.v_obj, NULL)))
 		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
 	*obj = obj_sphere(vec3r(2, 3, 0), 1, 0);
-	app.cam.pos = vec3r(0, 0, -2.5);
-	app.cam.dir = vec3r(0, 0, 1);
-	app.cam.up = vec3r(0, 1, 0);
-	app.cam.right = vec3r(1, 0, 0);
+	camera_init(&app.cam);
 
 	(void)ac;
 	(void)av;

@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/13 14:25:38 by paperrin          #+#    #+#             */
-/*   Updated: 2018/01/13 23:17:07 by alngo            ###   ########.fr       */
+/*   Updated: 2018/01/16 21:41:19 by alngo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,14 +99,14 @@ typedef struct			s_obj
 	t_obj_container		as;
 }						t_obj;
 
-typedef struct			s_camera
+typedef struct			s_camera_data
 {
 	t_real3				pos;
 	t_real3				dir;
 	t_real3				up;
 	t_real3				right;
 	t_real				pxl_ratio;
-}						t_camera;
+}						t_camera_data;
 
 typedef struct			s_ray
 {
