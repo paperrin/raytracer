@@ -29,7 +29,7 @@ void		callback_key(void *user_ptr, int key, int action)
 	else if (key == GLFW_KEY_I || key == GLFW_KEY_K)
 		camera_rotation_x(&app->cam, key == GLFW_KEY_I ? -0.05 : 0.05);
 	else if (key == GLFW_KEY_J || key == GLFW_KEY_L)
-		camera_rotation_y(&app->cam, key == GLFW_KEY_J ? -0.05 : 0.05);
+		camera_rotation_y(&app->cam, key == GLFW_KEY_L ? -0.05 : 0.05);
 	else if (key == GLFW_KEY_Y || key == GLFW_KEY_H)
 		camera_rotation_z(&app->cam, key == GLFW_KEY_Y ? -0.05 : 0.05);
 	render(app);
