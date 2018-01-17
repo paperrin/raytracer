@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/09 16:52:27 by paperrin          #+#    #+#             */
-/*   Updated: 2017/12/22 18:42:18 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/01/17 20:55:00 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,24 @@
 
 void		callback_key(void *user_ptr, int key, int action)
 {
+	static int		u = 0;
+	static int		d = 0;
+	static int		l = 0;
+	static int		r = 0;
 	t_app	*app;
 
-	(void)action;
 	app = (t_app*)user_ptr;
 	if (key == GLFW_KEY_ESCAPE)
 		app_destroy(app, EXIT_SUCCESS);
 	else if (key == GLFW_KEY_A)
-		app->cam.pos.s[0] -= 0.05;
+		l = action > 0;
 	else if (key == GLFW_KEY_D)
-		app->cam.pos.s[0] += 0.05;
+		r = action > 0;
+	else if (key == GLFW_KEY_W)
+		u = action > 0;
+	else if (key == GLFW_KEY_S)
+		d = action > 0;
+	app->cam.pos.s[0] += (r - l) * 0.05;
+	app->cam.pos.s[1] += (u - d) * 0.05;
 	render(app);
 }

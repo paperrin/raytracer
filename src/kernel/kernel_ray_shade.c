@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/16 22:37:07 by paperrin          #+#    #+#             */
-/*   Updated: 2018/01/17 20:09:57 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/01/18 00:10:53 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,12 +64,15 @@ int				kernel_ray_shade_launch(t_app *app)
 {
 	size_t		work_size;
 
-	if (app->n_hits > 0)
+	if (!app->config.ray_compaction || app->n_hits > 0)
 	{
-		app->kernel_ray_shade.work_size = app->n_hits;
+		if (app->config.ray_compaction)
+			app->kernel_ray_shade.work_size = app->n_hits;
+		else
+			app->kernel_ray_shade.work_size = APP_WIDTH * APP_HEIGHT;
 		work_size = app->kernel_ray_shade.work_size;
 		clEnqueueNDRangeKernel(app->ocl.cmd_queue, app->kernel_ray_shade.kernel
-			, 1, NULL, &work_size, NULL, 0, NULL, NULL);
+			, 1, NULL, &app->kernel_ray_shade.work_size, NULL, 0, NULL, NULL);
 	}
 	clEnqueueReadBuffer(app->ocl.cmd_queue, app->kernel_clear.args[0]
 			, CL_TRUE, 0, sizeof(cl_float) * 4 * APP_WIDTH * APP_HEIGHT

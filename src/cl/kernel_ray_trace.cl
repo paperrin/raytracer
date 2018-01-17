@@ -5,7 +5,8 @@ kernel void			kernel_ray_trace(
 		constant read_only t_obj *objs,
 		constant read_only uint *objs_size,
 		global read_only t_ray_state *ray_states,
-		global read_write uint *n_hits)
+		global read_write uint *n_hits,
+		global read_only t_config *config)
 {
 
 	const int		gid = get_global_id(0);
@@ -18,12 +19,13 @@ kernel void			kernel_ray_trace(
 	state = ray_states[gid];
 	ray = state.ray;
 	obj_id_nearest = ray_throw_get_first_hit_obj(&ray, objs, *objs_size, &t_nearest);
-	if (obj_id_nearest > -1)
-	{
-		state.pxl_id = gid;
-		state.t = (t_nearest < 200000) ? t_nearest : -1;
-		state.obj_id = obj_id_nearest;
-		barrier(CLK_GLOBAL_MEM_FENCE);
-		ray_states[atomic_add(n_hits, 1)] = state;
-	}
+	state.pxl_id = gid;
+	state.t = (t_nearest < 200000) ? t_nearest : -1;
+	state.obj_id = obj_id_nearest;
+	if (obj_id_nearest > -1 )
+		new_id = atomic_add(n_hits, 1);
+	if (config->ray_compaction && obj_id_nearest > -1)
+		ray_states[new_id] = state;
+	else
+		ray_states[gid] = state;
 }

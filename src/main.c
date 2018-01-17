@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/09 16:14:42 by paperrin          #+#    #+#             */
-/*   Updated: 2018/01/17 19:48:58 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/01/18 00:21:31 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int			app_create(t_app *app)
 		return (0);
 	if (!image_create(&app->draw_buf, APP_WIDTH, APP_HEIGHT))
 		app_destroy(app, EXIT_FAILURE);
-	if (!(opencl_create(&app->ocl)))
+	if (!(opencl_create(&app->ocl, 0)))
 		app_destroy(app, EXIT_FAILURE);
 	if (!kernel_ray_gen_primary_create(app))
 		app_destroy(app, EXIT_FAILURE);
@@ -47,9 +47,10 @@ void		app_destroy(t_app *app, int exit_status)
 
 void		render(void *user_ptr)
 {
-	static double		last_time = -1;
-	static size_t		n_frames = 0;
-	t_app				*app;
+	static double			last_time = -1;
+	static unsigned long	hits_per_sec = 0;
+	static size_t			n_frames = 0;
+	t_app					*app;
 
 	if (last_time < 0)
 		last_time = glfwGetTime();
@@ -62,15 +63,17 @@ void		render(void *user_ptr)
 		app_destroy(app, EXIT_FAILURE);
 	if (!kernel_ray_shade_launch(app))
 		app_destroy(app, EXIT_FAILURE);
-	window_clear(&app->win, ft_clrf_rgb(0, 0, 0));
+	clFinish(app->ocl.cmd_queue);
 	image_put(&app->draw_buf, 0, 0);
 	window_swap_buffers(&app->win);
 	n_frames++;
+	hits_per_sec += app->n_hits;
 	if (glfwGetTime() - last_time > 1)
 	{
 		last_time = glfwGetTime();
-		ft_printf("FPS: %lu\n", n_frames);
+		printf("FPS: %4lu   |   Rays: %10u   |   Rays/ms: %10lu\n", n_frames, app->n_hits, hits_per_sec / 1000);
 		n_frames = 0;
+		hits_per_sec = 0;
 	}
 }
 
@@ -81,8 +84,8 @@ int			main(int ac, char **av)
 	t_light				*light;
 	t_material			*mat;
 
+	app.config.ray_compaction = 1;
 	app.scene.v_obj = ft_vector_create(sizeof(t_obj), NULL, NULL);
-
 
 	if (!(obj = (t_obj*)ft_vector_push_back(&app.scene.v_obj, NULL)))
 		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
@@ -96,10 +99,11 @@ int			main(int ac, char **av)
 		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
 	*obj = obj_sphere(vec3r(-0.6, -0.5, 1), 0.3, 2);
 
+/*
 	if (!(obj = (t_obj*)ft_vector_push_back(&app.scene.v_obj, NULL)))
 		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
 	*obj = obj_sphere(vec3r(0, 0, 60), 55, 3);
-
+*/
 	app.scene.v_material = ft_vector_create(sizeof(t_material), NULL, NULL);
 	if (!(mat = (t_material*)ft_vector_push_back(&app.scene.v_material, NULL)))
 		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
@@ -132,13 +136,18 @@ int			main(int ac, char **av)
 	if (!(light = (t_light*)ft_vector_push_back(&app.scene.v_light, NULL)))
 		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
 	light->type = light_type_point;
-	light->color = vec3r(0.5, 0.5, 1);
+	light->color = vec3r(0.0, 0.5, 0.5);
 	light->intensity = 0.5;
 	light->as.point.pos = vec3r(-2, 4, -5);
+	if (!(light = (t_light*)ft_vector_push_back(&app.scene.v_light, NULL)))
+		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
+	light->type = light_type_point;
+	light->color = vec3r(1, 0.8, 0.15);
+	light->intensity = 0.5;
+	light->as.point.pos = vec3r(0, -10, 0);
 
 
-
-	app.cam.pos = vec3r(0, 0, -1);
+	app.cam.pos = vec3r(0, 0, -0.5);
 	app.cam.dir = vec3r(0, 0, 1);
 	app.cam.up = vec3r(0, 1, 0);
 	app.cam.right = vec3r(1, 0, 0);

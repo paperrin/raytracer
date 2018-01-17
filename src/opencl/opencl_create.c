@@ -6,19 +6,19 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/21 15:56:38 by paperrin          #+#    #+#             */
-/*   Updated: 2018/01/15 01:49:08 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/01/17 23:39:09 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "opencl.h"
 
-static int			set_device(t_opencl *ocl)
+static int			set_device(t_opencl *ocl, int use_gpu)
 {
 	cl_int			err;
 	cl_device_id	cpu;
 
 	err = clGetDeviceIDs(NULL, CL_DEVICE_TYPE_CPU, 1, &cpu, NULL);
-	if (clGetDeviceIDs(NULL, CL_DEVICE_TYPE_GPU, 1, &(ocl->device), NULL)
+	if (!use_gpu || clGetDeviceIDs(NULL, CL_DEVICE_TYPE_GPU, 1, &(ocl->device), NULL)
 			!= CL_SUCCESS)
 	{
 		if (err != CL_SUCCESS)
@@ -47,11 +47,11 @@ static int			set_and_print_device_info(t_opencl *ocl)
 	return (1);
 }
 
-int					opencl_create(t_opencl *ocl)
+int					opencl_create(t_opencl *ocl, int use_gpu)
 {
 	cl_int			err;
 
-	if (!set_device(ocl))
+	if (!set_device(ocl, use_gpu))
 		return (0);
 	if (!set_and_print_device_info(ocl))
 	{

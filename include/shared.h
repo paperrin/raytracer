@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/13 14:25:38 by paperrin          #+#    #+#             */
-/*   Updated: 2018/01/17 15:59:01 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/01/17 23:49:27 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,11 @@ typedef struct			s_camera
 	t_real3				right;
 	t_real				pxl_ratio;
 }						t_camera;
+
+typedef struct			s_config
+{
+	char				ray_compaction;
+}						t_config;
 
 /*
 ** Rays

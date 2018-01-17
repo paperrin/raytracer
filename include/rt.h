@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/09 16:36:38 by paperrin          #+#    #+#             */
-/*   Updated: 2018/01/17 20:19:24 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/01/17 23:49:53 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ typedef struct		s_app
 	t_ocl_kernel	kernel_clear;
 	t_ocl_kernel	kernel_ray_shade;
 	cl_uint			n_hits;
+	t_config		config;
 }					t_app;
 
 int					app_create(t_app *app);

@@ -26,14 +26,18 @@ kernel void			kernel_ray_shade(
 	t_real3					color;
 	t_obj					obj;
 
-	obj = objs[ray_states[gid].obj_id];
-	hit_pos = ray_states[gid].ray.origin + ray_states[gid].t * ray_states[gid].ray.dir;
-	normal = obj_surface_normal(&obj, hit_pos);
-	hit_pos += normal * (float)1e-5;
-	color = shade(obj, hit_pos,
-			objs, *objs_size,
-			mats, *mats_size,
-			lights, *lights_size);
+	color = (t_real3)(0, 0, 0);
+	if (ray_states[gid].obj_id > -1)
+	{
+		obj = objs[ray_states[gid].obj_id];
+		hit_pos = ray_states[gid].ray.origin + ray_states[gid].t * ray_states[gid].ray.dir;
+		normal = obj_surface_normal(&obj, hit_pos);
+		hit_pos += normal * (float)1e-5;
+		color = shade(obj, hit_pos,
+				objs, *objs_size,
+				mats, *mats_size,
+				lights, *lights_size);
+	}
 	pixels[ray_states[gid].pxl_id * 4 + 0] = color.r;
 	pixels[ray_states[gid].pxl_id * 4 + 1] = color.g;
 	pixels[ray_states[gid].pxl_id * 4 + 2] = color.b;
@@ -77,20 +81,20 @@ t_real3				shade(t_obj obj, t_real3 hit_pos,
 	char			in_shadow;
 	t_real3			color;
 	int				i;
+	float			ndl;
 
 	surface_normal = obj_surface_normal(&obj, hit_pos);
 	light_ray.origin = hit_pos;
-	color = (t_real3)(0, 0, 0);
 	color = mats[obj.material_id].color * (t_real3)(0.0, 0.0, 0.05);
 	i = -1;
 	while (++i < lights_size)
 	{
 		light_ray.dir = light_get_dir(lights[i], hit_pos, &light_color);
+		ndl = dot(light_ray.dir, surface_normal);
+		if (ndl < 0)
+			continue ;
 		if (!(ray_throw_get_any_hit_obj(&light_ray, objs, objs_size, &t) > -1 && t >= 0))
-		{
-			color += mats[obj.material_id].color * light_color
-				* dot(light_ray.dir, surface_normal);
-		}
+			color += mats[obj.material_id].color * light_color * ndl;
 	}
 	color.r = real_min_max(0, color.r, 1);
 	color.g = real_min_max(0, color.g, 1);
