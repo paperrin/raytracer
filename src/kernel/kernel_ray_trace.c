@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/22 18:06:33 by paperrin          #+#    #+#             */
-/*   Updated: 2018/01/16 23:10:38 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/01/17 19:50:22 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,18 +41,15 @@ int				kernel_ray_trace_create(t_app *app)
 
 int				kernel_ray_trace_launch(t_app *app)
 {
-	size_t		work_size;
-
-	work_size = app->kernel_ray_trace.work_size;
 	app->n_hits = 0;
 	opencl_kernel_arg_select_id(&app->kernel_ray_trace, 3);
 	opencl_kernel_arg_selected_destroy(&app->kernel_ray_trace);
 	if (!opencl_kernel_arg_selected_create(&app->kernel_ray_trace
-			, CL_MEM_READ_WRITE
-			, sizeof(&app->n_hits), NULL))
+			, CL_MEM_READ_WRITE | CL_MEM_COPY_HOST_PTR
+			, sizeof(&app->n_hits), &app->n_hits))
 		return (0);
 	clEnqueueNDRangeKernel(app->ocl.cmd_queue, app->kernel_ray_trace.kernel
-			, 1, 0, &work_size, 0, 0, 0, 0);
+			, 1, NULL, &app->kernel_ray_trace.work_size, NULL, 0, NULL, NULL);
 	clEnqueueReadBuffer(app->ocl.cmd_queue, app->kernel_ray_trace.args[3]
 			, CL_TRUE, 0, sizeof(&app->n_hits), &app->n_hits, 0, NULL, NULL);
 	return (1);

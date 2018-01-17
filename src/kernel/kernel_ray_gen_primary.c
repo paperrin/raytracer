@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/18 21:50:02 by paperrin          #+#    #+#             */
-/*   Updated: 2017/12/22 19:18:33 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/01/17 19:17:50 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,8 @@ int			kernel_ray_gen_primary_launch(t_app *app)
 				, CL_MEM_READ_ONLY | CL_MEM_COPY_HOST_PTR
 				, sizeof(app->cam), (void*)&app->cam))
 		return (0);
-	clEnqueueNDRangeKernel(app->ocl.cmd_queue, app->kernel_ray_gen.kernel, 1, 0
-			, &app->kernel_ray_gen.work_size, 0, 0, 0, 0);
+	clEnqueueNDRangeKernel(app->ocl.cmd_queue, app->kernel_ray_gen.kernel, 1, NULL
+			, &app->kernel_ray_gen.work_size, NULL, 0, NULL, NULL);
 	return (1);
 }
 

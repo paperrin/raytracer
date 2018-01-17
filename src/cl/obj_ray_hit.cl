@@ -2,9 +2,13 @@
 
 t_real				solve_quadratic(t_real3 abc, t_real *values);
 t_real				obj_ray_hit(constant t_obj *obj,
-		global t_ray *ray);
+		t_ray *ray);
 t_real				obj_sphere_ray_hit(constant t_sphere *sphere,
-		global t_ray *ray);
+		t_ray *ray);
+cl_int				ray_throw_get_first_hit_obj(t_ray *ray,
+		constant t_obj *objs, cl_uint objs_size, cl_float *t_nearest);
+cl_int			ray_throw_get_any_hit_obj(t_ray *ray,
+		constant t_obj *objs, cl_uint objs_size, cl_float *t);
 
 t_real			solve_quadratic(t_real3 abc, t_real *values)
 {
@@ -26,8 +30,44 @@ t_real			solve_quadratic(t_real3 abc, t_real *values)
 	return (discr);
 }
 
+cl_int			ray_throw_get_first_hit_obj(t_ray *ray,
+		constant t_obj *objs, cl_uint objs_size, cl_float *t_nearest)
+{
+	cl_float	t;
+	cl_int		i;
+	cl_int		obj_id_nearest;
+
+	i = -1;
+	*t_nearest = 200000;
+	obj_id_nearest = -1;
+	while (++i < (t_obj_id)objs_size)
+	{
+		if ((t = obj_ray_hit(&objs[i], ray)) >= 0 && t < *t_nearest)
+		{
+			*t_nearest = t;
+			obj_id_nearest = i;
+		}
+	}
+	return (obj_id_nearest);
+}
+
+cl_int			ray_throw_get_any_hit_obj(t_ray *ray,
+		constant t_obj *objs, cl_uint objs_size, cl_float *t)
+{
+	cl_int		i;
+
+	*t = 200000;
+	i = -1;
+	while (++i < (t_obj_id)objs_size)
+	{
+		if ((*t = obj_ray_hit(&objs[i], ray)) >= 0)
+			return (i);
+	}
+	return (-1);
+}
+
 t_real			obj_ray_hit(constant t_obj *obj,
-		global t_ray *ray)
+		t_ray *ray)
 {
 	if (obj->type == type_sphere)
 		return (obj_sphere_ray_hit(&obj->as.sphere, ray));
@@ -36,7 +76,7 @@ t_real			obj_ray_hit(constant t_obj *obj,
 }
 
 t_real			obj_sphere_ray_hit(constant t_sphere *sphere,
-		global t_ray *ray)
+		t_ray *ray)
 {
 	t_real3		dist;
 	t_real3		abc;

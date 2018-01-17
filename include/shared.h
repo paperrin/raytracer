@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/13 14:25:38 by paperrin          #+#    #+#             */
-/*   Updated: 2018/01/16 23:23:01 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/01/17 15:59:01 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,9 +127,16 @@ typedef union			u_obj_container
 typedef struct			s_obj
 {
 	t_obj_type			type;
-	t_mat_id			material;
+	t_mat_id			material_id;
 	t_obj_container		as;
 }						t_obj;
+
+typedef struct			s_material
+{
+	t_real3				color;
+	t_real				reflection;
+	t_real				refraction;
+}						t_material;
 
 /*
 ** Lights

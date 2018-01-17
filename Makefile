@@ -61,6 +61,7 @@ CFILES		=	\
 				\
 				kernel/kernel_ray_gen_primary.c					\
 				kernel/kernel_ray_trace.c						\
+				kernel/kernel_clear.c							\
 				kernel/kernel_ray_shade.c						\
 				\
 				callbacks/callback_key.c						\
