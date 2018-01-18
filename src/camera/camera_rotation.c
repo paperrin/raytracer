@@ -6,29 +6,18 @@
 /*   By: alngo <alngo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/13 22:52:46 by alngo             #+#    #+#             */
-/*   Updated: 2018/01/16 23:20:39 by alngo            ###   ########.fr       */
+/*   Updated: 2018/01/18 23:55:06 by alngo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
 
-void		camera_rotation_x(t_camera_data *cam, double angle)
+t_real3		matrix_real3_rot(t_real16 *mat, t_real3 vec)
 {
-	cam->dir = ft_real3_rot_x(cam->dir, angle);
-	cam->up = ft_real3_rot_x(cam->up, angle);
-	cam->right = ft_real3_rot_x(cam->right, angle);
-}
+	t_real3	ret;
 
-void		camera_rotation_y(t_camera_data *cam, double angle)
-{
-	cam->dir = ft_real3_rot_y(cam->dir, angle);
-	cam->up = ft_real3_rot_y(cam->up, angle);
-	cam->right = ft_real3_rot_y(cam->right, angle);
-}
-
-void		camera_rotation_z(t_camera_data *cam, double angle)
-{
-	cam->dir = ft_real3_rot_z(cam->dir, angle);
-	cam->up = ft_real3_rot_z(cam->up, angle);
-	cam->right = ft_real3_rot_z(cam->right, angle);
+	ret.s[0] = vec.s[0] * mat->s[0] + vec.s[1] * mat->s[1] + vec.s[2] * mat->s[2];
+	ret.s[1] = vec.s[0] * mat->s[4] + vec.s[1] * mat->s[5] + vec.s[2] * mat->s[6];
+	ret.s[2] = vec.s[0] * mat->s[8] + vec.s[1] * mat->s[9] + vec.s[2] * mat->s[10];
+	return (ret);
 }

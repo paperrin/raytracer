@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/09 16:52:27 by paperrin          #+#    #+#             */
-/*   Updated: 2018/01/16 23:58:42 by alngo            ###   ########.fr       */
+/*   Updated: 2018/01/19 00:12:56 by alngo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,10 @@ void		callback_key(void *user_ptr, int key, int action)
 		camera_translate_y(&app->cam, key == GLFW_KEY_F ? -0.05 : 0.05);
 	else if (key == GLFW_KEY_W || key == GLFW_KEY_S)
 		camera_translate_z(&app->cam, key == GLFW_KEY_S ? -0.05 : 0.05);
-	else if (key == GLFW_KEY_I || key == GLFW_KEY_K)
-		camera_rotation_x(&app->cam.cam_data, key == GLFW_KEY_I ? -0.05 : 0.05);
 	else if (key == GLFW_KEY_J || key == GLFW_KEY_L)
-		camera_rotation_y(&app->cam.cam_data, key == GLFW_KEY_J ? -0.05 : 0.05);
+		app->cam.rot.s[1] += key == GLFW_KEY_J ? -0.05 : 0.05;
+	else if (key == GLFW_KEY_I || key == GLFW_KEY_K)
+		app->cam.rot.s[0] += key == GLFW_KEY_I ? -0.05 : 0.05;
 	else if (key == GLFW_KEY_Y || key == GLFW_KEY_H)
-		camera_rotation_z(&app->cam.cam_data, key == GLFW_KEY_Y ? -0.05 : 0.05);
-	render(app);
+		app->cam.rot.s[2] += key == GLFW_KEY_H ? -0.05 : 0.05;
 }

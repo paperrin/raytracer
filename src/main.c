@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/09 16:14:42 by paperrin          #+#    #+#             */
-/*   Updated: 2018/01/16 23:01:45 by alngo            ###   ########.fr       */
+/*   Updated: 2018/01/19 00:06:42 by alngo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ void		render(void *user_ptr)
 	if (last_time < 0)
 		last_time = glfwGetTime();
 	app = (t_app*)user_ptr;
+	camera_update(&app->cam);
 	if (!kernel_ray_gen_primary_launch(app))
 		app_destroy(app, EXIT_FAILURE);
 	if (!kernel_ray_trace_launch(app))
@@ -76,7 +77,8 @@ int			main(int ac, char **av)
 	if (!(obj = (t_obj*)ft_vector_push_back(&app.scene.v_obj, NULL)))
 		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
 	*obj = obj_sphere(vec3r(2, 3, 0), 1, 0);
-	camera_init(&app.cam);
+	app.cam.cam_data.pos = vec3r(0, 0, -2.5);
+	camera_update(&app.cam);
 
 	(void)ac;
 	(void)av;
