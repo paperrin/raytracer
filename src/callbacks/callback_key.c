@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/09 16:52:27 by paperrin          #+#    #+#             */
-/*   Updated: 2018/01/17 20:55:00 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/01/18 23:43:26 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,5 +33,4 @@ void		callback_key(void *user_ptr, int key, int action)
 		d = action > 0;
 	app->cam.pos.s[0] += (r - l) * 0.05;
 	app->cam.pos.s[1] += (u - d) * 0.05;
-	render(app);
 }

@@ -22,6 +22,7 @@ kernel void			kernel_ray_trace(
 	state.pxl_id = gid;
 	state.t = (t_nearest < 200000) ? t_nearest : -1;
 	state.obj_id = obj_id_nearest;
+	barrier(CLK_GLOBAL_MEM_FENCE);
 	if (obj_id_nearest > -1 )
 		new_id = atomic_add(n_hits, 1);
 	if (config->ray_compaction && obj_id_nearest > -1)

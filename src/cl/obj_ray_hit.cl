@@ -86,7 +86,7 @@ t_real			obj_sphere_ray_hit(constant t_sphere *sphere,
 	abc[0] = dot(ray->dir, ray->dir);
 	abc[1] = 2 * dot(ray->dir, dist);
 	abc[2] = dot(dist, dist) - sphere->radius * sphere->radius;
-	if (solve_quadratic(abc, hits) < 0 || hits[0] < 0)
+	if (solve_quadratic(abc, hits) < 0)
 		return (-1);
 	return (hits[0]);
 }

@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/09 16:14:42 by paperrin          #+#    #+#             */
-/*   Updated: 2018/01/18 00:21:31 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/01/18 23:46:39 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int			app_create(t_app *app)
 		return (0);
 	if (!image_create(&app->draw_buf, APP_WIDTH, APP_HEIGHT))
 		app_destroy(app, EXIT_FAILURE);
-	if (!(opencl_create(&app->ocl, 0)))
+	if (!(opencl_create(&app->ocl, 1)))
 		app_destroy(app, EXIT_FAILURE);
 	if (!kernel_ray_gen_primary_create(app))
 		app_destroy(app, EXIT_FAILURE);
@@ -84,70 +84,59 @@ int			main(int ac, char **av)
 	t_light				*light;
 	t_material			*mat;
 
-	app.config.ray_compaction = 1;
+	app.config.ray_compaction = 0;
 	app.scene.v_obj = ft_vector_create(sizeof(t_obj), NULL, NULL);
 
 	if (!(obj = (t_obj*)ft_vector_push_back(&app.scene.v_obj, NULL)))
 		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
-	*obj = obj_sphere(vec3r(0, 0, 2), 1, 0);
+	*obj = obj_sphere(vec3r(0, -10000, 0), 10000, 0);
 
 	if (!(obj = (t_obj*)ft_vector_push_back(&app.scene.v_obj, NULL)))
 		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
-	*obj = obj_sphere(vec3r(1, 0.1, 1), 0.5, 1);
+	*obj = obj_sphere(vec3r(0, 0, 10000), 10000, 0);
 
 	if (!(obj = (t_obj*)ft_vector_push_back(&app.scene.v_obj, NULL)))
 		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
-	*obj = obj_sphere(vec3r(-0.6, -0.5, 1), 0.3, 2);
+	*obj = obj_sphere(vec3r(0, 0.1, -2), 0.1, 0);
 
-/*
-	if (!(obj = (t_obj*)ft_vector_push_back(&app.scene.v_obj, NULL)))
-		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
-	*obj = obj_sphere(vec3r(0, 0, 60), 55, 3);
-*/
 	app.scene.v_material = ft_vector_create(sizeof(t_material), NULL, NULL);
 	if (!(mat = (t_material*)ft_vector_push_back(&app.scene.v_material, NULL)))
 		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
-	mat->color = vec3r(1, 0.3, 0.3);
+	mat->color = vec3r(1, 1, 1);
 	mat->reflection = 0;
 	mat->refraction = 0;
 	if (!(mat = (t_material*)ft_vector_push_back(&app.scene.v_material, NULL)))
 		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
-	mat->color = vec3r(0, 1, 0.3);
+	mat->color = vec3r(0, 1, 0);
 	mat->reflection = 0;
 	mat->refraction = 0;
 	if (!(mat = (t_material*)ft_vector_push_back(&app.scene.v_material, NULL)))
 		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
-	mat->color = vec3r(0, 0.3, 1);
+	mat->color = vec3r(.1, .1, 1);
 	mat->reflection = 0;
 	mat->refraction = 0;
 	if (!(mat = (t_material*)ft_vector_push_back(&app.scene.v_material, NULL)))
 		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
-	mat->color = vec3r(0.4, 0.4, 0.4);
+	mat->color = vec3r(1, 1, 1);
 	mat->reflection = 0;
 	mat->refraction = 0;
 
 	app.scene.v_light = ft_vector_create(sizeof(t_light), NULL, NULL);
-	if (!(light = (t_light*)ft_vector_push_back(&app.scene.v_light, NULL)))
-		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
-	light->type = light_type_point;
-	light->color = vec3r(1, 1, 1);
-	light->intensity = 0.5;
-	light->as.point.pos = vec3r(7, 10, -5);
-	if (!(light = (t_light*)ft_vector_push_back(&app.scene.v_light, NULL)))
-		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
-	light->type = light_type_point;
-	light->color = vec3r(0.0, 0.5, 0.5);
-	light->intensity = 0.5;
-	light->as.point.pos = vec3r(-2, 4, -5);
-	if (!(light = (t_light*)ft_vector_push_back(&app.scene.v_light, NULL)))
-		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
-	light->type = light_type_point;
-	light->color = vec3r(1, 0.8, 0.15);
-	light->intensity = 0.5;
-	light->as.point.pos = vec3r(0, -10, 0);
 
+	if (!(light = (t_light*)ft_vector_push_back(&app.scene.v_light, NULL)))
+		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
+	light->type = light_type_point;
+	light->color = vec3r(0, 0.3, 1);
+	light->intensity = 100;
+	light->as.point.pos = vec3r(0, 1, -4);
+	if (!(light = (t_light*)ft_vector_push_back(&app.scene.v_light, NULL)))
+		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
+	light->type = light_type_point;
+	light->color = vec3r(1, 1, 0.3);
+	light->intensity = 150;
+	light->as.point.pos = vec3r(2, 3, -3);
 
-	app.cam.pos = vec3r(0, 0, -0.5);
+	app.cam.pos = vec3r(0, 0, -3);
 	app.cam.dir = vec3r(0, 0, 1);
 	app.cam.up = vec3r(0, 1, 0);
 	app.cam.right = vec3r(1, 0, 0);
