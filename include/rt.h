@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/09 16:36:38 by paperrin          #+#    #+#             */
-/*   Updated: 2018/01/16 21:41:16 by alngo            ###   ########.fr       */
+/*   Updated: 2018/01/19 00:22:00 by alngo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,15 @@
 # include "image.h"
 # include "camera.h"
 
-# define APP_WIDTH 800
-# define APP_HEIGHT 450
-# define APP_TITLE "RT"
+# define APP_WIDTH 720
+# define APP_HEIGHT 480
+# define APP_TITLE "R-T RT"
 
 typedef struct		s_scene
 {
+	t_vector		v_material;
 	t_vector		v_obj;
+	t_vector		v_light;
 }					t_scene;
 
 typedef struct		s_app
@@ -39,8 +41,10 @@ typedef struct		s_app
 	t_opencl		ocl;
 	t_ocl_kernel	kernel_ray_gen;
 	t_ocl_kernel	kernel_ray_trace;
-	t_hit			*hits;
+	t_ocl_kernel	kernel_clear;
+	t_ocl_kernel	kernel_ray_shade;
 	cl_uint			n_hits;
+	t_config		config;
 }					t_app;
 
 int					app_create(t_app *app);
@@ -64,5 +68,13 @@ void				kernel_ray_gen_primary_destroy(t_app *app);
 int					kernel_ray_trace_create(t_app *app);
 int					kernel_ray_trace_launch(t_app *app);
 void				kernel_ray_trace_destroy(t_app *app);
+
+int					kernel_ray_shade_create(t_app *app);
+int					kernel_ray_shade_launch(t_app *app);
+void				kernel_ray_shade_destroy(t_app *app);
+
+int					kernel_clear_create(t_app *app);
+int					kernel_clear_launch(t_app *app);
+void				kernel_clear_destroy(t_app *app);
 
 #endif

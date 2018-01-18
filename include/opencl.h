@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/10 15:33:54 by paperrin          #+#    #+#             */
-/*   Updated: 2017/12/22 17:23:47 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/01/17 23:38:38 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ typedef struct			s_ocl_kernel
 	unsigned char		args_size;
 }						t_ocl_kernel;
 
-int						opencl_create(t_opencl *ocl);
+int						opencl_create(t_opencl *ocl, int use_gpu);
 void					opencl_destroy(t_opencl *ocl);
 cl_char					*opencl_get_device_info(cl_device_id device
 		, cl_device_info param_name);
