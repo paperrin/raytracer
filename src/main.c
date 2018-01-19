@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/09 16:14:42 by paperrin          #+#    #+#             */
-/*   Updated: 2018/01/19 00:18:00 by alngo            ###   ########.fr       */
+/*   Updated: 2018/01/19 19:44:32 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,9 @@ int			app_create(t_app *app)
 	if (!kernel_ray_shade_create(app))
 		app_destroy(app, EXIT_FAILURE);
 	window_callback_key(&app->win, &callback_key);
+	window_callback_mouse_motion(&app->win, &callback_mouse_motion);
+	glfwSetCursorPos(app->win.glfw_win, APP_WIDTH / 2, APP_HEIGHT / 2);
+	glfwSetInputMode(app->win.glfw_win, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 	window_callback_loop(&app->win, &render, app);
 	return (1);
 }
@@ -55,6 +58,8 @@ void		render(void *user_ptr)
 	if (last_time < 0)
 		last_time = glfwGetTime();
 	app = (t_app*)user_ptr;
+
+	process_input(app);
 	camera_update(&app->cam);
 	if (!kernel_ray_gen_primary_launch(app))
 		app_destroy(app, EXIT_FAILURE);

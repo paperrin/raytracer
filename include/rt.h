@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/09 16:36:38 by paperrin          #+#    #+#             */
-/*   Updated: 2018/01/19 00:22:00 by alngo            ###   ########.fr       */
+/*   Updated: 2018/01/19 19:23:24 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,8 @@ int					app_create(t_app *app);
 void				app_destroy(t_app *app, int exit_status);
 
 void				callback_key(void *user_ptr, int key, int action);
+void				callback_mouse_motion(void *user_ptr, double x, double y);
+void				process_input(t_app *app);
 
 int					error_cl_code(cl_int err_code);
 void				*perror_cl_code(cl_int err_code);
