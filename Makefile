@@ -75,6 +75,7 @@ CFILES		=	\
 				vec/vec3r.c										\
 				\
 				obj/obj_sphere.c								\
+				obj/obj_plane.c								\
 				\
 				main.c											\
 				error.c

@@ -57,6 +57,7 @@ void				*perror_cl_code(cl_int err_code);
 int					error_string(char const *const error_str);
 
 t_obj				obj_sphere(t_real3 pos, t_real radius, t_mat_id material);
+t_obj				obj_plane(t_real3 pos, t_real3 normal, t_mat_id material);
 
 void				render(void *user_ptr);
 

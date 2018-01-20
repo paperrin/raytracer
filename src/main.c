@@ -87,18 +87,33 @@ int			main(int ac, char **av)
 
 	app.config.ray_compaction = 0;
 	app.scene.v_obj = ft_vector_create(sizeof(t_obj), NULL, NULL);
-
 	if (!(obj = (t_obj*)ft_vector_push_back(&app.scene.v_obj, NULL)))
 		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
 	*obj = obj_sphere(vec3r(0, -10000, 0), 10000, 0);
-
+/*
 	if (!(obj = (t_obj*)ft_vector_push_back(&app.scene.v_obj, NULL)))
 		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
 	*obj = obj_sphere(vec3r(0, 0, 10000), 10000, 0);
-
+*/
 	if (!(obj = (t_obj*)ft_vector_push_back(&app.scene.v_obj, NULL)))
 		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
 	*obj = obj_sphere(vec3r(0, 0.1, -2), 0.1, 0);
+
+	if (!(obj = (t_obj*)ft_vector_push_back(&app.scene.v_obj, NULL)))
+		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
+	*obj = obj_plane(vec3r(0, 0, -1), vec3r(0, 0, -1), 0);
+
+	if (!(obj = (t_obj*)ft_vector_push_back(&app.scene.v_obj, NULL)))
+		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
+	*obj = obj_plane(vec3r(-1, 0, 0), vec3r(1, 0, 0), 0);
+
+	if (!(obj = (t_obj*)ft_vector_push_back(&app.scene.v_obj, NULL)))
+		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
+	*obj = obj_plane(vec3r(1, 0, 0), vec3r(-1, 0, 0), 0);
+
+	if (!(obj = (t_obj*)ft_vector_push_back(&app.scene.v_obj, NULL)))
+		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
+	*obj = obj_plane(vec3r(0, 0, -3), vec3r(0, 0, 1), 0);
 
 	app.scene.v_material = ft_vector_create(sizeof(t_material), NULL, NULL);
 	if (!(mat = (t_material*)ft_vector_push_back(&app.scene.v_material, NULL)))
@@ -127,14 +142,14 @@ int			main(int ac, char **av)
 	if (!(light = (t_light*)ft_vector_push_back(&app.scene.v_light, NULL)))
 		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
 	light->type = light_type_point;
-	light->color = vec3r(0, 0.3, 1);
-	light->intensity = 100;
-	light->as.point.pos = vec3r(0, 1, -4);
+	light->color = vec3r(0.5, 0.5, 1);
+	light->intensity = 150;
+	light->as.point.pos = vec3r(-2, -3, -3);
 	if (!(light = (t_light*)ft_vector_push_back(&app.scene.v_light, NULL)))
 		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
 	light->type = light_type_point;
-	light->color = vec3r(1, 1, 0.3);
-	light->intensity = 150;
+	light->color = vec3r(0.5, 0.9, 0.5);
+	light->intensity = 300;
 	light->as.point.pos = vec3r(2, 3, -3);
 
 	app.cam.cam_data.pos = vec3r(0, 0, -2.5);

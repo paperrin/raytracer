@@ -94,7 +94,6 @@ typedef enum			e_obj_type
 typedef struct			s_plane
 {
 	t_real3				pos;
-	t_real3				up;
 	t_real3				normal;
 }						t_plane;
 

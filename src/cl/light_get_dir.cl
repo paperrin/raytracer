@@ -25,6 +25,6 @@ t_real3				light_point_get_dir(t_light light, t_real3 to_pos,
 	r2 = dot(dir, dir);
 	*dist = sqrt(r2);
 	dir /= *dist;
-	*color = light.color * light.intensity / (float)(4 * M_PI * (float)r2);
+	*color = light.color * light.intensity / (float)(4 * M_PI_F * (float)r2);
 	return (dir);
 }

@@ -16,9 +16,9 @@
 typedef struct			s_camera
 {
 	t_camera_data		cam_data;
-	t_real3				rot;
-	t_real3				translation;
-}						t_camera;
+	t_real3			rot;
+	t_real3			translation;
+}				t_camera;
 
 
 void			camera_update(t_camera *cam);
