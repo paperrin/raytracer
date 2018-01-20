@@ -74,6 +74,7 @@ CFILES		=	\
 				camera/matrix_real16_rot.c						\
 				\
 				vec/vec3r.c										\
+				vec/vec3f.c										\
 				\
 				obj/obj_sphere.c								\
 				\

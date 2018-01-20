@@ -6,9 +6,9 @@ t_real				obj_ray_hit(constant t_obj *obj,
 t_real				obj_sphere_ray_hit(constant t_sphere *sphere,
 		t_ray *ray);
 cl_int				ray_throw_get_first_hit_obj(t_ray *ray,
-		constant t_obj *objs, cl_uint objs_size, cl_float *t_nearest);
+		constant t_obj *objs, cl_uint objs_size, t_real *t_nearest);
 cl_int			ray_throw_get_any_hit_obj(t_ray *ray,
-		constant t_obj *objs, cl_uint objs_size, cl_float *t);
+		constant t_obj *objs, cl_uint objs_size, t_real *t);
 
 t_real			solve_quadratic(t_real3 abc, t_real *values)
 {
@@ -31,9 +31,9 @@ t_real			solve_quadratic(t_real3 abc, t_real *values)
 }
 
 cl_int			ray_throw_get_first_hit_obj(t_ray *ray,
-		constant t_obj *objs, cl_uint objs_size, cl_float *t_nearest)
+		constant t_obj *objs, cl_uint objs_size, t_real *t_nearest)
 {
-	cl_float	t;
+	t_real		t;
 	cl_int		i;
 	cl_int		obj_id_nearest;
 
@@ -52,7 +52,7 @@ cl_int			ray_throw_get_first_hit_obj(t_ray *ray,
 }
 
 cl_int			ray_throw_get_any_hit_obj(t_ray *ray,
-		constant t_obj *objs, cl_uint objs_size, cl_float *t)
+		constant t_obj *objs, cl_uint objs_size, t_real *t)
 {
 	cl_int		i;
 

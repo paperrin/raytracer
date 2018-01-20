@@ -19,7 +19,6 @@ kernel void			kernel_ray_trace(
 	state = ray_states[gid];
 	ray = state.ray;
 	obj_id_nearest = ray_throw_get_first_hit_obj(&ray, objs, *objs_size, &t_nearest);
-	state.pxl_id = gid;
 	state.t = (t_nearest < 200000) ? t_nearest : -1;
 	state.obj_id = obj_id_nearest;
 	barrier(CLK_GLOBAL_MEM_FENCE);
