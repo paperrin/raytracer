@@ -46,9 +46,11 @@ cl_float3		texture_uv_color(
 	cl_uchar3	color_char;
 
 	pos = (cl_uint2)(uv.x * texture->width, uv.y * texture->height);
+	if (pos.x >= texture->width)
+		pos.x = texture->width;
+	if (pos.y >= texture->height)
+		pos.y = texture->height;
 	pixel_offset = pos.y * texture->width + pos.x;
-	if (pixel_offset >= texture->width * texture->height)
-		pixel_offset = texture->width * texture->height - 1;
 	pixel_offset += texture->pixels_offset;
 	if (pixel_offset >= n_texture_pixels)
 		return ((cl_float3)(1, 0.078, 0.576));

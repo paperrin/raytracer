@@ -49,6 +49,7 @@ kernel void			kernel_ray_shade(
 		has_reflection = mats[obj.material_id].reflection > 1e-4;
 		if (has_reflection)
 		{
+			printf("reflect!\n");
 			state.ray = get_reflected_ray(state, hit_pos, normal);
 			state.importance *= mats[obj.material_id].reflection;
 			state.t = -1;
@@ -61,11 +62,13 @@ kernel void			kernel_ray_shade(
 	pixels[state.pxl_id * 4 + 3] = 1;
 	barrier(CLK_GLOBAL_MEM_FENCE);
 	if (has_reflection)
+	{
 		new_id = atomic_inc(n_new_rays);
-	if (config->ray_compaction && has_reflection)
-		ray_states[new_id] = state;
-	else	
-		ray_states[gid] = state;
+		if (config->ray_compaction)
+			ray_states[new_id] = state;
+		else	
+			ray_states[gid] = state;
+	}
 }
 
 t_ray				get_reflected_ray(t_ray_state state, t_real3 hit_pos, t_real3 normal)
