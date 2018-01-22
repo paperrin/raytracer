@@ -82,11 +82,16 @@ t_real			obj_plane_ray_hit(constant t_plane *plane, t_ray *ray)
 {
 	t_real		denom;
 	t_real		t;
-	
-	denom = dot(ray->dir, plane->normal);
-	t = dot(plane->pos - ray->origin, plane->normal);
-	if (t > 0)
-		return (t);
+	t_real3		p;
+
+	denom =	dot(plane->up, ray->dir);
+	if (denom > 1e-6)
+	{
+		p = plane->pos - ray->origin;
+		t = dot(p, plane->up) / denom;
+		if (t >= 0)
+			return (t);
+	}
 	return (-1);
 }
 

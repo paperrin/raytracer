@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/13 14:25:38 by paperrin          #+#    #+#             */
-/*   Updated: 2018/01/19 00:21:36 by alngo            ###   ########.fr       */
+/*   Updated: 2018/01/20 17:22:05 by alngo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,7 @@ typedef enum			e_obj_type
 typedef struct			s_plane
 {
 	t_real3				pos;
+	t_real3				up;
 	t_real3				normal;
 }						t_plane;
 
