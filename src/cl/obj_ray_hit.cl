@@ -9,6 +9,7 @@ cl_int				ray_throw_get_first_hit_obj(t_ray *ray,
 		constant t_obj *objs, cl_uint objs_size, cl_float *t_nearest);
 cl_int			ray_throw_get_any_hit_obj(t_ray *ray,
 		constant t_obj *objs, cl_uint objs_size, cl_float *t);
+t_real				obj_plane_ray_hit(constant t_plane *plane, t_ray *ray);
 
 t_real			solve_quadratic(t_real3 abc, t_real *values)
 {
@@ -71,8 +72,27 @@ t_real			obj_ray_hit(constant t_obj *obj,
 {
 	if (obj->type == type_sphere)
 		return (obj_sphere_ray_hit(&obj->as.sphere, ray));
+	else if (obj->type == type_plane)
+		return (obj_plane_ray_hit(&obj->as.plane, ray));
 	else
 		return (-1);
+}
+
+t_real			obj_plane_ray_hit(constant t_plane *plane, t_ray *ray)
+{
+	t_real		denom;
+	t_real		t;
+	t_real3		p;
+
+	denom =	dot(plane->up, ray->dir);
+	if (denom > 1e-6)
+	{
+		p = plane->pos - ray->origin;
+		t = dot(p, plane->up) / denom;
+		if (t >= 0)
+			return (t);
+	}
+	return (-1);
 }
 
 t_real			obj_sphere_ray_hit(constant t_sphere *sphere,

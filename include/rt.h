@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/09 16:36:38 by paperrin          #+#    #+#             */
-/*   Updated: 2018/01/19 19:23:24 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/01/22 22:25:44 by alngo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ void				*perror_cl_code(cl_int err_code);
 int					error_string(char const *const error_str);
 
 t_obj				obj_sphere(t_real3 pos, t_real radius, t_mat_id material);
+t_obj				obj_plane(t_real3 pos, t_real3 up, t_mat_id material);
 
 void				render(void *user_ptr);
 
