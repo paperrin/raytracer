@@ -1,3 +1,6 @@
+#ifndef OBJ_SURFACE_NORMAL_CL
+# define OBJ_SURFACE_NORMAL_CL
+
 #include "shared.h"
 
 t_real3			obj_surface_normal(t_obj *obj, t_real3 point);
@@ -18,3 +21,5 @@ t_real3			obj_sphere_surface_normal(t_sphere *sphere, t_real3 point)
 	normal = normalize(normal);
 	return (normal);
 }
+
+#endif

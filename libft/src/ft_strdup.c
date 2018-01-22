@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/03 15:11:40 by paperrin          #+#    #+#             */
-/*   Updated: 2017/12/05 14:40:11 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/01/21 21:44:29 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ char	*ft_strdup(const char *s1)
 {
 	char	*dst;
 
-	dst = ft_strnew(ft_strlen(s1) + 1);
+	dst = ft_strnew(ft_strlen(s1));
 	if (dst)
 		dst = ft_strcpy(dst, s1);
 	return (dst);

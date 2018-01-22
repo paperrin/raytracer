@@ -35,7 +35,9 @@ CFILES		=	ft_swap.c			\
 				ft_memccpy.c		\
 				ft_memmove.c		\
 				ft_memchr.c			\
+				ft_memchr_any.c		\
 				ft_memcmp.c			\
+				ft_memrealloc.c		\
 				ft_strlen.c			\
 				ft_wstrlen.c		\
 				ft_strdup.c			\
@@ -205,7 +207,11 @@ CFILES		=	ft_swap.c			\
 				instream/ft_input_stream.c				\
 				instream/ft_input_stream_file.c			\
 				file/ft_file_get_size.c			\
-				file/ft_file_to_string.c
+				file/ft_file_to_string.c		\
+				fstream/internal_ft_fstream_read_more.c			\
+				fstream/ft_fstream_sread_to_any_char.c			\
+				fstream/ft_fstream_read_open.c					\
+				ppm/ppm.c
 
 SRC			=	$(CFILES:%=$(SRC_DIR)%)
 

@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/03 12:52:47 by paperrin          #+#    #+#             */
-/*   Updated: 2017/12/06 18:49:16 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/01/21 23:49:54 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,9 @@ typedef struct	s_string
 t_string		ft_string(char *s, size_t n);
 void			ft_swap(void **a, void **b);
 void			*ft_memset(void *s, int c, size_t n);
+void			*ft_memrealloc(void **src, size_t src_size, size_t new_size);
+void			*ft_memrealloc_offset(void **src, size_t src_size,
+		size_t new_size, size_t offset);
 void			ft_bzero(void *s, size_t n);
 int				ft_strcmp(const char *s1, const char *s2);
 char			*ft_strcpy(char *dst, const char *src);
@@ -64,6 +67,8 @@ void			*ft_memrevcpy(void *dst, const void *src, size_t n);
 void			*ft_memccpy(void *dst, const void *src, int c, size_t n);
 void			*ft_memmove(void *dst, const void *src, size_t n);
 void			*ft_memchr(const void *s, int c, size_t n);
+void			*ft_memchr_any(void const *const s, size_t n,
+		void const *const to_search, size_t n_to_search);
 int				ft_memcmp(const void *s1, const void *s2, size_t n);
 char			*ft_strncpy(char *dst, const char *src, size_t n);
 char			*ft_strcat(char *s1, const char *s2);

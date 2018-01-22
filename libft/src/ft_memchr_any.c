@@ -1,29 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strchr_any.c                                    :+:      :+:    :+:   */
+/*   ft_memchr_any.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/12/26 17:59:58 by paperrin          #+#    #+#             */
-/*   Updated: 2018/01/22 01:14:30 by paperrin         ###   ########.fr       */
+/*   Created: 2018/01/21 23:49:17 by paperrin          #+#    #+#             */
+/*   Updated: 2018/01/21 23:49:33 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strchr_any(const char *s, const char *c)
+void	*ft_memchr_any(void const *const s, size_t n,
+		void const *const to_search, size_t n_to_search)
 {
-	char	*p;
+	unsigned char		*p;
 
-	p = (char*)s;
-	while (*p)
+	p = (unsigned char*)s;
+	while (n--)
 	{
-		if (ft_strchr(c, *p))
+		if (ft_memchr(to_search, *p, n_to_search))
 			return (p);
 		p++;
 	}
-	if ((char)c[0] == '\0')
-		return (p);
 	return (NULL);
 }

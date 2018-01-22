@@ -6,7 +6,7 @@
 /*   By: alngo <alngo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/17 17:17:06 by alngo             #+#    #+#             */
-/*   Updated: 2017/12/21 15:22:16 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/01/21 02:23:50 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static int				opencl_kernel_build_program(
 	{
 		internal_print_program_build_info(kernel->ocl, kernel);
 		free(flags_options);
-		return (0);
+		return (error_cl_code(err));
 	}
 	free(flags_options);
 	return (1);

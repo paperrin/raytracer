@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/09 16:36:38 by paperrin          #+#    #+#             */
-/*   Updated: 2018/01/20 21:57:18 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/01/21 08:18:33 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,9 @@ typedef struct		s_scene
 	t_vector		v_material;
 	t_vector		v_obj;
 	t_vector		v_light;
+	t_vector		v_texture;
+	cl_uchar		*texture_pixels;
+	cl_ulong		n_texture_pixels;
 }					t_scene;
 
 typedef struct		s_app

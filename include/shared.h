@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/13 14:25:38 by paperrin          #+#    #+#             */
-/*   Updated: 2018/01/20 22:10:20 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/01/21 03:19:20 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,9 @@ typedef int				cl_int;
 typedef int2			cl_int2;
 typedef uint			cl_uint;
 typedef uint2			cl_uint2;
+typedef long			cl_long;
+typedef unsigned long	cl_ulong;
+typedef uchar3			cl_uchar3;
 # endif
 
 # ifdef DOUBLE_SUPPORT_AVAILABLE
@@ -123,7 +126,8 @@ typedef struct			s_plane
 typedef struct			s_sphere
 {
 	t_real3				pos;
-	t_real3				normal;
+	t_real3				up;
+	t_real3				front;
 	t_real				radius;
 }						t_sphere;
 
@@ -163,7 +167,15 @@ typedef struct			s_material
 	cl_float3			color;
 	cl_float			reflection;
 	cl_float			refraction;
+	cl_int				texture_id;
 }						t_material;
+
+typedef struct			s_texture
+{
+	cl_long				pixels_offset;
+	cl_uint				width;
+	cl_uint				height;
+}						t_texture;
 
 /*
 ** Lights

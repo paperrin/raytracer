@@ -3,7 +3,7 @@
 
 kernel void			kernel_ray_trace(
 		constant read_only t_obj *objs,
-		constant read_only uint *objs_size,
+		global read_only uint *objs_size,
 		global read_only t_ray_state *ray_states,
 		global read_write uint *n_hits,
 		global read_only t_config *config)

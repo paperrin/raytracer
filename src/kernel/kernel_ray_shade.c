@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/16 22:37:07 by paperrin          #+#    #+#             */
-/*   Updated: 2018/01/20 18:26:46 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/01/21 19:10:16 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,10 @@ int				kernel_ray_shade_create(t_app *app)
 {
 	cl_uint			mats_size;
 	cl_uint			lights_size;
+	cl_uint			textures_size;
 
 	app->kernel_ray_shade.work_size = APP_WIDTH * APP_HEIGHT;
-	if (!opencl_kernel_create_n_args(&app->kernel_ray_shade, &app->ocl, 10))
+	if (!opencl_kernel_create_n_args(&app->kernel_ray_shade, &app->ocl, 14))
 		return (0);
 	if (!opencl_kernel_load_from_file(&app->kernel_ray_shade
 				, "./src/cl/kernel_ray_shade.cl", "-I ./include/ -I ./src/cl/"))
@@ -51,10 +52,31 @@ int				kernel_ray_shade_create(t_app *app)
 			, CL_MEM_READ_ONLY | CL_MEM_COPY_HOST_PTR
 			, sizeof(cl_uint), (void*)&lights_size))
 		return (0);
+	textures_size = ft_vector_size(&app->scene.v_texture);
 	opencl_kernel_arg_select_id(&app->kernel_ray_shade, 6);
+	if (!opencl_kernel_arg_selected_create(&app->kernel_ray_shade
+			, CL_MEM_READ_ONLY | CL_MEM_COPY_HOST_PTR
+			, sizeof(t_texture) * textures_size, (void*)app->scene.v_texture.begin))
+		return (0);
+	opencl_kernel_arg_select_id(&app->kernel_ray_shade, 7);
+	if (!opencl_kernel_arg_selected_create(&app->kernel_ray_shade
+			, CL_MEM_READ_ONLY | CL_MEM_COPY_HOST_PTR
+			, sizeof(cl_uint), (void*)&textures_size))
+		return (0);
+	opencl_kernel_arg_select_id(&app->kernel_ray_shade, 8);
+	if (!opencl_kernel_arg_selected_create(&app->kernel_ray_shade
+			, CL_MEM_READ_ONLY | CL_MEM_COPY_HOST_PTR
+			, sizeof(cl_uchar) * app->scene.n_texture_pixels * 3, (void*)app->scene.texture_pixels))
+		return (0);
+	opencl_kernel_arg_select_id(&app->kernel_ray_shade, 9);
+	if (!opencl_kernel_arg_selected_create(&app->kernel_ray_shade
+			, CL_MEM_READ_ONLY | CL_MEM_COPY_HOST_PTR
+			, sizeof(cl_ulong), (void*)&app->scene.n_texture_pixels))
+		return (0);
+	opencl_kernel_arg_select_id(&app->kernel_ray_shade, 10);
 	opencl_kernel_arg_selected_use_kernel_arg_id(&app->kernel_ray_shade
 			, &app->kernel_ray_gen, 2);
-	opencl_kernel_arg_select_id(&app->kernel_ray_shade, 8);
+	opencl_kernel_arg_select_id(&app->kernel_ray_shade, 12);
 	opencl_kernel_arg_selected_use_kernel_arg_id(&app->kernel_ray_shade
 			, &app->kernel_clear, 0);
 	return (1);
@@ -64,7 +86,6 @@ int				kernel_ray_shade_launch(t_app *app)
 {
 	size_t		work_size;
 
-
 	app->n_rays = 0;
 	if (!app->config.ray_compaction || app->n_hits > 0)
 	{
@@ -73,13 +94,13 @@ int				kernel_ray_shade_launch(t_app *app)
 		else
 			app->kernel_ray_shade.work_size = APP_WIDTH * APP_HEIGHT;
 		work_size = app->kernel_ray_shade.work_size;
-		opencl_kernel_arg_select_id(&app->kernel_ray_shade, 7);
+		opencl_kernel_arg_select_id(&app->kernel_ray_shade, 11);
 		opencl_kernel_arg_selected_destroy(&app->kernel_ray_shade);
 		if (!opencl_kernel_arg_selected_create(&app->kernel_ray_shade
 				, CL_MEM_READ_WRITE | CL_MEM_COPY_HOST_PTR
 				, sizeof(&app->n_rays), &app->n_rays))
 			return (0);
-		opencl_kernel_arg_select_id(&app->kernel_ray_shade, 9);
+		opencl_kernel_arg_select_id(&app->kernel_ray_shade, 13);
 		opencl_kernel_arg_selected_use_kernel_arg_id(&app->kernel_ray_shade
 			, &app->kernel_ray_trace, 4);
 		clEnqueueNDRangeKernel(app->ocl.cmd_queue, app->kernel_ray_shade.kernel
