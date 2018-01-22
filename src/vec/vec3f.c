@@ -1,20 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   vec3r.c                                            :+:      :+:    :+:   */
+/*   vec3f.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/12/16 16:31:07 by paperrin          #+#    #+#             */
-/*   Updated: 2018/01/20 21:20:05 by paperrin         ###   ########.fr       */
+/*   Created: 2018/01/20 21:19:34 by paperrin          #+#    #+#             */
+/*   Updated: 2018/01/20 21:20:04 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vec.h"
 
-t_real3		vec3r(t_real x, t_real y, t_real z)
+cl_float3		vec3f(cl_float x, cl_float y, cl_float z)
 {
-	t_real3		vec;
+	cl_float3		vec;
 
 	vec.s[0] = x;
 	vec.s[1] = y;

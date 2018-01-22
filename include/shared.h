@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/13 14:25:38 by paperrin          #+#    #+#             */
-/*   Updated: 2018/01/20 17:22:05 by alngo            ###   ########.fr       */
+/*   Updated: 2018/01/22 22:28:30 by alngo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,30 +17,52 @@
 ** Please care of data packing when changing data types / structure order
 */
 
+# ifdef CONFIG_USE_DOUBLE
+#  ifdef cl_khr_fp64
+#   pragma OPENCL EXTENSION cl_khr_fp64 : enable
+#   define DOUBLE_SUPPORT_AVAILABLE
+#  elif defined cl_amd_fp64
+#   pragma OPENCL EXTENSION cl_amd_fp64 : enable
+#   define DOUBLE_SUPPORT_AVAILABLE
+#  endif
+# endif
 
 # ifdef IS_KERNEL
-
 typedef	float			cl_float;
 typedef	float2			cl_float2;
 typedef	float3			cl_float3;
 typedef	float4			cl_float4;
 typedef	float8			cl_float8;
 typedef	float16			cl_float16;
+typedef	double			cl_double;
+typedef	double2			cl_double2;
+typedef	double3			cl_double3;
+typedef	double4			cl_double4;
+typedef	double8			cl_double8;
+typedef	double16		cl_double16;
 typedef char			cl_uchar;
 typedef short			cl_short;
 typedef int				cl_int;
 typedef int2			cl_int2;
 typedef uint			cl_uint;
 typedef uint2			cl_uint2;
-
 # endif
 
+# ifdef DOUBLE_SUPPORT_AVAILABLE
+typedef cl_double		t_real;
+typedef cl_double2		t_real2;
+typedef cl_double3		t_real3;
+typedef cl_double4		t_real4;
+typedef cl_double8		t_real8;
+typedef cl_double16		t_real16;
+# else
 typedef cl_float		t_real;
 typedef cl_float2		t_real2;
 typedef cl_float3		t_real3;
 typedef cl_float4		t_real4;
 typedef cl_float8		t_real8;
 typedef cl_float16		t_real16;
+# endif
 
 typedef cl_short		t_obj_type;
 typedef cl_int			t_obj_id;
@@ -74,7 +96,7 @@ typedef struct			s_ray_state
 {
 	t_ray				ray;
 	t_real				t;
-	t_real				importance;
+	cl_float			importance;
 	cl_uint				pxl_id;
 	t_obj_id			obj_id;
 }						t_ray_state;
@@ -138,9 +160,9 @@ typedef struct			s_obj
 
 typedef struct			s_material
 {
-	t_real3				color;
-	t_real				reflection;
-	t_real				refraction;
+	cl_float3			color;
+	cl_float			reflection;
+	cl_float			refraction;
 }						t_material;
 
 /*
@@ -180,8 +202,8 @@ typedef union			u_light_container
 typedef struct			s_light
 {
 	t_light_type		type;
-	t_real3				color;
-	t_real				intensity;
+	cl_float3			color;
+	cl_float			intensity;
 	t_light_container	as;
 }						t_light;
 

@@ -1,25 +1,25 @@
 #include "shared.h"
 
 t_real3				light_get_dir(t_light light, t_real3 to_pos,
-		t_real3 *color, t_real *dist);
+		cl_float3 *color, t_real *dist);
 t_real3				light_point_get_dir(t_light light, t_real3 to_pos,
-		t_real3 *color, t_real *dist);
+		cl_float3 *color, t_real *dist);
 
 t_real3				light_get_dir(t_light light, t_real3 to_pos,
-		t_real3 *color, t_real *dist)
+		cl_float3 *color, t_real *dist)
 {
 	*dist = -1;
-	*color = (t_real3)(0, 0, 0);
+	*color = (cl_float3)(0, 0, 0);
 	if (light.type == light_type_point)
 		return (light_point_get_dir(light, to_pos, color, dist));
 	return ((t_real3)(0, 0, 0));
 }
 
 t_real3				light_point_get_dir(t_light light, t_real3 to_pos,
-		t_real3 *color, t_real *dist)
+		cl_float3 *color, t_real *dist)
 {
 	t_real3		dir;
-	float		r2;
+	t_real		r2;
 
 	dir = light.as.point.pos - to_pos;
 	r2 = dot(dir, dir);

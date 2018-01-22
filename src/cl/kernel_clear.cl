@@ -2,7 +2,7 @@
 
 
 kernel void		kernel_clear(
-	global write_only t_real *pixels)
+	global write_only cl_float *pixels)
 {
 	const int		gid = get_global_id(0);
 

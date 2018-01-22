@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/09 16:36:38 by paperrin          #+#    #+#             */
-/*   Updated: 2018/01/22 22:25:44 by alngo            ###   ########.fr       */
+/*   Updated: 2018/01/22 22:28:12 by alngo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,8 @@ typedef struct		s_app
 	t_ocl_kernel	kernel_clear;
 	t_ocl_kernel	kernel_ray_shade;
 	cl_uint			n_hits;
+	cl_uint			n_rays;
+	char			mouse_captured;
 	t_config		config;
 }					t_app;
 
@@ -52,7 +54,7 @@ void				app_destroy(t_app *app, int exit_status);
 
 void				callback_key(void *user_ptr, int key, int action);
 void				callback_mouse_motion(void *user_ptr, double x, double y);
-void				process_input(t_app *app);
+void				process_input(t_app *app, double elapsed);
 
 int					error_cl_code(cl_int err_code);
 void				*perror_cl_code(cl_int err_code);
@@ -61,7 +63,7 @@ int					error_string(char const *const error_str);
 t_obj				obj_sphere(t_real3 pos, t_real radius, t_mat_id material);
 t_obj				obj_plane(t_real3 pos, t_real3 up, t_mat_id material);
 
-void				render(void *user_ptr);
+void				render(void *user_ptr, double elapsed);
 
 
 int					kernel_ray_gen_primary_create(t_app *app);
