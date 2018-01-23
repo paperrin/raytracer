@@ -46,10 +46,8 @@ cl_float3		texture_uv_color(
 	cl_uchar3	color_char;
 
 	pos = (cl_uint2)(uv.x * texture->width, uv.y * texture->height);
-	if (pos.x >= texture->width)
-		pos.x = texture->width;
-	if (pos.y >= texture->height)
-		pos.y = texture->height;
+	pos.x = clamp(pos.x, (uint)0, (uint)texture->width - 1);
+	pos.y = clamp(pos.y, (uint)0, (uint)texture->height - 1);
 	pixel_offset = pos.y * texture->width + pos.x;
 	pixel_offset += texture->pixels_offset;
 	if (pixel_offset >= n_texture_pixels)
@@ -57,7 +55,7 @@ cl_float3		texture_uv_color(
 	color_char.r = texture_pixels[pixel_offset * 3 + 0];
 	color_char.g = texture_pixels[pixel_offset * 3 + 1];
 	color_char.b = texture_pixels[pixel_offset * 3 + 2];
-	color = (cl_float3)((cl_float)color_char.r / 255, (cl_float)color_char.g / 255, (cl_float)color_char.b / 255);
+	color = (cl_float3)(color_char.r / 255.f, color_char.g / 255.f, color_char.b / 255.f);
 	return (color);
 }
 

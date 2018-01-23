@@ -48,7 +48,7 @@ cl_float3			shade(t_obj obj, t_real3 hit_pos,
 			textures, textures_size,
 			texture_pixels, n_texture_pixels,
 			hit_pos);
-	color = surface_color * (cl_float3)(0.05, 0.05, 0.05);
+	color = surface_color * (cl_float3)(0.2, 0.2, 0.2);
 	i = -1;
 	while (++i < (int)lights_size)
 	{

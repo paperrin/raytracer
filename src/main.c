@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/09 16:14:42 by paperrin          #+#    #+#             */
-/*   Updated: 2018/01/23 00:22:21 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/01/23 05:12:10 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ int			main(int ac, char **av)
 	size_t			height;
 	size_t			max;
 
-	app.config.ray_compaction = 1;
+	app.config.ray_compaction = 0;
 	app.scene.v_obj = ft_vector_create(sizeof(t_obj), NULL, NULL);
 /*
 	if (!(obj = (t_obj*)ft_vector_push_back(&app.scene.v_obj, NULL)))
@@ -137,31 +137,7 @@ int			main(int ac, char **av)
 	mat->color = vec3f(1, 1, 1);
 	mat->reflection = 0;
 	mat->refraction = 0;
-	mat->texture_id = -1;
-	if (!(mat = (t_material*)ft_vector_push_back(&app.scene.v_material, NULL)))
-		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
-	mat->color = vec3f(1, 1, 1);
-	mat->reflection = 0;
-	mat->refraction = 0;
-	mat->texture_id = -1;
-	if (!(mat = (t_material*)ft_vector_push_back(&app.scene.v_material, NULL)))
-		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
-	mat->color = vec3f(1, 0.1, 0.1);
-	mat->reflection = 0;
-	mat->refraction = 0;
-	mat->texture_id = -1;
-	if (!(mat = (t_material*)ft_vector_push_back(&app.scene.v_material, NULL)))
-		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
-	mat->color = vec3f(0.8, 0.8, 0.8);
-	mat->reflection = 0;
-	mat->refraction = 0;
-	mat->texture_id = -1;
-	if (!(mat = (t_material*)ft_vector_push_back(&app.scene.v_material, NULL)))
-		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
-	mat->color = vec3f(1, 1, 1);
-	mat->reflection = 0.9;
-	mat->refraction = 0;
-	mat->texture_id = -1;
+	mat->texture_id = 2;
 
 
 	app.scene.v_light = ft_vector_create(sizeof(t_light), NULL, NULL);
@@ -184,15 +160,7 @@ int			main(int ac, char **av)
 	(void)height;
 	(void)max;
 	app.scene.v_texture = ft_vector_create(sizeof(t_texture), NULL, NULL);
-	if (!(texture = (t_texture*)ft_vector_push_back(&app.scene.v_texture, NULL)))
-		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
-	app.scene.texture_pixels = malloc(sizeof(cl_uchar) * 3);
-	app.scene.n_texture_pixels = 1;
-	texture->pixels_offset = 0;
-	texture->width = 0;
-	texture->height = 0;
-	/*
-	if (!(pixels = ft_ppm_get("textures/mc-tnt.ppm", &width, &height, &max)))
+	if (!(pixels = ft_ppm_get("textures/brick.ppm", &width, &height, &max)))
 		return (0);
 	if (!(texture = (t_texture*)ft_vector_push_back(&app.scene.v_texture, NULL)))
 		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
@@ -202,7 +170,7 @@ int			main(int ac, char **av)
 	texture->pixels_offset = 0;
 	texture->width = width;
 	texture->height = height;
-*/
+
 	app.cam.cam_data.pos = vec3r(0, 0, -2);
 	(void)ac;
 	(void)av;

@@ -21,14 +21,14 @@ t_real2			obj_sphere_surface_uv_map(t_sphere *sphere, t_real3 point)
 	t_real2		uv;
 	t_real		theta;
 
-	surface_normal = obj_sphere_surface_normal(sphere, point);
+	surface_normal = normalize(obj_sphere_surface_normal(sphere, point));
 	phi = acos(-dot(sphere->up, surface_normal));
-	uv.y = 1 - (phi / M_PI);
-	theta = acos(dot(surface_normal, sphere->front) / sin(phi)) / (2 * M_PI);
-	if (dot(cross(sphere->front, sphere->up), surface_normal) > 0)
-		uv.x = theta;
-	else
+	uv.y = 1.f - (phi / M_PI_F);
+	theta = acos(clamp(dot(sphere->front, surface_normal) / sin(phi), -1.f, 1.f)) / (2.f * M_PI_F);
+	if (dot(cross(sphere->front, sphere->up), surface_normal) <= 0)
 		uv.x = 1 - theta;
+	else
+		uv.x = theta;
 	return (uv);
 }
 
