@@ -1,3 +1,6 @@
+#ifndef OBJ_SURFACE_NORMAL_CL
+# define OBJ_SURFACE_NORMAL_CL
+
 #include "shared.h"
 
 t_real3			obj_surface_normal(t_obj *obj, t_real3 point);
@@ -26,3 +29,5 @@ t_real3			obj_plane_surface_normal(t_plane *plane, t_real3 point)
 {
 	return (plane->up);
 }
+
+#endif
