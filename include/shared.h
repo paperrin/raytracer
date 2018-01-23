@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/13 14:25:38 by paperrin          #+#    #+#             */
-/*   Updated: 2018/01/21 03:19:20 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/01/23 22:13:22 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,11 +170,19 @@ typedef struct			s_material
 	cl_int				texture_id;
 }						t_material;
 
+typedef enum			e_filter
+{
+	e_filter_nearest = 0,
+	e_filter_bilinear
+}						t_filter;
+
 typedef struct			s_texture
 {
 	cl_long				pixels_offset;
 	cl_uint				width;
 	cl_uint				height;
+	t_filter			filter;
+
 }						t_texture;
 
 /*
