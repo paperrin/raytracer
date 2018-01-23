@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/09 16:14:42 by paperrin          #+#    #+#             */
-/*   Updated: 2018/01/23 05:16:55 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/01/23 22:16:42 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,7 +135,17 @@ int			main(int ac, char **av)
 */
 	if (!(obj = (t_obj*)ft_vector_push_back(&app.scene.v_obj, NULL)))
 		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
-	*obj = obj_sphere(vec3r(0, 0, 0), 0.5, 2);
+	*obj = obj_sphere(vec3r(-0.6, 0.5, 0), 0.5, 0);
+	if (!(obj = (t_obj*)ft_vector_push_back(&app.scene.v_obj, NULL)))
+		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
+	*obj = obj_sphere(vec3r(0.6, 0.5, 0), 0.5, 1);
+
+	if (!(obj = (t_obj*)ft_vector_push_back(&app.scene.v_obj, NULL)))
+		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
+	*obj = obj_sphere(vec3r(0, 0, 100002), 100000, 2);
+	if (!(obj = (t_obj*)ft_vector_push_back(&app.scene.v_obj, NULL)))
+		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
+	*obj = obj_sphere(vec3r(0, -100000, 0), 100000, 3);
 
 	app.scene.v_material = ft_vector_create(sizeof(t_material), NULL, NULL);
 	if (!(mat = (t_material*)ft_vector_push_back(&app.scene.v_material, NULL)))
@@ -143,21 +153,26 @@ int			main(int ac, char **av)
 	mat->color = vec3f(1, 1, 1);
 	mat->reflection = 0;
 	mat->refraction = 0;
-	mat->texture_id = 2;
-
-	app.scene.v_light = ft_vector_create(sizeof(t_light), NULL, NULL);
-	if (!(light = (t_light*)ft_vector_push_back(&app.scene.v_light, NULL)))
+	mat->texture_id = 0;
+	if (!(mat = (t_material*)ft_vector_push_back(&app.scene.v_material, NULL)))
 		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
-	light->type = light_type_point;
-	light->color = vec3f(1, 0.8, 0.7);
-	light->intensity = 15000;
-	light->as.point.pos = vec3r(30, 10, 0);
+	mat->color = vec3f(1, 1, 1);
+	mat->reflection = 0;
+	mat->refraction = 0;
+	mat->texture_id = 1;
+	if (!(mat = (t_material*)ft_vector_push_back(&app.scene.v_material, NULL)))
+		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
+	mat->color = vec3f(1, 1, 1);
+	mat->reflection = 0.8;
+	mat->refraction = 0;
+	mat->texture_id = -1;
+	if (!(mat = (t_material*)ft_vector_push_back(&app.scene.v_material, NULL)))
+		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
+	mat->color = vec3f(1, 1, 1);
+	mat->reflection = 0;
+	mat->refraction = 0;
+	mat->texture_id = -1;
 
-	(void)texture;
-	(void)pixels;
-	(void)width;
-	(void)height;
-	(void)max;
 	app.scene.v_texture = ft_vector_create(sizeof(t_texture), NULL, NULL);
 	if (!(pixels = ft_ppm_get("textures/brick.ppm", &width, &height, &max)))
 		return (0);
@@ -169,8 +184,29 @@ int			main(int ac, char **av)
 	texture->pixels_offset = 0;
 	texture->width = width;
 	texture->height = height;
+	texture->filter = e_filter_nearest;
+	if (!(texture = (t_texture*)ft_vector_push_back(&app.scene.v_texture, NULL)))
+		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
+	texture->pixels_offset = 0;
+	texture->width = width;
+	texture->height = height;
+	texture->filter = e_filter_bilinear;
 
-	app.cam.cam_data.pos = vec3r(0, 0, -2);
+	app.scene.v_light = ft_vector_create(sizeof(t_light), NULL, NULL);
+	if (!(light = (t_light*)ft_vector_push_back(&app.scene.v_light, NULL)))
+		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
+	light->type = light_type_point;
+	light->color = vec3f(1, 0.8, 0.7);
+	light->intensity = 10;
+	light->as.point.pos = vec3r(1, 1, -1);
+	if (!(light = (t_light*)ft_vector_push_back(&app.scene.v_light, NULL)))
+		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
+	light->type = light_type_point;
+	light->color = vec3f(1, 0.8, 0.7);
+	light->intensity = 10;
+	light->as.point.pos = vec3r(-0.5, 0.8, 0.9);
+
+	app.cam.cam_data.pos = vec3r(0, 0.5, -1);
 	(void)ac;
 	(void)av;
 

@@ -10,6 +10,11 @@ cl_float3		obj_surface_color(
 		constant t_texture *textures, cl_uint textures_size,
 		global cl_uchar *texture_pixels, cl_ulong n_texture_pixels,
 		t_real3 point);
+cl_float3		texture_get_color(
+		constant t_texture *texture,
+		global cl_uchar *texture_pixels,
+		cl_ulong n_texture_pixels,
+		uint x, uint y);
 cl_float3		texture_uv_color(
 		constant t_texture *textures,
 		global cl_uchar *texture_pixels, cl_ulong n_texture_pixels,
@@ -35,28 +40,43 @@ cl_float3		obj_surface_color(
 	return ((cl_float3)(0.078, 1, 0.576));
 }
 
+cl_float3		texture_get_color(constant t_texture *texture, global cl_uchar *texture_pixels, cl_ulong n_texture_pixels, uint x, uint y)
+{
+	cl_uchar3		color;
+	cl_ulong		offset;
+
+	x = x % texture->width;
+	y = y % texture->height;
+	offset = texture->pixels_offset + (y * texture->width + x);
+	if (offset >= n_texture_pixels)
+		return ((cl_float3)(1, 0.078, 0.576));
+	color.r = texture_pixels[offset * 3 + 0];
+	color.g = texture_pixels[offset * 3 + 1];
+	color.b = texture_pixels[offset * 3 + 2];
+	return ((cl_float3)(color.r / 255.f, color.g / 255.f, color.b / 255.f));
+}
+
 cl_float3		texture_uv_color(
 		constant t_texture *texture,
 		global cl_uchar *texture_pixels, cl_ulong n_texture_pixels,
 		t_real2 uv)
 {
 	cl_uint2	pos;
-	cl_ulong	pixel_offset;
-	cl_float3	color;
-	cl_uchar3	color_char;
+	cl_float3	colors[4];
+	cl_float2	interp;
 
-	pos = (cl_uint2)(uv.x * texture->width, uv.y * texture->height);
-	pos.x = clamp(pos.x, (uint)0, (uint)texture->width - 1);
-	pos.y = clamp(pos.y, (uint)0, (uint)texture->height - 1);
-	pixel_offset = pos.y * texture->width + pos.x;
-	pixel_offset += texture->pixels_offset;
-	if (pixel_offset >= n_texture_pixels)
-		return ((cl_float3)(1, 0.078, 0.576));
-	color_char.r = texture_pixels[pixel_offset * 3 + 0];
-	color_char.g = texture_pixels[pixel_offset * 3 + 1];
-	color_char.b = texture_pixels[pixel_offset * 3 + 2];
-	color = (cl_float3)(color_char.r / 255.f, color_char.g / 255.f, color_char.b / 255.f);
-	return (color);
+	uv = (t_real2)(uv.x * texture->width, uv.y * texture->height);
+	pos = (cl_uint2)(uv.x, uv.y);
+	colors[0] = texture_get_color(texture, texture_pixels, n_texture_pixels, pos.x, pos.y);
+	if (texture->filter != e_filter_bilinear)
+		return (colors[0]);
+	colors[1] = texture_get_color(texture, texture_pixels, n_texture_pixels, pos.x + 1, pos.y);
+	colors[2] = texture_get_color(texture, texture_pixels, n_texture_pixels, pos.x, pos.y + 1);
+	colors[3] = texture_get_color(texture, texture_pixels, n_texture_pixels, pos.x + 1, pos.y + 1);
+	interp = (cl_float2)(uv.x - pos.x, uv.y - pos.y);
+	colors[1] = colors[0] * (1 - interp.x) + colors[1] * interp.x;
+	colors[2] = colors[2] * (1 - interp.x) + colors[3] * interp.x;
+	return (colors[1] * (1 - interp.y) + colors[2] * interp.y);
 }
-
+//*/
 #endif

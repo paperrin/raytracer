@@ -49,7 +49,6 @@ kernel void			kernel_ray_shade(
 		has_reflection = mats[obj.material_id].reflection > 1e-4;
 		if (has_reflection)
 		{
-			printf("reflect!\n");
 			state.ray = get_reflected_ray(state, hit_pos, normal);
 			state.importance *= mats[obj.material_id].reflection;
 			state.t = -1;
