@@ -27,7 +27,7 @@ t_real3			obj_sphere_surface_normal(t_sphere *sphere, t_real3 point)
 
 t_real3			obj_plane_surface_normal(t_plane *plane, t_real3 point)
 {
-	return (plane->up);
+	return (plane->normal);
 }
 
 #endif
