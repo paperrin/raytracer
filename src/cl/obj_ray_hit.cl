@@ -85,18 +85,17 @@ t_real			obj_plane_ray_hit(constant t_plane *plane, t_ray *ray)
 	t_real3		p;
 
 	denom =	dot(plane->up, ray->dir);
-	if (denom > 1e-6)
+	if (-denom > 1e-10)
 	{
 		p = plane->pos - ray->origin;
-		t = dot(p, plane->up) / denom;
+		t = dot(plane->up, p) / denom;
 		if (t >= 0)
 			return (t);
 	}
 	return (-1);
 }
 
-t_real			obj_sphere_ray_hit(constant t_sphere *sphere,
-		t_ray *ray)
+t_real			obj_sphere_ray_hit(constant t_sphere *sphere, t_ray *ray)
 {
 	t_real3		dist;
 	t_real3		abc;
