@@ -18,7 +18,7 @@ kernel void			kernel_ray_shade(
 		global read_only ulong *n_texture_pixels,
 		global read_write t_ray_state *ray_states,
 		global read_write uint *n_new_rays,
-		global write_only cl_float *pixels,
+		global read_write cl_float *pixels,
 		global read_only t_config *config)
 {
 	const int				gid = get_global_id(0);
@@ -27,7 +27,6 @@ kernel void			kernel_ray_shade(
 	cl_float3				color;
 	t_obj					obj;
 	t_ray_state				state;
-	uint					new_id;
 	char					has_reflection;
 
 	state = ray_states[gid];
@@ -44,30 +43,26 @@ kernel void			kernel_ray_shade(
 				mats, *mats_size,
 				textures, *textures_size,
 				texture_pixels, *n_texture_pixels,
-				lights, *lights_size);
+				lights, *lights_size, config->ambient);
 		color *= (state.importance - mats[obj.material_id].reflection);
+		pixels[state.pxl_id * 4 + 0] += color.r;
+		pixels[state.pxl_id * 4 + 1] += color.g;
+		pixels[state.pxl_id * 4 + 2] += color.b;
 		has_reflection = mats[obj.material_id].reflection > 1e-4;
 		if (has_reflection)
 		{
+			atomic_inc(n_new_rays);
 			state.ray = get_reflected_ray(state, hit_pos, normal);
 			state.importance *= mats[obj.material_id].reflection;
 			state.t = -1;
 			state.obj_id = -1;
 		}
+		else
+			state.importance = -1;
 	}
-	pixels[state.pxl_id * 4 + 0] += color.r;
-	pixels[state.pxl_id * 4 + 1] += color.g;
-	pixels[state.pxl_id * 4 + 2] += color.b;
-	pixels[state.pxl_id * 4 + 3] = 1;
-	barrier(CLK_GLOBAL_MEM_FENCE);
-	if (has_reflection)
-	{
-		new_id = atomic_inc(n_new_rays);
-		if (config->ray_compaction)
-			ray_states[new_id] = state;
-		else	
-			ray_states[gid] = state;
-	}
+	else
+		state.importance = -1;
+	ray_states[gid] = state;
 }
 
 t_ray				get_reflected_ray(t_ray_state state, t_real3 hit_pos, t_real3 normal)

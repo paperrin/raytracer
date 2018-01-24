@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/16 22:37:07 by paperrin          #+#    #+#             */
-/*   Updated: 2018/01/21 19:10:16 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/01/24 15:18:19 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,12 +87,8 @@ int				kernel_ray_shade_launch(t_app *app)
 	size_t		work_size;
 
 	app->n_rays = 0;
-	if (!app->config.ray_compaction || app->n_hits > 0)
+	if (app->n_hits > 0)
 	{
-		if (app->config.ray_compaction)
-			app->kernel_ray_shade.work_size = app->n_hits;
-		else
-			app->kernel_ray_shade.work_size = APP_WIDTH * APP_HEIGHT;
 		work_size = app->kernel_ray_shade.work_size;
 		opencl_kernel_arg_select_id(&app->kernel_ray_shade, 11);
 		opencl_kernel_arg_selected_destroy(&app->kernel_ray_shade);
@@ -105,7 +101,7 @@ int				kernel_ray_shade_launch(t_app *app)
 			, &app->kernel_ray_trace, 4);
 		clEnqueueNDRangeKernel(app->ocl.cmd_queue, app->kernel_ray_shade.kernel
 			, 1, NULL, &app->kernel_ray_shade.work_size, NULL, 0, NULL, NULL);
-		clEnqueueReadBuffer(app->ocl.cmd_queue, app->kernel_ray_shade.args[7]
+		clEnqueueReadBuffer(app->ocl.cmd_queue, app->kernel_ray_shade.args[11]
 			, CL_TRUE, 0, sizeof(&app->n_rays), &app->n_rays, 0, NULL, NULL);
 	}
 	return (1);

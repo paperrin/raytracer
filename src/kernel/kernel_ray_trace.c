@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/22 18:06:33 by paperrin          #+#    #+#             */
-/*   Updated: 2018/01/20 18:35:40 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/01/24 15:02:03 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,12 +42,9 @@ int				kernel_ray_trace_create(t_app *app)
 int				kernel_ray_trace_launch(t_app *app)
 {
 	app->n_hits = 0;
-	if (!app->config.ray_compaction || app->n_rays > 0)
+	if (app->n_rays > 0)
 	{
-		if (app->config.ray_compaction)
-			app->kernel_ray_trace.work_size = app->n_rays;
-		else
-			app->kernel_ray_trace.work_size = APP_WIDTH * APP_HEIGHT;
+		app->kernel_ray_trace.work_size = APP_WIDTH * APP_HEIGHT;
 		opencl_kernel_arg_select_id(&app->kernel_ray_trace, 3);
 		opencl_kernel_arg_selected_destroy(&app->kernel_ray_trace);
 		if (!opencl_kernel_arg_selected_create(&app->kernel_ray_trace

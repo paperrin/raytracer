@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/17 14:34:09 by paperrin          #+#    #+#             */
-/*   Updated: 2018/01/20 22:04:15 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/01/24 15:18:47 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int				kernel_clear_create(t_app *app)
 		return (0);
 	opencl_kernel_arg_select_id(&app->kernel_clear, 0);
 	if (!opencl_kernel_arg_selected_create(&app->kernel_clear
-			, CL_MEM_WRITE_ONLY
+			, CL_MEM_READ_WRITE
 			, sizeof(cl_float) * 4 * APP_WIDTH * APP_HEIGHT, NULL))
 		return (0);
 	return (1);

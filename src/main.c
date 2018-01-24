@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/09 16:14:42 by paperrin          #+#    #+#             */
-/*   Updated: 2018/01/23 22:16:42 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/01/24 15:36:53 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int			app_create(t_app *app)
 		return (0);
 	if (!image_create(&app->draw_buf, APP_WIDTH, APP_HEIGHT))
 		app_destroy(app, EXIT_FAILURE);
-	if (!(opencl_create(&app->ocl, 0)))
+	if (!(opencl_create(&app->ocl, 1)))
 		app_destroy(app, EXIT_FAILURE);
 	if (!kernel_ray_gen_primary_create(app)) app_destroy(app, EXIT_FAILURE);
 	if (!kernel_ray_trace_create(app))
@@ -103,7 +103,6 @@ int			main(int ac, char **av)
 	size_t			height;
 	size_t			max;
 
-	app.config.ray_compaction = 0;
 	app.scene.v_obj = ft_vector_create(sizeof(t_obj), NULL, NULL);
 /*
 	if (!(obj = (t_obj*)ft_vector_push_back(&app.scene.v_obj, NULL)))
@@ -162,8 +161,8 @@ int			main(int ac, char **av)
 	mat->texture_id = 1;
 	if (!(mat = (t_material*)ft_vector_push_back(&app.scene.v_material, NULL)))
 		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
-	mat->color = vec3f(1, 1, 1);
-	mat->reflection = 0.8;
+	mat->color = vec3f(0.6, 0.6, 1);
+	mat->reflection = 0.7;
 	mat->refraction = 0;
 	mat->texture_id = -1;
 	if (!(mat = (t_material*)ft_vector_push_back(&app.scene.v_material, NULL)))
@@ -192,18 +191,19 @@ int			main(int ac, char **av)
 	texture->height = height;
 	texture->filter = e_filter_bilinear;
 
+	app.config.ambient = vec3f(0.1, 0.1, 0.1);
 	app.scene.v_light = ft_vector_create(sizeof(t_light), NULL, NULL);
 	if (!(light = (t_light*)ft_vector_push_back(&app.scene.v_light, NULL)))
 		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
 	light->type = light_type_point;
 	light->color = vec3f(1, 0.8, 0.7);
-	light->intensity = 10;
+	light->intensity = 15;
 	light->as.point.pos = vec3r(1, 1, -1);
 	if (!(light = (t_light*)ft_vector_push_back(&app.scene.v_light, NULL)))
 		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
 	light->type = light_type_point;
 	light->color = vec3f(1, 0.8, 0.7);
-	light->intensity = 10;
+	light->intensity = 15;
 	light->as.point.pos = vec3r(-0.5, 0.8, 0.9);
 
 	app.cam.cam_data.pos = vec3r(0, 0.5, -1);

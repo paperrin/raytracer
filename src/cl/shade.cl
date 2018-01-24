@@ -12,7 +12,8 @@ cl_float3			shade(t_obj obj, t_real3 hit_pos,
 		constant t_material *mats, cl_uint mats_size,
 		constant t_texture *textures, cl_uint textures_size,
 		global cl_uchar *texture_pixels, cl_ulong n_texture_pixels,
-		constant t_light *lights, cl_uint lights_size);
+		constant t_light *lights, cl_uint lights_size,
+		cl_float3 ambient);
 cl_float3			tone_map(cl_float3 color);
 
 cl_float3			tone_map(cl_float3 color)
@@ -28,7 +29,8 @@ cl_float3			shade(t_obj obj, t_real3 hit_pos,
 		constant t_material *mats, cl_uint mats_size,
 		constant t_texture *textures, cl_uint textures_size,
 		global cl_uchar *texture_pixels, cl_ulong n_texture_pixels,
-		constant t_light *lights, cl_uint lights_size)
+		constant t_light *lights, cl_uint lights_size,
+		cl_float3 ambient)
 {
 	t_real3			surface_normal;
 	t_ray			light_ray;
@@ -48,7 +50,7 @@ cl_float3			shade(t_obj obj, t_real3 hit_pos,
 			textures, textures_size,
 			texture_pixels, n_texture_pixels,
 			hit_pos);
-	color = surface_color * (cl_float3)(0.2, 0.2, 0.2);
+	color = surface_color * ambient;
 	i = -1;
 	while (++i < (int)lights_size)
 	{

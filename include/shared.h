@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/13 14:25:38 by paperrin          #+#    #+#             */
-/*   Updated: 2018/01/23 22:16:55 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/01/24 15:34:10 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ typedef struct			s_camera_data
 
 typedef struct			s_config
 {
-	char				ray_compaction;
+	cl_float3			ambient;
 }						t_config;
 
 /*
