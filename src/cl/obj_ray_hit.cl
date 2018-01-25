@@ -9,6 +9,7 @@ cl_int				ray_throw_get_first_hit_obj(t_ray *ray,
 		constant t_obj *objs, cl_uint objs_size, cl_float *t_nearest);
 cl_int			ray_throw_get_any_hit_obj(t_ray *ray,
 		constant t_obj *objs, cl_uint objs_size, cl_float *t);
+t_real				obj_cone_ray_hit(constant t_cone *cone, t_ray *ray);
 
 t_real			solve_quadratic(t_real3 abc, t_real *values)
 {
@@ -71,6 +72,8 @@ t_real			obj_ray_hit(constant t_obj *obj,
 {
 	if (obj->type == type_sphere)
 		return (obj_sphere_ray_hit(&obj->as.sphere, ray));
+	if (obj->type == type_cone)
+		return (obj_cone_ray_hit(&obj->as.cone, ray));
 	else
 		return (-1);
 }
@@ -86,6 +89,27 @@ t_real			obj_sphere_ray_hit(constant t_sphere *sphere,
 	abc[0] = dot(ray->dir, ray->dir);
 	abc[1] = 2 * dot(ray->dir, dist);
 	abc[2] = dot(dist, dist) - sphere->radius * sphere->radius;
+	if (solve_quadratic(abc, hits) < 0)
+		return (-1);
+	return (hits[0]);
+}
+
+t_real		obj_cone_ray_hit(constant t_cone *cone, t_ray *ray)
+{
+	t_real3		dist;
+	t_real3		abc;
+	t_real		hits[2];
+	t_real3		cylu;
+	t_real3		cylv;
+
+	dist = ray->origin - cone->pos;
+	abc[0] = dot(ray->dir, ray->dir) - (dot(ray->dir, cone->normal) * dot(ray->dir, cone->normal));
+	abc[1] = 2 * (dot(ray->dir, dist) - dot(ray->dir, cone->normal) * dot(dist, cone->normal));
+	abc[2] = dot(dist, dist) - (dot(dist, cone->normal) * (dot(dist, cone->normal))) - (cone->radius * cone->radius);
+
+/*	abc[0] = dot(ray->dir , ray->dir);
+	abc[1] = 2 * dot(ray->dir, dist);
+	abc[2] = dot(dist, dist) - cone->radius * cone->radius;*/
 	if (solve_quadratic(abc, hits) < 0)
 		return (-1);
 	return (hits[0]);
