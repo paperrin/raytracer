@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/09 16:14:42 by paperrin          #+#    #+#             */
-/*   Updated: 2018/01/24 20:45:29 by alngo            ###   ########.fr       */
+/*   Updated: 2018/01/25 23:02:38 by alngo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,18 +131,28 @@ int			main(int ac, char **av)
 	if (!(obj = (t_obj*)ft_vector_push_back(&app.scene.v_obj, NULL)))
 		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
 	*obj = obj_sphere(vec3r(0.3, 0.1, -0.3), 0.1, 1);
+*
 */
+
 	if (!(obj = (t_obj*)ft_vector_push_back(&app.scene.v_obj, NULL)))
 		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
-	*obj = obj_sphere(vec3r(-0.6, 0.5, 0), 0.5, 0);
+	*obj = obj_sphere(vec3r(0, 0.5, 0), 0.5, 0);
+
+/*
+	if (!(obj = (t_obj*)ft_vector_push_back(&app.scene.v_obj, NULL)))
+		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
+	*obj = obj_sphere(vec3r(1, 2, 1), 0.5, 0);
+*/
 /*
 	if (!(obj = (t_obj*)ft_vector_push_back(&app.scene.v_obj, NULL)))
 		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
 	*obj = obj_sphere(vec3r(0.6, 0.5, 0), 0.5, 1);
 */
+
+
 	if (!(obj = (t_obj*)ft_vector_push_back(&app.scene.v_obj, NULL)))
 		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
-	*obj = obj_plane(vec3r(0, 0, 0), vec3r(0, 0, -1), vec3r(1, 0, 0), 1);
+	*obj = obj_plane(vec3r(0, 0, 0), vec3r(0, 1, 0), vec3r(1, 0, 0), 1);
 
 /*
 	if (!(obj = (t_obj*)ft_vector_push_back(&app.scene.v_obj, NULL)))
@@ -170,7 +180,7 @@ int			main(int ac, char **av)
 	mat->color = vec3f(1, 1, 1);
 	mat->reflection = 0;
 	mat->refraction = 0;
-	mat->texture_id = 1;
+	mat->texture_id = -1;
 	if (!(mat = (t_material*)ft_vector_push_back(&app.scene.v_material, NULL)))
 		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
 	mat->color = vec3f(0.6, 0.6, 1);
@@ -209,21 +219,28 @@ int			main(int ac, char **av)
 	texture->height = height;
 	texture->filter = e_filter_bilinear;
 
-	app.config.ambient = vec3f(0.8, 0.8, 0.8);
+	app.config.ambient = vec3f(0.2, 0.2, 0.2);
+
 	app.scene.v_light = ft_vector_create(sizeof(t_light), NULL, NULL);
 	if (!(light = (t_light*)ft_vector_push_back(&app.scene.v_light, NULL)))
 		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
-	light->type = light_type_point;
-	light->color = vec3f(1, 0.8, 0.7);
-	light->intensity = 15;
-	light->as.point.pos = vec3r(0.9, 1, -1);
+	light->type = light_type_spot;
+	light->color = vec3f(1, 1, 1);
+	light->intensity = 10;
+	light->as.spot.pos = vec3r(6, 5, 1);
+	light->as.spot.dir = vec3r_norm(vec3r(-1, -1, 0));
+	light->as.spot.beam_angle = 30.0;
+	light->as.spot.field_angle = 60.0;
+	light->as.spot.beam_aperture = 0.75 * 0.75;
+	light->as.spot.field_aperture = 1;
+/*
 	if (!(light = (t_light*)ft_vector_push_back(&app.scene.v_light, NULL)))
 		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
 	light->type = light_type_point;
 	light->color = vec3f(1, 0.8, 0.7);
 	light->intensity = 15;
 	light->as.point.pos = vec3r(-0.5, 0.8, 0.9);
-
+*/
 	app.cam.cam_data.pos = vec3r(0, 0.5, -1);
 	(void)ac;
 	(void)av;
