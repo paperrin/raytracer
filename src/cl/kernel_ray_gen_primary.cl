@@ -16,4 +16,6 @@ kernel void			kernel_ray_gen_primary(
 			* ((t_real)screen_size->y / screen_size->x)
 			* cam->up
 	);
+	ray_states[gid].importance = 1;
+	ray_states[gid].pxl_id = gid;
 }

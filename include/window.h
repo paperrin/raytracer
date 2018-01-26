@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/03 19:17:00 by paperrin          #+#    #+#             */
-/*   Updated: 2017/12/04 20:35:34 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/01/20 18:59:00 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,9 +71,10 @@ typedef void		(*t_f_window_callback_mouse_scroll)(void *user_ptr,
 **
 ** @callback t_f_window_callback_loop
 ** @param user_ptr - the unmodified pointer which was given
+** @param elapsed - elapsed time since last call ( in milliseconds )
 ** to window_callback_loop()
 */
-typedef void		(*t_f_window_callback_loop)(void *user_ptr);
+typedef void		(*t_f_window_callback_loop)(void *user_ptr, double elapsed);
 
 /*
 ** Window object, must be initialized by window_create()
@@ -190,7 +191,7 @@ void				window_callback_mouse_scroll(t_window *win,
 ** unmodified to all other callbacks
 */
 void				window_callback_loop(t_window *win,
-		void (*f_loop)(void*), void *user_ptr);
+		void (*f_loop)(void*, double), void *user_ptr);
 
 /*
 ** Loops till the window is closed

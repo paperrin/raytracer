@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/18 21:50:02 by paperrin          #+#    #+#             */
-/*   Updated: 2018/01/19 00:18:21 by alngo            ###   ########.fr       */
+/*   Updated: 2018/01/20 21:55:02 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ int			kernel_ray_gen_primary_create(t_app *app)
 
 int			kernel_ray_gen_primary_launch(t_app *app)
 {
+	app->n_rays = APP_WIDTH * APP_HEIGHT;
 	opencl_kernel_arg_select_id(&app->kernel_ray_gen, 1);
 	opencl_kernel_arg_selected_destroy(&app->kernel_ray_gen);
 	if (!opencl_kernel_arg_selected_create(&app->kernel_ray_gen

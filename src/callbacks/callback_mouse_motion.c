@@ -1,29 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strchr_any.c                                    :+:      :+:    :+:   */
+/*   callback_mouse_motion.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/12/26 17:59:58 by paperrin          #+#    #+#             */
-/*   Updated: 2018/01/22 01:14:30 by paperrin         ###   ########.fr       */
+/*   Created: 2018/01/19 18:24:37 by paperrin          #+#    #+#             */
+/*   Updated: 2018/01/19 19:22:26 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "rt.h"
 
-char	*ft_strchr_any(const char *s, const char *c)
+void		callback_mouse_motion(void *user_ptr, double x, double y)
 {
-	char	*p;
+	t_app			*app;
 
-	p = (char*)s;
-	while (*p)
-	{
-		if (ft_strchr(c, *p))
-			return (p);
-		p++;
-	}
-	if ((char)c[0] == '\0')
-		return (p);
-	return (NULL);
+	app = (t_app*)user_ptr;
+	(void)x;
+	(void)y;
 }

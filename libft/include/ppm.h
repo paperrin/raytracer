@@ -1,29 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strchr_any.c                                    :+:      :+:    :+:   */
+/*   ppm.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/12/26 17:59:58 by paperrin          #+#    #+#             */
-/*   Updated: 2018/01/22 01:14:30 by paperrin         ###   ########.fr       */
+/*   Created: 2018/01/21 06:47:05 by paperrin          #+#    #+#             */
+/*   Updated: 2018/01/22 02:20:26 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#ifndef PPM_H
+# define PPM_H
 
-char	*ft_strchr_any(const char *s, const char *c)
-{
-	char	*p;
+# include <sys/types.h>
+# include <sys/uio.h>
+# include <unistd.h>
+# include "libft.h"
+# include "ft_fstream.h"
 
-	p = (char*)s;
-	while (*p)
-	{
-		if (ft_strchr(c, *p))
-			return (p);
-		p++;
-	}
-	if ((char)c[0] == '\0')
-		return (p);
-	return (NULL);
-}
+char	*ft_ppm_get(char const *const path, size_t *const width,
+		size_t *const height, size_t *const max_val);
+
+#endif

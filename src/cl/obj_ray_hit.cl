@@ -6,10 +6,11 @@ t_real				obj_ray_hit(constant t_obj *obj,
 t_real				obj_sphere_ray_hit(constant t_sphere *sphere,
 		t_ray *ray);
 cl_int				ray_throw_get_first_hit_obj(t_ray *ray,
-		constant t_obj *objs, cl_uint objs_size, cl_float *t_nearest);
+		constant t_obj *objs, cl_uint objs_size, t_real *t_nearest);
 cl_int			ray_throw_get_any_hit_obj(t_ray *ray,
 		constant t_obj *objs, cl_uint objs_size, cl_float *t);
 t_real				obj_cone_ray_hit(constant t_cone *cone, t_ray *ray);
+t_real				obj_plane_ray_hit(constant t_plane *plane, t_ray *ray);
 
 t_real			solve_quadratic(t_real3 abc, t_real *values)
 {
@@ -32,9 +33,9 @@ t_real			solve_quadratic(t_real3 abc, t_real *values)
 }
 
 cl_int			ray_throw_get_first_hit_obj(t_ray *ray,
-		constant t_obj *objs, cl_uint objs_size, cl_float *t_nearest)
+		constant t_obj *objs, cl_uint objs_size, t_real *t_nearest)
 {
-	cl_float	t;
+	t_real		t;
 	cl_int		i;
 	cl_int		obj_id_nearest;
 
@@ -53,7 +54,7 @@ cl_int			ray_throw_get_first_hit_obj(t_ray *ray,
 }
 
 cl_int			ray_throw_get_any_hit_obj(t_ray *ray,
-		constant t_obj *objs, cl_uint objs_size, cl_float *t)
+		constant t_obj *objs, cl_uint objs_size, t_real *t)
 {
 	cl_int		i;
 
@@ -74,12 +75,30 @@ t_real			obj_ray_hit(constant t_obj *obj,
 		return (obj_sphere_ray_hit(&obj->as.sphere, ray));
 	if (obj->type == type_cone)
 		return (obj_cone_ray_hit(&obj->as.cone, ray));
+	else if (obj->type == type_plane)
+		return (obj_plane_ray_hit(&obj->as.plane, ray));
 	else
 		return (-1);
 }
 
-t_real			obj_sphere_ray_hit(constant t_sphere *sphere,
-		t_ray *ray)
+t_real			obj_plane_ray_hit(constant t_plane *plane, t_ray *ray)
+{
+	t_real		denom;
+	t_real		t;
+	t_real3		p;
+
+	denom =	dot(plane->normal, ray->dir);
+	if (-denom > 1e-10)
+	{
+		p = plane->pos - ray->origin;
+		t = dot(plane->normal, p) / denom;
+		if (t >= 0)
+			return (t);
+	}
+	return (-1);
+}
+
+t_real			obj_sphere_ray_hit(constant t_sphere *sphere, t_ray *ray)
 {
 	t_real3		dist;
 	t_real3		abc;

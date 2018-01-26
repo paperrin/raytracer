@@ -1,29 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strchr_any.c                                    :+:      :+:    :+:   */
+/*   vec3f.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/12/26 17:59:58 by paperrin          #+#    #+#             */
-/*   Updated: 2018/01/22 01:14:30 by paperrin         ###   ########.fr       */
+/*   Created: 2018/01/20 21:19:34 by paperrin          #+#    #+#             */
+/*   Updated: 2018/01/20 21:20:04 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "vec.h"
 
-char	*ft_strchr_any(const char *s, const char *c)
+cl_float3		vec3f(cl_float x, cl_float y, cl_float z)
 {
-	char	*p;
+	cl_float3		vec;
 
-	p = (char*)s;
-	while (*p)
-	{
-		if (ft_strchr(c, *p))
-			return (p);
-		p++;
-	}
-	if ((char)c[0] == '\0')
-		return (p);
-	return (NULL);
+	vec.s[0] = x;
+	vec.s[1] = y;
+	vec.s[2] = z;
+	return (vec);
 }

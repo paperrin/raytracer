@@ -65,6 +65,7 @@ CFILES		=	\
 				kernel/kernel_ray_shade.c						\
 				\
 				callbacks/callback_key.c						\
+				callbacks/callback_mouse_motion.c				\
 				\
 				camera/camera.c									\
 				camera/camera_rotation.c						\
@@ -73,11 +74,14 @@ CFILES		=	\
 				camera/matrix_real16_rot.c						\
 				\
 				vec/vec3r.c										\
+				vec/vec3f.c										\
 				\
 				obj/obj_sphere.c								\
 				obj/obj_cone.c									\
+				obj/obj_plane.c								\
 				\
 				main.c											\
+				process_input.c									\
 				error.c
 
 

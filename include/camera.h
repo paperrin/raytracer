@@ -6,7 +6,7 @@
 /*   By: alngo <alngo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/13 22:42:32 by alngo             #+#    #+#             */
-/*   Updated: 2018/01/18 23:55:15 by alngo            ###   ########.fr       */
+/*   Updated: 2018/01/19 18:23:02 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@
 typedef struct			s_camera
 {
 	t_camera_data		cam_data;
-	t_real3				rot;
-	t_real3				translation;
-}						t_camera;
+	t_real3			rot;
+	t_real3			translation;
+}				t_camera;
 
 
 void			camera_update(t_camera *cam);
