@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/13 14:25:38 by paperrin          #+#    #+#             */
-/*   Updated: 2018/01/25 20:56:59 by alngo            ###   ########.fr       */
+/*   Updated: 2018/02/01 20:59:55 by alngo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,6 +171,7 @@ typedef struct			s_material
 	cl_float3			color;
 	cl_float			reflection;
 	cl_float			refraction;
+	cl_float			indice_of_refraction;
 	cl_int				texture_id;
 }						t_material;
 

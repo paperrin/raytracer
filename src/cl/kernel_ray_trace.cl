@@ -15,7 +15,7 @@ kernel void			kernel_ray_trace(
 	t_ray_state		state;
 
 	state = ray_states[gid];
-	if (state.importance > 0)
+	if (gid == (720 / 2) * (480 / 2) && state.importance > 0)
 	{
 		obj_id_nearest = ray_throw_get_first_hit_obj(&state.ray, objs, *objs_size, &t_nearest);
 		state.t = (t_nearest < 200000) ? t_nearest : -1;

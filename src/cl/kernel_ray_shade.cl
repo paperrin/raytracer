@@ -4,6 +4,8 @@
 
 t_ray				get_reflected_ray(t_ray_state state, t_real3 hit_pos,
 		t_real3 normal);
+t_ray				get_refracted_ray(t_ray_state state, t_real3 hit_pos,
+		t_real3 normal, t_real ior);
 
 kernel void			kernel_ray_shade(
 		constant read_only t_obj *objs,
@@ -28,6 +30,7 @@ kernel void			kernel_ray_shade(
 	t_obj					obj;
 	t_ray_state				state;
 	char					has_reflection;
+	char					has_refraction;
 
 	state = ray_states[gid];
 	color = (cl_float3)(0, 0, 0);
@@ -49,11 +52,20 @@ kernel void			kernel_ray_shade(
 		pixels[state.pxl_id * 4 + 1] += color.g;
 		pixels[state.pxl_id * 4 + 2] += color.b;
 		has_reflection = mats[obj.material_id].reflection > 1e-4;
+		has_refraction = mats[obj.material_id].refraction > 1e-4;
 		if (has_reflection)
 		{
 			atomic_inc(n_new_rays);
 			state.ray = get_reflected_ray(state, hit_pos, normal);
 			state.importance *= mats[obj.material_id].reflection;
+			state.t = -1;
+			state.obj_id = -1;
+		}
+		if (has_refraction)
+		{
+			atomic_inc(n_new_rays);
+			state.ray = get_refracted_ray(state, hit_pos, normal, mats[obj.material_id].indice_of_refraction);
+			state.importance *= mats[obj.material_id].refraction;
 			state.t = -1;
 			state.obj_id = -1;
 		}
@@ -71,5 +83,18 @@ t_ray				get_reflected_ray(t_ray_state state, t_real3 hit_pos, t_real3 normal)
 
 	ray.origin = hit_pos;
 	ray.dir = state.ray.dir - (t_real)2 * dot(normal, state.ray.dir) * normal;
+	return (ray);
+}
+
+
+t_ray				get_refracted_ray(t_ray_state state, t_real3 hit_pos, t_real3 normal, t_real ior)
+{
+	t_ray			ray;
+
+	ray.origin = hit_pos + state.ray.dir * 0.001f; // bias
+	if (dot(normal, state.ray.dir) < 0)
+		ray.dir = -normal + (normal + state.ray.dir) * ior;
+	else
+		ray.dir = normal + (normal - state.ray.dir) * ior;
 	return (ray);
 }
