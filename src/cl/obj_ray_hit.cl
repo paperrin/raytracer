@@ -10,6 +10,7 @@ cl_int				ray_throw_get_first_hit_obj(t_ray *ray,
 cl_int			ray_throw_get_any_hit_obj(t_ray *ray,
 		constant t_obj *objs, cl_uint objs_size, t_real *t);
 t_real				obj_plane_ray_hit(constant t_plane *plane, t_ray *ray);
+t_real				obj_cylinder_ray_hit(constant t_cylinder *cylinder, t_ray *ray);
 
 t_real			solve_quadratic(t_real3 abc, t_real *values)
 {
@@ -74,6 +75,8 @@ t_real			obj_ray_hit(constant t_obj *obj,
 		return (obj_sphere_ray_hit(&obj->as.sphere, ray));
 	else if (obj->type == type_plane)
 		return (obj_plane_ray_hit(&obj->as.plane, ray));
+	else if (obj->type == type_cylinder)
+		return (obj_cylinder_ray_hit(&obj->as.cylinder, ray));
 	else
 		return (-1);
 }
@@ -93,6 +96,23 @@ t_real			obj_plane_ray_hit(constant t_plane *plane, t_ray *ray)
 			return (t);
 	}
 	return (-1);
+}
+
+t_real			obj_cylinder_ray_hit(constant t_cylinder *cylinder, t_ray *ray)
+{
+	t_real3		axes[3];
+	t_real3		abc;
+	t_real		hits[2];
+
+	axes[0] = cylinder->pos - cylinder->normal;
+	axes[1] = cross(ray->origin - cylinder->pos, axes[0]);
+	axes[2] = cross(ray->dir, axes[0]);
+	abc[0] = dot(axes[2], axes[2]);
+	abc[1] = 2 * dot(axes[2], axes[1]);
+	abc[2] = dot(axes[1], axes[1]) - (cylinder->radius * cylinder->radius);
+	if (solve_quadratic(abc, hits) < 0)
+		return (-1);
+	return (hits[0]);
 }
 
 t_real			obj_sphere_ray_hit(constant t_sphere *sphere, t_ray *ray)
