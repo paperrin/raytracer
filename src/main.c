@@ -141,6 +141,13 @@ int			main(int ac, char **av)
 	if (!(obj = (t_obj*)ft_vector_push_back(&app.scene.v_obj, NULL)))
 		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
 	*obj = obj_cylinder(vec3r(0, 0, 0), vec3r(0, 0, 1), vec3r(1, 0, 0), 0.5, 1);
+/*
+	if (!(obj = (t_obj*)ft_vector_push_back(&app.scene.v_obj, NULL)))
+		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
+	*obj = obj_cylinder(vec3r(0, 0, 0), vec3r(0, 1, 0), vec3r(1, 0, 0), 0.5, 1);
+	if (!(obj = (t_obj*)ft_vector_push_back(&app.scene.v_obj, NULL)))
+		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
+	*obj = obj_cylinder(vec3r(0, 0, 0), vec3r(0, 0, 1), vec3r(1, 0, 0), 0.5, 1);
 
 	if (!(obj = (t_obj*)ft_vector_push_back(&app.scene.v_obj, NULL)))
 		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
@@ -149,16 +156,14 @@ int			main(int ac, char **av)
 	if (!(obj = (t_obj*)ft_vector_push_back(&app.scene.v_obj, NULL)))
 		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
 	*obj = obj_plane(vec3r(0, -2, 0), vec3r(0, 1, 0), vec3r(1, 0, 0), 0);
-
-/*
 	if (!(obj = (t_obj*)ft_vector_push_back(&app.scene.v_obj, NULL)))
 		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
 	*obj = obj_plane(vec3r(0, 0, 1), vec3r(0, 0, -1), vec3r(0, 0, 1), 3);
 
+*/
 	if (!(obj = (t_obj*)ft_vector_push_back(&app.scene.v_obj, NULL)))
 		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
-	*obj = obj_plane(vec3r(1, 0, 0), vec3r(-1, 0, 0), vec3r(0, 1, 0), 4);
-*/
+	*obj = obj_plane(vec3r(0, 0, 0), vec3r(-1, 0, 0), vec3r(0, 1, 0), 4);
 /*
 	if (!(obj = (t_obj*)ft_vector_push_back(&app.scene.v_obj, NULL)))
 		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
@@ -221,7 +226,7 @@ int			main(int ac, char **av)
 		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
 	light->type = light_type_point;
 	light->color = vec3f(1, 0.8, 0.7);
-	light->intensity = 1500;
+	light->intensity = 150;
 	light->as.point.pos = vec3r(2, 2, 2);
 
 	app.cam.cam_data.pos = vec3r(0, 0.5, -1);
