@@ -1,6 +1,7 @@
 #include "shared.h"
 #include "obj_surface_normal.cl"
 #include "shade.cl"
+#include "atomic_add.cl"
 
 t_ray				get_reflected_ray(t_ray_state state, t_real3 hit_pos,
 		t_real3 normal);
@@ -45,9 +46,10 @@ kernel void			kernel_ray_shade(
 				texture_pixels, *n_texture_pixels,
 				lights, *lights_size, config->ambient);
 		color *= (state.importance - mats[obj.material_id].reflection);
-		pixels[state.pxl_id * 4 + 0] += color.r;
-		pixels[state.pxl_id * 4 + 1] += color.g;
-		pixels[state.pxl_id * 4 + 2] += color.b;
+		color /= config->samples_width * config->samples_width;
+		atomic_addf(&pixels[state.pxl_id * 4 + 0], color.r);
+		atomic_addf(&pixels[state.pxl_id * 4 + 1], color.g);
+		atomic_addf(&pixels[state.pxl_id * 4 + 2], color.b);
 		has_reflection = mats[obj.material_id].reflection > 1e-4;
 		if (has_reflection)
 		{

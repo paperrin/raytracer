@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/13 14:25:38 by paperrin          #+#    #+#             */
-/*   Updated: 2018/01/24 18:40:51 by alngo            ###   ########.fr       */
+/*   Updated: 2018/01/30 22:17:41 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ typedef struct			s_camera_data
 typedef struct			s_config
 {
 	cl_float3			ambient;
+	cl_uint				samples_width;
 }						t_config;
 
 /*

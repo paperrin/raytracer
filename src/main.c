@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/09 16:14:42 by paperrin          #+#    #+#             */
-/*   Updated: 2018/01/24 20:45:29 by alngo            ###   ########.fr       */
+/*   Updated: 2018/02/14 18:21:12 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void		render(void *user_ptr, double elapsed)
 	if (!kernel_clear_launch(app))
 		app_destroy(app, EXIT_FAILURE);
 	depth = -1;
-	while (++depth <= 1)
+	while (++depth <= 0)
 	{
 		if (!kernel_ray_trace_launch(app))
 			app_destroy(app, EXIT_FAILURE);
@@ -134,7 +134,7 @@ int			main(int ac, char **av)
 */
 	if (!(obj = (t_obj*)ft_vector_push_back(&app.scene.v_obj, NULL)))
 		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
-	*obj = obj_sphere(vec3r(-0.6, 0.5, 0), 0.5, 0);
+	*obj = obj_sphere(vec3r(-0.6, 0.5, -0.7), 0.5, 0);
 /*
 	if (!(obj = (t_obj*)ft_vector_push_back(&app.scene.v_obj, NULL)))
 		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
@@ -207,9 +207,10 @@ int			main(int ac, char **av)
 	texture->pixels_offset = 0;
 	texture->width = width;
 	texture->height = height;
-	texture->filter = e_filter_bilinear;
+	texture->filter = e_filter_nearest;
 
 	app.config.ambient = vec3f(0.8, 0.8, 0.8);
+	app.config.samples_width = 1;
 	app.scene.v_light = ft_vector_create(sizeof(t_light), NULL, NULL);
 	if (!(light = (t_light*)ft_vector_push_back(&app.scene.v_light, NULL)))
 		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
@@ -224,7 +225,7 @@ int			main(int ac, char **av)
 	light->intensity = 15;
 	light->as.point.pos = vec3r(-0.5, 0.8, 0.9);
 
-	app.cam.cam_data.pos = vec3r(0, 0.5, -1);
+	app.cam.cam_data.pos = vec3r(0, 0.5, -2);
 	(void)ac;
 	(void)av;
 
