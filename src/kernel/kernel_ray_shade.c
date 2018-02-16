@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/16 22:37:07 by paperrin          #+#    #+#             */
-/*   Updated: 2018/01/24 15:18:19 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/02/17 21:50:59 by alngo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int				kernel_ray_shade_create(t_app *app)
 	cl_uint			lights_size;
 	cl_uint			textures_size;
 
-	app->kernel_ray_shade.work_size = APP_WIDTH * APP_HEIGHT;
+	app->kernel_ray_shade.work_size = APP_WIDTH * APP_HEIGHT * pow(2, app->config.cur_depth);
 	if (!opencl_kernel_create_n_args(&app->kernel_ray_shade, &app->ocl, 14))
 		return (0);
 	if (!opencl_kernel_load_from_file(&app->kernel_ray_shade
@@ -84,12 +84,10 @@ int				kernel_ray_shade_create(t_app *app)
 
 int				kernel_ray_shade_launch(t_app *app)
 {
-	size_t		work_size;
-
+	app->kernel_ray_shade.work_size = APP_WIDTH * APP_HEIGHT * pow(2, app->config.cur_depth);
 	app->n_rays = 0;
 	if (app->n_hits > 0)
 	{
-		work_size = app->kernel_ray_shade.work_size;
 		opencl_kernel_arg_select_id(&app->kernel_ray_shade, 11);
 		opencl_kernel_arg_selected_destroy(&app->kernel_ray_shade);
 		if (!opencl_kernel_arg_selected_create(&app->kernel_ray_shade
@@ -98,7 +96,7 @@ int				kernel_ray_shade_launch(t_app *app)
 			return (0);
 		opencl_kernel_arg_select_id(&app->kernel_ray_shade, 13);
 		opencl_kernel_arg_selected_use_kernel_arg_id(&app->kernel_ray_shade
-			, &app->kernel_ray_trace, 4);
+			, &app->kernel_ray_gen, 0);
 		clEnqueueNDRangeKernel(app->ocl.cmd_queue, app->kernel_ray_shade.kernel
 			, 1, NULL, &app->kernel_ray_shade.work_size, NULL, 0, NULL, NULL);
 		clEnqueueReadBuffer(app->ocl.cmd_queue, app->kernel_ray_shade.args[11]

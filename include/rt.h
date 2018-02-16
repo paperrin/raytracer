@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/09 16:36:38 by paperrin          #+#    #+#             */
-/*   Updated: 2018/01/24 19:05:21 by alngo            ###   ########.fr       */
+/*   Updated: 2018/02/17 21:52:12 by alngo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ t_obj				obj_plane(t_real3 pos, t_real3 normal, t_real3 up, t_mat_id material);
 
 void				render(void *user_ptr, double elapsed);
 
+int					update_gpu_config(t_app *app);
 
 int					kernel_ray_gen_primary_create(t_app *app);
 int					kernel_ray_gen_primary_launch(t_app *app);
