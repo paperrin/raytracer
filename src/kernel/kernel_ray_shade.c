@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/16 22:37:07 by paperrin          #+#    #+#             */
-/*   Updated: 2018/01/24 15:18:19 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/02/16 15:47:29 by alngo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ int				kernel_ray_shade_launch(t_app *app)
 			return (0);
 		opencl_kernel_arg_select_id(&app->kernel_ray_shade, 13);
 		opencl_kernel_arg_selected_use_kernel_arg_id(&app->kernel_ray_shade
-			, &app->kernel_ray_trace, 4);
+			, &app->kernel_ray_gen, 0);
 		clEnqueueNDRangeKernel(app->ocl.cmd_queue, app->kernel_ray_shade.kernel
 			, 1, NULL, &app->kernel_ray_shade.work_size, NULL, 0, NULL, NULL);
 		clEnqueueReadBuffer(app->ocl.cmd_queue, app->kernel_ray_shade.args[11]

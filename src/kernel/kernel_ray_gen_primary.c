@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/18 21:50:02 by paperrin          #+#    #+#             */
-/*   Updated: 2018/01/20 21:55:02 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/02/16 15:47:21 by alngo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,18 @@
 
 int			kernel_ray_gen_primary_create(t_app *app)
 {
-	cl_uint2			screen_size;
-
 	app->kernel_ray_gen.work_size = APP_WIDTH * APP_HEIGHT;
 	if (!opencl_kernel_create_n_args(&app->kernel_ray_gen, &app->ocl, 3))
 		return (0);
 	if (!opencl_kernel_load_from_file(&app->kernel_ray_gen
 				, "./src/cl/kernel_ray_gen_primary.cl", "-I ./include/"))
 		return (0);
-	screen_size.s[0] = APP_WIDTH;
-	screen_size.s[1] = APP_HEIGHT;
+	app->config.screen_size.s[0] = APP_WIDTH;
+	app->config.screen_size.s[1] = APP_HEIGHT;
 	opencl_kernel_arg_select_id(&app->kernel_ray_gen, 0);
 	if (!opencl_kernel_arg_selected_create(&app->kernel_ray_gen
-				, CL_MEM_READ_ONLY | CL_MEM_COPY_HOST_PTR
-				, sizeof(screen_size), (void*)&screen_size))
+			, CL_MEM_READ_ONLY | CL_MEM_COPY_HOST_PTR
+			, sizeof(t_config), (void*)&app->config))
 		return (0);
 	opencl_kernel_arg_select_id(&app->kernel_ray_gen, 2);
 	if (!opencl_kernel_arg_selected_create(&app->kernel_ray_gen
