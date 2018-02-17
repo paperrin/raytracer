@@ -33,6 +33,8 @@ kernel void			kernel_ray_shade(
 	t_ray_state				state_refrac;
 	char					has_reflection;
 	char					has_refraction;
+	int						block_size;
+	int						middle_pos;
 
 	state = ray_states[gid];
 	color = (cl_float3)(0, 0, 0);
@@ -44,9 +46,9 @@ kernel void			kernel_ray_shade(
 	{
 		obj = objs[state.obj_id];
 		hit_pos = state.ray.origin + state.t * state.ray.dir;
-		normal = obj_surface_normal(&obj, hit_pos);
+		normal = obj_surface_normal(&obj, hit_pos, state.ray);
 		hit_pos += normal * (t_real)1e-10;
-		color = shade(obj, hit_pos,
+		color = shade(obj, hit_pos, state.ray,
 				objs, *objs_size,
 				mats, *mats_size,
 				textures, *textures_size,
@@ -85,8 +87,10 @@ kernel void			kernel_ray_shade(
 	}
 	if (config->cur_depth < config->max_depth)
 	{
-		ray_states[gid] = state_reflec;
-		ray_states[gid + config->screen_size.x * config->screen_size.y] = state_refrac;
+		block_size = config->screen_size.x * config->screen_size.y;
+		middle_pos = (config->cur_depth + 1) * block_size;
+		ray_states[gid % middle_pos] = state_reflec;
+		ray_states[gid % middle_pos + middle_pos] = state_refrac;
 	}
 }
 

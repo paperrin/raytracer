@@ -7,7 +7,7 @@
 #include "obj_surface_color.cl"
 #include "light_get_dir.cl"
 
-cl_float3			shade(t_obj obj, t_real3 hit_pos,
+cl_float3			shade(t_obj obj, t_real3 hit_pos, t_ray ray,
 		constant t_obj *objs, cl_uint objs_size,
 		constant t_material *mats, cl_uint mats_size,
 		constant t_texture *textures, cl_uint textures_size,
@@ -24,7 +24,7 @@ cl_float3			tone_map(cl_float3 color)
 	return (color);
 }
 
-cl_float3			shade(t_obj obj, t_real3 hit_pos,
+cl_float3			shade(t_obj obj, t_real3 hit_pos, t_ray ray,
 		constant t_obj *objs, cl_uint objs_size,
 		constant t_material *mats, cl_uint mats_size,
 		constant t_texture *textures, cl_uint textures_size,
@@ -42,7 +42,7 @@ cl_float3			shade(t_obj obj, t_real3 hit_pos,
 	t_real			light_dist;
 	cl_float3		surface_color;
 
-	surface_normal = obj_surface_normal(&obj, hit_pos);
+	surface_normal = obj_surface_normal(&obj, hit_pos, ray);
 	light_ray.origin = hit_pos;
 	surface_color = obj_surface_color(
 			&obj,

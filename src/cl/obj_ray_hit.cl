@@ -14,15 +14,17 @@ t_real				obj_plane_ray_hit(constant t_plane *plane, t_ray *ray);
 t_real			solve_quadratic(t_real3 abc, t_real *values)
 {
 	t_real		discr;
+	t_real		sq_discr;
 	t_real		tmp;
 
 	discr = abc[1] * abc[1] - 4 * abc[0] * abc[2];
 	if (discr < 0)
 		return (-1);
-	discr = sqrt(discr);
-	values[0] = (-abc[1] - discr) / (2 * abc[0]);
-	values[1] = (-abc[1] + discr) / (2 * abc[0]);
-	if (values[1] < values[0])
+	sq_discr = sqrt(discr);
+	values[0] = (-abc[1] - sq_discr) / (2 * abc[0]);
+	values[1] = (-abc[1] + sq_discr) / (2 * abc[0]);
+	if ((values[0] < 0 && values[1] > values[0])
+		|| values[1] < values[0])
 	{
 		tmp = values[1];
 		values[1] = values[0];
@@ -85,12 +87,11 @@ t_real			obj_plane_ray_hit(constant t_plane *plane, t_ray *ray)
 	t_real3		p;
 
 	denom =	dot(plane->normal, ray->dir);
-	if (-denom > 1e-10)
+	if (fabs(denom) > 1e-10)
 	{
 		p = plane->pos - ray->origin;
 		t = dot(plane->normal, p) / denom;
-		if (t >= 0)
-			return (t);
+		return (t);
 	}
 	return (-1);
 }
