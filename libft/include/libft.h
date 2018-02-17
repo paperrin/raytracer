@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/03 12:52:47 by paperrin          #+#    #+#             */
-/*   Updated: 2018/01/21 23:49:54 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/03/04 21:42:21 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,8 @@ int				ft_strnequ(char const *s1, char const *s2, size_t n);
 char			*ft_strsub(char const *s, unsigned int start, size_t len);
 char			*ft_strjoin(char const *s1, char const *s2);
 char			*ft_strjoin_free(char **a, char **b, int free);
+char			*ft_strjoin_char(char const *str, char c, int order);
+char			*ft_strjoin_char_free(char **str, char c, int order, int free);
 char			*ft_strnjoin(t_strnjoin_arg s1, t_strnjoin_arg s2);
 char			*ft_strnjoin_free(t_strnjoin_arg s1, t_strnjoin_arg s2
 		, int free);

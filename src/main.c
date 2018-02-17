@@ -6,22 +6,37 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/09 16:14:42 by paperrin          #+#    #+#             */
-/*   Updated: 2018/02/17 15:33:39 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/03/04 23:42:24 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
 #include "ppm.h"
 
+#include "scene_parser.h"
+
 int			app_create(t_app *app)
 {
+	t_token_stream	*tkstream;
+	t_token			*tk;
+
+	if ((tkstream = tkstream_open("example_2.rt")))
+	{
+		while ((tk = tkstream_next(tkstream)))
+		{
+			tkstream_print_token(tk);
+			free(tk);
+		}
+		tkstream_close(&tkstream);
+	}
 	if (!window_create(&app->win, APP_WIDTH, APP_HEIGHT, APP_TITLE))
 		return (0);
 	if (!image_create(&app->draw_buf, APP_WIDTH, APP_HEIGHT))
 		app_destroy(app, EXIT_FAILURE);
 	if (!(opencl_create(&app->ocl, 1)))
 		app_destroy(app, EXIT_FAILURE);
-	if (!kernel_ray_gen_primary_create(app)) app_destroy(app, EXIT_FAILURE);
+	if (!kernel_ray_gen_primary_create(app))
+		app_destroy(app, EXIT_FAILURE);
 	if (!kernel_ray_trace_create(app))
 		app_destroy(app, EXIT_FAILURE);
 	if (!kernel_clear_create(app))
@@ -65,7 +80,7 @@ void		render(void *user_ptr, double elapsed)
 	if (!kernel_clear_launch(app))
 		app_destroy(app, EXIT_FAILURE);
 	depth = -1;
-	while (++depth <= 0)
+	while (++depth <= 1)
 	{
 		if (!kernel_ray_trace_launch(app))
 			app_destroy(app, EXIT_FAILURE);
@@ -142,7 +157,10 @@ int			main(int ac, char **av)
 */
 	if (!(obj = (t_obj*)ft_vector_push_back(&app.scene.v_obj, NULL)))
 		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
-	*obj = obj_plane(vec3r(0, 0, 0), vec3r(0, 0, -1), vec3r(1, 0, 0), 1);
+	*obj = obj_plane(vec3r(0, 0, 1), vec3r(0, 0, -1), vec3r(1, 0, 0), 1);
+	if (!(obj = (t_obj*)ft_vector_push_back(&app.scene.v_obj, NULL)))
+		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
+	*obj = obj_plane(vec3r(0, 0, -3), vec3r(0, 0, 1), vec3r(1, 0, 0), 1);
 
 /*
 	if (!(obj = (t_obj*)ft_vector_push_back(&app.scene.v_obj, NULL)))
@@ -168,9 +186,9 @@ int			main(int ac, char **av)
 	if (!(mat = (t_material*)ft_vector_push_back(&app.scene.v_material, NULL)))
 		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
 	mat->color = vec3f(1, 1, 1);
-	mat->reflection = 0;
+	mat->reflection = 0.8;
 	mat->refraction = 0;
-	mat->texture_id = 1;
+	mat->texture_id = -1;
 	if (!(mat = (t_material*)ft_vector_push_back(&app.scene.v_material, NULL)))
 		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
 	mat->color = vec3f(0.6, 0.6, 1);
@@ -209,7 +227,7 @@ int			main(int ac, char **av)
 	texture->height = height;
 	texture->filter = e_filter_nearest;
 
-	app.config.ambient = vec3f(0.2, 0.2, 0.2);
+	app.config.ambient = vec3f(1, 1, 1);
 	app.config.samples_width = 1;
 	app.scene.v_light = ft_vector_create(sizeof(t_light), NULL, NULL);
 	if (!(light = (t_light*)ft_vector_push_back(&app.scene.v_light, NULL)))

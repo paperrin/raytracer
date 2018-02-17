@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/09 16:36:38 by paperrin          #+#    #+#             */
-/*   Updated: 2018/01/30 22:29:41 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/02/22 21:30:55 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@
 # define APP_WIDTH 720
 # define APP_HEIGHT 480
 # define APP_TITLE "R-T RT"
+
+# define ERR_MEMORY "not enough memory"
 
 typedef struct		s_scene
 {
@@ -62,6 +64,7 @@ void				process_input(t_app *app, double elapsed);
 int					error_cl_code(cl_int err_code);
 void				*perror_cl_code(cl_int err_code);
 int					error_string(char const *const error_str);
+void				*perror_string(char const *const str_error);
 
 t_obj				obj_sphere(t_real3 pos, t_real radius, t_mat_id material);
 t_obj				obj_plane(t_real3 pos, t_real3 normal, t_real3 up, t_mat_id material);

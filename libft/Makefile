@@ -210,6 +210,7 @@ CFILES		=	ft_swap.c			\
 				file/ft_file_to_string.c		\
 				fstream/internal_ft_fstream_read_more.c			\
 				fstream/ft_fstream_sread_to_any_char.c			\
+				fstream/ft_fstream_sread_char.c					\
 				fstream/ft_fstream_read_open.c					\
 				ppm/ppm.c
 

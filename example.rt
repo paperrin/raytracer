@@ -1,0 +1,36 @@
+#this is a comment
+
+recursion_depth(2)
+move_speed(50)
+use_gpu(1)
+
+push()
+
+	new material(0)
+		.color(0, 50, 255)
+		.reflection(0.3)
+		.refraction(0.5)
+
+	new sphere("water_drop")
+		.radius(0.5)
+		.material(0)
+
+	new texture("tex_earth")
+		.ppm("textures/earth.ppm")
+		.filter(BILINEAR)
+
+	rotate(0, 180, 0)
+	translate(0, 0, 10)
+
+	new sphere("earth")
+		.radius(5)
+		.texture("tex_earth")
+
+pop()
+
+translate(0, 0, -2)
+
+camera()
+	.view(0, 0, 720, 480)
+	.samples(1)
+	.filter(SEPIA)

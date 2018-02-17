@@ -9,9 +9,9 @@
 		[ ] Cone
 	[/] Anti-Aliasing
 		[?] Post-process anti-aliasing ( FXAA ? )
-		[A/] MSAA ( oversampling )
+		[/] MSAA ( oversampling )
 	[ ] Undersampling
-	[/] Light types :
+	[x] Light types :
 		[x] Point Lights
 		[x] Directionnal Lights
 		[x] Spot Lights
@@ -45,11 +45,11 @@
 		[ ] Ray intersection ( device )
 			[ ] Algorithm
 			[ ] BBox collision
-	[ ] Scene file
+	[A/] Scene file
 	[T] PPM
 		[ ] Color max val ( host )
 		[?] Color max val ( device )
-	[/] Mouse ray
+	[x] Mouse ray
 	[ ] Object rotation / translation
 	[ ] User Interface
 		[ ] Text

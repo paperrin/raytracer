@@ -6,7 +6,7 @@
 #    By: paperrin <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/12/04 23:22:26 by paperrin          #+#    #+#              #
-#    Updated: 2018/02/14 18:29:26 by paperrin         ###   ########.fr        #
+#    Updated: 2018/02/17 19:06:29 by paperrin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -93,6 +93,8 @@ SET(SRC_FILES
 
 	src/obj/obj_sphere.c
 	src/obj/obj_plane.c
+
+	src/scene_parser/cstream.c
 
 	src/main.c
 	src/process_input.c

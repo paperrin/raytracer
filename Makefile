@@ -77,7 +77,17 @@ CFILES		=	\
 				vec/vec3f.c										\
 				\
 				obj/obj_sphere.c								\
-				obj/obj_plane.c								\
+				obj/obj_plane.c									\
+				\
+				scene_parser/cstream.c							\
+				scene_parser/cstream_skip_chars.c				\
+				scene_parser/token_stream.c						\
+				scene_parser/tkstream_read_token.c				\
+				scene_parser/tkstream_read_punc.c				\
+				scene_parser/tkstream_read_str.c				\
+				scene_parser/tkstream_read_num.c				\
+				scene_parser/tkstream_read_op.c					\
+				scene_parser/tkstream_read_var.c				\
 				\
 				main.c											\
 				process_input.c									\
