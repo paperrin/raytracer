@@ -50,7 +50,7 @@ kernel void			kernel_ray_shade(
 		atomic_addf(&pixels[state.pxl_id * 4 + 0], color.r);
 		atomic_addf(&pixels[state.pxl_id * 4 + 1], color.g);
 		atomic_addf(&pixels[state.pxl_id * 4 + 2], color.b);
-		has_reflection = mats[obj.material_id].reflection > 1e-4;
+		has_reflection = mats[obj.material_id].reflection > 1.f / 255;
 		if (has_reflection)
 		{
 			atomic_inc(n_new_rays);

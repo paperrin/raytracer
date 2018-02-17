@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/09 16:14:42 by paperrin          #+#    #+#             */
-/*   Updated: 2018/02/14 18:21:12 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/02/17 15:33:39 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -209,20 +209,20 @@ int			main(int ac, char **av)
 	texture->height = height;
 	texture->filter = e_filter_nearest;
 
-	app.config.ambient = vec3f(0.8, 0.8, 0.8);
+	app.config.ambient = vec3f(0.2, 0.2, 0.2);
 	app.config.samples_width = 1;
 	app.scene.v_light = ft_vector_create(sizeof(t_light), NULL, NULL);
 	if (!(light = (t_light*)ft_vector_push_back(&app.scene.v_light, NULL)))
 		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
 	light->type = light_type_point;
 	light->color = vec3f(1, 0.8, 0.7);
-	light->intensity = 15;
+	light->intensity = 20;
 	light->as.point.pos = vec3r(0.9, 1, -1);
 	if (!(light = (t_light*)ft_vector_push_back(&app.scene.v_light, NULL)))
 		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
 	light->type = light_type_point;
 	light->color = vec3f(1, 0.8, 0.7);
-	light->intensity = 15;
+	light->intensity = 20;
 	light->as.point.pos = vec3r(-0.5, 0.8, 0.9);
 
 	app.cam.cam_data.pos = vec3r(0, 0.5, -2);

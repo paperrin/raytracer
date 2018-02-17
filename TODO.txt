@@ -5,7 +5,7 @@
 	[/] Primitives :
 		[x] Sphere
 		[x] Plane
-		[A] Cylinder
+		[A/] Cylinder
 		[ ] Cone
 	[/] Anti-Aliasing
 		[?] Post-process anti-aliasing ( FXAA ? )
@@ -13,12 +13,13 @@
 	[ ] Undersampling
 	[/] Light types :
 		[x] Point Lights
-		[A] Directionnal Lights
-		[A] Spot Lights
+		[x] Directionnal Lights
+		[x] Spot Lights
 	[/] Shading :
 		[x] Shadows
+		[?] Soft-Shadows
 		[/] Reflections
-		[ ] Refractions
+		[/] Refractions
 		[ ] Specular
 	[ ] Texture mapping :
 		[ ] General uv mapping :
@@ -36,7 +37,7 @@
 			[ ] On screen texture viewing
 			[ ] Mip Map texture construction
 			[ ] Mip Map level determination
-	[ ] KD-Tree :
+	[?] BVH / KD-Tree:
 		[ ] Creation ( host )
 			[ ] BBox creation
 			[ ] Partitionning
@@ -48,8 +49,10 @@
 	[T] PPM
 		[ ] Color max val ( host )
 		[?] Color max val ( device )
-	[A] Mouse ray
+	[/] Mouse ray
 	[ ] Object rotation / translation
+	[ ] User Interface
+		[ ] Text
 	
 
 
