@@ -5,6 +5,8 @@
 
 t_ray				get_reflected_ray(t_ray_state state, t_real3 hit_pos,
 		t_real3 normal);
+t_ray				get_refracted_ray(t_ray_state state, t_real3 hit_pos,
+		t_real3 normal, t_real ior);
 
 kernel void			kernel_ray_shade(
 		constant read_only t_obj *objs,
@@ -28,43 +30,71 @@ kernel void			kernel_ray_shade(
 	cl_float3				color;
 	t_obj					obj;
 	t_ray_state				state;
+	t_ray_state				state_reflec;
+	t_ray_state				state_refrac;
 	char					has_reflection;
+	char					has_refraction;
+	int						block_size;
+	int						middle_pos;
 
 	state = ray_states[gid];
 	color = (cl_float3)(0, 0, 0);
 	has_reflection = 0;
+	has_refraction = 0;
+	state_refrac.importance = -1;
+	state_reflec.importance = -1;
 	if (state.obj_id > -1)
 	{
 		obj = objs[state.obj_id];
 		hit_pos = state.ray.origin + state.t * state.ray.dir;
-		normal = obj_surface_normal(&obj, hit_pos);
-		hit_pos += normal * (t_real)1e-10;
-		color = shade(obj, hit_pos,
+		normal = obj_surface_normal(&obj, hit_pos, state.ray);
+		hit_pos += normal * (t_real)1e-3;
+		color = shade(obj, hit_pos, state.ray,
 				objs, *objs_size,
 				mats, *mats_size,
 				textures, *textures_size,
 				texture_pixels, *n_texture_pixels,
 				lights, *lights_size, config->ambient);
-		color *= (state.importance - mats[obj.material_id].reflection);
+		color *= (state.importance - mats[obj.material_id].reflection - mats[obj.material_id].refraction);
 		color /= config->samples_width * config->samples_width;
 		atomic_addf(&pixels[state.pxl_id * 4 + 0], color.r);
 		atomic_addf(&pixels[state.pxl_id * 4 + 1], color.g);
 		atomic_addf(&pixels[state.pxl_id * 4 + 2], color.b);
-		has_reflection = mats[obj.material_id].reflection > 1.f / 255;
-		if (has_reflection)
+
+		if (config->cur_depth < config->max_depth)
 		{
-			atomic_inc(n_new_rays);
-			state.ray = get_reflected_ray(state, hit_pos, normal);
-			state.importance *= mats[obj.material_id].reflection;
-			state.t = -1;
-			state.obj_id = -1;
+				has_reflection = mats[obj.material_id].reflection > 1.f / 255;
+				has_refraction = mats[obj.material_id].refraction > 1.f / 255;
+
+				if (has_refraction)
+				{
+					state_refrac = state;
+					atomic_inc(n_new_rays);
+					state_refrac.ray = get_refracted_ray(state, hit_pos, normal, 
+								mats[obj.material_id].indice_of_refraction);
+					state_refrac.importance = state.importance * mats[obj.material_id].refraction;
+					state_refrac.t = -1;
+					state_refrac.obj_id = -1;
+				}
+
+				if (has_reflection)
+				{
+					state_reflec = state;
+					atomic_inc(n_new_rays);
+					state_reflec.ray = get_reflected_ray(state, hit_pos, normal);
+					state_reflec.importance = state.importance * mats[obj.material_id].reflection;
+					state_reflec.t = -1;
+					state_reflec.obj_id = -1;
+				}
 		}
-		else
-			state.importance = -1;
 	}
-	else
-		state.importance = -1;
-	ray_states[gid] = state;
+	if (config->cur_depth < config->max_depth)
+	{
+		block_size = config->screen_size.x * config->screen_size.y;
+		middle_pos = config->samples_width * config->samples_width * pown(2.f, config->cur_depth) * block_size;
+		ray_states[gid % middle_pos] = state_reflec;
+		ray_states[gid % middle_pos + middle_pos] = state_refrac;
+	}
 }
 
 t_ray				get_reflected_ray(t_ray_state state, t_real3 hit_pos, t_real3 normal)
@@ -73,5 +103,18 @@ t_ray				get_reflected_ray(t_ray_state state, t_real3 hit_pos, t_real3 normal)
 
 	ray.origin = hit_pos;
 	ray.dir = state.ray.dir - (t_real)2 * dot(normal, state.ray.dir) * normal;
+	return (ray);
+}
+
+
+t_ray				get_refracted_ray(t_ray_state state, t_real3 hit_pos, t_real3 normal, t_real ior)
+{
+	t_ray			ray;
+
+	ray.origin = hit_pos - normal * 1e-1f; // bias
+	if (dot(normal, state.ray.dir) < 0)
+		ray.dir = -normal + (normal + state.ray.dir) * ior;
+	else
+		ray.dir = normal + (normal - state.ray.dir) * ior;
 	return (ray);
 }

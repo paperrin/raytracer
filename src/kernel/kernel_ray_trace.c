@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/22 18:06:33 by paperrin          #+#    #+#             */
-/*   Updated: 2018/02/01 20:48:57 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/02/18 23:32:46 by alngo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int				kernel_ray_trace_create(t_app *app)
 {
 	cl_uint				objs_size;
 
-	app->kernel_ray_trace.work_size = APP_WIDTH * APP_HEIGHT;
+	app->kernel_ray_trace.work_size = APP_WIDTH * APP_HEIGHT * pow(2, app->config.cur_depth);
 	if (!opencl_kernel_create_n_args(&app->kernel_ray_trace, &app->ocl, 5))
 		return (0);
 	if (!opencl_kernel_load_from_file(&app->kernel_ray_trace
@@ -38,10 +38,13 @@ int				kernel_ray_trace_create(t_app *app)
 
 int				kernel_ray_trace_launch(t_app *app)
 {
+	cl_int		err;
+
+	app->kernel_ray_trace.work_size = APP_WIDTH * APP_HEIGHT * pow(2, app->config.cur_depth);
 	app->n_hits = 0;
 	if (app->n_rays > 0)
 	{
-		app->kernel_ray_trace.work_size = APP_WIDTH * APP_HEIGHT * app->config.samples_width * app->config.samples_width;
+		app->kernel_ray_trace.work_size = APP_WIDTH * APP_HEIGHT * app->config.samples_width * app->config.samples_width * pow(2, app->config.cur_depth);
 		opencl_kernel_arg_select_id(&app->kernel_ray_trace, 2);
 		opencl_kernel_arg_selected_use_kernel_arg_id(&app->kernel_ray_trace
 				, &app->kernel_ray_gen, 2);
@@ -53,11 +56,13 @@ int				kernel_ray_trace_launch(t_app *app)
 			return (0);
 		opencl_kernel_arg_select_id(&app->kernel_ray_trace, 4);
 		opencl_kernel_arg_selected_use_kernel_arg_id(&app->kernel_ray_trace
-				, &app->kernel_ray_gen, 3);
-		clEnqueueNDRangeKernel(app->ocl.cmd_queue, app->kernel_ray_trace.kernel
-				, 1, NULL, &app->kernel_ray_trace.work_size, NULL, 0, NULL, NULL);
-		clEnqueueReadBuffer(app->ocl.cmd_queue, app->kernel_ray_trace.args[3]
-				, CL_TRUE, 0, sizeof(&app->n_hits), &app->n_hits, 0, NULL, NULL);
+		, &app->kernel_ray_gen, 0);
+		if ((err = clEnqueueNDRangeKernel(app->ocl.cmd_queue, app->kernel_ray_trace.kernel
+				, 1, NULL, &app->kernel_ray_trace.work_size, NULL, 0, NULL, NULL)) != CL_SUCCESS)
+			return (error_cl_code(err));
+		if ((err = clEnqueueReadBuffer(app->ocl.cmd_queue, app->kernel_ray_trace.args[3]
+				, CL_TRUE, 0, sizeof(&app->n_hits), &app->n_hits, 0, NULL, NULL)) != CL_SUCCESS)
+			return (error_cl_code(err));
 	}
 	return (1);
 }

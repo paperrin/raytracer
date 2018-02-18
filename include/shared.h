@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/13 14:25:38 by paperrin          #+#    #+#             */
-/*   Updated: 2018/01/30 22:17:41 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/02/18 22:14:55 by alngo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,8 @@ typedef cl_double3		t_real3;
 typedef cl_double4		t_real4;
 typedef cl_double8		t_real8;
 typedef cl_double16		t_real16;
+#define REAL_MAX DBL_MAX
+#define REAL_MIN DBL_MIN
 # else
 typedef cl_float		t_real;
 typedef cl_float2		t_real2;
@@ -65,6 +67,8 @@ typedef cl_float3		t_real3;
 typedef cl_float4		t_real4;
 typedef cl_float8		t_real8;
 typedef cl_float16		t_real16;
+#define REAL_MAX FLT_MAX
+#define REAL_MIN FLT_MIN
 # endif
 
 typedef cl_short		t_obj_type;
@@ -84,6 +88,10 @@ typedef struct			s_config
 {
 	cl_float3			ambient;
 	cl_uint				samples_width;
+	cl_uint2			screen_size;
+	cl_int				max_depth;
+	cl_int				cur_depth;
+	cl_int				mouse_pxl_id;
 }						t_config;
 
 /*
@@ -168,6 +176,7 @@ typedef struct			s_material
 	cl_float3			color;
 	cl_float			reflection;
 	cl_float			refraction;
+	cl_float			indice_of_refraction;
 	cl_int				texture_id;
 }						t_material;
 
@@ -206,6 +215,10 @@ typedef struct			s_light_spot
 {
 	t_real3				pos;
 	t_real3				dir;
+	t_real				beam_angle;
+	t_real				field_angle;
+	t_real				beam_aperture;
+	t_real				field_aperture;
 }						t_light_spot;
 
 typedef struct			s_light_dir
