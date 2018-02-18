@@ -23,13 +23,18 @@ t_real			solve_quadratic(t_real3 abc, t_real *values)
 	sq_discr = sqrt(discr);
 	values[0] = (-abc[1] - sq_discr) / (2 * abc[0]);
 	values[1] = (-abc[1] + sq_discr) / (2 * abc[0]);
-	if ((values[0] < 0 && values[1] > values[0])
-		|| values[1] < values[0])
+	if (values[1] < values[0])
 	{
 		tmp = values[1];
 		values[1] = values[0];
 		values[0] = tmp;
 	}
+	if (values[0] < 0)
+	{
+		tmp = values[1];
+		values[1] = values[0];
+		values[0] = tmp;
+	}	
 	return (discr);
 }
 

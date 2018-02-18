@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/13 14:25:38 by paperrin          #+#    #+#             */
-/*   Updated: 2018/02/17 20:58:49 by alngo            ###   ########.fr       */
+/*   Updated: 2018/02/18 16:55:36 by alngo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,7 @@ typedef struct			s_config
 	cl_uint2			screen_size;
 	cl_int				max_depth;
 	cl_int				cur_depth;
+	cl_int				mouse_pxl_id;
 }						t_config;
 
 /*

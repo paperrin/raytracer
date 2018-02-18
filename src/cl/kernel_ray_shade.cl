@@ -47,7 +47,7 @@ kernel void			kernel_ray_shade(
 		obj = objs[state.obj_id];
 		hit_pos = state.ray.origin + state.t * state.ray.dir;
 		normal = obj_surface_normal(&obj, hit_pos, state.ray);
-		hit_pos += normal * (t_real)1e-10;
+		hit_pos += normal * (t_real)1e-3;
 		color = shade(obj, hit_pos, state.ray,
 				objs, *objs_size,
 				mats, *mats_size,
@@ -68,7 +68,8 @@ kernel void			kernel_ray_shade(
 				{
 					state_refrac = state;
 					atomic_inc(n_new_rays);
-					state_refrac.ray = get_refracted_ray(state, hit_pos, normal, mats[obj.material_id].indice_of_refraction);
+					state_refrac.ray = get_refracted_ray(state, hit_pos, normal, 
+								mats[obj.material_id].indice_of_refraction);
 					state_refrac.importance = state.importance * mats[obj.material_id].refraction;
 					state_refrac.t = -1;
 					state_refrac.obj_id = -1;
@@ -108,7 +109,7 @@ t_ray				get_refracted_ray(t_ray_state state, t_real3 hit_pos, t_real3 normal, t
 {
 	t_ray			ray;
 
-	ray.origin = hit_pos + state.ray.dir * 0.001f; // bias
+	ray.origin = hit_pos - normal * 1e-1f; // bias
 	if (dot(normal, state.ray.dir) < 0)
 		ray.dir = -normal + (normal + state.ray.dir) * ior;
 	else
