@@ -89,7 +89,7 @@ kernel void			kernel_ray_shade(
 	if (config->cur_depth < config->max_depth)
 	{
 		block_size = config->screen_size.x * config->screen_size.y;
-		middle_pos = (config->cur_depth + 1) * block_size;
+		middle_pos = pown(2.f, config->cur_depth) * block_size;
 		ray_states[gid % middle_pos] = state_reflec;
 		ray_states[gid % middle_pos + middle_pos] = state_refrac;
 	}
