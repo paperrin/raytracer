@@ -104,7 +104,7 @@ t_real			obj_cylinder_ray_hit(constant t_cylinder *cylinder, t_ray *ray)
 	t_real3		abc;
 	t_real		hits[2];
 
-	axes[0] = cylinder->pos - cylinder->normal;
+	axes[0] = cylinder->normal;
 	axes[1] = cross(ray->origin - cylinder->pos, axes[0]);
 	axes[2] = cross(ray->dir, axes[0]);
 	abc[0] = dot(axes[2], axes[2]);

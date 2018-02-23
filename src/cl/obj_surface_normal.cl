@@ -30,15 +30,18 @@ t_real3			obj_sphere_surface_normal(t_sphere *sphere, t_real3 point)
 
 t_real3			obj_cylinder_surface_normal(t_cylinder *cylinder, t_real3 point)
 {
-	t_real		d;
 	t_real		h;
+	t_real		d;
 	t_real3		normal;
 
-	d = dot(cylinder->pos - point, cylinder->pos - point);
-	h = sqrt(d - cylinder->radius * cylinder->radius);
-	if (dot(cylinder->pos - point, cylinder->pos - cylinder->normal) > 0)
-		h = -h;
-	normal = cylinder->normal * h + point;
+	h = dot(cylinder->pos - point, cylinder->pos - point);
+	d = sqrt(h - cylinder->radius * cylinder->radius);
+	h = dot(point - cylinder->pos, cylinder->normal);
+	if (fabs(h) < 1e-3)
+		d = 0;
+	else if (h > 0)
+		d = -d;
+	normal = cylinder->normal * d + (point - cylinder->pos);
 	normal = normalize(normal);
 	return (normal);
 }
