@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/09 16:14:42 by paperrin          #+#    #+#             */
-/*   Updated: 2018/02/23 23:15:44 by alngo            ###   ########.fr       */
+/*   Updated: 2018/02/24 21:20:10 by alngo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ int			main(int ac, char **av)
 
 	if (!(obj = (t_obj*)ft_vector_push_back(&app.scene.v_obj, NULL)))
 		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
-	*obj = obj_cylinder(vec3r(1, 0, 0), vec3r(0, 1, 0), vec3r(1, 0, 0), 0.5, 1);
+	*obj = obj_cylinder(vec3r(0, 0, 0), vec3r(1, 0, 0), vec3r(0, 0, 1), 0.5, 0);
 
 	if (!(obj = (t_obj*)ft_vector_push_back(&app.scene.v_obj, NULL)))
 		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
@@ -119,7 +119,7 @@ int			main(int ac, char **av)
 	mat->color = vec3f(1, 1, 1);
 	mat->reflection = 0;
 	mat->refraction = 0;
-	mat->texture_id = 1;
+	mat->texture_id = 0;
 	if (!(mat = (t_material*)ft_vector_push_back(&app.scene.v_material, NULL)))
 		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
 	mat->color = vec3f(0.6, 0.6, 1);
@@ -165,9 +165,9 @@ int			main(int ac, char **av)
 	light->type = light_type_point;
 	light->color = vec3f(1, 1, 1);
 	light->intensity = 120;
-	light->as.point.pos = vec3r(0, 0, -1);
+	light->as.point.pos = vec3r(2, 0, -1);
 
-	app.cam.cam_data.pos = vec3r(0, 0.5, -0.07);
+	app.cam.cam_data.pos = vec3r(0, 0.5, -2);
 	(void)ac;
 	(void)av;
 
