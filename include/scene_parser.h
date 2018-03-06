@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/17 15:51:44 by paperrin          #+#    #+#             */
-/*   Updated: 2018/03/13 17:35:40 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/03/13 17:37:02 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ typedef struct		s_token_var
 typedef struct		s_token_call
 {
 	char			*func;
-	t_token			*args;
+	t_token			**args;
 	int				args_len;
 }					t_token_call;
 
@@ -164,5 +164,8 @@ void				token_bool_destroy(t_token *token);
 
 t_ast				*ast_parse(char const *const file_path);
 void				ast_destroy(t_ast **ast);
+t_token				*ast_parse_expr(t_token_stream *const tkstream);
+t_token				*ast_parse_var(t_token_stream *const tkstream);
+
 
 #endif

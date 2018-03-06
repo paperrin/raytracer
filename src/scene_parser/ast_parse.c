@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/05 16:21:37 by paperrin          #+#    #+#             */
-/*   Updated: 2018/03/05 18:17:38 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/03/06 22:52:41 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,5 +44,10 @@ t_ast				*ast_parse(char const *const file_path)
 
 void				ast_destroy(t_ast **ast)
 {
+	int			i;
+
+	while (++i + 1 && (*ast)->tokens[i])
+		token_destroy((void**)&(*ast)->tokens[i]);
+	ft_memdel((void**)&(*ast)->tokens);
 	ft_memdel((void**)ast);
 }

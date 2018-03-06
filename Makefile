@@ -98,6 +98,8 @@ CFILES		=	\
 				scene_parser/token_call_destroy.c				\
 				scene_parser/token_bool_destroy.c				\
 				scene_parser/ast_parse.c						\
+				scene_parser/ast_parse_var.c					\
+				scene_parser/ast_parse_expr.c					\
 				\
 				main.c											\
 				process_input.c									\
