@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/16 22:37:07 by paperrin          #+#    #+#             */
-/*   Updated: 2018/02/01 20:46:57 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/03/06 18:27:03 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int				kernel_ray_shade_create(t_app *app)
 	cl_uint			lights_size;
 	cl_uint			textures_size;
 
-	app->kernel_ray_shade.work_size = APP_WIDTH * APP_HEIGHT;
+	app->kernel_ray_shade.work_size = app->win.width * app->win.height;
 	if (!opencl_kernel_create_n_args(&app->kernel_ray_shade, &app->ocl, 14))
 		return (0);
 	if (!opencl_kernel_load_from_file(&app->kernel_ray_shade
@@ -84,7 +84,8 @@ int				kernel_ray_shade_launch(t_app *app)
 	size_t		work_size;
 
 	app->n_rays = 0;
-	app->kernel_ray_shade.work_size = APP_WIDTH * APP_HEIGHT * app->config.samples_width * app->config.samples_width;
+	app->kernel_ray_shade.work_size = app->win.width * app->win.height
+		* app->config.samples_width * app->config.samples_width;
 	if (app->n_hits > 0)
 	{
 		work_size = app->kernel_ray_shade.work_size;

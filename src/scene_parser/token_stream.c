@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/17 19:25:19 by paperrin          #+#    #+#             */
-/*   Updated: 2018/03/13 17:31:15 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/03/13 17:35:11 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ t_token_stream		*tkstream_open(char const *const file_path)
 		return (NULL);
 	}
 	tkstream->cur = NULL;
+	tkstream->col = 1;
+	tkstream->line = 1;
 	return (tkstream);
 }
 
@@ -53,7 +55,8 @@ t_token				*tkstream_peek(t_token_stream *const tkstream)
 int					tkstream_error(t_token_stream const *const tkstream,
 		char const *const error)
 {
-	(void)tkstream;
-	(void)error;
+	ft_dprintf(STDERR_FILENO, "%s:%u:%u: error: %s\n",
+			tkstream->cstream->file_path,
+			tkstream->line, tkstream->col, error);
 	return (0);
 }

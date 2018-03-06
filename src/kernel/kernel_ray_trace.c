@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/22 18:06:33 by paperrin          #+#    #+#             */
-/*   Updated: 2018/02/01 20:48:57 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/03/06 18:23:34 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int				kernel_ray_trace_create(t_app *app)
 {
 	cl_uint				objs_size;
 
-	app->kernel_ray_trace.work_size = APP_WIDTH * APP_HEIGHT;
+	app->kernel_ray_trace.work_size = app->win.width * app->win.height;
 	if (!opencl_kernel_create_n_args(&app->kernel_ray_trace, &app->ocl, 5))
 		return (0);
 	if (!opencl_kernel_load_from_file(&app->kernel_ray_trace
@@ -41,7 +41,8 @@ int				kernel_ray_trace_launch(t_app *app)
 	app->n_hits = 0;
 	if (app->n_rays > 0)
 	{
-		app->kernel_ray_trace.work_size = APP_WIDTH * APP_HEIGHT * app->config.samples_width * app->config.samples_width;
+		app->kernel_ray_trace.work_size = app->win.width * app->win.height
+			* app->config.samples_width * app->config.samples_width;
 		opencl_kernel_arg_select_id(&app->kernel_ray_trace, 2);
 		opencl_kernel_arg_selected_use_kernel_arg_id(&app->kernel_ray_trace
 				, &app->kernel_ray_gen, 2);

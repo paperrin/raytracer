@@ -88,6 +88,16 @@ CFILES		=	\
 				scene_parser/tkstream_read_num.c				\
 				scene_parser/tkstream_read_op.c					\
 				scene_parser/tkstream_read_var.c				\
+				scene_parser/token_destroy.c					\
+				scene_parser/token_punc_destroy.c				\
+				scene_parser/token_num_destroy.c				\
+				scene_parser/token_str_destroy.c				\
+				scene_parser/token_kw_destroy.c					\
+				scene_parser/token_var_destroy.c				\
+				scene_parser/token_op_destroy.c					\
+				scene_parser/token_call_destroy.c				\
+				scene_parser/token_bool_destroy.c				\
+				scene_parser/ast_parse.c						\
 				\
 				main.c											\
 				process_input.c									\

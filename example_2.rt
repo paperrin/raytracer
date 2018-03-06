@@ -13,20 +13,20 @@
 
 recursion_depth(0)
 move_speed(50)
-use_gpu(1)
+use_gpu(TRUE)
 
-new distantLight("sun")
-	.color(0xFF)
+distantLight("sun")
+	.color(255, 255, 255)
 	.dir(0, 135, 0)
 
 push()
 	rotate(0, animated(0, 360 / 24), 0)
 	
-	new texture("tex_earth")
+	texture("tex_earth")
 		.ppm("textures/earth.ppm")
 		.filter(BILINEAR)
 	
-	new sphere("earth")
+	sphere("earth")
 		.radius(6.3781)
 		.texture("tex_earth")
 pop()
@@ -37,11 +37,11 @@ push()
 
 	rotate(0, animated(0, 360 / 27), 0)
 	
-	new texture("tex_moon")
+	texture("tex_moon")
 		.ppm("textures/moon.ppm")
 		.filter(BILINEAR)
 	
-	new sphere("moon")
+	sphere("moon")
 		.radius(1.7381)
 		.texture("tex_moon")
 pop()

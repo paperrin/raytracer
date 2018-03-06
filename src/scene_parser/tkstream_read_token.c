@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/19 18:57:19 by paperrin          #+#    #+#             */
-/*   Updated: 2018/03/05 00:02:15 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/03/05 18:23:57 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static t_token	*read_token(t_token_stream *const tkstream, int *is_unsupported)
 		(void*)",()", (void*)&tkstream_read_punc,
 		(void*)"\"", (void*)&tkstream_read_str,
 		(void*)"0123456789", (void*)&tkstream_read_num,
-		(void*)".-+", (void*)&tkstream_read_op,
+		(void*)".-+/*", (void*)&tkstream_read_op,
 		(void*)"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ",
 			(void*)&tkstream_read_var};
 	int					i;
@@ -55,6 +55,8 @@ t_token			*tkstream_read_token(t_token_stream *const tkstream)
 	tkstream_read_comment(tkstream);
 	if (!(tkstream->cur = (t_token*)malloc(sizeof(*tkstream->cur))))
 		return (perror_string(ERR_MEMORY));
+	tkstream->col = tkstream->cstream->col;
+	tkstream->line = tkstream->cstream->line;
 	if (!read_token(tkstream, &is_unsupported))
 	{
 		if (is_unsupported)

@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/09 16:14:42 by paperrin          #+#    #+#             */
-/*   Updated: 2018/03/04 23:42:24 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/03/06 18:28:58 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,9 @@ int			app_create(t_app *app)
 		}
 		tkstream_close(&tkstream);
 	}
-	if (!window_create(&app->win, APP_WIDTH, APP_HEIGHT, APP_TITLE))
+	if (!window_create(&app->win, 720, 480, APP_TITLE))
 		return (0);
-	if (!image_create(&app->draw_buf, APP_WIDTH, APP_HEIGHT))
+	if (!image_create(&app->draw_buf, app->win.width, app->win.height))
 		app_destroy(app, EXIT_FAILURE);
 	if (!(opencl_create(&app->ocl, 1)))
 		app_destroy(app, EXIT_FAILURE);
@@ -91,7 +91,7 @@ void		render(void *user_ptr, double elapsed)
 	}
 	clFinish(app->ocl.cmd_queue);
 	clEnqueueReadBuffer(app->ocl.cmd_queue, app->kernel_clear.args[0]
-			, CL_TRUE, 0, sizeof(cl_float) * 4 * APP_WIDTH * APP_HEIGHT
+			, CL_TRUE, 0, sizeof(cl_float) * 4 * app->win.width * app->win.height
 			, app->draw_buf.pixels, 0, 0, 0);
 	image_put(&app->draw_buf, 0, 0);
 	window_swap_buffers(&app->win);

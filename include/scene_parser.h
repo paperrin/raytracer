@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/17 15:51:44 by paperrin          #+#    #+#             */
-/*   Updated: 2018/03/13 17:34:23 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/03/13 17:35:40 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include "rt.h"
 
 # define TKSTREAM_NB_F_TOKENS 5
+# define TOKEN_DESTROY_NB_F_TOKENS 8
 
 typedef enum		e_token_type
 {
@@ -37,6 +38,7 @@ typedef struct s_token_stream	t_token_stream;
 
 typedef t_token *(t_f_token_read)(t_token_stream *const);
 typedef void	(t_f_token_print)(t_token const *const);
+typedef void	(t_f_token_destroy)(t_token*);
 
 typedef struct		s_token_var
 {
@@ -110,7 +112,14 @@ struct				s_token_stream
 {
 	t_token			*cur;
 	t_char_stream	*cstream;
+	unsigned int	line;
+	unsigned int	col;
 };
+
+typedef struct		s_ast
+{
+	t_token			**tokens;
+}					t_ast;
 
 t_char_stream		*cstream_open(char const *const file_path);
 void				cstream_close(t_char_stream **cstream);
@@ -143,5 +152,17 @@ void				tkstream_print_str(t_token const *const token);
 void				tkstream_print_num(t_token const *const token);
 void				tkstream_print_var(t_token const *const token);
 
+void				token_destroy(t_token **token);
+void				token_punc_destroy(t_token *token);
+void				token_num_destroy(t_token *token);
+void				token_str_destroy(t_token *token);
+void				token_kw_destroy(t_token *token);
+void				token_var_destroy(t_token *token);
+void				token_op_destroy(t_token *token);
+void				token_call_destroy(t_token *token);
+void				token_bool_destroy(t_token *token);
+
+t_ast				*ast_parse(char const *const file_path);
+void				ast_destroy(t_ast **ast);
 
 #endif
