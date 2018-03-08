@@ -6,7 +6,7 @@
 #    By: paperrin <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/12/04 23:22:26 by paperrin          #+#    #+#              #
-#    Updated: 2018/02/14 18:29:26 by paperrin         ###   ########.fr        #
+#    Updated: 2018/03/17 22:09:00 by tlernoul         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -78,6 +78,8 @@ SET(SRC_FILES
 	src/kernel/kernel_ray_trace.c
 	src/kernel/kernel_clear.c
 	src/kernel/kernel_ray_shade.c
+	src/kernel/kernel_prefix_sum.c
+	src/kernel/kernel_ray_sort.c
 
 	src/callbacks/callback_key.c
 	src/callbacks/callback_mouse_motion.c
@@ -105,12 +107,15 @@ files_import(
 	src/cl/kernel_ray_gen_primary.cl
 	src/cl/kernel_ray_shade.cl
 	src/cl/kernel_ray_trace.cl
+	src/cl/kernel_prefix_sum.cl
+	src/cl/kernel_ray_sort.cl
 	src/cl/light_get_dir.cl
 	src/cl/obj_ray_hit.cl
 	src/cl/obj_surface_color.cl
 	src/cl/obj_surface_normal.cl
 	src/cl/obj_surface_uv_map.cl
 	src/cl/shade.cl
+	textures/brick.ppm
 )
 add_executable(rt ${SRC_FILES})
 

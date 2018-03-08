@@ -18,7 +18,6 @@ kernel void			kernel_ray_shade(
 		global read_only cl_uchar *texture_pixels,
 		global read_only ulong *n_texture_pixels,
 		global read_write t_ray_state *ray_states,
-		global read_write uint *n_new_rays,
 		global read_write cl_float *pixels,
 		global read_only t_config *config)
 {
@@ -53,7 +52,6 @@ kernel void			kernel_ray_shade(
 		has_reflection = mats[obj.material_id].reflection > 1.f / 255;
 		if (has_reflection)
 		{
-			atomic_inc(n_new_rays);
 			state.ray = get_reflected_ray(state, hit_pos, normal);
 			state.importance *= mats[obj.material_id].reflection;
 			state.t = -1;

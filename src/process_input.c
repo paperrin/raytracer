@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/19 19:21:17 by paperrin          #+#    #+#             */
-/*   Updated: 2018/02/16 20:11:07 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/03/07 20:28:42 by tlernoul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,12 @@ static void		process_input_mouse(t_app *app, double elapsed)
 	double			x;
 	double			y;
 
+	glfwGetCursorPos(app->win.glfw_win, &x, &y);
+	app->config.mouse_gid = (int)x + ((int)y * app->win.width);
+	app->config.mouse_xy.s[0] = x;
+	app->config.mouse_xy.s[1] = y;
 	if (!app->mouse_captured)
 		return ;
-	glfwGetCursorPos(app->win.glfw_win, &x, &y);
 	if (x != last_x)
 		app->cam.rot.s[1] -= rot * elapsed * ((x < last_x) * 2 - 1);
 	if (y != last_y)

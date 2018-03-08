@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/17 14:34:09 by paperrin          #+#    #+#             */
-/*   Updated: 2018/01/24 15:18:47 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/03/16 19:27:07 by tlernoul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,15 @@ int				kernel_clear_create(t_app *app)
 
 int				kernel_clear_launch(t_app *app)
 {
-	clEnqueueNDRangeKernel(app->ocl.cmd_queue, app->kernel_clear.kernel
-			, 1, NULL, &app->kernel_clear.work_size, NULL, 0, NULL, NULL);
+	cl_int		err;
+
+	if (CL_SUCCESS != (err = clEnqueueNDRangeKernel(app->ocl.cmd_queue, app->kernel_clear.kernel
+			, 1, NULL, &app->kernel_clear.work_size, NULL, 0, NULL, NULL)))
+		return (error_cl_code(err));
 	return (1);
 }
 
-void		kernel_clear_destroy(t_app *app)
+void			kernel_clear_destroy(t_app *app)
 {
 	opencl_kernel_destroy(&app->kernel_clear);
 }

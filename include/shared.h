@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/13 14:25:38 by paperrin          #+#    #+#             */
-/*   Updated: 2018/01/30 22:17:41 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/03/09 18:44:44 by tlernoul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,17 @@ typedef struct			s_config
 {
 	cl_float3			ambient;
 	cl_uint				samples_width;
+	cl_uint				mouse_gid;
+	cl_uint2			mouse_xy;
 }						t_config;
+
+typedef struct			s_prefix_sums
+{
+	cl_uint				start;
+	cl_uint				offset;
+	cl_uint				arr_size;
+	cl_long				step;
+}						t_prefix_sums;
 
 /*
 ** Rays
