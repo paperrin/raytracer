@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/09 16:52:27 by paperrin          #+#    #+#             */
-/*   Updated: 2018/01/20 19:13:31 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/03/12 20:05:23 by ilarbi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,4 +28,6 @@ void		callback_key(void *user_ptr, int key, int action)
 		else
 			glfwSetInputMode(app->win.glfw_win, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
 	}
+	else if (key == GLFW_KEY_Z && action == GLFW_PRESS)
+		app->config.shading_model = !app->config.shading_model;
 }

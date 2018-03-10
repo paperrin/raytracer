@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/13 14:25:38 by paperrin          #+#    #+#             */
-/*   Updated: 2018/01/30 22:17:41 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/03/12 22:05:50 by ilarbi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,9 +67,11 @@ typedef cl_float8		t_real8;
 typedef cl_float16		t_real16;
 # endif
 
-typedef cl_short		t_obj_type;
-typedef cl_int			t_obj_id;
-typedef cl_short		t_mat_id;
+typedef cl_short			t_obj_type;
+typedef cl_int				t_obj_id;
+typedef cl_short			t_mat_id;
+typedef	struct s_material	t_material;
+typedef	struct s_ray		t_ray; 
 
 typedef struct			s_camera_data
 {
@@ -80,21 +82,30 @@ typedef struct			s_camera_data
 	t_real				pxl_ratio;
 }						t_camera_data;
 
+typedef cl_float3 (t_f_specular_model)(t_material, t_real3, t_ray, t_real3, t_real3, cl_float3);
+
+typedef enum			e_shading_model
+{
+	shading_model_phong = 0,
+	shading_model_blinn
+}						t_e_shading_model;
+
 typedef struct			s_config
 {
 	cl_float3			ambient;
 	cl_uint				samples_width;
+	t_e_shading_model	shading_model;
 }						t_config;
 
 /*
 ** Rays
 */
 
-typedef struct			s_ray
+struct					s_ray
 {
 	t_real3				origin;
 	t_real3				dir;
-}						t_ray;
+};
 
 typedef struct			s_ray_state
 {
@@ -163,13 +174,16 @@ typedef struct			s_obj
 	t_obj_container		as;
 }						t_obj;
 
-typedef struct			s_material
+struct					s_material
 {
 	cl_float3			color;
 	cl_float			reflection;
 	cl_float			refraction;
+	cl_float			specular;
+	cl_float3			specular_color;
+	cl_float			specular_exp;
 	cl_int				texture_id;
-}						t_material;
+};
 
 typedef enum			e_filter
 {
