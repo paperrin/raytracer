@@ -79,27 +79,27 @@ CFILES		=	\
 				obj/obj_sphere.c								\
 				obj/obj_plane.c									\
 				\
-				scene_parser/cstream.c							\
-				scene_parser/cstream_skip_chars.c				\
-				scene_parser/token_stream.c						\
-				scene_parser/tkstream_read_token.c				\
-				scene_parser/tkstream_read_punc.c				\
-				scene_parser/tkstream_read_str.c				\
-				scene_parser/tkstream_read_num.c				\
-				scene_parser/tkstream_read_op.c					\
-				scene_parser/tkstream_read_var.c				\
-				scene_parser/token_destroy.c					\
-				scene_parser/token_punc_destroy.c				\
-				scene_parser/token_num_destroy.c				\
-				scene_parser/token_str_destroy.c				\
-				scene_parser/token_kw_destroy.c					\
-				scene_parser/token_var_destroy.c				\
-				scene_parser/token_op_destroy.c					\
-				scene_parser/token_call_destroy.c				\
-				scene_parser/token_bool_destroy.c				\
-				scene_parser/ast_parse.c						\
-				scene_parser/ast_parse_var.c					\
-				scene_parser/ast_parse_expr.c					\
+				scene_parser/cstream/cstream.c							\
+				scene_parser/cstream/cstream_skip_chars.c				\
+				scene_parser/tkstream/tkstream.c					\
+				scene_parser/tkstream/tkstream_read_token.c			\
+				scene_parser/tkstream/tkstream_read_punc.c			\
+				scene_parser/tkstream/tkstream_read_str.c			\
+				scene_parser/tkstream/tkstream_read_num.c			\
+				scene_parser/tkstream/tkstream_read_op.c			\
+				scene_parser/tkstream/tkstream_read_var.c			\
+				scene_parser/token/token_destroy.c						\
+				scene_parser/token/token_punc_destroy.c					\
+				scene_parser/token/token_num_destroy.c					\
+				scene_parser/token/token_str_destroy.c					\
+				scene_parser/token/token_kw_destroy.c					\
+				scene_parser/token/token_var_destroy.c					\
+				scene_parser/token/token_op_destroy.c					\
+				scene_parser/token/token_call_destroy.c					\
+				scene_parser/token/token_bool_destroy.c					\
+				scene_parser/ast/ast_parse.c						\
+				scene_parser/ast/ast_parse_var.c					\
+				scene_parser/ast/ast_parse_expr.c					\
 				\
 				main.c											\
 				process_input.c									\

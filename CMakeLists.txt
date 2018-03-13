@@ -6,7 +6,7 @@
 #    By: paperrin <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/12/04 23:22:26 by paperrin          #+#    #+#              #
-#    Updated: 2018/02/17 19:06:29 by paperrin         ###   ########.fr        #
+#    Updated: 2018/03/13 16:58:33 by paperrin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -94,7 +94,27 @@ SET(SRC_FILES
 	src/obj/obj_sphere.c
 	src/obj/obj_plane.c
 
-	src/scene_parser/cstream.c
+	src/scene_parser/cstream/cstream.c
+	src/scene_parser/cstream/cstream_skip_chars.c
+	src/scene_parser/tkstream/tkstream.c
+	src/scene_parser/tkstream/tkstream_read_token.c
+	src/scene_parser/tkstream/tkstream_read_punc.c
+	src/scene_parser/tkstream/tkstream_read_str.c
+	src/scene_parser/tkstream/tkstream_read_num.c
+	src/scene_parser/tkstream/tkstream_read_op.c
+	src/scene_parser/tkstream/tkstream_read_var.c
+	src/scene_parser/token/token_destroy.c
+	src/scene_parser/token/token_punc_destroy.c
+	src/scene_parser/token/token_num_destroy.c
+	src/scene_parser/token/token_str_destroy.c
+	src/scene_parser/token/token_kw_destroy.c
+	src/scene_parser/token/token_var_destroy.c
+	src/scene_parser/token/token_op_destroy.c
+	src/scene_parser/token/token_call_destroy.c
+	src/scene_parser/token/token_bool_destroy.c
+	src/scene_parser/ast/ast_parse.c
+	src/scene_parser/ast/ast_parse_var.c
+	src/scene_parser/ast/ast_parse_expr.c
 
 	src/main.c
 	src/process_input.c

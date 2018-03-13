@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/05 16:21:37 by paperrin          #+#    #+#             */
-/*   Updated: 2018/03/06 22:52:41 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/03/12 15:39:32 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ static int			parse_program(t_ast *const ast,
 
 	if (!(token = tkstream_peek(tkstream)))
 		return (0);
+
 	(void)ast;
 	return (1);
 
@@ -46,8 +47,9 @@ void				ast_destroy(t_ast **ast)
 {
 	int			i;
 
+	i = -1;
 	while (++i + 1 && (*ast)->tokens[i])
-		token_destroy((void**)&(*ast)->tokens[i]);
+		token_destroy(&(*ast)->tokens[i]);
 	ft_memdel((void**)&(*ast)->tokens);
 	ft_memdel((void**)ast);
 }

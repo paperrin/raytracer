@@ -1,0 +1,259 @@
+{
+	"prog": {
+		"tokens": [
+			{
+				"type": "token_type_call",
+				"func": "recursion_depth",
+				"args": [
+					{ "type": "token_type_num", "value": 2 }
+				],
+				"args_len": 1
+			},
+			{
+				"type": "token_type_call",
+				"func": "move_speed",
+				"args": [
+					{ "type": "token_type_num", "value": 50 }
+				],
+				"args_len": 1
+			},
+			{
+				"type": "token_type_call",
+				"func": "use_gpu",
+				"args": [
+					{ "type": "token_type_bool", "value": true }
+				],
+				"args_len": 1
+			},
+			{
+				"type": "token_type_call",
+				"func": "push",
+				"args": [ ],
+				"args_len": 0
+			},
+			{
+				"type": "token_type_op",
+				"value": ".",
+				"left": {
+					"type": "token_type_call",
+					"func": "material",
+					"args": [
+						{ "type": "token_type_num", "value": 0 }
+					],
+					"args_len": 1
+				},
+				"right": {
+					"type": "token_type_op",
+					"value": ".",
+					"left": {
+						"type": "token_type_call",
+						"func": "color",
+						"args": [
+							{ "type": "token_type_num", "value": 0 },
+							{ "type": "token_type_num", "value": 50 },
+							{ "type": "token_type_num", "value": 255 }
+						],
+						"args_len": 3
+					},
+					"right": {
+						"type": "token_type_op",
+						"value": ".",
+						"left": {
+							"type": "token_type_call",
+							"func": "reflection",
+							"args": [
+								{ "type": "token_type_num", "value": 0.3 }
+							],
+							"args_len": 1
+						},
+						"right": {
+							"type": "token_type_call",
+							"func": "refraction",
+							"args": [
+								{ "type": "token_type_num", "value": 0.5 }
+							],
+							"args_len": 1
+						}
+					}
+				}
+			},
+			{
+				"type": "token_type_op",
+				"value": ".",
+				"left": {
+					"type": "token_type_call",
+					"func": "sphere",
+					"args": [
+						{ "type": "token_type_str", "value": "water_drop" }
+					],
+					"args_len": 1
+				},
+				"right": {
+					"type": "token_type_op",
+					"value": ".",
+					"left": {
+						"type": "token_type_call",
+						"func": "radius",
+						"args": [
+							{ "type": "token_type_num", "value": 0.5 }
+						],
+						"args_len": 1
+					},
+					"right": {
+						"type": "token_type_call",
+						"func": "material",
+						"args": [
+							{ "type": "token_type_num", "value": 0 }
+						],
+						"args_len": 1
+					}
+				}
+			},
+			{
+				"type": "token_type_op",
+				"value": ".",
+				"left": {
+					"type": "token_type_call",
+					"func": "texture",
+					"args": [
+						{ "type": "token_type_str", "value": "tex_earth" }
+					],
+					"args_len": 1
+				},
+				"right": {
+					"type": "token_type_op",
+					"value": ".",
+					"left": {
+						"type": "token_type_call",
+						"func": "ppm",
+						"args": [
+							{ "type": "token_type_str", "value": "textures/earth.ppm" }
+						],
+						"args_len": 1
+					},
+					"right": {
+						"type": "token_type_call",
+						"func": "filter",
+						"args": [
+							{ "type": "token_type_var", "name": "BILINEAR" }
+						],
+						"args_len": 1
+					}
+				}
+			},
+			{
+				"type": "token_type_call",
+				"func": "rotate",
+				"args": [
+					{ "type": "token_type_num", "value": 0 },
+					{ "type": "token_type_num", "value": 180 },
+					{ "type": "token_type_num", "value": 0 }
+				],
+				"args_len": 3
+			},
+			{
+				"type": "token_type_call",
+				"func": "translate",
+				"args": [
+					{ "type": "token_type_num", "value": 0 },
+					{ "type": "token_type_num", "value": 0 },
+					{ "type": "token_type_num", "value": 10 }
+				],
+				"args_len": 3
+			},
+			{
+				"type": "token_type_op",
+				"value": ".",
+				"left": {
+					"type": "token_type_call",
+					"func": "sphere",
+					"args": [
+						{ "type": "token_type_str", "value": "earth" }
+					],
+					"args_len": 1
+				},
+				"right": {
+					"type": "token_type_op",
+					"value": ".",
+					"left": {
+						"type": "token_type_call",
+						"func": "radius",
+						"args": [
+							{ "type": "token_type_num", "value": 5 }
+						],
+						"args_len": 1
+					},
+					"right": {
+						"type": "token_type_call",
+						"func": "texture",
+						"args": [
+							{ "type": "token_type_str", "value": "tex_earth" }
+						],
+						"args_len": 1
+					}
+				}
+			},
+			{
+				"type": "token_type_call",
+				"func": "pop",
+				"args": [ ],
+				"args_len": 0
+			},
+			{
+				"type": "token_type_call",
+				"func": "translate",
+				"args": [
+					{ "type": "token_type_num", "value": 0 },
+					{ "type": "token_type_num", "value": 0 },
+					{ "type": "token_type_num", "value": -2 }
+				],
+				"args_len": 3
+			},
+			{
+				"type": "token_type_op",
+				"value": ".",
+				"left": {
+					"type": "token_type_call",
+					"func": "camera",
+					"args": [ ],
+					"args_len": 0
+				},
+				"right": {
+					"type": "token_type_op",
+					"value": ".",
+					"left": {
+						"type": "token_type_call",
+						"func": "view",
+						"args": [
+							{ "type": "token_type_num", "value": 0 },
+							{ "type": "token_type_num", "value": 0 },
+							{ "type": "token_type_num", "value": 720 },
+							{ "type": "token_type_num", "value": 480 }
+						],
+						"args_len": 4
+					},
+					"right": {
+						"type": "token_type_op",
+						"value": ".",
+						"left": {
+							"type": "token_type_call",
+							"func": "samples",
+							"args": [
+								{ "type": "token_type_num", "value": 1 }
+							],
+							"args_len": 1
+						},
+						"right": {
+							"type": "token_type_call",
+							"func": "filter",
+							"args": [
+								{ "type": "token_type_var", "name": "SEPIA" }
+							],
+							"args_len": 1
+						}
+					}
+				}
+			}
+		]
+	}
+}
