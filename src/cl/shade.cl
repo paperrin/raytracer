@@ -7,7 +7,7 @@
 #include "obj_surface_color.cl"
 #include "light_get_dir.cl"
 
-cl_float3			shade(t_obj obj, t_ray ray, t_real3 hit_pos,
+cl_float3			shade(t_obj obj, t_real3 hit_pos, t_ray ray,
 		constant t_obj *objs, cl_uint objs_size,
 		constant t_material *mats, cl_uint mats_size,
 		constant t_texture *textures, cl_uint textures_size,
@@ -81,7 +81,7 @@ cl_float3			get_specular_color_phong(t_material mat, t_real3 view_dir,
 	return (0);
 }
 
-cl_float3			shade(t_obj obj, t_ray ray, t_real3 hit_pos,
+cl_float3			shade(t_obj obj, t_real3 hit_pos, t_ray ray,
 		constant t_obj *objs, cl_uint objs_size,
 		constant t_material *mats, cl_uint mats_size,
 		constant t_texture *textures, cl_uint textures_size,
@@ -99,13 +99,17 @@ cl_float3			shade(t_obj obj, t_ray ray, t_real3 hit_pos,
 	t_real			light_dist;
 	cl_float3		surface_color;
 
-	surface_normal = obj_surface_normal(&obj, hit_pos);
+	surface_normal = obj_surface_normal(&obj, hit_pos, ray);
 	light_ray.origin = hit_pos;
 	surface_color = obj_surface_color(
 			&obj,
 			mats,
 			textures, textures_size,
-			texture_pixels, n_texture_pixels,
+			texture_pixf (shading_model == shading_model_blinn)
+			 34         return (get_specular_color_blinn(mat, view_dir, light_ray, hit_pos, surface_normal, light_color));
+			  35     return (get_specular_color_phong(mat, view_dir, light_ray, hit_pos, surface_normal, light_color));
+			   36 }
+			    37els, n_texture_pixels,
 			hit_pos);
 	color = surface_color * config->ambient;
 	i = -1;
