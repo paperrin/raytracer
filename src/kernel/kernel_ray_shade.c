@@ -18,7 +18,7 @@ int				kernel_ray_shade_create(t_app *app)
 	cl_uint			lights_size;
 	cl_uint			textures_size;
 
-	app->kernel_ray_shade.work_size = APP_WIDTH * APP_HEIGHT * pow(2, app->config.cur_depth);
+	app->kernel_ray_shade.work_size = app->win.width * app->win.height * pow(2, app->config.cur_depth);
 	if (!opencl_kernel_create_n_args(&app->kernel_ray_shade, &app->ocl, 14))
 		return (0);
 	if (!opencl_kernel_load_from_file(&app->kernel_ray_shade
@@ -84,7 +84,7 @@ int				kernel_ray_shade_launch(t_app *app)
 	cl_int		err;
 
 	app->n_rays = 0;
-	app->kernel_ray_shade.work_size = APP_WIDTH * APP_HEIGHT
+	app->kernel_ray_shade.work_size = app->win.width * app->win.height
 		* app->config.samples_width * app->config.samples_width * pow(2, app->config.cur_depth);
 	if (app->n_hits > 0)
 	{

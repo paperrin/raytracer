@@ -105,11 +105,7 @@ cl_float3			shade(t_obj obj, t_real3 hit_pos, t_ray ray,
 			&obj,
 			mats,
 			textures, textures_size,
-			texture_pixf (shading_model == shading_model_blinn)
-			 34         return (get_specular_color_blinn(mat, view_dir, light_ray, hit_pos, surface_normal, light_color));
-			  35     return (get_specular_color_phong(mat, view_dir, light_ray, hit_pos, surface_normal, light_color));
-			   36 }
-			    37els, n_texture_pixels,
+			texture_pixels, n_texture_pixels,
 			hit_pos);
 	color = surface_color * config->ambient;
 	i = -1;

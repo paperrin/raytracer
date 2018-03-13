@@ -17,7 +17,7 @@ int			app_create(t_app *app)
 {
 	if (!window_create(&app->win, APP_WIDTH, APP_HEIGHT, APP_TITLE))
 		return (0);
-	if (!image_create(&app->draw_buf, APP_WIDTH, APP_HEIGHT))
+	if (!image_create(&app->draw_buf, app->win.width, app->win.height))
 		app_destroy(app, EXIT_FAILURE);
 	if (!(opencl_create(&app->ocl, 1)))
 		app_destroy(app, EXIT_FAILURE);
@@ -29,6 +29,8 @@ int			app_create(t_app *app)
 		app_destroy(app, EXIT_FAILURE);
 	if (!kernel_ray_shade_create(app) && !error_string("error: shade kernel creation failed\n"))
 		app_destroy(app, EXIT_FAILURE);
+	app->config.screen_size.s[0] = app->win.width;
+	app->config.screen_size.s[1] = app->win.height;
 	window_callback_key(&app->win, &callback_key);
 	window_callback_mouse_motion(&app->win, &callback_mouse_motion);
 	glfwSetInputMode(app->win.glfw_win, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
@@ -52,10 +54,11 @@ void		app_destroy(t_app *app, int exit_status)
 void		render(void *user_ptr, double elapsed)
 {
 	static double			last_time = -1;
-	static unsigned long	hits_per_sec = 0;
-	static unsigned long	rays_per_sec = 0;
+	static unsigned long		hits_per_sec = 0;
+	static unsigned long		rays_per_sec = 0;
 	static size_t			n_frames = 0;
-	t_app					*app;
+	t_app				*app;
+	cl_int				err;
 
 	app = (t_app*)user_ptr;
 	process_input(app, (last_time < 0) ? 0 : elapsed);
@@ -77,9 +80,13 @@ void		render(void *user_ptr, double elapsed)
 			app_destroy(app, EXIT_FAILURE);
 	}
 	clFinish(app->ocl.cmd_queue);
-	clEnqueueReadBuffer(app->ocl.cmd_queue, app->kernel_clear.args[0]
-			, CL_TRUE, 0, sizeof(cl_float) * 4 * APP_WIDTH * APP_HEIGHT
-			, app->draw_buf.pixels, 0, 0, 0);
+	if (CL_SUCCESS != (err = clEnqueueReadBuffer(app->ocl.cmd_queue, app->kernel_clear.args[0]
+			, CL_TRUE, 0, sizeof(cl_float) * 4 * app->win.width * app->win.height
+			, app->draw_buf.pixels, 0, 0, 0)))
+	{
+		error_cl_code(err);
+		app_destroy(app, EXIT_FAILURE);
+	}
 	image_put(&app->draw_buf, 0, 0);
 	window_swap_buffers(&app->win);
 	n_frames++;

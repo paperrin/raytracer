@@ -14,7 +14,7 @@
 
 int				kernel_clear_create(t_app *app)
 {
-	app->kernel_clear.work_size = APP_WIDTH * APP_HEIGHT;
+	app->kernel_clear.work_size = app->win.width * app->win.height;
 	if (!opencl_kernel_create_n_args(&app->kernel_clear, &app->ocl, 1))
 		return (0);
 	if (!opencl_kernel_load_from_file(&app->kernel_clear
@@ -23,15 +23,18 @@ int				kernel_clear_create(t_app *app)
 	opencl_kernel_arg_select_id(&app->kernel_clear, 0);
 	if (!opencl_kernel_arg_selected_create(&app->kernel_clear
 			, CL_MEM_READ_WRITE
-			, sizeof(cl_float) * 4 * APP_WIDTH * APP_HEIGHT, NULL))
+			, sizeof(cl_float) * 4 * app->kernel_clear.work_size, NULL))
 		return (0);
 	return (1);
 }
 
 int				kernel_clear_launch(t_app *app)
 {
-	clEnqueueNDRangeKernel(app->ocl.cmd_queue, app->kernel_clear.kernel
-			, 1, NULL, &app->kernel_clear.work_size, NULL, 0, NULL, NULL);
+	cl_int		error;
+
+	if (CL_SUCCESS != (error = clEnqueueNDRangeKernel(app->ocl.cmd_queue, app->kernel_clear.kernel
+			, 1, NULL, &app->kernel_clear.work_size, NULL, 0, NULL, NULL)))
+		return (error_cl_code(error));
 	return (1);
 }
 

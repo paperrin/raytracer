@@ -14,9 +14,11 @@
 
 int			kernel_ray_gen_primary_create(t_app *app)
 {
-	app->kernel_ray_gen.work_size = APP_WIDTH * APP_HEIGHT * app->config.samples_width * app->config.samples_width;
 	if (!opencl_kernel_create_n_args(&app->kernel_ray_gen, &app->ocl, 3))
 		return (0);
+	if (!update_gpu_config(app))
+		return (0);
+	app->kernel_ray_gen.work_size = app->win.width * app->win.height * app->config.samples_width * app->config.samples_width;
 	if (!opencl_kernel_load_from_file(&app->kernel_ray_gen
 				, "./src/cl/kernel_ray_gen_primary.cl", "-I ./include/"))
 		return (0);
@@ -48,8 +50,6 @@ int			kernel_ray_gen_primary_launch(t_app *app)
 	if (!opencl_kernel_arg_selected_create(&app->kernel_ray_gen
 				, CL_MEM_READ_ONLY | CL_MEM_COPY_HOST_PTR
 				, sizeof(app->cam.cam_data), (void*)&app->cam.cam_data))
-		return (0);
-	if (!update_gpu_config(app))
 		return (0);
 	if ((err = clEnqueueNDRangeKernel(app->ocl.cmd_queue, app->kernel_ray_gen.kernel, 1, NULL
 			, &app->kernel_ray_gen.work_size, NULL, 0, NULL, NULL)) != CL_SUCCESS)

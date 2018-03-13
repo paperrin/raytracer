@@ -16,7 +16,7 @@ int				kernel_ray_trace_create(t_app *app)
 {
 	cl_uint				objs_size;
 
-	app->kernel_ray_trace.work_size = APP_WIDTH * APP_HEIGHT * pow(2, app->config.cur_depth);
+	app->kernel_ray_trace.work_size = app->win.width * app->win.height * pow(2, app->config.cur_depth);
 	if (!opencl_kernel_create_n_args(&app->kernel_ray_trace, &app->ocl, 5))
 		return (0);
 	if (!opencl_kernel_load_from_file(&app->kernel_ray_trace
@@ -40,11 +40,10 @@ int				kernel_ray_trace_launch(t_app *app)
 {
 	cl_int		err;
 
-	app->kernel_ray_trace.work_size = APP_WIDTH * APP_HEIGHT * pow(2, app->config.cur_depth);
 	app->n_hits = 0;
 	if (app->n_rays > 0)
 	{
-		app->kernel_ray_trace.work_size = APP_WIDTH * APP_HEIGHT * app->config.samples_width * app->config.samples_width * pow(2, app->config.cur_depth);
+		app->kernel_ray_trace.work_size = app->win.width * app->win.height * app->config.samples_width * app->config.samples_width * pow(2, app->config.cur_depth);
 		opencl_kernel_arg_select_id(&app->kernel_ray_trace, 2);
 		opencl_kernel_arg_selected_use_kernel_arg_id(&app->kernel_ray_trace
 				, &app->kernel_ray_gen, 2);
