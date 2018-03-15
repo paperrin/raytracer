@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/09 16:14:42 by paperrin          #+#    #+#             */
-/*   Updated: 2018/03/14 20:19:48 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/03/15 16:48:02 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,17 +17,15 @@
 
 int			app_create(t_app *app)
 {
-	t_token_stream	*tkstream;
-	t_token			*tk;
+	t_ast		*ast;
+	int			i;
 
-	if ((tkstream = tkstream_open("example_2.rt")))
+	if ((ast = ast_parse("example.rt")))
 	{
-		while ((tk = tkstream_next(tkstream)))
-		{
-			tkstream_print_token(tk);
-			free(tk);
-		}
-		tkstream_close(&tkstream);
+		i = -1;
+		while (ast->tokens[++i] && i < 10)
+			tkstream_print_token(ast->tokens[i]);
+		ast_destroy(&ast);
 	}
 	if (!window_create(&app->win, 720, 480, APP_TITLE))
 		return (0);

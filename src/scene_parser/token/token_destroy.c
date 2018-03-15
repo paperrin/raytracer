@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/05 17:23:37 by paperrin          #+#    #+#             */
-/*   Updated: 2018/03/11 17:55:19 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/03/15 17:51:37 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,10 @@ void		token_destroy(t_token **token)
 		(void*)token_type_bool, (void*)&token_bool_destroy};
 	int				i;
 
+	if (!token)
+		return ;
 	i = -1;
-	while (i < TOKEN_DESTROY_NB_F_TOKENS)
+	while (++i < TOKEN_DESTROY_NB_F_TOKENS)
 	{
 		if ((*token)->type == (unsigned int)f_token_type_destroy[i * 2])
 		{

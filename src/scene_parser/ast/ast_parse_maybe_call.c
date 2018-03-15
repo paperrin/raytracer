@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ast_parse_var.c                                    :+:      :+:    :+:   */
+/*   ast_parse_maybe_call.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/03/06 19:37:39 by paperrin          #+#    #+#             */
-/*   Updated: 2018/03/06 22:46:21 by paperrin         ###   ########.fr       */
+/*   Created: 2018/03/15 17:25:53 by paperrin          #+#    #+#             */
+/*   Updated: 2018/03/15 20:11:17 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,7 @@ static int				add_arg(t_token **tk_call, t_token **tk_arg)
 	i = -1;
 	if (!(*tk_call)->as.call.args)
 	{
-		while (++i < (*tk_call)->as.call.args_len)
-			token_destroy(&args[i]);
-		free(args);
-		ft_memdel((void**)tk_arg);
+		token_destroy(tk_call);
 		return (0);
 	}
 	while (++i < (*tk_call)->as.call.args_len)
@@ -45,17 +42,23 @@ static int				parse_args(t_token_stream *const tkstream,
 
 	while ((tk = tkstream_peek(tkstream)))
 	{
+		if (tk->type == token_type_punc && tk->as.punc.value == ')')
+			break ;
 		if (!(tk_arg = ast_parse_expr(tkstream)) || !add_arg(tk_call, &tk_arg))
 		{
-			token_destroy(tk_call);
+			ft_putendl("NO ARGS");
 			return (0);
 		}
-		if (tk->type != token_type_punc || tk->as.punc.value != ',')
-			break ;
-		else
+		if (!(tk = tkstream_peek(tkstream)))
+			return (0);
+		ft_putendl("sep:"); tkstream_print_token(tk);
+		if (tk->type == token_type_punc && tk->as.punc.value == ',')
 			token_destroy(&tk);
+		else
+			break ;
+		tkstream_next(tkstream);
 	}
-	if (tk->type != token_type_punc || tk->as.punc.value != ')')
+	if (tk->type != token_type_punc && tk->as.punc.value != ')')
 	{
 		token_destroy(&tk);
 		token_destroy(tk_call);
@@ -79,30 +82,37 @@ static t_token			*parse_call(t_token_stream *const tkstream,
 	tk_call->as.call.func = tk_var->as.var.name;
 	tk_call->as.call.args = NULL;
 	tk_call->as.call.args_len = 0;
-	ft_memdel((void**)&tk_var);
+	token_destroy(&tk_var);
 	if (!parse_args(tkstream, &tk_call))
 		return (NULL);
+	tkstream_next(tkstream);
 	return (tk_call);
 }
 
-t_token					*ast_parse_var(t_token_stream *const tkstream)
+t_token					*ast_parse_maybe_call(t_token_stream *const tkstream)
 {
-	t_token		*tk_var;
+	t_token		*tk_maybe_call;
 	t_token		*tk;
 
-	if (!(tk_var = tkstream_peek(tkstream)))
+	if (!(tk_maybe_call = tkstream_peek(tkstream)))
 		return (NULL);
 	if (!(tk = tkstream_next(tkstream)))
 	{
-		token_destroy(&tk_var);
+		if (cstream_peek(tkstream->cstream) == 0)
+			return (tk_maybe_call);
+		token_destroy(&tk_maybe_call);
 		return (NULL);
 	}
 	if (tk->type == token_type_punc && tk->as.punc.value == '(')
 	{
+		ft_putendl("func:"); tkstream_print_token(tk_maybe_call);
+		ft_putendl("begin:"); tkstream_print_token(tk);
 		token_destroy(&tk);
 		if (tkstream_next(tkstream))
-			return (parse_call(tkstream, tk_var));
-		token_destroy(&tk_var);
+			return (parse_call(tkstream, tk_maybe_call));
+		token_destroy(&tk_maybe_call);
+		return (NULL);
 	}
-	return (tk_var);
+	ft_putendl("other:"); tkstream_print_token(tk_maybe_call);
+	return (tk_maybe_call);
 }
