@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/17 15:51:44 by paperrin          #+#    #+#             */
-/*   Updated: 2018/03/13 17:37:02 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/03/15 01:09:04 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,8 @@ typedef struct		s_token_kw
 typedef struct		s_token_op
 {
 	char			value;
+	t_token			*left;
+	t_token			*right;
 }					t_token_op;
 
 typedef union		u_token_container

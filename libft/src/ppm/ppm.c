@@ -6,12 +6,12 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/21 06:46:39 by paperrin          #+#    #+#             */
-/*   Updated: 2018/01/22 02:33:39 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/03/14 20:13:11 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ppm.h"
-#include <stdio.h>
+
 static int		read_header(t_fstream *file, size_t *const width,
 		size_t *const height, size_t *const max_val)
 {

@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/09 16:14:42 by paperrin          #+#    #+#             */
-/*   Updated: 2018/03/06 18:28:58 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/03/14 20:19:48 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -209,7 +209,7 @@ int			main(int ac, char **av)
 	mat->texture_id = -1;
 
 	app.scene.v_texture = ft_vector_create(sizeof(t_texture), NULL, NULL);
-	if (!(pixels = ft_ppm_get("textures/brick.ppm", &width, &height, &max)))
+	if (!(pixels = ft_ppm_get("textures/test.ppm", &width, &height, &max)))
 		return (0);
 	if (!(texture = (t_texture*)ft_vector_push_back(&app.scene.v_texture, NULL)))
 		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));

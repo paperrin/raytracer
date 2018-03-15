@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/04 22:35:42 by paperrin          #+#    #+#             */
-/*   Updated: 2018/03/05 18:24:42 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/03/15 01:41:30 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ t_token			*tkstream_read_op(t_token_stream *const tkstream)
 	}
 	tkstream->cur->type = token_type_op;
 	tkstream->cur->as.op.value = cstream_next(tkstream->cstream);
+	tkstream->cur->as.op.left = NULL;
+	tkstream->cur->as.op.right = NULL;
 	return (tkstream->cur);
 }
 

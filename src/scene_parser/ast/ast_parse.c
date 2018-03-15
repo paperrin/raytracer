@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/05 16:21:37 by paperrin          #+#    #+#             */
-/*   Updated: 2018/03/12 15:39:32 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/03/15 01:39:27 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,20 @@
 static int			parse_program(t_ast *const ast,
 		t_token_stream *const tkstream)
 {
-	t_token		*token;
+	t_vector	v_tokens;
+	t_token		**token;
 
-	if (!(token = tkstream_peek(tkstream)))
-		return (0);
-
+	v_tokens = ft_vector_create(sizeof(t_token*), NULL, NULL);
+	if (!(token = (t_token**)ft_vector_push_back(&v_tokens, NULL)))
+		return (error_string(ERR_MEMORY));
+	if (!(*token = ast_parse_expr(tkstream)))
+	{
+		/* TODO If file wasn't entirely read or file error occurred,
+		program should be destroyed and parse_program() return 0
+		think about additional errors */
+		if (cstream_peek(tkstream->cstream) < -1)
+			return (0);
+	}
 	(void)ast;
 	return (1);
 
