@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/10 15:33:54 by paperrin          #+#    #+#             */
-/*   Updated: 2018/01/17 23:38:38 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/03/17 21:20:32 by tlernoul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ typedef struct			s_ocl_kernel
 	t_opencl			*ocl;
 	size_t				work_size;
 	size_t				selected_arg_id;
+	size_t				wg_size;
 	cl_program			program;
 	cl_kernel			kernel;
 	cl_mem				*args;
@@ -69,7 +70,7 @@ void					opencl_kernel_arg_select_id(t_ocl_kernel *kernel
 		, size_t id);
 int						opencl_kernel_arg_selected_create(t_ocl_kernel *kernel
 		, cl_mem_flags flags, size_t size, void *host_ptr);
-void					opencl_kernel_arg_selected_use_kernel_arg_id(
+int						opencl_kernel_arg_selected_use_kernel_arg_id(
 		t_ocl_kernel *kernel, t_ocl_kernel *kernel_src, size_t id);
 void					opencl_kernel_arg_selected_destroy(
 		t_ocl_kernel *kernel);

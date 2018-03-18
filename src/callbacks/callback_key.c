@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/09 16:52:27 by paperrin          #+#    #+#             */
-/*   Updated: 2018/03/12 20:05:23 by ilarbi           ###   ########.fr       */
+/*   Updated: 2018/03/17 22:46:25 by tlernoul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,4 +30,6 @@ void		callback_key(void *user_ptr, int key, int action)
 	}
 	else if (key == GLFW_KEY_Z && action == GLFW_PRESS)
 		app->config.shading_model = !app->config.shading_model;
+	else if (key == GLFW_KEY_X && action == GLFW_PRESS)
+		app->should_sort_rays = !app->should_sort_rays;
 }

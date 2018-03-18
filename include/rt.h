@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/09 16:36:38 by paperrin          #+#    #+#             */
-/*   Updated: 2018/02/18 22:14:30 by alngo            ###   ########.fr       */
+/*   Updated: 2018/03/17 22:46:47 by tlernoul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,11 @@ typedef struct		s_app
 	t_ocl_kernel	kernel_ray_trace;
 	t_ocl_kernel	kernel_clear;
 	t_ocl_kernel	kernel_ray_shade;
+	t_ocl_kernel	kernel_prefix_sum;
+	t_ocl_kernel	kernel_ray_sort;
 	cl_uint			n_hits;
 	cl_uint			n_rays;
+	int				should_sort_rays;
 	char			mouse_captured;
 	t_config		config;
 }					t_app;
@@ -86,4 +89,11 @@ int					kernel_clear_create(t_app *app);
 int					kernel_clear_launch(t_app *app);
 void				kernel_clear_destroy(t_app *app);
 
+int					kernel_prefix_sum_create(t_app *app);
+int					kernel_prefix_sum_launch(t_app *app);
+void				kernel_prefix_sum_destroy(t_app *app);
+
+int					kernel_ray_sort_create(t_app *app);
+int					kernel_ray_sort_launch(t_app *app);
+void				kernel_ray_sort_destroy(t_app *app);
 #endif

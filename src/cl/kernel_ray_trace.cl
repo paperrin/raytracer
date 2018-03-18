@@ -5,8 +5,9 @@ kernel void			kernel_ray_trace(
 		constant read_only t_obj *objs,
 		global read_only uint *objs_size,
 		global read_write t_ray_state *ray_states,
-		global read_write uint *n_hits,
-		global read_only t_config *config)
+		global read_only t_config *config,
+		global read_write uint *ray_hits,
+		global read_write int *n_hits)
 {
 
 	const int		gid = get_global_id(0);
@@ -22,7 +23,17 @@ kernel void			kernel_ray_trace(
 		state.t = (t_nearest < 200000) ? t_nearest : -1;
 		state.obj_id = obj_id_nearest;
 		if (obj_id_nearest > -1)
+		{
+			ray_hits[gid] = 1;
 			atomic_inc(n_hits);
+		}
+		else
+			ray_hits[gid] = 0;
+	}
+	else
+	{
+		ray_hits[gid] = 0;
+		state.obj_id = -1;
 	}
 	ray_states[gid] = state;
 }

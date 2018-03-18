@@ -98,6 +98,7 @@ cl_float3			shade(t_obj obj, t_real3 hit_pos, t_ray ray,
 	t_real			ndl;
 	t_real			light_dist;
 	cl_float3		surface_color;
+	int				gid = get_global_id(0);
 
 	surface_normal = obj_surface_normal(&obj, hit_pos, ray);
 	light_ray.origin = hit_pos;
@@ -115,7 +116,7 @@ cl_float3			shade(t_obj obj, t_real3 hit_pos, t_ray ray,
 		ndl = dot(light_ray.dir, surface_normal);
 		if (ndl < 0)
 			continue ;
-		if (!(ray_throw_get_any_hit_obj(&light_ray, objs, objs_size, &t) > -1) || (light_dist <= t))
+		if (ray_throw_get_first_hit_obj(&light_ray, objs, objs_size, &t) <= -1 || light_dist < t)
 		{
 			color += surface_color * light_color * (cl_float)ndl;
 			color += get_specular_color(config->shading_model, mats[obj.material_id], ray.dir, light_ray, hit_pos, surface_normal, light_color);

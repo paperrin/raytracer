@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/13 14:25:38 by paperrin          #+#    #+#             */
-/*   Updated: 2018/03/13 20:06:34 by alngo            ###   ########.fr       */
+/*   Updated: 2018/03/17 22:37:56 by tlernoul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,8 +102,17 @@ typedef struct			s_config
 	cl_uint2			screen_size;
 	cl_int				max_depth;
 	cl_int				cur_depth;
-	cl_int				mouse_pxl_id;
+	cl_uint				mouse_gid;
+	cl_uint2			mouse_xy;
 }						t_config;
+
+typedef struct			s_prefix_sums
+{
+	cl_uint				start;
+	cl_uint				offset;
+	cl_uint				arr_size;
+	cl_long				step;
+}						t_prefix_sums;
 
 /*
 ** Rays

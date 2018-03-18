@@ -18,9 +18,9 @@ kernel void			kernel_ray_shade(
 		global read_only cl_uchar *texture_pixels,
 		global read_only ulong *n_texture_pixels,
 		global read_write t_ray_state *ray_states,
-		global read_write uint *n_new_rays,
 		global read_write cl_float *pixels,
-		global read_only t_config *config)
+		global read_only t_config *config,
+		global read_only uint *n_rays)
 {
 	const int				gid = get_global_id(0);
 	t_real3					hit_pos;
@@ -32,8 +32,6 @@ kernel void			kernel_ray_shade(
 	t_ray_state				state_refrac;
 	char					has_reflection;
 	char					has_refraction;
-	int						block_size;
-	int						middle_pos;
 
 	state = ray_states[gid];
 	color = (cl_float3)(0, 0, 0);
@@ -41,6 +39,8 @@ kernel void			kernel_ray_shade(
 	has_refraction = 0;
 	state_refrac.importance = -1;
 	state_reflec.importance = -1;
+	state_refrac.obj_id = -1;
+	state_reflec.obj_id = -1;
 	if (state.obj_id > -1)
 	{
 		obj = objs[state.obj_id];
@@ -67,8 +67,7 @@ kernel void			kernel_ray_shade(
 				if (has_refraction)
 				{
 					state_refrac = state;
-					atomic_inc(n_new_rays);
-					state_refrac.ray = get_refracted_ray(state.ray, hit_pos, normal, 
+					state_refrac.ray = get_refracted_ray(state.ray, hit_pos, normal,
 								mats[obj.material_id].indice_of_refraction);
 					state_refrac.importance = state.importance * mats[obj.material_id].refraction;
 					state_refrac.t = -1;
@@ -78,7 +77,6 @@ kernel void			kernel_ray_shade(
 				if (has_reflection)
 				{
 					state_reflec = state;
-					atomic_inc(n_new_rays);
 					state_reflec.ray = get_reflected_ray(state.ray, hit_pos, normal);
 					state_reflec.importance = state.importance * mats[obj.material_id].reflection;
 					state_reflec.t = -1;
@@ -88,10 +86,8 @@ kernel void			kernel_ray_shade(
 	}
 	if (config->cur_depth < config->max_depth)
 	{
-		block_size = config->screen_size.x * config->screen_size.y;
-		middle_pos = config->samples_width * config->samples_width * pown(2.f, config->cur_depth) * block_size;
-		ray_states[gid % middle_pos] = state_reflec;
-		ray_states[gid % middle_pos + middle_pos] = state_refrac;
+		ray_states[gid + *n_rays] = state_reflec;
+		ray_states[gid] = state_refrac;
 	}
 }
 

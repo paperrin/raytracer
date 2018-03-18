@@ -64,13 +64,13 @@ cl_int			ray_throw_get_any_hit_obj(t_ray *ray,
 {
 	cl_int		i;
 
-	*t = 200000;
 	i = -1;
 	while (++i < (t_obj_id)objs_size)
 	{
 		if ((*t = obj_ray_hit(&objs[i], ray)) >= 0)
 			return (i);
 	}
+	*t = 200000;
 	return (-1);
 }
 
