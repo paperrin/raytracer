@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/16 22:37:07 by paperrin          #+#    #+#             */
-/*   Updated: 2018/03/06 18:27:03 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/03/17 18:28:51 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,14 +81,11 @@ int				kernel_ray_shade_create(t_app *app)
 
 int				kernel_ray_shade_launch(t_app *app)
 {
-	size_t		work_size;
-
 	app->n_rays = 0;
 	app->kernel_ray_shade.work_size = app->win.width * app->win.height
 		* app->config.samples_width * app->config.samples_width;
 	if (app->n_hits > 0)
 	{
-		work_size = app->kernel_ray_shade.work_size;
 		opencl_kernel_arg_select_id(&app->kernel_ray_shade, 10);
 		opencl_kernel_arg_selected_use_kernel_arg_id(&app->kernel_ray_shade
 				, &app->kernel_ray_gen, 2);

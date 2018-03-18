@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/15 17:25:53 by paperrin          #+#    #+#             */
-/*   Updated: 2018/03/15 20:11:17 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/03/17 14:52:08 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,8 @@ static int				parse_args(t_token_stream *const tkstream,
 	if (tk->type != token_type_punc && tk->as.punc.value != ')')
 	{
 		token_destroy(&tk);
-		token_destroy(tk_call);
+		if (tk_call)
+			token_destroy(tk_call);
 		return (tkstream_error(tkstream, "unexpected token in function call"));
 	}
 	token_destroy(&tk);
@@ -82,7 +83,7 @@ static t_token			*parse_call(t_token_stream *const tkstream,
 	tk_call->as.call.func = tk_var->as.var.name;
 	tk_call->as.call.args = NULL;
 	tk_call->as.call.args_len = 0;
-	token_destroy(&tk_var);
+	ft_memdel((void**)&tk_var);
 	if (!parse_args(tkstream, &tk_call))
 		return (NULL);
 	tkstream_next(tkstream);
