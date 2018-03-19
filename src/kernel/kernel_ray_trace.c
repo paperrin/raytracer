@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/22 18:06:33 by paperrin          #+#    #+#             */
-/*   Updated: 2018/03/19 01:00:39 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/03/19 17:25:53 by tlernoul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,12 +44,11 @@ int				kernel_ray_trace_launch(t_app *app)
 
 	if (app->n_rays == 0)
 		return (1);
+	app->kernel_ray_trace.work_size = app->n_rays;
 	if (old_work_size < app->n_rays)
 	{
-		app->kernel_ray_trace.work_size = app->n_rays;
 		old_work_size = app->n_rays;
 		ray_hits_size = app->n_rays - (app->n_rays % app->kernel_prefix_sum.wg_size) + app->kernel_prefix_sum.wg_size;
-		printf("%lu\n", ray_hits_size);
 		opencl_kernel_arg_select_id(&app->kernel_ray_trace, 4);
 		opencl_kernel_arg_selected_destroy(&app->kernel_ray_trace);
 		if (!opencl_kernel_arg_selected_create(&app->kernel_ray_trace
@@ -57,7 +56,7 @@ int				kernel_ray_trace_launch(t_app *app)
 				, sizeof(cl_uint) * ray_hits_size, NULL))
 			return (0);
 	}
-	hits = app->n_hits;
+	hits = 0;
 	opencl_kernel_arg_select_id(&app->kernel_ray_trace, 5);
 		opencl_kernel_arg_selected_destroy(&app->kernel_ray_trace);
 		if (!opencl_kernel_arg_selected_create(&app->kernel_ray_trace

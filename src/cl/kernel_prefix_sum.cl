@@ -47,10 +47,8 @@ kernel void kernel_prefix_sum(
 		d *= 2;
 	}
 	write_mem_fence(CLK_LOCAL_MEM_FENCE);
-	if (lid == *n / 2 - 1)
-	{
+	if (lid == 0)
 		group_sums[group_id] = tmp[*n - 1] + tmp[1];
-	}
 	ray_hits[2 * gid] = tmp[2 * lid];
 	ray_hits[2 * gid + 1] = tmp[2 * lid + 1];
 }

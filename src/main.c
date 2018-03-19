@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/09 16:14:42 by paperrin          #+#    #+#             */
-/*   Updated: 2018/03/19 04:14:00 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/03/19 18:45:27 by tlernoul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -236,7 +236,7 @@ int			main(int ac, char **av)
 	app.should_sort_rays = 0;
 	app.config.ambient = vec3f(0.2, 0.2, 0.2);
 	app.config.samples_width = 1;
-	app.config.max_depth = 0;
+	app.config.max_depth = 1;
 	app.config.shading_model = shading_model_phong;
 
 	app.scene.v_light = ft_vector_create(sizeof(t_light), NULL, NULL);

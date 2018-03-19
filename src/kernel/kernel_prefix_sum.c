@@ -6,7 +6,7 @@
 /*   By: tlernoul <tlernoul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/07 19:01:53 by tlernoul          #+#    #+#             */
-/*   Updated: 2018/03/19 03:57:44 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/03/19 21:52:31 by tlernoul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,18 +51,16 @@ int				kernel_prefix_sum_launch(t_app *app)
 
 	if (!app->n_rays || !app->should_sort_rays)
 		return (1);
-	app->kernel_prefix_sum.work_size = app->n_rays;
+	app->kernel_prefix_sum.work_size = app->n_rays / 2;
 	if (app->kernel_prefix_sum.work_size % app->kernel_prefix_sum.wg_size)
-		app->kernel_prefix_sum.work_size +=
-			-(app->kernel_prefix_sum.work_size % app->kernel_prefix_sum.wg_size)
+		app->kernel_prefix_sum.work_size = app->kernel_prefix_sum.work_size - (app->kernel_prefix_sum.work_size % app->kernel_prefix_sum.wg_size)
 			+ app->kernel_prefix_sum.wg_size;
-	app->kernel_prefix_sum.work_size /= 2;
 	opencl_kernel_arg_select_id(&app->kernel_prefix_sum, 3);
 	opencl_kernel_arg_selected_destroy(&app->kernel_prefix_sum);
 	if (!opencl_kernel_arg_selected_create(&app->kernel_prefix_sum
 			, CL_MEM_READ_WRITE
-			, sizeof(cl_uint) * app->kernel_prefix_sum.work_size
-				/ app->kernel_prefix_sum.wg_size, NULL))
+			, sizeof(cl_uint) * (app->kernel_prefix_sum.work_size
+				/ app->kernel_prefix_sum.wg_size), NULL))
 		return (0);
 	opencl_kernel_arg_select_id(&app->kernel_prefix_sum, 0);
 	if (!opencl_kernel_arg_selected_use_kernel_arg_id(&app->kernel_prefix_sum
@@ -71,7 +69,7 @@ int				kernel_prefix_sum_launch(t_app *app)
 	if (CL_SUCCESS != (err = clEnqueueNDRangeKernel(app->ocl.cmd_queue, app->kernel_prefix_sum.kernel
 			, 1, NULL, &app->kernel_prefix_sum.work_size, &app->kernel_prefix_sum.wg_size, 0, NULL, NULL)))
 		return (error_cl_code(err));
-
+	printf("%d\n", sizeof(t_ray_state));
 	/*
 	 * TO REPLACE >>
 	*/
@@ -103,7 +101,6 @@ int				kernel_prefix_sum_launch(t_app *app)
 	/*
 	 * << TO REPLACE
 	*/
-
 	if (!kernel_sum_blocks_launch(app))
 		return (0);
 	return (1);

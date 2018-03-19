@@ -7,7 +7,7 @@ kernel void kernel_sum_blocks(
 {
 	int		gid = get_global_id(0);
 	int		group_id = gid / *n;
-	
+
 	if (group_id > 0)
 		ray_hits[gid] += group_sums[group_id - 1];
 }

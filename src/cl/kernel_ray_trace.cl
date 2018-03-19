@@ -7,7 +7,7 @@ kernel void			kernel_ray_trace(
 		global read_write t_ray_state *ray_states,
 		global read_only t_config *config,
 		global read_write uint *ray_hits,
-		global read_write int *n_hits)
+		volatile global read_write int *n_hits)
 {
 
 	const int		gid = get_global_id(0);
