@@ -64,6 +64,7 @@ CFILES		=	\
 				kernel/kernel_clear.c							\
 				kernel/kernel_ray_shade.c						\
 				kernel/kernel_prefix_sum.c						\
+				kernel/kernel_sum_blocks.c						\
 				kernel/kernel_ray_sort.c						\
 				\
 				callbacks/callback_key.c						\

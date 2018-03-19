@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/09 16:36:38 by paperrin          #+#    #+#             */
-/*   Updated: 2018/03/17 22:46:47 by tlernoul         ###   ########.fr       */
+/*   Updated: 2018/03/19 02:36:00 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ typedef struct		s_app
 	t_ocl_kernel	kernel_clear;
 	t_ocl_kernel	kernel_ray_shade;
 	t_ocl_kernel	kernel_prefix_sum;
+	t_ocl_kernel	kernel_sum_blocks;
 	t_ocl_kernel	kernel_ray_sort;
 	cl_uint			n_hits;
 	cl_uint			n_rays;
@@ -96,4 +97,9 @@ void				kernel_prefix_sum_destroy(t_app *app);
 int					kernel_ray_sort_create(t_app *app);
 int					kernel_ray_sort_launch(t_app *app);
 void				kernel_ray_sort_destroy(t_app *app);
+
+int					kernel_sum_blocks_create(t_app *app);
+int					kernel_sum_blocks_launch(t_app *app);
+void				kernel_sum_blocks_destroy(t_app *app);
+
 #endif

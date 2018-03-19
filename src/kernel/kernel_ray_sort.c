@@ -6,7 +6,7 @@
 /*   By: tlernoul <tlernoul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/12 16:36:28 by tlernoul          #+#    #+#             */
-/*   Updated: 2018/03/18 23:26:49 by tlernoul         ###   ########.fr       */
+/*   Updated: 2018/03/19 04:11:47 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,14 +34,15 @@ int				kernel_ray_sort_create(t_app *app)
 
 int				kernel_ray_sort_launch(t_app *app)
 {
-	cl_uint			new_app_n_rays;
+	cl_uint			new_app_n_rays[1];
 	cl_int			err;
 	cl_uint			n_rays;
 
 	n_rays = (cl_uint)app->n_rays;
 	opencl_kernel_arg_select_id(&app->kernel_ray_sort, 2);
 	opencl_kernel_arg_selected_destroy(&app->kernel_ray_sort);
-	if (!opencl_kernel_arg_selected_create(&app->kernel_ray_sort, CL_MEM_READ_ONLY | CL_MEM_COPY_HOST_PTR,
+	if (!opencl_kernel_arg_selected_create(&app->kernel_ray_sort,
+				CL_MEM_READ_ONLY | CL_MEM_COPY_HOST_PTR,
 		sizeof(cl_uint), (void*)&n_rays))
 		return (0);
 	if (!app->n_rays || !app->should_sort_rays)
@@ -57,29 +58,21 @@ int				kernel_ray_sort_launch(t_app *app)
 	if (!opencl_kernel_arg_selected_use_kernel_arg_id(&app->kernel_ray_sort
 				, &app->kernel_ray_gen, 2))
 		return (0);
-	
-	
 	if (CL_SUCCESS != (err = clEnqueueNDRangeKernel(app->ocl.cmd_queue, app->kernel_ray_sort.kernel
 			, 1, NULL, &app->kernel_ray_sort.work_size, &app->kernel_ray_sort.wg_size, 0, NULL, NULL)))
 		return (error_cl_code(err));
-
-
 	if (CL_SUCCESS != (err = clEnqueueReadBuffer(app->ocl.cmd_queue,
 					app->kernel_ray_trace.args[4], CL_TRUE,
-					sizeof(cl_uint) * (app->kernel_ray_sort.work_size - 1),
-					sizeof(cl_uint), (void*)&new_app_n_rays, 0, NULL, NULL)))
+					sizeof(cl_uint) * (app->n_rays - 1),
+					sizeof(cl_uint), (void*)new_app_n_rays, 0, NULL, NULL)))
 		return (error_cl_code(err));
-	app->n_rays = (size_t)new_app_n_rays;
+	app->n_rays = (size_t)*new_app_n_rays;
 	n_rays = (cl_uint)app->n_rays;
 	opencl_kernel_arg_select_id(&app->kernel_ray_sort, 2);
 	opencl_kernel_arg_selected_destroy(&app->kernel_ray_sort);
 	if (!opencl_kernel_arg_selected_create(&app->kernel_ray_sort, CL_MEM_READ_ONLY | CL_MEM_COPY_HOST_PTR,
-		sizeof(cl_uint), (void*)&n_rays))
+		sizeof(cl_uint), (void*)new_app_n_rays))
 		return (0);
-	if (app->config.cur_depth == 2)
-	{
-		printf("prefix: %u, hits: %u\n", n_rays, app->n_hits);
-	}
 	return (1);
 }
 

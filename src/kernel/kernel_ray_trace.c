@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/22 18:06:33 by paperrin          #+#    #+#             */
-/*   Updated: 2018/03/18 23:25:51 by tlernoul         ###   ########.fr       */
+/*   Updated: 2018/03/19 01:00:39 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ int				kernel_ray_trace_create(t_app *app)
 int				kernel_ray_trace_launch(t_app *app)
 {
 	static size_t	old_work_size = 0;
+	size_t			ray_hits_size;
 	cl_int			err;
 	cl_int			hits;
 
@@ -45,12 +46,15 @@ int				kernel_ray_trace_launch(t_app *app)
 		return (1);
 	if (old_work_size < app->n_rays)
 	{
+		app->kernel_ray_trace.work_size = app->n_rays;
 		old_work_size = app->n_rays;
+		ray_hits_size = app->n_rays - (app->n_rays % app->kernel_prefix_sum.wg_size) + app->kernel_prefix_sum.wg_size;
+		printf("%lu\n", ray_hits_size);
 		opencl_kernel_arg_select_id(&app->kernel_ray_trace, 4);
 		opencl_kernel_arg_selected_destroy(&app->kernel_ray_trace);
 		if (!opencl_kernel_arg_selected_create(&app->kernel_ray_trace
 				, CL_MEM_READ_WRITE
-				, sizeof(cl_uint) * app->n_rays, NULL))
+				, sizeof(cl_uint) * ray_hits_size, NULL))
 			return (0);
 	}
 	hits = app->n_hits;
@@ -60,7 +64,6 @@ int				kernel_ray_trace_launch(t_app *app)
 				, CL_MEM_READ_WRITE | CL_MEM_COPY_HOST_PTR
 				, sizeof(cl_int), (void*)&hits))
 			return (0);
-	app->kernel_ray_trace.work_size = app->n_rays;
 	opencl_kernel_arg_select_id(&app->kernel_ray_trace, 2);
 	if (!opencl_kernel_arg_selected_use_kernel_arg_id(&app->kernel_ray_trace
 			, &app->kernel_ray_gen, 2))
