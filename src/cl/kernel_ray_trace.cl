@@ -17,23 +17,21 @@ kernel void			kernel_ray_trace(
 
 	state = ray_states[gid];
 	state.obj_id = -1;
+	state.t = -1;
+	ray_hits[gid] = 0;
 	if (state.importance > 1e-4)
 	{
 		obj_id_nearest = ray_throw_get_first_hit_obj(&state.ray, objs, *objs_size, &t_nearest);
-		state.t = (t_nearest < 200000) ? t_nearest : -1;
-		state.obj_id = obj_id_nearest;
-		if (obj_id_nearest > -1)
+		if (t_nearest < 200000 - 1)
 		{
-			ray_hits[gid] = 1;
-			atomic_inc(n_hits);
+			state.t = t_nearest;
+			state.obj_id = obj_id_nearest;
+			if (state.obj_id > -1)
+			{
+				ray_hits[gid] = 1;
+				atomic_inc(n_hits);
+			}
 		}
-		else
-			ray_hits[gid] = 0;
-	}
-	else
-	{
-		ray_hits[gid] = 0;
-		state.obj_id = -1;
 	}
 	ray_states[gid] = state;
 }

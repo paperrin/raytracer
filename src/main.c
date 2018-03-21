@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/09 16:14:42 by paperrin          #+#    #+#             */
-/*   Updated: 2018/03/19 23:26:56 by tlernoul         ###   ########.fr       */
+/*   Updated: 2018/03/21 16:49:54 by tlernoul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -203,8 +203,8 @@ int			main(int ac, char **av)
 	if (!(mat = (t_material*)ft_vector_push_back(&app.scene.v_material, NULL)))
 		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
 	mat->color = vec3f(1, 1, 1);
-	mat->reflection = 0;
-	mat->refraction = 0;
+	mat->reflection = 0.2;
+	mat->refraction = 0.2;
 	mat->indice_of_refraction = 0;
 	mat->texture_id = -1;
 	mat->specular = 10;
@@ -233,7 +233,7 @@ int			main(int ac, char **av)
 	app.config.screen_size.s[0] = app.win.width;
 	app.config.screen_size.s[1] = app.win.height;
 
-	app.should_sort_rays = 0;
+	app.should_sort_rays = 1;
 	app.config.ambient = vec3f(0.2, 0.2, 0.2);
 	app.config.samples_width = 1;
 	app.config.max_depth = 2;

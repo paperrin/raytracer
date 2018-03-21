@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/19 02:35:26 by paperrin          #+#    #+#             */
-/*   Updated: 2018/03/19 04:10:31 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/03/21 15:42:29 by tlernoul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ int				kernel_sum_blocks_create(t_app *app)
 int				kernel_sum_blocks_launch(t_app *app)
 {
 	cl_int			err;
+	const size_t	global_work_off = 1;
 
 	app->kernel_sum_blocks.work_size = app->n_rays;
 	opencl_kernel_arg_select_id(&app->kernel_sum_blocks, 0);
@@ -40,7 +41,7 @@ int				kernel_sum_blocks_launch(t_app *app)
 				, &app->kernel_prefix_sum, 2))
 		return (0);
 	if (CL_SUCCESS != (err = clEnqueueNDRangeKernel(app->ocl.cmd_queue, app->kernel_sum_blocks.kernel
-			, 1, NULL, &app->kernel_sum_blocks.work_size, NULL, 0, NULL, NULL)))
+			, 1, &global_work_off, &app->kernel_sum_blocks.work_size, NULL, 0, NULL, NULL)))
 		return (error_cl_code(err));
 	return (1);
 }

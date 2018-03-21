@@ -8,8 +8,8 @@ kernel void kernel_prefix_sum(
 {
 	int gid = get_global_id(0);
 	int lid = get_local_id(0);
-	int	wg_size = *n / 2;
-	int	group_id = gid / wg_size;
+	int	wg_size = get_local_size(0);
+	int	group_id = get_group_id(0);
 	int offset = 1;
 	int a, b, d;
 	uint t;
