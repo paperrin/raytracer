@@ -6,7 +6,7 @@
 /*   By: tlernoul <tlernoul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/07 19:01:53 by tlernoul          #+#    #+#             */
-/*   Updated: 2018/03/19 21:52:31 by tlernoul         ###   ########.fr       */
+/*   Updated: 2018/03/19 22:50:11 by tlernoul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,6 @@ int				kernel_prefix_sum_launch(t_app *app)
 	if (CL_SUCCESS != (err = clEnqueueNDRangeKernel(app->ocl.cmd_queue, app->kernel_prefix_sum.kernel
 			, 1, NULL, &app->kernel_prefix_sum.work_size, &app->kernel_prefix_sum.wg_size, 0, NULL, NULL)))
 		return (error_cl_code(err));
-	printf("%d\n", sizeof(t_ray_state));
 	/*
 	 * TO REPLACE >>
 	*/

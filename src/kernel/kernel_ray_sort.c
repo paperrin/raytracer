@@ -6,7 +6,7 @@
 /*   By: tlernoul <tlernoul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/12 16:36:28 by tlernoul          #+#    #+#             */
-/*   Updated: 2018/03/19 21:33:04 by tlernoul         ###   ########.fr       */
+/*   Updated: 2018/03/19 22:54:26 by tlernoul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int				kernel_ray_sort_create(t_app *app)
 {
 	cl_int			err;
 
-	if (!opencl_kernel_create_n_args(&app->kernel_ray_sort, &app->ocl, 4))
+	if (!opencl_kernel_create_n_args(&app->kernel_ray_sort, &app->ocl, 5))
 		return (0);
 	if (!opencl_kernel_load_from_file(&app->kernel_ray_sort
 				, "./src/cl/kernel_ray_sort.cl", "-I ./include/"))
@@ -28,6 +28,8 @@ int				kernel_ray_sort_create(t_app *app)
 			(void*)&app->kernel_ray_sort.wg_size, NULL)))
 		return (error_cl_code(err));
 	if (CL_SUCCESS != (err = clSetKernelArg(app->kernel_ray_sort.kernel, 3, sizeof(t_ray_state) * app->kernel_ray_sort.wg_size, NULL)))
+		return (error_cl_code(err));
+	if (CL_SUCCESS != (err = clSetKernelArg(app->kernel_ray_sort.kernel, 4, sizeof(t_ray_state) * app->kernel_ray_sort.wg_size, NULL)))
 		return (error_cl_code(err));
 	return (1);
 }
@@ -47,9 +49,7 @@ int				kernel_ray_sort_launch(t_app *app)
 		return (0);
 	if (!app->n_rays || !app->should_sort_rays)
 		return (1);
-	app->kernel_ray_sort.work_size = app->n_rays;
-	if (app->n_rays % app->kernel_ray_sort.wg_size)
-		app->kernel_ray_sort.work_size = app->n_rays - app->n_rays % app->kernel_ray_sort.wg_size + app->kernel_ray_sort.wg_size;
+	app->kernel_ray_sort.work_size = app->kernel_ray_sort.wg_size;
 		opencl_kernel_arg_select_id(&app->kernel_ray_sort, 0);
 	if (!opencl_kernel_arg_selected_use_kernel_arg_id(&app->kernel_ray_sort
 				, &app->kernel_ray_trace, 4))
@@ -58,7 +58,6 @@ int				kernel_ray_sort_launch(t_app *app)
 	if (!opencl_kernel_arg_selected_use_kernel_arg_id(&app->kernel_ray_sort
 				, &app->kernel_ray_gen, 2))
 		return (0);
-	printf("%lu / %lu = %lu\n", app->kernel_ray_sort.work_size, app->kernel_ray_sort.wg_size,  app->kernel_ray_sort.work_size / app->kernel_ray_sort.wg_size);
 	if (CL_SUCCESS != (err = clEnqueueNDRangeKernel(app->ocl.cmd_queue, app->kernel_ray_sort.kernel
 			, 1, NULL, &app->kernel_ray_sort.work_size, &app->kernel_ray_sort.wg_size, 0, NULL, NULL)))
 		return (error_cl_code(err));
@@ -74,8 +73,6 @@ int				kernel_ray_sort_launch(t_app *app)
 	if (!opencl_kernel_arg_selected_create(&app->kernel_ray_sort,
 	CL_MEM_READ_ONLY | CL_MEM_COPY_HOST_PTR, sizeof(cl_uint), (void*)&n_rays))
 		return (0);
-	if (app->n_rays != app->n_hits)
-		printf("depth :%d n_rays:%u n_hits:%u (%u)\n",app->config.cur_depth ,app->n_rays, app->n_hits, (int)app->n_hits - app->n_rays);
 	return (1);
 }
 

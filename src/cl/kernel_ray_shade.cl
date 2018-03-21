@@ -86,8 +86,8 @@ kernel void			kernel_ray_shade(
 	}
 	if (config->cur_depth < config->max_depth)
 	{
-		ray_states[gid + *n_rays] = state_reflec;
-		ray_states[gid] = state_refrac;
+		ray_states[gid + *n_rays] = state_refrac;
+		ray_states[gid] = state_reflec;
 	}
 }
 

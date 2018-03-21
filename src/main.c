@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/09 16:14:42 by paperrin          #+#    #+#             */
-/*   Updated: 2018/03/19 18:45:27 by tlernoul         ###   ########.fr       */
+/*   Updated: 2018/03/19 23:26:56 by tlernoul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,11 +145,11 @@ int			main(int ac, char **av)
 	if (!(obj = (t_obj*)ft_vector_push_back(&app.scene.v_obj, NULL)))
 		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
 	*obj = obj_plane(vec3r(0, 0, -2), vec3r(0, 0, 1), vec3r(0, 1, 0), 4);
-
+/*
 	if (!(obj = (t_obj*)ft_vector_push_back(&app.scene.v_obj, NULL)))
 		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
 	*obj = obj_plane(vec3r(0, 2, 0), vec3r(0, -1, 0), vec3r(1, 0, 0), 5);
-
+*/
 	if (!(obj = (t_obj*)ft_vector_push_back(&app.scene.v_obj, NULL)))
 		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
 	*obj = obj_sphere(vec3r(0, 0, 0), 0.5, 6);
@@ -203,8 +203,8 @@ int			main(int ac, char **av)
 	if (!(mat = (t_material*)ft_vector_push_back(&app.scene.v_material, NULL)))
 		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
 	mat->color = vec3f(1, 1, 1);
-	mat->reflection = 0.3;
-	mat->refraction = 0.3;
+	mat->reflection = 0;
+	mat->refraction = 0;
 	mat->indice_of_refraction = 0;
 	mat->texture_id = -1;
 	mat->specular = 10;
@@ -236,7 +236,7 @@ int			main(int ac, char **av)
 	app.should_sort_rays = 0;
 	app.config.ambient = vec3f(0.2, 0.2, 0.2);
 	app.config.samples_width = 1;
-	app.config.max_depth = 1;
+	app.config.max_depth = 2;
 	app.config.shading_model = shading_model_phong;
 
 	app.scene.v_light = ft_vector_create(sizeof(t_light), NULL, NULL);
