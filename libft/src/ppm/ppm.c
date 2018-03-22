@@ -6,14 +6,18 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/21 06:46:39 by paperrin          #+#    #+#             */
-/*   Updated: 2018/01/22 02:33:39 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/03/22 22:36:51 by ilarbi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ppm.h"
 #include <stdio.h>
+/*
+**read_to_any_char should accept all WHITESPACES
+*//*
+static int		ignore_comment(t_fstream *file, )
 static int		read_header(t_fstream *file, size_t *const width,
-		size_t *const height, size_t *const max_val)
+		size_t *const height, unsigned int *const max_val)
 {
 	int		ret;
 	char	*line;
@@ -22,19 +26,20 @@ static int		read_header(t_fstream *file, size_t *const width,
 
 	prev_line = NULL;
 	line_nb = 0;
-	while ((ret = ft_fstream_sread_to_any_char(file, &line, "\n", 1)) > 0)
+	while ((ret = ft_fstream_sread_to_any_char(file, &line, "\v\f\n\t\r ", 1)) > 0)
 	{
 		if (prev_line)
 			free(prev_line);
 		prev_line = line;
+		if (*line == '#')
+			continue ;
+		while (ft_is_whitespace((int)*line))
+			line++;
 		if (line_nb == 0 && ft_strstr(line, "P6") == line && ++line_nb)
 			continue ;
 		else if (line_nb == 0)
 			break ;
-		while (ft_is_whitespace((int)*line))
-			line++;
-		if (*line == '#')
-			continue ;
+	
 		if (line_nb == 1 && *line != '\0')
 		{
 			*width = ft_atoi(line);
@@ -60,7 +65,7 @@ static int		read_header(t_fstream *file, size_t *const width,
 		free(prev_line);
 	return (line_nb == 3 && ret != -1);
 }
-
+*/
 static int		read_raster(t_fstream *file, size_t const *const dim, int bytes_per_color, char *const pixels)
 {
 	long		ret;
@@ -76,7 +81,7 @@ static int		read_raster(t_fstream *file, size_t const *const dim, int bytes_per_
 }
 
 char			*ft_ppm_get(char const *const path, size_t *const width,
-		size_t *const height, size_t *const max_val)
+		size_t *const height, unsigned int *const max_val)
 {
 	t_fstream		*file;
 	size_t			dim[2];
@@ -84,9 +89,15 @@ char			*ft_ppm_get(char const *const path, size_t *const width,
 	int				bytes_per_color;
 
 	if (!(file = ft_fstream_read_open(path)))
+	{
+		ft_printf("Usage : ./rt filepath\n");
 		return (NULL);
-	if (!read_header(file, width, height, max_val))
+	}
+	if (!ft_ppm_read_header(file, width, height, max_val))
+	{
+		ft_printf("ppm| invalid file\n");
 		return (NULL);
+	}
 	bytes_per_color = (*max_val > 255 ? 2 : 1) * 3 * sizeof(char);
 	if ((pixels = (char*)malloc(sizeof(char) * bytes_per_color * *width * *height)))
 	{
