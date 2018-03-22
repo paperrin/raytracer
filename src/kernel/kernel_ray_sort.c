@@ -6,7 +6,7 @@
 /*   By: tlernoul <tlernoul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/12 16:36:28 by tlernoul          #+#    #+#             */
-/*   Updated: 2018/03/21 17:09:06 by tlernoul         ###   ########.fr       */
+/*   Updated: 2018/03/22 02:17:27 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,6 @@ int				kernel_ray_sort_create(t_app *app)
 			(void*)&app->kernel_ray_sort.wg_size, NULL)))
 		return (error_cl_code(err));
 	if (CL_SUCCESS != (err = clSetKernelArg(app->kernel_ray_sort.kernel, 3, sizeof(t_ray_state) * app->kernel_ray_sort.wg_size, NULL)))
-		return (error_cl_code(err));
-	if (CL_SUCCESS != (err = clSetKernelArg(app->kernel_ray_sort.kernel, 4, sizeof(t_ray_state) * app->kernel_ray_sort.wg_size, NULL)))
 		return (error_cl_code(err));
 	return (1);
 }
@@ -67,7 +65,8 @@ int				kernel_ray_sort_launch(t_app *app)
 					sizeof(cl_uint), (void*)&new_app_n_rays, 0, NULL, NULL)))
 		return (error_cl_code(err));
 /*	printf("appn %u (diff) %d | \nrays %u | hits %u\n",new_app_n_rays,(int)new_app_n_rays - (int)app->n_hits , app->n_rays, app->n_hits);
-*/	
+*/
+	app->n_rays = app->n_hits;
 	n_rays = (cl_uint)app->n_hits;
 	opencl_kernel_arg_select_id(&app->kernel_ray_sort, 2);
 	opencl_kernel_arg_selected_destroy(&app->kernel_ray_sort);

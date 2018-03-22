@@ -84,8 +84,6 @@ kernel void			kernel_ray_shade(
 				}
 		}
 	}
-//	else
-//		printf("gid = %d, ",gid % 32);
 	if (config->cur_depth < config->max_depth)
 	{
 		ray_states[gid + *n_rays] = state_refrac;
