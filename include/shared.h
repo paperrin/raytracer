@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/13 14:25:38 by paperrin          #+#    #+#             */
-/*   Updated: 2018/03/12 22:05:50 by ilarbi           ###   ########.fr       */
+/*   Updated: 2018/03/25 17:08:35 by ilarbi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -196,6 +196,7 @@ typedef struct			s_texture
 	cl_long				pixels_offset;
 	cl_uint				width;
 	cl_uint				height;
+	cl_uint				max_val;
 	t_filter			filter;
 
 }						t_texture;

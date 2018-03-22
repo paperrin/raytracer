@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/09 16:14:42 by paperrin          #+#    #+#             */
-/*   Updated: 2018/03/12 22:44:38 by ilarbi           ###   ########.fr       */
+/*   Updated: 2018/03/25 18:15:13 by ilarbi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void		render(void *user_ptr, double elapsed)
 	if (!kernel_clear_launch(app))
 		app_destroy(app, EXIT_FAILURE);
 	depth = -1;
-	while (++depth <= 1)
+	while (++depth <= 2)
 	{
 		if (!kernel_ray_trace_launch(app))
 			app_destroy(app, EXIT_FAILURE);
@@ -98,10 +98,10 @@ int			main(int ac, char **av)
 	t_light				*light;
 	t_material			*mat;
 	t_texture			*texture;
-	char			*pixels;
+	unsigned char		*pixels;
 	size_t			width;
 	size_t			height;
-	size_t			max;
+	unsigned int	max_val;
 
 	app.scene.v_obj = ft_vector_create(sizeof(t_obj), NULL, NULL);
 	
@@ -132,7 +132,7 @@ int			main(int ac, char **av)
 	mat->color = vec3f(1, 1, 1);
 	mat->reflection = 0;
 	mat->refraction = 0;
-	mat->texture_id = 1;
+	mat->texture_id = 0;
 	if (!(mat = (t_material*)ft_vector_push_back(&app.scene.v_material, NULL)))
 		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
 	mat->color = vec3f(0.6, 0.6, 1);
@@ -144,25 +144,20 @@ int			main(int ac, char **av)
 	mat->specular_exp = 200;
 
 	app.scene.v_texture = ft_vector_create(sizeof(t_texture), NULL, NULL);
-	if (!(pixels = ft_ppm_get("textures/brick.ppm", &width, &height, &max)))
-		return (0);
+	if (!(pixels = ft_ppm_file_read("textures/max_val.ppm", &width, &height, &max_val)))
+		return (error_string("Could not read ppm file"));
 	if (!(texture = (t_texture*)ft_vector_push_back(&app.scene.v_texture, NULL)))
 		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
-	printf("texture_size: %lu, %lu, %lu\n", width, height, max);
+	printf("texture_size: %lu, %lu, %u\n", width, height, max_val);
 	app.scene.texture_pixels = (cl_uchar*)pixels;
-	app.scene.n_texture_pixels = width * height;
+	app.scene.n_texture_pixels = width * height * (max_val <= 255 ? 1 : 2);
 	texture->pixels_offset = 0;
 	texture->width = width;
 	texture->height = height;
-	texture->filter = e_filter_nearest;
-	if (!(texture = (t_texture*)ft_vector_push_back(&app.scene.v_texture, NULL)))
-		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
-	texture->pixels_offset = 0;
-	texture->width = width;
-	texture->height = height;
+	texture->max_val = max_val;
 	texture->filter = e_filter_nearest;
 
-	app.config.ambient = vec3f(0.2, 0.2, 0.2);
+	app.config.ambient = vec3f(0.1, 0.1, 0.1);
 	app.config.samples_width = 1;
 	app.config.shading_model = shading_model_phong;
 	app.scene.v_light = ft_vector_create(sizeof(t_light), NULL, NULL);
@@ -170,7 +165,7 @@ int			main(int ac, char **av)
 		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
 	light->type = light_type_point;
 	light->color = vec3f(1, 0.8, 0.7);
-	light->intensity = 20;
+	light->intensity = 30;
 	light->as.point.pos = vec3r(0.9, 1, -1.2);
 	if (!(light = (t_light*)ft_vector_push_back(&app.scene.v_light, NULL)))
 		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
