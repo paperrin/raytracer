@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/17 15:51:44 by paperrin          #+#    #+#             */
-/*   Updated: 2018/03/17 15:03:30 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/03/23 23:20:35 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,7 @@ struct				s_token_stream
 
 typedef struct		s_ast
 {
-	t_token			**tokens;
+	t_vector		v_tokens;
 }					t_ast;
 
 t_char_stream		*cstream_open(char const *const file_path);
@@ -164,7 +164,9 @@ void				token_op_destroy(t_token *token);
 void				token_call_destroy(t_token *token);
 void				token_bool_destroy(t_token *token);
 
-t_ast				*ast_parse(char const *const file_path);
+t_token				*token_num(float value);
+
+	t_ast				*ast_parse(char const *const file_path);
 void				ast_destroy(t_ast **ast);
 t_token				*ast_parse_expr(t_token_stream *const tkstream);
 t_token				*ast_parse_maybe_call(t_token_stream *const tkstream);

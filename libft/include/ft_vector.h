@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/30 19:50:27 by paperrin          #+#    #+#             */
-/*   Updated: 2017/12/16 19:20:18 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/03/23 23:24:05 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,6 @@
 # include "ft_math.h"
 
 # define FT_VECTOR_BASE_GROW_FACTOR 2
-
-# define VECTOR_PUSHR(V, R) ft_vector_push_back(&V, (char*)R)
-# define VECTOR_PUSH(V, T, P) (P = (T*)ft_vector_push_back(&V, NULL))
-
-# define VECTOR_PUSHR_FRONT(V, R) ft_vector_push_front(&V, (char*)R)
-# define VECTOR_PUSH_FRONT(V, T, P) (P = (T*)ft_vector_push_front(&V, NULL))
 
 typedef struct	s_vector
 {

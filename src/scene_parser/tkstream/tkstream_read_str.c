@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/04 18:50:03 by paperrin          #+#    #+#             */
-/*   Updated: 2018/03/04 22:02:41 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/03/24 00:00:45 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ t_token			*tkstream_read_str(t_token_stream *const tkstream)
 			break ;
 		if (!concat_char_is_escaped(&str, c, escaped))
 		{
-			free(str);
+			ft_strdel(&str);
 			return (NULL);
 		}
 	}

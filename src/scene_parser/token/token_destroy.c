@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/05 17:23:37 by paperrin          #+#    #+#             */
-/*   Updated: 2018/03/15 17:51:37 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/03/23 23:49:59 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,16 @@ void		token_destroy(t_token **token)
 		(void*)token_type_bool, (void*)&token_bool_destroy};
 	int				i;
 
-	if (!token)
+	ft_putendl("TEST1\n");
+			printf("type: %u\n", (**token).type);
+	if (!token || !(*token))
 		return ;
+	ft_putendl("TEST2\n");
 	i = -1;
 	while (++i < TOKEN_DESTROY_NB_F_TOKENS)
 	{
-		if ((*token)->type == (unsigned int)f_token_type_destroy[i * 2])
+		if ((*token)->type
+				== (unsigned int)f_token_type_destroy[i * 2])
 		{
 			((t_f_token_destroy*)f_token_type_destroy[i * 2 + 1])(*token);
 			ft_memdel((void**)token);

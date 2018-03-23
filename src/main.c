@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/09 16:14:42 by paperrin          #+#    #+#             */
-/*   Updated: 2018/03/17 18:24:45 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/03/23 22:19:43 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,30 @@
 
 int			app_create(t_app *app)
 {
+	t_ast *ast;
+	/*
+	t_token_stream		*tkstream;
+	t_token			*tk;
+
+	if ((tkstream = tkstream_open("example.rt")))
+	{
+		while (1)
+		{
+			if ((tk = tkstream_next(tkstream)))
+				tkstream_print_token(tk);
+			else
+				return (0);
+		}
+	}
+	else
+		return (0);*/
+	if ((ast = ast_parse("example.rt")))
+	{
+		ast_destroy(&ast);
+		return (1);
+	}
+	else
+		return (0);
 	if (!window_create(&app->win, 720, 480, APP_TITLE))
 		return (0);
 	if (!image_create(&app->draw_buf, app->win.width, app->win.height))

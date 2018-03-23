@@ -97,6 +97,7 @@ CFILES		=	\
 				scene_parser/token/token_op_destroy.c					\
 				scene_parser/token/token_call_destroy.c					\
 				scene_parser/token/token_bool_destroy.c					\
+				scene_parser/token/token_num.c								\
 				scene_parser/ast/ast_parse.c						\
 				scene_parser/ast/ast_parse_expr.c					\
 				scene_parser/ast/ast_parse_maybe_call.c				\
