@@ -6,16 +6,11 @@
 /*   By: ilarbi <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/22 19:11:15 by ilarbi            #+#    #+#             */
-/*   Updated: 2018/03/22 23:43:36 by ilarbi           ###   ########.fr       */
+/*   Updated: 2018/03/24 21:26:48 by ilarbi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/ppm.h"
-
-static int		read_format(char const *const line)
-{
-	return (ft_strstr(line, "P6") == line);
-}
 
 static size_t	read_size(char **line)
 {
@@ -47,18 +42,23 @@ static int		skip_comment(t_fstream *const file, char **line)
 	if (**line != '#')
 		return (0);
 	new_line = ft_strchr_any(*line, "\n\r");
-	if (new_line)
-		*line = new_line++;
-	else
+	if (!new_line)
 	{
-		free((void*)*line);
-		if ((ret = ft_fstream_sread_to_any_char(file, line, "\r\n", 1) <= 0))
+		ft_strdel(line);
+		ft_printf("freeing ...1\n");
+		if ((ret = ft_fstream_sread_to_any_char(file, line, "\r\n", 1)) <= 0)
+		{
+			ft_printf("exit\n");
 			return (0);
+		}
 	}
+	ft_strdel(line);
+	if ((ret = ft_fstream_sread_to_any_char(file, line, "\v\f\n\t\r ", 1)) <= 0)
+		return (0);
 	return (1);
 }
 
-int				ft_ppm_read_header(t_fstream *file, size_t *const width,
+int				ft_ppm_read_header(t_fstream *const file, size_t *const width,
 		size_t *const height, unsigned int *const max_val)
 {
 	static char		*prev_line = NULL;
@@ -67,23 +67,23 @@ int				ft_ppm_read_header(t_fstream *file, size_t *const width,
 	int				token;
 
 	token = 0;
-	while (token != 4 && (ret = ft_fstream_sread_to_any_char(file, &line,
-					"\v\f\n\t\r ", 1)) > 0)
+	while (token != 4 && (ret = ft_fstream_sread_to_any_char(
+					file, &line, "\v\f\n\t\r ", 1)) > 0)
 	{
-		if (prev_line)
-			ft_strdel(&prev_line);
+		ft_strdel(&prev_line);
 		prev_line = line;
 		if (ft_is_whitespace((int)*line))
 			continue ;
-		else if ((*line == '#' && skip_comment(file, &line))
-			|| (token == 0 && read_format(line) && ++token)
+		if (*line == '#' && !skip_comment(file, &line))
+			break ;
+		prev_line = line;
+		if ((token == 0 && (ft_strstr(line, "P6") == line) && ++token)
 			|| (token == 1 && (*width = read_size(&line)) && ++token)
 			|| (token == 2 && (*height = read_size(&line)) && ++token)
 			|| (token == 3 && (*max_val = read_max_val(&line)) && ++token))
 			continue ;
 		break ;
 	}
-	if (prev_line)
-		ft_strdel(&prev_line);
+	ft_strdel(&prev_line);
 	return (token == 4 && ret > 0);
 }

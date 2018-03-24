@@ -6,7 +6,7 @@
 /*   By: ilarbi <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/21 21:53:30 by ilarbi            #+#    #+#             */
-/*   Updated: 2018/03/21 21:59:14 by ilarbi           ###   ########.fr       */
+/*   Updated: 2018/03/23 23:50:57 by ilarbi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,9 @@ unsigned char			*ft_ppm_from_floats(t_ppm_file *const file, float *ftab)
 	i = 0;
 	size = ((file->max_val <= 255) ? (1) : (2));
 	if (!ftab || !(file->color_depth_vector = (unsigned char *)malloc(
-			sizeof(unsigned char) * (file->width * file->height * size))))
+			sizeof(unsigned char) * (file->width * file->height * 3 * size))))
 		return (NULL);
-	while (i < file->width * file->height)
+	while (i < file->width * file->height * 3)
 	{
 		if (ft_float_to_str(ftab[i], file->max_val,
 				&file->color_depth_vector[i * size]))

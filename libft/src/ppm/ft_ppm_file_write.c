@@ -6,17 +6,18 @@
 /*   By: ilarbi <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/14 22:15:01 by ilarbi            #+#    #+#             */
-/*   Updated: 2018/03/21 22:32:11 by ilarbi           ###   ########.fr       */
+/*   Updated: 2018/03/24 22:03:47 by ilarbi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/ppm.h"
+#include "ppm.h"
 
 /*
 **file.color_depth_vector not freed here!
 **fd not closed here either
 */
-int				ft_ppm_file_write(t_ppm_file const *const file)
+
+int			ft_ppm_file_write(t_ppm_file const *const file)
 {
 	size_t	ret;
 	size_t	size;
@@ -31,10 +32,9 @@ int				ft_ppm_file_write(t_ppm_file const *const file)
 	if ((write(file->fd, header, ft_strlen(header)) !=
 				(ssize_t)ft_strlen(header))
 	|| ((ret = (ssize_t)write(file->fd, file->color_depth_vector,
-	file->height * file->width * size)) !=
-		(ssize_t)file->height * file->width * size))
+	file->height * file->width * 3 * size)) !=
+		(ssize_t)file->height * file->width * 3 * size))
 	{
-		ft_printf("cant printf whole tab ret = %d\n", ret);
 		ft_strdel((char **)&header);
 		return (0);
 	}

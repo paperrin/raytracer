@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/21 06:47:05 by paperrin          #+#    #+#             */
-/*   Updated: 2018/03/22 22:44:12 by ilarbi           ###   ########.fr       */
+/*   Updated: 2018/03/24 23:27:33 by ilarbi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,12 @@ struct						s_ppm_file
 	unsigned char			*color_depth_vector;
 };
 
-char						*ft_ppm_get(char const *const path,
+char						*ft_ppm_file_read(char const *const path,
 		size_t *const width, size_t *const height, unsigned int *const max_val);
 unsigned char				*ft_ppm_from_floats(t_ppm_file *const file,
 							float *ftab);
-int							ft_ppm_read_header(t_fstream *file, size_t *const width, size_t *const height, unsigned int *const max_val);
+int							ft_ppm_read_header(t_fstream *file,
+		size_t *const width, size_t *const height, unsigned int *const max_val);
 int							ft_ppm_file_write(t_ppm_file const *const file);
 
 #endif

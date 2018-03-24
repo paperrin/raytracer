@@ -42,18 +42,31 @@ cl_float3		obj_surface_color(
 
 cl_float3		texture_get_color(constant t_texture *texture, global cl_uchar *texture_pixels, cl_ulong n_texture_pixels, uint x, uint y)
 {
-	cl_uchar3		color;
+	uint3			color;
 	cl_ulong		offset;
+	int				n_bytes;
 
+	n_bytes = (texture->max_val <= 255) ? 1 : 2;
 	x = x % texture->width;
 	y = y % texture->height;
-	offset = texture->pixels_offset + (y * texture->width + x);
+	offset = texture->pixels_offset + (y * texture->width + x) * n_bytes;
 	if (offset >= n_texture_pixels)
 		return ((cl_float3)(1, 0.078, 0.576));
-	color.r = texture_pixels[offset * 3 + 0];
-	color.g = texture_pixels[offset * 3 + 1];
-	color.b = texture_pixels[offset * 3 + 2];
-	return ((cl_float3)(color.r / 255.f, color.g / 255.f, color.b / 255.f));
+	color.r = (uint)texture_pixels[offset * 3 + 0 * n_bytes];
+	printf("color.r = %u\n", texture_pixels[offset * 3 + 0 * n_bytes]);
+	color.g = (uint)texture_pixels[offset * 3 + 1 * n_bytes];
+	color.b = (uint)texture_pixels[offset * 3 + 2 * n_bytes];
+	if (n_bytes == 2)
+	{
+		color.r <<= 8;
+		color.g <<= 8;
+		color.b <<= 8;
+		offset += 1;
+		color.r |= (uint)texture_pixels[offset * 3 + 0 * n_bytes];
+		color.g |= (uint)texture_pixels[offset * 3 + 1 * n_bytes];
+		color.b |= (uint)texture_pixels[offset * 3 + 2 * n_bytes];
+	}
+	return ((cl_float3)(color.r / texture->max_val, color.g / texture->max_val, color.b / texture->max_val));
 }
 
 cl_float3		texture_uv_color(

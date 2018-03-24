@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/09 16:14:42 by paperrin          #+#    #+#             */
-/*   Updated: 2018/03/17 22:26:53 by ilarbi           ###   ########.fr       */
+/*   Updated: 2018/03/24 23:55:17 by ilarbi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,8 @@ int			main(int ac, char **av)
 	char			*pixels;
 	size_t			width;
 	size_t			height;
-	size_t			max;
+	unsigned int	max_val;
+	t_ppm_file		f;
 
 	app.scene.v_obj = ft_vector_create(sizeof(t_obj), NULL, NULL);
 	
@@ -132,7 +133,7 @@ int			main(int ac, char **av)
 	mat->color = vec3f(1, 1, 1);
 	mat->reflection = 0;
 	mat->refraction = 0;
-	mat->texture_id = 1;
+	mat->texture_id = 0;
 	if (!(mat = (t_material*)ft_vector_push_back(&app.scene.v_material, NULL)))
 		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
 	mat->color = vec3f(0.6, 0.6, 1);
@@ -144,23 +145,27 @@ int			main(int ac, char **av)
 	mat->specular_exp = 200;
 
 	app.scene.v_texture = ft_vector_create(sizeof(t_texture), NULL, NULL);
-	if (!(pixels = ft_ppm_get("textures/brick.ppm", &width, &height, &max)))
+	if (!(pixels = ft_ppm_file_read("textures/brick.ppm", &width, &height, &max_val)))
 		return (0);
 	if (!(texture = (t_texture*)ft_vector_push_back(&app.scene.v_texture, NULL)))
 		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
-	printf("texture_size: %lu, %lu, %lu\n", width, height, max);
+	printf("texture_size: %lu, %lu, %u\n", width, height, max_val);
 	app.scene.texture_pixels = (cl_uchar*)pixels;
-	app.scene.n_texture_pixels = width * height;
+	app.scene.n_texture_pixels = width * height * ((max_val > 255) + 1);
 	texture->pixels_offset = 0;
 	texture->width = width;
 	texture->height = height;
+	texture->max_val = max_val;
 	texture->filter = e_filter_nearest;
-	if (!(texture = (t_texture*)ft_vector_push_back(&app.scene.v_texture, NULL)))
-		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
-	texture->pixels_offset = 0;
-	texture->width = width;
-	texture->height = height;
-	texture->filter = e_filter_nearest;
+
+
+	f.fd = open("_brick.ppm", O_WRONLY | O_CREAT | O_TRUNC, S_IRWXU);
+	f.type = '6';
+	f.width = width;
+   	f.height = height;
+	f.max_val = max_val;
+	f.color_depth_vector = (unsigned char *)pixels;
+	ft_ppm_file_write(&f);
 
 	app.config.ambient = vec3f(0.2, 0.2, 0.2);
 	app.config.samples_width = 1;
