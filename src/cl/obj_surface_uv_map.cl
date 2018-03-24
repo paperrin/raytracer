@@ -55,26 +55,27 @@ t_real2			obj_cylinder_surface_uv_map(t_cylinder *cylinder, t_real3 point)
 {
 	t_real3		surface_normal;
 	t_real2		uv;
+	t_real		theta;
 	t_real		phi;
 	t_real		h;
 	t_real		d;
 
-	surface_normal = normalize(obj_cylinder_surface_normal(cylinder, point));
-	phi = acos(-dot(cylinder->up, surface_normal));
-	uv.y = 1.f - (phi / M_PI_F);
 	h = dot(cylinder->pos - point, cylinder->pos - point);
 	d = sqrt(h - cylinder->radius * cylinder->radius);
-	uv.x = d;
+	uv.y = d;
+	if (dot(cylinder->normal, cylinder->pos - point) > 0)
+		uv.y *= -1;
+
+	phi = acos(-dot(cylinder->up, surface_normal));
+	surface_normal = normalize(obj_cylinder_surface_normal(cylinder, point));
+	theta = acos(clamp(dot(cylinder->up, surface_normal) / sin(phi), -1.f, 1.f)) / (2.f * M_PI_F);
+	if (dot(cross(cylinder->up, cylinder->normal), surface_normal) <= 0)
+		uv.x = 1 - theta;
+	else
+		uv.x = theta;
+
 	uv -= (t_real2)(floor(uv.x), floor(uv.y));
 	return (uv);
-
-//	t_real3		surface_normal;
-//	t_real2		uv;
-//
-//	surface_normal = normalize(obj_cylinder_surface_normal(cylinder, point));
-//	uv.x = atan2(surface_normal.x, surface_normal.z) / (2 * M_PI_F) + 1.f;
-//	uv.y = surface_normal.y * 1.f + 1.f;
-//	return (uv);
 }
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/09 16:14:42 by paperrin          #+#    #+#             */
-/*   Updated: 2018/02/24 21:20:10 by alngo            ###   ########.fr       */
+/*   Updated: 2018/03/24 17:05:30 by alngo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,18 +107,27 @@ int			main(int ac, char **av)
 
 	if (!(obj = (t_obj*)ft_vector_push_back(&app.scene.v_obj, NULL)))
 		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
-	*obj = obj_cylinder(vec3r(0, 0, 0), vec3r(1, 0, 0), vec3r(0, 0, 1), 0.5, 0);
+	*obj = obj_cylinder(vec3r(0, 0.5, 0), vec3r_norm(vec3r(1, 0, 0)), vec3r_norm(vec3r(0, 1, 0)), 0.5, 0);
+
+	if (!(obj = (t_obj*)ft_vector_push_back(&app.scene.v_obj, NULL)))
+		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
+	*obj = obj_cylinder(vec3r(0, 0.5, -1), vec3r_norm(vec3r(0, 1, 0)), vec3r_norm(vec3r(1, 0, 0)), 0.5, 0);
+
+	if (!(obj = (t_obj*)ft_vector_push_back(&app.scene.v_obj, NULL)))
+		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
+	*obj = obj_sphere(vec3r(0, 1, 1), 0.5, 0);
 
 	if (!(obj = (t_obj*)ft_vector_push_back(&app.scene.v_obj, NULL)))
 		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
 	*obj = obj_plane(vec3r(0, -2, 0), vec3r(0, 1, 0), vec3r(1, 0, 0), 0);
 
+	if (!(obj = (t_obj*)ft_vector_push_back(&app.scene.v_obj, NULL)))
+		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
+	*obj = obj_plane(vec3r(0, -2, 0), vec3r(0, 1, 0), vec3r(1, 0, 0), 0);
 	app.scene.v_material = ft_vector_create(sizeof(t_material), NULL, NULL);
 	if (!(mat = (t_material*)ft_vector_push_back(&app.scene.v_material, NULL)))
 		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
-	mat->color = vec3f(1, 1, 1);
-	mat->reflection = 0;
-	mat->refraction = 0;
+	mat->color = vec3f(1, 1, 1); mat->reflection = 0; mat->refraction = 0;
 	mat->texture_id = 0;
 	if (!(mat = (t_material*)ft_vector_push_back(&app.scene.v_material, NULL)))
 		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
