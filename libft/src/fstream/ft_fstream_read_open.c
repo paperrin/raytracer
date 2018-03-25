@@ -6,10 +6,11 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/21 20:26:59 by paperrin          #+#    #+#             */
-/*   Updated: 2018/01/22 01:14:14 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/03/24 21:58:04 by ilarbi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdio.h>
 #include "ft_fstream.h"
 
 t_fstream		*ft_fstream_read_open(char const *const path)
