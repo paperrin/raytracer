@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/09 16:14:42 by paperrin          #+#    #+#             */
-/*   Updated: 2018/03/24 23:55:17 by ilarbi           ###   ########.fr       */
+/*   Updated: 2018/03/25 17:03:08 by ilarbi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void		render(void *user_ptr, double elapsed)
 	if (!kernel_clear_launch(app))
 		app_destroy(app, EXIT_FAILURE);
 	depth = -1;
-	while (++depth <= 1)
+	while (++depth <= 3)
 	{
 		if (!kernel_ray_trace_launch(app))
 			app_destroy(app, EXIT_FAILURE);
@@ -98,11 +98,12 @@ int			main(int ac, char **av)
 	t_light				*light;
 	t_material			*mat;
 	t_texture			*texture;
-	char			*pixels;
+	unsigned char		*pixels;
 	size_t			width;
 	size_t			height;
 	unsigned int	max_val;
 	t_ppm_file		f;
+	int i;
 
 	app.scene.v_obj = ft_vector_create(sizeof(t_obj), NULL, NULL);
 	
@@ -145,13 +146,16 @@ int			main(int ac, char **av)
 	mat->specular_exp = 200;
 
 	app.scene.v_texture = ft_vector_create(sizeof(t_texture), NULL, NULL);
-	if (!(pixels = ft_ppm_file_read("textures/brick.ppm", &width, &height, &max_val)))
-		return (0);
+	if (!(pixels = ft_ppm_file_read("textures/max_val.ppm", &width, &height, &max_val)))
+	{
+		return (error_string("Could not read ppm file"));
+	}
 	if (!(texture = (t_texture*)ft_vector_push_back(&app.scene.v_texture, NULL)))
 		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
 	printf("texture_size: %lu, %lu, %u\n", width, height, max_val);
 	app.scene.texture_pixels = (cl_uchar*)pixels;
-	app.scene.n_texture_pixels = width * height * ((max_val > 255) + 1);
+	app.scene.n_texture_pixels = width * height * (max_val <= 255 ? 1 : 2);
+	i = 0;
 	texture->pixels_offset = 0;
 	texture->width = width;
 	texture->height = height;
