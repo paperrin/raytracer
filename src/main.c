@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/09 16:14:42 by paperrin          #+#    #+#             */
-/*   Updated: 2018/01/26 16:38:37 by eabgrall         ###   ########.fr       */
+/*   Updated: 2018/03/26 21:19:18 by eabgrall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,11 +147,11 @@ int			main(int ac, char **av)
 
 	if (!(obj = (t_obj*)ft_vector_push_back(&app.scene.v_obj, NULL)))
 		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
-	*obj = obj_cone(vec3r(0, 0.4, -2), 0.1, vec3r(0, 1, 0), 0);
+	*obj = obj_cone(vec3r(0, 0.4, -2), 0.4, vec3r(0, 1, 0), 0);
 
 	if (!(obj = (t_obj*)ft_vector_push_back(&app.scene.v_obj, NULL)))
 		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
-	*obj = obj_cone(vec3r(1, 0, -2), 0.1, vec3r(0, 0, 1), 0);
+	*obj = obj_cone(vec3r(1, 0, -2), 0.2, vec3r(0, 0.3, 1), 0);
 /*
 	if (!(obj = (t_obj*)ft_vector_push_back(&app.scene.v_obj, NULL)))
 		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));

@@ -115,20 +115,23 @@ t_real			obj_sphere_ray_hit(constant t_sphere *sphere, t_ray *ray)
 
 t_real		obj_cone_ray_hit(constant t_cone *cone, t_ray *ray)
 {
-	t_real3		dist;
 	t_real3		abc;
 	t_real		hits[2];
-	t_real3		cylu;
-	t_real3		cylv;
+	t_real		csquare;
+	t_real		ssquare;
+	t_real3		dp;
 
-	dist = ray->origin - cone->pos;
-	abc[0] = dot(ray->dir, ray->dir) - (dot(ray->dir, cone->normal) * dot(ray->dir, cone->normal));
-	abc[1] = 2 * (dot(ray->dir, dist) - dot(ray->dir, cone->normal) * dot(dist, cone->normal));
-	abc[2] = dot(dist, dist) - (dot(dist, cone->normal) * (dot(dist, cone->normal))) - (cone->radius * cone->radius);
-
-/*	abc[0] = dot(ray->dir , ray->dir);
-	abc[1] = 2 * dot(ray->dir, dist);
-	abc[2] = dot(dist, dist) - cone->radius * cone->radius;*/
+	csquare = cos(cone->angle) * cos(cone->angle);
+	ssquare = sin(cone->angle) * sin(cone->angle);
+	dp = ray->origin - cone->pos;
+	abc[0] = csquare * dot((ray->dir - dot(ray->dir, cone->up) * cone->up), 
+				(ray->dir - dot(ray->dir, cone->up) * cone->up)) - ssquare * 
+				dot(ray->dir , cone->up) * dot(ray->dir , cone->up);
+	abc[1] = 2 * csquare * dot((ray->dir - dot(ray->dir, cone->up) *
+				cone->up), (dp - dot(dp, cone->up) * cone->up)) - 
+				2 * ssquare * dot(ray->dir, cone->up) * dot(dp, cone->up);
+	abc[2] = csquare * dot((dp - dot(dp, cone->up) * cone->up), (dp - dot(dp, cone->up) * cone->up)) -
+				ssquare * dot(dp, cone->up) * dot(dp, cone->up);
 	if (solve_quadratic(abc, hits) < 0)
 		return (-1);
 	return (hits[0]);

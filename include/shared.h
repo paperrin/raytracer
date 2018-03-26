@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/13 14:25:38 by paperrin          #+#    #+#             */
-/*   Updated: 2018/01/24 18:40:51 by alngo            ###   ########.fr       */
+/*   Updated: 2018/03/26 19:18:56 by eabgrall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,7 +144,7 @@ typedef struct			s_cone
 	t_real3				pos;
 	t_real3				up;
 	t_real3				normal;
-	t_real				radius;
+	t_real				angle;
 }						t_cone;
 
 typedef union			u_obj_container

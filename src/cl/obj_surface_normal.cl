@@ -37,7 +37,7 @@ t_real3			obj_cone_surface_normal(t_cone *cone, t_real3 point)
 
 	normal = point - cone->pos;
 	h = sqrt(dot(normal, normal));
-	y = sqrt(h * h - dot(cone->radius, cone->radius));
+	y = sqrt(h * h - dot(cone->angle, cone->angle));
 	c = cone->up * y + cone->pos;
 	normal = point - c;
 	normal = normalize(normal);
