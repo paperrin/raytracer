@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/09 16:14:42 by paperrin          #+#    #+#             */
-/*   Updated: 2018/03/25 18:57:57 by ilarbi           ###   ########.fr       */
+/*   Updated: 2018/03/26 20:43:17 by tlernoul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,10 +145,10 @@ int			main(int ac, char **av)
 	app.scene.v_material = ft_vector_create(sizeof(t_material), NULL, NULL);
 	if (!(mat = (t_material*)ft_vector_push_back(&app.scene.v_material, NULL)))
 		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
-	mat->color = vec3f(0.5, 0.5, 0.5);
+	mat->color = vec3f(1, 1, 1);
 	mat->reflection = 0;
 	mat->refraction = 0;
-	mat->texture_id = 0;
+	mat->texture_id = -1;
 	if (!(mat = (t_material*)ft_vector_push_back(&app.scene.v_material, NULL)))
 		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
 	mat->color = vec3f(1, 0, 0);
@@ -187,16 +187,16 @@ int			main(int ac, char **av)
 	if (!(mat = (t_material*)ft_vector_push_back(&app.scene.v_material, NULL)))
 		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
 	mat->color = vec3f(1, 1, 1);
-	mat->reflection = 0.05;
-	mat->refraction = 0.40;
-	mat->indice_of_refraction = 0.65;
-	mat->texture_id = -1;
+	mat->reflection = 0;
+	mat->refraction = 0.7;
+	mat->indice_of_refraction = 1;
+	mat->texture_id = 0;
 	mat->specular = 10;
 	mat->specular_color = vec3f(1, 1, 1);
 	mat->specular_exp = 200;
 
 	app.scene.v_texture = ft_vector_create(sizeof(t_texture), NULL, NULL);
-	if (!(pixels = ft_ppm_file_read("textures/max_val.ppm", &width, &height, &max_val)))
+	if (!(pixels = ft_ppm_file_read("textures/brick.ppm", &width, &height, &max_val)))
 		return (error_string("Could not read ppm file"));
 	if (!(texture = (t_texture*)ft_vector_push_back(&app.scene.v_texture, NULL)))
 		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
@@ -212,7 +212,7 @@ int			main(int ac, char **av)
 	app.config.screen_size.s[0] = APP_WIDTH;
 	app.config.screen_size.s[1] = APP_HEIGHT;
 
-	app.config.ambient = vec3f(0.1, 0.1, 0.1);
+	app.config.ambient = vec3f(0.15, 0.15, 0.15);
 	app.config.samples_width = 1;
 	app.config.max_depth = 2;
 
@@ -221,7 +221,7 @@ int			main(int ac, char **av)
 		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
 	light->type = light_type_point;
 	light->color = vec3f(1, 1, 1);
-	light->intensity = 150;
+	light->intensity = 250;
 	light->as.point.pos = vec3r(0, 1, -1);
 	
 	app.cam.cam_data.pos = vec3r(0, 0, -1);

@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/13 14:25:38 by paperrin          #+#    #+#             */
-/*   Updated: 2018/03/25 18:50:11 by ilarbi           ###   ########.fr       */
+/*   Updated: 2018/03/26 20:10:53 by tlernoul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,6 +122,7 @@ typedef struct			s_ray_state
 	cl_float			importance;
 	cl_uint				pxl_id;
 	t_obj_id			obj_id;
+	cl_float3			color_factor;
 }						t_ray_state;
 
 /*

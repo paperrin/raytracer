@@ -21,6 +21,7 @@ kernel void			kernel_ray_gen_primary(
 			* ((t_real)config->screen_size.y / config->screen_size.x)
 			* cam->up
 	);
+	ray_states[gid].color_factor = (float3)(1);
 	ray_states[gid].importance = 1.f;
 	ray_states[gid].pxl_id = pxl_id;
 }
