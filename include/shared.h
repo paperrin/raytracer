@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/13 14:25:38 by paperrin          #+#    #+#             */
-/*   Updated: 2018/03/26 20:10:53 by tlernoul         ###   ########.fr       */
+/*   Updated: 2018/03/27 23:13:49 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,13 @@ typedef enum			e_shading_model
 
 typedef struct			s_config
 {
-	cl_float3			ambient;
+	cl_float3			ambient_c;
+	cl_float			ambient_i;
+	cl_float3			camera_light_c;
+	cl_float			camera_light_i;
+	cl_float			color_epsilon;
+	t_real				intersection_bias;
+	t_real				z_far;
 	cl_uint				samples_width;
 	t_e_shading_model	shading_model;
 	cl_uint2			screen_size;
