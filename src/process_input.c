@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/19 19:21:17 by paperrin          #+#    #+#             */
-/*   Updated: 2018/03/13 20:00:04 by alngo            ###   ########.fr       */
+/*   Updated: 2018/03/27 17:26:55 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static void		process_input_mouse(t_app *app, double elapsed)
 
 static void		process_input_key(t_app *app, double elapsed)
 {
-	const double	move = 50;
+	const double	move = 80;
 	char			a_pressed;
 	char			s_pressed;
 	char			d_pressed;
