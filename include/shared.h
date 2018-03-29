@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/13 14:25:38 by paperrin          #+#    #+#             */
-/*   Updated: 2018/03/27 23:13:49 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/01 21:45:59 by tlernoul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,7 @@ typedef struct			s_config
 	cl_float3			camera_light_c;
 	cl_float			camera_light_i;
 	cl_float			color_epsilon;
+	cl_uint				projection_depth;
 	t_real				intersection_bias;
 	t_real				z_far;
 	cl_uint				samples_width;
@@ -198,6 +199,7 @@ struct					s_material
 	cl_float3			specular_color;
 	cl_float			specular_exp;
 	cl_float			indice_of_refraction;
+	cl_uint				projection;
 	cl_int				texture_id;
 };
 

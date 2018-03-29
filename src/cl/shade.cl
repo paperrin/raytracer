@@ -43,22 +43,26 @@ int			is_in_shadow(global t_config const *const config, float3 *perceived_l_colo
 	t_real3				hit_pos;
 	constant t_material	*mat;
 	t_obj				obj;
+	cl_uint				p_depth = 0;
 
-	*perceived_l_color = (float3)(1);
+	if (!config->projection_depth && ray_throw_get_any_hit_obj(config, &light_ray, objs, objs_size, &t) > -1 && light_dist > t)
+		return (1);
+	*perceived_l_color = (float3)(1, 1, 1);
 	while ((obj_id = ray_throw_get_first_hit_obj(config, &light_ray, objs, objs_size, &t)) > -1 && light_dist > t)
 	{
 		obj = objs[obj_id];
 		mat = &mats[obj.material_id];
 		importance *= mat->refraction;
-		if (importance < config->color_epsilon)
+		if (p_depth >= config->projection_depth || !mat->projection
+				|| importance < config->color_epsilon)
 			return (1);
 		hit_pos = light_ray.origin + light_ray.dir * t;
 		*perceived_l_color *= obj_surface_color(&obj, mats, textures, textures_size,
 				texture_pixels, n_texture_pixels, hit_pos) * importance;
 		light_ray.origin = hit_pos + obj_surface_normal(&obj, hit_pos, light_ray) * (t_real)-config->intersection_bias;
 		light_dist -= t + t * config->intersection_bias;
+		p_depth++;
 	}
-	*perceived_l_color *= importance;
 	return (0);
 }
 
@@ -71,14 +75,14 @@ float3			shade(global t_config const *const config, t_obj obj, t_real3 hit_pos, 
 {
 	t_real3			surface_normal;
 	t_ray			light_ray;
-	float3		light_color;
-	float3		color;
+	float3			light_color;
+	float3			color;
 	int				i;
 	t_real			ndl;
 	t_real			light_dist;
-	float3		surface_color;
-	float3		perceived_l_color;
-	float		vdn;
+	float3			surface_color;
+	float3			perceived_l_color;
+	float			vdn;
 
 	surface_normal = obj_surface_normal(&obj, hit_pos, ray);
 	light_ray.origin = hit_pos;
@@ -88,7 +92,7 @@ float3			shade(global t_config const *const config, t_obj obj, t_real3 hit_pos, 
 			textures, textures_size,
 			texture_pixels, n_texture_pixels,
 			hit_pos);
-	color = (float3)(0);
+	color = (float3)(0, 0, 0);
 	vdn = dot(-surface_normal, ray.dir);
 	i = -1;
 	while (++i < (int)lights_size)

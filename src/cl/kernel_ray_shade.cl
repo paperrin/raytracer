@@ -52,7 +52,7 @@ kernel void			kernel_ray_shade(
 				texture_pixels, *n_texture_pixels,
 				lights, *lights_size);
 		color *= state.color_factor;
-		color *= (state.importance - mats[obj.material_id].reflection - mats[obj.material_id].refraction);
+		color *= (state.importance - state.importance * (mats[obj.material_id].reflection + mats[obj.material_id].refraction));
 		color /= config->samples_width * config->samples_width;
 		atomic_addf(&pixels[state.pxl_id * 4 + 0], color.r);
 		atomic_addf(&pixels[state.pxl_id * 4 + 1], color.g);
@@ -69,7 +69,7 @@ kernel void			kernel_ray_shade(
 				{
 					state_refrac = state;
 					atomic_inc(n_new_rays);
-	config, 				state_refrac.ray = get_refracted_ray(config, state.ray, hit_pos, normal,
+					state_refrac.ray = get_refracted_ray(config, &obj, state.ray, hit_pos, normal,
 								mats[obj.material_id].indice_of_refraction);
 					state_refrac.importance = state.importance * mats[obj.material_id].refraction;
 					state_refrac.t = -1;

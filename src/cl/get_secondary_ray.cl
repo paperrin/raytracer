@@ -4,9 +4,9 @@
 # include "shared.h"
 
 t_ray			get_reflected_ray(global t_config const *const config,
-		t_ray ray, t_real3 hit_pos, t_real3 nomal);
+		t_ray ray, t_real3 hit_pos, t_real3 normal);
 t_ray			get_refracted_ray(global t_config const *const config,
-		t_ray ray, t_real3 hit_pos, t_real3 normal, t_real ior);
+		t_obj *obj, t_ray ray, t_real3 hit_pos, t_real3 normal, t_real n2);
 
 
 t_ray			get_reflected_ray(global t_config const *const config,
@@ -20,15 +20,22 @@ t_ray			get_reflected_ray(global t_config const *const config,
 }
 
 t_ray			get_refracted_ray(global t_config const *const config,
-		t_ray ray, t_real3 hit_pos, t_real3 normal, t_real ior)
+		t_obj *obj, t_ray ray, t_real3 hit_pos, t_real3 normal, t_real n2)
 {
 	t_ray			new_ray;
-
+	t_real			n1 = 1;
+	t_real			cosi = dot(normal, -ray.dir);
+	t_real			cosr = sqrt(1 - ((n1 / n2) * (n1 / n2)) * (1 - (cosi * cosi)));
+	
 	new_ray.origin = hit_pos - normal * config->intersection_bias * 2;
-	if (dot(normal, ray.dir) < 0)
-		new_ray.dir = -normal + (normal + ray.dir) * ior;
-	else
-		new_ray.dir = normal + (normal - ray.dir) * ior;
+	if (dot(obj_surface_normal_ext(obj, hit_pos), ray.dir) > 0)
+	{
+		n1 = n2;
+		n2 = 1;
+	}
+	if (cosi <= 0.f)
+		cosr = -cosr;
+	new_ray.dir = (n1 / n2) * ray.dir + (n1 / n2 * cosi - cosr) * normal;
 	return (new_ray);
 }
 

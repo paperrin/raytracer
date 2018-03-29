@@ -23,17 +23,17 @@ float3			get_specular_color(global t_config const *const config, t_material mat,
 float3			get_specular_color_blinn(global t_config const *const config, t_material mat, t_real3 view_dir,
 		t_ray light_ray, t_real3 hit_pos, t_real3 surface_normal, float3 light_color)
 {
-	float3		h;
+	t_real3		h;
 	float		ndh;
 
 	h = (-view_dir + light_ray.dir) / length(-view_dir + light_ray.dir);
 	if (mat.specular > config->color_epsilon)
 	{
 		ndh = dot(surface_normal, h);
-		if (ndh >= 0)
+		if (ndh > 0)
 			return (light_color * mat.specular * mat.specular_color * pow(ndh, mat.specular_exp));
 	}
-	return (0);
+	return ((float3)(0,0,0));
 }
 
 float3			get_specular_color_phong(global t_config const *const config, t_material mat, t_real3 view_dir,
@@ -43,10 +43,10 @@ float3			get_specular_color_phong(global t_config const *const config, t_materia
 
 	if (mat.specular > config->color_epsilon)
 	{
-		if ((vdr =  dot(view_dir , get_reflected_ray(config, light_ray, hit_pos, surface_normal).dir)) > 0)
+		if ((vdr = dot(view_dir , get_reflected_ray(config, light_ray, hit_pos, surface_normal).dir)) > 0)
 			return (light_color * mat.specular * mat.specular_color * pow(vdr, mat.specular_exp));
 	}
-	return (0);
+	return ((float3)(0,0,0));
 }
 
 #endif
