@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/16 22:37:07 by paperrin          #+#    #+#             */
-/*   Updated: 2018/03/25 18:49:01 by ilarbi           ###   ########.fr       */
+/*   Updated: 2018/03/29 20:31:04 by ilarbi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,11 @@ int				kernel_ray_shade_create(t_app *app)
 			, CL_MEM_READ_ONLY | CL_MEM_COPY_HOST_PTR
 			, sizeof(cl_ulong), (void*)&app->scene.n_texture_pixels))
 		return (0);
+	opencl_kernel_arg_select_id(&app->kernel_ray_shade, 11);
+	if (!opencl_kernel_arg_selected_create(&app->kernel_ray_shade
+			, CL_MEM_READ_WRITE
+			, sizeof(cl_uint), NULL))
+			return (0);
 	opencl_kernel_arg_select_id(&app->kernel_ray_shade, 12);
 	opencl_kernel_arg_selected_use_kernel_arg_id(&app->kernel_ray_shade
 			, &app->kernel_clear, 0);
@@ -91,12 +96,10 @@ int				kernel_ray_shade_launch(t_app *app)
 		opencl_kernel_arg_select_id(&app->kernel_ray_shade, 10);
 		opencl_kernel_arg_selected_use_kernel_arg_id(&app->kernel_ray_shade
 				, &app->kernel_ray_gen, 2);
-		opencl_kernel_arg_select_id(&app->kernel_ray_shade, 11);
-		opencl_kernel_arg_selected_destroy(&app->kernel_ray_shade);
-		if (!opencl_kernel_arg_selected_create(&app->kernel_ray_shade
-				, CL_MEM_READ_WRITE | CL_MEM_COPY_HOST_PTR
-				, sizeof(&app->n_rays), &app->n_rays))
-			return (0);
+		if ((err = clEnqueueWriteBuffer(app->ocl.cmd_queue, app->kernel_ray_shade.args[11],
+						CL_TRUE, 0, sizeof(cl_uint), (void*)&app->n_rays, 0, NULL, NULL)) != CL_SUCCESS)
+			return (error_cl_code(err));
+
 		opencl_kernel_arg_select_id(&app->kernel_ray_shade, 13);
 		opencl_kernel_arg_selected_use_kernel_arg_id(&app->kernel_ray_shade
 		, &app->kernel_ray_gen, 0);
@@ -104,10 +107,10 @@ int				kernel_ray_shade_launch(t_app *app)
 			, 1, NULL, &app->kernel_ray_shade.work_size, NULL, 0, NULL, NULL)) != CL_SUCCESS)
 			return (error_cl_code(err));
 		if ((err = clEnqueueReadBuffer(app->ocl.cmd_queue, app->kernel_ray_shade.args[11]
-			, CL_TRUE, 0, sizeof(&app->n_rays), &app->n_rays, 0, NULL, NULL)) != CL_SUCCESS)
+			, CL_TRUE, 0, sizeof(cl_uint), (void*)&app->n_rays, 0, NULL, NULL)) != CL_SUCCESS)
 			return (error_cl_code(err));
 	}
-	return (1);
+	return (-1);
 }
 
 void		kernel_ray_shade_destroy(t_app *app)

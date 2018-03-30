@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/13 14:25:38 by paperrin          #+#    #+#             */
-/*   Updated: 2018/03/25 18:50:11 by ilarbi           ###   ########.fr       */
+/*   Updated: 2018/03/26 23:12:48 by ilarbi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,7 +133,8 @@ typedef enum			e_obj_type
 	type_sphere,
 	type_plane,
 	type_cylinder,
-	type_cone
+	type_cone,
+	type_aligned_cube
 }						t_e_obj_type;
 
 typedef struct			s_plane
@@ -167,12 +168,19 @@ typedef struct			s_cone
 	t_real				radius;
 }						t_cone;
 
+typedef	struct			s_aligned_cube
+{
+	t_real3				pos;
+	t_real3				size;
+}						t_aligned_cube;
+
 typedef union			u_obj_container
 {
 	t_plane				plane;
 	t_sphere			sphere;
 	t_cylinder			cylinder;
 	t_cone				cone;
+	t_aligned_cube		aligned_cube;
 }						t_obj_container;
 
 typedef struct			s_obj

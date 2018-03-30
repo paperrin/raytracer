@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/09 16:14:42 by paperrin          #+#    #+#             */
-/*   Updated: 2018/03/25 18:57:57 by ilarbi           ###   ########.fr       */
+/*   Updated: 2018/03/30 17:17:40 by ilarbi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,7 @@ void		render(void *user_ptr, double elapsed)
 		hits_per_sec = 0;
 		rays_per_sec = 0;
 	}
+	app_destroy(app, EXIT_SUCCESS);
 }
 
 int			main(int ac, char **av)
@@ -113,10 +114,10 @@ int			main(int ac, char **av)
 	unsigned int	max_val;
 
 	app.scene.v_obj = ft_vector_create(sizeof(t_obj), NULL, NULL);
-
+/*
 	if (!(obj = (t_obj*)ft_vector_push_back(&app.scene.v_obj, NULL)))
 		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
-	*obj = obj_sphere(vec3r(0, 0, 0), 0.5, 6);
+	*obj = obj_sphere(vec3r(0, 0, 0), 0.5, 6);*/
 
 	if (!(obj = (t_obj*)ft_vector_push_back(&app.scene.v_obj, NULL)))
 		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
@@ -141,6 +142,12 @@ int			main(int ac, char **av)
 	if (!(obj = (t_obj*)ft_vector_push_back(&app.scene.v_obj, NULL)))
 		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
 	*obj = obj_plane(vec3r(0, 3, 0), vec3r(0, -1, 0), vec3r(1, 0, 0), 5);
+/*
+** axis_aligned_cube
+*/
+	if (!(obj = (t_obj*)ft_vector_push_back(&app.scene.v_obj, NULL)))
+		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
+	*obj = obj_aligned_cube(vec3r(0, 0, -1), vec3r(1, 1, 1), 7);
 
 	app.scene.v_material = ft_vector_create(sizeof(t_material), NULL, NULL);
 	if (!(mat = (t_material*)ft_vector_push_back(&app.scene.v_material, NULL)))
@@ -194,13 +201,22 @@ int			main(int ac, char **av)
 	mat->specular = 10;
 	mat->specular_color = vec3f(1, 1, 1);
 	mat->specular_exp = 200;
+	if (!(mat = (t_material*)ft_vector_push_back(&app.scene.v_material, NULL)))
+		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
+	mat->color = vec3f(0, 0, 1);
+	mat->reflection = 0.0;
+	mat->refraction = 0.0;
+	mat->indice_of_refraction = 0.65;
+	mat->texture_id = -1;
+	mat->specular = 0;
+	mat->specular_color = vec3f(1, 1, 1);
+	mat->specular_exp = 200;
 
 	app.scene.v_texture = ft_vector_create(sizeof(t_texture), NULL, NULL);
 	if (!(pixels = ft_ppm_file_read("textures/max_val.ppm", &width, &height, &max_val)))
 		return (error_string("Could not read ppm file"));
 	if (!(texture = (t_texture*)ft_vector_push_back(&app.scene.v_texture, NULL)))
 		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
-	printf("texture_size: %lu, %lu, %u\n", width, height, max_val);
 	app.scene.texture_pixels = (cl_uchar*)pixels;
 	app.scene.n_texture_pixels = width * height * (max_val <= 255 ? 1 : 2);
 	texture->pixels_offset = 0;
@@ -214,7 +230,7 @@ int			main(int ac, char **av)
 
 	app.config.ambient = vec3f(0.1, 0.1, 0.1);
 	app.config.samples_width = 1;
-	app.config.max_depth = 2;
+	app.config.max_depth = 0;
 
 	app.scene.v_light = ft_vector_create(sizeof(t_light), NULL, NULL);
 	if (!(light = (t_light*)ft_vector_push_back(&app.scene.v_light, NULL)))
@@ -224,7 +240,7 @@ int			main(int ac, char **av)
 	light->intensity = 150;
 	light->as.point.pos = vec3r(0, 1, -1);
 	
-	app.cam.cam_data.pos = vec3r(0, 0, -1);
+	app.cam.cam_data.pos = vec3r(0, 0, 0);
 	(void)ac;
 	(void)av;
 

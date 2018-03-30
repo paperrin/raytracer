@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/09 16:36:38 by paperrin          #+#    #+#             */
-/*   Updated: 2018/03/25 18:50:39 by ilarbi           ###   ########.fr       */
+/*   Updated: 2018/03/29 20:29:25 by ilarbi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ int					error_string(char const *const error_str);
 
 t_obj				obj_sphere(t_real3 pos, t_real radius, t_mat_id material);
 t_obj				obj_plane(t_real3 pos, t_real3 normal, t_real3 up, t_mat_id material);
+t_obj				obj_aligned_cube(t_real3 pos, t_real3 size, t_mat_id material);
 
 void				render(void *user_ptr, double elapsed);
 

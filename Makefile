@@ -76,8 +76,9 @@ CFILES		=	\
 				vec/vec3r.c										\
 				vec/vec3f.c										\
 				\
-				obj/obj_sphere.c								\
+				obj/obj_sphere.c							\
 				obj/obj_plane.c								\
+				obj/obj_aligned_cube.c						\
 				\
 				main.c											\
 				process_input.c									\
