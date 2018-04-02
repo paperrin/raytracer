@@ -15,7 +15,7 @@ float3			get_specular_color_phong(global t_config const *const config, t_materia
 float3			get_specular_color(global t_config const *const config, t_material mat, t_real3 view_dir,
 		t_ray light_ray, t_real3 hit_pos, t_real3 surface_normal, float3 light_color)
 {
-	if (config->shading_model == shading_model_blinn)
+	if (config->shading_model == e_shading_model_blinn)
 		return (get_specular_color_blinn(config, mat, view_dir, light_ray, hit_pos, surface_normal, light_color));
 	return (get_specular_color_phong(config, mat, view_dir, light_ray, hit_pos, surface_normal, light_color));
 }

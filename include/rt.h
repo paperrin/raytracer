@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/09 16:36:38 by paperrin          #+#    #+#             */
-/*   Updated: 2018/03/25 18:50:39 by ilarbi           ###   ########.fr       */
+/*   Updated: 2018/04/02 16:44:37 by tlernoul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ typedef struct		s_app
 	t_ocl_kernel	kernel_ray_trace;
 	t_ocl_kernel	kernel_clear;
 	t_ocl_kernel	kernel_ray_shade;
+	t_ocl_kernel	kernel_post_process;
 	cl_uint			n_hits;
 	cl_uint			n_rays;
 	char			mouse_captured;
@@ -85,5 +86,9 @@ void				kernel_ray_shade_destroy(t_app *app);
 int					kernel_clear_create(t_app *app);
 int					kernel_clear_launch(t_app *app);
 void				kernel_clear_destroy(t_app *app);
+
+int					kernel_post_process_create(t_app *app);
+int					kernel_post_process_launch(t_app *app);
+void				kernel_post_process_destroy(t_app *app);
 
 #endif

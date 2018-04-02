@@ -63,6 +63,7 @@ CFILES		=	\
 				kernel/kernel_ray_trace.c						\
 				kernel/kernel_clear.c							\
 				kernel/kernel_ray_shade.c						\
+				kernel/kernel_post_process.c					\
 				\
 				callbacks/callback_key.c						\
 				callbacks/callback_mouse_motion.c				\

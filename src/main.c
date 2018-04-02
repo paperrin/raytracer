@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/09 16:14:42 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/01 21:46:01 by tlernoul         ###   ########.fr       */
+/*   Updated: 2018/04/02 19:25:14 by tlernoul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ int			app_create(t_app *app)
 		app_destroy(app, EXIT_FAILURE);
 	if (!kernel_ray_shade_create(app) && !error_string("error: shade kernel creation failed\n"))
 		app_destroy(app, EXIT_FAILURE);
+	if (!kernel_post_process_create(app) && !error_string("error: post process kernel creation failed\n"))
+		app_destroy(app, EXIT_FAILURE);
 	app->config.screen_size.s[0] = app->win.width;
 	app->config.screen_size.s[1] = app->win.height;
 	window_callback_key(&app->win, &callback_key);
@@ -45,6 +47,7 @@ void		app_destroy(t_app *app, int exit_status)
 	kernel_ray_trace_destroy(app);
 	kernel_clear_destroy(app);
 	kernel_ray_shade_destroy(app);
+	kernel_post_process_destroy(app);
 	opencl_destroy(&app->ocl);
 	image_destroy(&app->draw_buf);
 	window_destroy(&app->win);
@@ -77,6 +80,8 @@ void		render(void *user_ptr, double elapsed)
 		hits_per_sec += app->n_hits;
 		rays_per_sec += app->n_rays;
 		if (!kernel_ray_shade_launch(app) && !error_string("error: shade kernel launch failed\n"))
+			app_destroy(app, EXIT_FAILURE);
+		if (!kernel_post_process_launch(app) && !error_string("error: post process kernel launch failed\n"))
 			app_destroy(app, EXIT_FAILURE);
 	}
 	clFinish(app->ocl.cmd_queue);
@@ -223,11 +228,12 @@ int			main(int ac, char **av)
 	app.config.samples_width = 1;
 	app.config.max_depth = 2;
 	app.config.projection_depth = 0;
+	app.config.post_filters = e_post_filter_none;
 
 	app.scene.v_light = ft_vector_create(sizeof(t_light), NULL, NULL);
 	if (!(light = (t_light*)ft_vector_push_back(&app.scene.v_light, NULL)))
 		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
-	light->type = light_type_point;
+	light->type = e_light_type_point;
 	light->color = vec3f(1, 1, 1);
 	light->intensity = 220;
 	light->as.point.pos = vec3r(0, 0.8, -1);

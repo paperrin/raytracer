@@ -14,11 +14,11 @@ t_real3				light_get_dir(t_light light, t_real3 to_pos,
 {
 	*dist = -1;
 	*color = (cl_float3)(0, 0, 0);
-	if (light.type == light_type_point)
+	if (light.type == e_light_type_point)
 		return (light_point_get_dir(light, to_pos, color, dist));
-	else if (light.type == light_type_dir)
+	else if (light.type == e_light_type_dir)
 		return (light_dir_get_dir(light, to_pos, color, dist));
-	else if (light.type == light_type_spot)
+	else if (light.type == e_light_type_spot)
 		return (light_spot_get_dir(light, to_pos, color, dist));
 	return ((t_real3)(0, 0, 0));
 }

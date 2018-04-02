@@ -81,9 +81,9 @@ cl_int			ray_throw_get_any_hit_obj(global t_config const *const config, t_ray *r
 t_real			obj_ray_hit(constant t_obj *obj,
 		t_ray *ray)
 {
-	if (obj->type == type_sphere)
+	if (obj->type == e_type_sphere)
 		return (obj_sphere_ray_hit(&obj->as.sphere, ray));
-	else if (obj->type == type_plane)
+	else if (obj->type == e_type_plane)
 		return (obj_plane_ray_hit(&obj->as.plane, ray));
 	else
 		return (-1);

@@ -6,7 +6,7 @@
 #    By: paperrin <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/12/04 23:22:26 by paperrin          #+#    #+#              #
-#    Updated: 2018/02/14 18:29:26 by paperrin         ###   ########.fr        #
+#    Updated: 2018/04/01 23:39:11 by tlernoul         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -64,7 +64,7 @@ SET(SRC_FILES
 	src/graphics/window_callback_mouse_scroll.c
 	src/graphics/image.c
 
-	src/opencl/opencl_get_device_info.c	
+	src/opencl/opencl_get_device_info.c
 	src/opencl/opencl_create.c
 	src/opencl/opencl_kernel_destroy.c
 	src/opencl/opencl_kernel_load_from_file.c
@@ -78,6 +78,7 @@ SET(SRC_FILES
 	src/kernel/kernel_ray_trace.c
 	src/kernel/kernel_clear.c
 	src/kernel/kernel_ray_shade.c
+	src/kernel/kernel_post_process.c
 
 	src/callbacks/callback_key.c
 	src/callbacks/callback_mouse_motion.c
@@ -105,6 +106,7 @@ files_import(
 	src/cl/kernel_ray_gen_primary.cl
 	src/cl/kernel_ray_shade.cl
 	src/cl/kernel_ray_trace.cl
+	src/cl/kernel_post_process.cl
 	src/cl/light_get_dir.cl
 	src/cl/obj_ray_hit.cl
 	src/cl/obj_surface_color.cl

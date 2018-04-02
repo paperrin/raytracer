@@ -23,9 +23,9 @@ t_real3			obj_surface_normal(t_obj *obj, t_real3 point, t_ray ray)
 
 t_real3			obj_surface_normal_ext(t_obj *obj, t_real3 point)
 {
-	if (obj->type == type_sphere)
+	if (obj->type == e_type_sphere)
 		return (obj_sphere_surface_normal(&obj->as.sphere, point));
-	else if (obj->type == type_plane)
+	else if (obj->type == e_type_plane)
 		return (obj_plane_surface_normal(&obj->as.plane, point));
 	return ((t_real3)(0, 0, 0));
 }
