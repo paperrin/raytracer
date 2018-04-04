@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/17 15:51:44 by paperrin          #+#    #+#             */
-/*   Updated: 2018/03/23 23:20:35 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/04 23:17:52 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,27 +17,25 @@
 # include "ft_printf.h"
 # include "rt.h"
 
-# define TKSTREAM_NB_F_TOKENS 5
-# define TOKEN_DESTROY_NB_F_TOKENS 8
+# define TKSTREAM_NB_F_TOKENS 6
+# define TOKEN_DESTROY_NB_F_TOKENS 6
 
 typedef enum		e_token_type
 {
 	token_type_punc,
 	token_type_num,
 	token_type_str,
-	token_type_kw,
 	token_type_var,
 	token_type_op,
-	token_type_call,
-	token_type_bool
+	token_type_call
 }					t_e_token_type;
 
 typedef struct s_token			t_token;
 
 typedef struct s_token_stream	t_token_stream;
 
-typedef t_token *(t_f_token_read)(t_token_stream *const);
-typedef void	(t_f_token_print)(t_token const *const);
+typedef t_token	*(t_f_token_read)(t_token_stream *const);
+typedef int		(t_f_token_print)(t_token const *const, unsigned int);
 typedef void	(t_f_token_destroy)(t_token*);
 
 typedef struct		s_token_var
@@ -67,16 +65,6 @@ typedef struct		s_token_str
 	char			*value;
 }					t_token_str;
 
-typedef struct		s_token_bool
-{
-	int				value;
-}					t_token_bool;
-
-typedef struct		s_token_kw
-{
-	char			*value;
-}					t_token_kw;
-
 typedef struct		s_token_op
 {
 	char			value;
@@ -90,9 +78,7 @@ typedef union		u_token_container
 	t_token_punc	punc;
 	t_token_num		num;
 	t_token_str		str;
-	t_token_bool	boo;
 	t_token_var		var;
-	t_token_kw		kw;
 	t_token_op		op;
 }					t_u_token_container;
 
@@ -147,26 +133,27 @@ t_token				*tkstream_read_op(t_token_stream *const tkstream);
 t_token				*tkstream_read_str(t_token_stream *const tkstream);
 t_token				*tkstream_read_num(t_token_stream *const tkstream);
 t_token				*tkstream_read_var(t_token_stream *const tkstream);
-void				tkstream_print_token(t_token const *const token);
-void				tkstream_print_punc(t_token const *const token);
-void				tkstream_print_op(t_token const *const token);
-void				tkstream_print_str(t_token const *const token);
-void				tkstream_print_num(t_token const *const token);
-void				tkstream_print_var(t_token const *const token);
+
+void				token_indent(unsigned int indent_depth);
+int					token_print(t_token const *const token, unsigned int indent_depth);
+int					token_punc_print(t_token const *const token, unsigned int indent_depth);
+int					token_op_print(t_token const *const token, unsigned int indent_depth);
+int					token_str_print(t_token const *const token, unsigned int indent_depth);
+int					token_num_print(t_token const *const token, unsigned int indent_depth);
+int					token_var_print(t_token const *const token, unsigned int indent_depth);
+int					token_call_print(t_token const *const token, unsigned int indent_depth);
 
 void				token_destroy(t_token **token);
 void				token_punc_destroy(t_token *token);
 void				token_num_destroy(t_token *token);
 void				token_str_destroy(t_token *token);
-void				token_kw_destroy(t_token *token);
 void				token_var_destroy(t_token *token);
 void				token_op_destroy(t_token *token);
 void				token_call_destroy(t_token *token);
-void				token_bool_destroy(t_token *token);
 
 t_token				*token_num(float value);
 
-	t_ast				*ast_parse(char const *const file_path);
+t_ast				*ast_parse(char const *const file_path);
 void				ast_destroy(t_ast **ast);
 t_token				*ast_parse_expr(t_token_stream *const tkstream);
 t_token				*ast_parse_maybe_call(t_token_stream *const tkstream);

@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/19 18:57:19 by paperrin          #+#    #+#             */
-/*   Updated: 2018/03/05 18:23:57 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/04 21:31:39 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ static t_token	*read_token(t_token_stream *const tkstream, int *is_unsupported)
 		}
 	}
 	*is_unsupported = (i == TKSTREAM_NB_F_TOKENS && tkstream->cur);
+	ft_memdel((void**)&tkstream->cur);
 	return (NULL);
 }
 
@@ -64,26 +65,4 @@ t_token			*tkstream_read_token(t_token_stream *const tkstream)
 		return (NULL);
 	}
 	return (tkstream->cur);
-}
-
-void			tkstream_print_token(t_token const *const token)
-{
-	static void			*f_print_tokens[TKSTREAM_NB_F_TOKENS * 2] = {
-		(void*)token_type_punc, (void*)&tkstream_print_punc,
-		(void*)token_type_str, (void*)&tkstream_print_str,
-		(void*)token_type_num, (void*)&tkstream_print_num,
-		(void*)token_type_op, (void*)&tkstream_print_op,
-		(void*)token_type_var, (void*)&tkstream_print_var};
-	int					i;
-
-	i = -1;
-	while (++i < TKSTREAM_NB_F_TOKENS)
-	{
-		if (token->type == (unsigned int)f_print_tokens[i * 2])
-		{
-			((t_f_token_print*)f_print_tokens[i * 2 + 1])(token);
-			return ;
-		}
-	}
-	ft_printf("{null}\n");
 }

@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/05 16:21:37 by paperrin          #+#    #+#             */
-/*   Updated: 2018/03/23 23:52:20 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/04 22:51:32 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,15 +16,13 @@
 static int			parse_program(t_ast *const ast,
 		t_token_stream *const tkstream)
 {
+	t_token		*tk_new;
 	t_token		**token;
 
 	ast->v_tokens = ft_vector_create(sizeof(t_token*), NULL, NULL);
 	while (cstream_peek(tkstream->cstream) > -1)
 	{
-		token = (t_token**)ft_vector_push_back(&ast->v_tokens, NULL);
-		if (!token)
-			return (error_string(ERR_MEMORY));
-		else if (!(*token = ast_parse_expr(tkstream)))
+		if (!(tk_new = ast_parse_expr(tkstream)))
 		{
 			if (cstream_peek(tkstream->cstream) < -1)
 			{
@@ -34,6 +32,10 @@ static int			parse_program(t_ast *const ast,
 			}
 			return (1);
 		}
+		if (!(token = (t_token**)ft_vector_push_back(&ast->v_tokens, NULL)))
+			return (error_string(ERR_MEMORY));
+		*token = tk_new;
+
 	}
 	return (1);
 }
@@ -69,11 +71,8 @@ void				ast_destroy(t_ast **ast)
 	{
 		i = -1;
 		while (++i < (int)ft_vector_size(&(*ast)->v_tokens))
-		{
-		printf("i : %d\n", i);
-			token_destroy((t_token**)&(*ast)->v_tokens.begin[i]);
-		}
-			ft_vector_destroy(&(*ast)->v_tokens);
+			token_destroy(&((t_token**)(*ast)->v_tokens.begin)[i]);
+		ft_vector_destroy(&(*ast)->v_tokens);
 		ft_memdel((void**)ast);
 	}
 }

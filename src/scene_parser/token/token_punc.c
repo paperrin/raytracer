@@ -1,18 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   token_num_destroy.c                                :+:      :+:    :+:   */
+/*   token_punc.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/03/05 17:40:25 by paperrin          #+#    #+#             */
-/*   Updated: 2018/03/05 17:40:43 by paperrin         ###   ########.fr       */
+/*   Created: 2018/04/04 17:47:41 by paperrin          #+#    #+#             */
+/*   Updated: 2018/04/04 23:15:13 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "scene_parser.h"
 
-void		token_num_destroy(t_token *token)
+int				token_punc_print(t_token const *const token,
+		unsigned int indent_depth)
+{
+	token_indent(indent_depth);
+	ft_printf("{ type: \"PUNC\", value: \"%c\" }", token->as.punc.value);
+	return (1);
+}
+
+void			token_punc_destroy(t_token *token)
 {
 	(void)token;
 }

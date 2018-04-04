@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/04 23:05:37 by paperrin          #+#    #+#             */
-/*   Updated: 2018/03/15 17:28:14 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/04 17:56:48 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,4 @@ t_token			*tkstream_read_var(t_token_stream *const tkstream)
 	tkstream->cur->type = token_type_var;
 	tkstream->cur->as.var.name = str;
 	return (tkstream->cur);
-}
-
-void			tkstream_print_var(t_token const *const token)
-{
-	ft_printf("{\n\ttype: var,\n\tname: \"%s\"\n}\n", token->as.var.name);
 }

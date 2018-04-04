@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/04 22:35:42 by paperrin          #+#    #+#             */
-/*   Updated: 2018/03/23 23:57:33 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/04 17:47:12 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,4 @@ t_token			*tkstream_read_op(t_token_stream *const tkstream)
 	tkstream->cur->as.op.left = NULL;
 	tkstream->cur->as.op.right = NULL;
 	return (tkstream->cur);
-}
-
-void			tkstream_print_op(t_token const *const token)
-{
-	ft_printf("{\n\ttype: op,\n\tvalue: \'%c\'\n}\n", token->as.punc.value);
 }

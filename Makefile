@@ -16,7 +16,7 @@ CC			=	gcc
 
 CFLAGS		=	-g -O3 -Wall -Wextra -Werror -std=c89 -pedantic \
 				-Wmissing-prototypes -Wstrict-prototypes \
-				-Wold-style-definition -Wno-long-long -fsanitize=address
+				-Wold-style-definition -Wno-long-long
 
 RM			=	rm -rf
 
@@ -81,6 +81,7 @@ CFILES		=	\
 				\
 				scene_parser/cstream/cstream.c							\
 				scene_parser/cstream/cstream_skip_chars.c				\
+				\
 				scene_parser/tkstream/tkstream.c					\
 				scene_parser/tkstream/tkstream_read_token.c			\
 				scene_parser/tkstream/tkstream_read_punc.c			\
@@ -88,16 +89,16 @@ CFILES		=	\
 				scene_parser/tkstream/tkstream_read_num.c			\
 				scene_parser/tkstream/tkstream_read_op.c			\
 				scene_parser/tkstream/tkstream_read_var.c			\
-				scene_parser/token/token_destroy.c						\
-				scene_parser/token/token_punc_destroy.c					\
-				scene_parser/token/token_num_destroy.c					\
-				scene_parser/token/token_str_destroy.c					\
-				scene_parser/token/token_kw_destroy.c					\
-				scene_parser/token/token_var_destroy.c					\
-				scene_parser/token/token_op_destroy.c					\
-				scene_parser/token/token_call_destroy.c					\
-				scene_parser/token/token_bool_destroy.c					\
+				\
+				scene_parser/token/token_destroy.c							\
+				scene_parser/token/token_print.c							\
+				scene_parser/token/token_punc.c								\
+				scene_parser/token/token_op.c								\
+				scene_parser/token/token_var.c								\
+				scene_parser/token/token_str.c								\
+				scene_parser/token/token_call.c								\
 				scene_parser/token/token_num.c								\
+				\
 				scene_parser/ast/ast_parse.c						\
 				scene_parser/ast/ast_parse_expr.c					\
 				scene_parser/ast/ast_parse_maybe_call.c				\

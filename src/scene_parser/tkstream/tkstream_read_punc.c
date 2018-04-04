@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/19 20:54:10 by paperrin          #+#    #+#             */
-/*   Updated: 2018/03/23 23:59:37 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/04 17:47:30 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,4 @@ t_token			*tkstream_read_punc(t_token_stream *const tkstream)
 	tkstream->cur->type = token_type_punc;
 	tkstream->cur->as.punc.value = cstream_next(tkstream->cstream);
 	return (tkstream->cur);
-}
-
-void			tkstream_print_punc(t_token const *const token)
-{
-	ft_printf("{\n\ttype: punc,\n\tvalue: \'%c\'\n}\n", token->as.punc.value);
 }

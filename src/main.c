@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/09 16:14:42 by paperrin          #+#    #+#             */
-/*   Updated: 2018/03/23 22:19:43 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/04 23:06:46 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@
 int			app_create(t_app *app)
 {
 	t_ast *ast;
-	/*
+	int		i;
+/*
 	t_token_stream		*tkstream;
 	t_token			*tk;
 
@@ -26,21 +27,33 @@ int			app_create(t_app *app)
 	{
 		while (1)
 		{
-			if ((tk = tkstream_next(tkstream)))
-				tkstream_print_token(tk);
+			if ((tk = ast_parse_expr(tkstream)))
+			{
+				token_print(tk, 0);
+				token_destroy(&tk);
+			}
 			else
-				return (0);
+				break ;
 		}
-	}
-	else
-		return (0);*/
-	if ((ast = ast_parse("example.rt")))
-	{
-		ast_destroy(&ast);
-		return (1);
+
 	}
 	else
 		return (0);
+	tkstream_close(&tkstream);
+	return (0);*/
+	if ((ast = ast_parse("example.rt")))
+	{
+		i = -1;
+		while (++i < (int)ft_vector_size(&ast->v_tokens))
+		{
+			token_print(((t_token**)ast->v_tokens.begin)[i], 0);
+			ft_putendl(",");
+		}
+		ast_destroy(&ast);
+	}
+	else
+		return (0);
+
 	if (!window_create(&app->win, 720, 480, APP_TITLE))
 		return (0);
 	if (!image_create(&app->draw_buf, app->win.width, app->win.height))
@@ -131,42 +144,9 @@ int			main(int ac, char **av)
 	size_t			max;
 
 	app.scene.v_obj = ft_vector_create(sizeof(t_obj), NULL, NULL);
-/*
-	if (!(obj = (t_obj*)ft_vector_push_back(&app.scene.v_obj, NULL)))
-		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
-	*obj = obj_sphere(vec3r(0, -10000, 0), 10000, 3);
-
-	if (!(obj = (t_obj*)ft_vector_push_back(&app.scene.v_obj, NULL)))
-		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
-	*obj = obj_sphere(vec3r(-10000.1, 0, 0), 10000, 4);
-
-	if (!(obj = (t_obj*)ft_vector_push_back(&app.scene.v_obj, NULL)))
-		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
-	*obj = obj_sphere(vec3r(10002, 0, 0), 10000, 4);
-
-	if (!(obj = (t_obj*)ft_vector_push_back(&app.scene.v_obj, NULL)))
-		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
-	*obj = obj_sphere(vec3r(0, 0, 10000), 10000, 4);
-
-	if (!(obj = (t_obj*)ft_vector_push_back(&app.scene.v_obj, NULL)))
-		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
-	*obj = obj_sphere(vec3r(0, 0.02, -2), 0.02, 0);
-
-	if (!(obj = (t_obj*)ft_vector_push_back(&app.scene.v_obj, NULL)))
-		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
-	*obj = obj_plane(vec3r(0, 1, 0), vec3r(0, 1, 0), 0);
-	if (!(obj = (t_obj*)ft_vector_push_back(&app.scene.v_obj, NULL)))
-		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
-	*obj = obj_sphere(vec3r(0.3, 0.1, -0.3), 0.1, 1);
-*/
 	if (!(obj = (t_obj*)ft_vector_push_back(&app.scene.v_obj, NULL)))
 		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
 	*obj = obj_sphere(vec3r(-0.6, 0.5, -0.7), 0.5, 0);
-/*
-	if (!(obj = (t_obj*)ft_vector_push_back(&app.scene.v_obj, NULL)))
-		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
-	*obj = obj_sphere(vec3r(0.6, 0.5, 0), 0.5, 1);
-*/
 	if (!(obj = (t_obj*)ft_vector_push_back(&app.scene.v_obj, NULL)))
 		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
 	*obj = obj_plane(vec3r(0, 0, 1), vec3r(0, 0, -1), vec3r(1, 0, 0), 1);
@@ -174,20 +154,6 @@ int			main(int ac, char **av)
 		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
 	*obj = obj_plane(vec3r(0, 0, -3), vec3r(0, 0, 1), vec3r(1, 0, 0), 1);
 
-/*
-	if (!(obj = (t_obj*)ft_vector_push_back(&app.scene.v_obj, NULL)))
-		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
-	*obj = obj_plane(vec3r(0, 0, 1), vec3r(0, 0, -1), vec3r(0, 0, 1), 3);
-
-	if (!(obj = (t_obj*)ft_vector_push_back(&app.scene.v_obj, NULL)))
-		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
-	*obj = obj_plane(vec3r(1, 0, 0), vec3r(-1, 0, 0), vec3r(0, 1, 0), 4);
-*/
-/*
-	if (!(obj = (t_obj*)ft_vector_push_back(&app.scene.v_obj, NULL)))
-		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
-	*obj = obj_sphere(vec3r(0, -100000, 0), 100000, 3);
-*/
 	app.scene.v_material = ft_vector_create(sizeof(t_material), NULL, NULL);
 	if (!(mat = (t_material*)ft_vector_push_back(&app.scene.v_material, NULL)))
 		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));

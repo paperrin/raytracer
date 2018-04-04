@@ -6,23 +6,11 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/06 19:31:56 by paperrin          #+#    #+#             */
-/*   Updated: 2018/03/23 23:53:41 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/04 22:27:45 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "scene_parser.h"
-
-static t_token		*handle_op(t_token_stream *const tkstream, t_token *tk_left,
-		t_token *tk_op)
-{
-	tk_op->as.op.left = tk_left;
-	if (!(tk_op->as.op.right = ast_parse_maybe_call(tkstream)))
-	{
-		token_destroy(&tk_op);
-		return (NULL);
-	}
-	return (tk_op);
-}
 
 static t_token		*handle_operand(t_token_stream *const tkstream,
 		t_token *tk)
@@ -52,6 +40,19 @@ static t_token		*handle_operand(t_token_stream *const tkstream,
 	return (tk);
 }
 
+static t_token		*handle_op(t_token_stream *const tkstream, t_token *tk_left,
+		t_token *tk_op)
+{
+	tk_op->as.op.left = tk_left;
+	if (!(tk_op->as.op.right = handle_operand(tkstream,
+					ast_parse_maybe_call(tkstream))))
+	{
+		token_destroy(&tk_op);
+		return (NULL);
+	}
+	return (tk_op);
+}
+
 static t_token		*recursive_parse_expr(t_token_stream *const tkstream,
 		t_token **tk_left)
 {
@@ -62,9 +63,7 @@ static t_token		*recursive_parse_expr(t_token_stream *const tkstream,
 					tkstream, ast_parse_maybe_call(tkstream))))
 		return (NULL);
 	if (!(tk_op = tkstream_peek(tkstream)))
-	{
 		return (*tk_left);
-	}
 	else if (tk_op->type == token_type_op)
 	{
 		tkstream_next(tkstream);
@@ -73,9 +72,8 @@ static t_token		*recursive_parse_expr(t_token_stream *const tkstream,
 		if (!(tk_next = tkstream_peek(tkstream)))
 			return (tk_op);
 		else if (tk_next->type == token_type_op)
-		{
-			return (recursive_parse_expr(tkstream, tk_left));
-		}
+			return (recursive_parse_expr(tkstream, &tk_op));
+		return (tk_op);
 	}
 	return (*tk_left);
 }
