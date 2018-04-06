@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/04 17:09:56 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/04 21:42:23 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/06 18:52:29 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,15 +38,13 @@ int				token_print(t_token const *const token,
 	{
 		if (token->type == (unsigned int)f_print_tokens[i * 2])
 		{
-			if (!((t_f_token_print*)f_print_tokens[i * 2 + 1])(token, indent_depth))
+			if (!((t_f_token_print*)f_print_tokens[i * 2 + 1])(token,
+						indent_depth))
 				return (0);
 			return (1);
 		}
 	}
 	token_indent(indent_depth);
-	if (token)
-		ft_printf("{unknown token}");
-	else
-		ft_printf("{null token}");
+	ft_putstr(token ? "{unknown token}" : "{null token}");
 	return (1);
 }

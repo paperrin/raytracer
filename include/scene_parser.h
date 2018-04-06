@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/17 15:51:44 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/04 23:17:52 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/06 19:31:54 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,7 @@ struct				s_token_stream
 	t_char_stream	*cstream;
 	unsigned int	line;
 	unsigned int	col;
+	int				did_error;
 };
 
 typedef struct		s_ast
@@ -125,7 +126,13 @@ t_token_stream		*tkstream_open(char const *const file_path);
 void				tkstream_close(t_token_stream **tkstream);
 t_token				*tkstream_next(t_token_stream *const tkstream);
 t_token				*tkstream_peek(t_token_stream *const tkstream);
-int					tkstream_error(t_token_stream const *const tkstream,
+int					tkstream_ferror(t_token_stream *const tkstream,
+		char const *const error);
+void				*tkstream_pferror(t_token_stream *const tkstream,
+		char const *const error);
+int					tkstream_error(t_token_stream *const tkstream,
+		char const *const error);
+void				*tkstream_perror(t_token_stream *const tkstream,
 		char const *const error);
 t_token				*tkstream_read_token(t_token_stream *const tkstream);
 t_token				*tkstream_read_punc(t_token_stream *const tkstream);
@@ -135,13 +142,20 @@ t_token				*tkstream_read_num(t_token_stream *const tkstream);
 t_token				*tkstream_read_var(t_token_stream *const tkstream);
 
 void				token_indent(unsigned int indent_depth);
-int					token_print(t_token const *const token, unsigned int indent_depth);
-int					token_punc_print(t_token const *const token, unsigned int indent_depth);
-int					token_op_print(t_token const *const token, unsigned int indent_depth);
-int					token_str_print(t_token const *const token, unsigned int indent_depth);
-int					token_num_print(t_token const *const token, unsigned int indent_depth);
-int					token_var_print(t_token const *const token, unsigned int indent_depth);
-int					token_call_print(t_token const *const token, unsigned int indent_depth);
+int					token_print(t_token const *const token,
+		unsigned int indent_depth);
+int					token_punc_print(t_token const *const token,
+		unsigned int indent_depth);
+int					token_op_print(t_token const *const token,
+		unsigned int indent_depth);
+int					token_str_print(t_token const *const token,
+		unsigned int indent_depth);
+int					token_num_print(t_token const *const token,
+		unsigned int indent_depth);
+int					token_var_print(t_token const *const token,
+		unsigned int indent_depth);
+int					token_call_print(t_token const *const token,
+		unsigned int indent_depth);
 
 void				token_destroy(t_token **token);
 void				token_punc_destroy(t_token *token);
@@ -155,8 +169,9 @@ t_token				*token_num(float value);
 
 t_ast				*ast_parse(char const *const file_path);
 void				ast_destroy(t_ast **ast);
+void				*ast_error(t_token_stream *const tkstream,
+		char const *const err_str);
 t_token				*ast_parse_expr(t_token_stream *const tkstream);
 t_token				*ast_parse_maybe_call(t_token_stream *const tkstream);
-
 
 #endif

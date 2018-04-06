@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/04 17:57:01 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/04 23:16:20 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/06 18:50:22 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int				token_var_print(t_token const *const token,
 	return (1);
 }
 
-void		token_var_destroy(t_token *token)
+void			token_var_destroy(t_token *token)
 {
 	ft_memdel((void**)&token->as.var.name);
 }

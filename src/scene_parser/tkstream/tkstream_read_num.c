@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/04 21:21:52 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/04 17:35:17 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/06 16:44:44 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ t_token			*tkstream_read_num(t_token_stream *const tkstream)
 		if (!ft_strchr("0123456789.", c))
 			break ;
 		if (!(str = ft_strjoin_char_free(&str, c, 1, STRJOIN_FREE_S1)))
-			return (perror_string(ERR_MEMORY));
+			return (tkstream_perror(tkstream, ERR_MEMORY));
 		cstream_next(tkstream->cstream);
 	}
 	tkstream->cur->type = token_type_num;

@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/19 20:54:10 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/04 17:47:30 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/06 16:57:55 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,7 @@ t_token			*tkstream_read_punc(t_token_stream *const tkstream)
 	if (!ft_strchr(",()", c))
 	{
 		ft_memdel((void**)&tkstream->cur);
-		ft_dprintf(STDERR_FILENO, "error: \"%c\" punctuation unsupported\n", c);
-		return (NULL);
+		return (tkstream_pferror(tkstream, "unsupported punctuation"));
 	}
 	tkstream->cur->type = token_type_punc;
 	tkstream->cur->as.punc.value = cstream_next(tkstream->cstream);

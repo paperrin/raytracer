@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/04 22:35:42 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/04 17:47:12 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/06 17:00:12 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,10 @@ t_token			*tkstream_read_op(t_token_stream *const tkstream)
 	char		c;
 
 	c = cstream_peek(tkstream->cstream);
-	if (!ft_strchr(".-+/*", c))
+	if (!ft_strchr(".-+", c))
 	{
 		ft_memdel((void**)&tkstream->cur);
-		ft_dprintf(STDERR_FILENO, "error: \"%c\" operator unsupported\n", c);
-		return (NULL);
+		return (tkstream_pferror(tkstream, "unsupported operator"));
 	}
 	tkstream->cur->type = token_type_op;
 	tkstream->cur->as.op.value = cstream_next(tkstream->cstream);

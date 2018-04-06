@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/13 16:54:17 by paperrin          #+#    #+#             */
-/*   Updated: 2018/03/23 21:54:20 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/06 18:47:53 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ t_token_stream		*tkstream_open(char const *const file_path)
 	tkstream->cur = NULL;
 	tkstream->col = 1;
 	tkstream->line = 1;
+	tkstream->did_error = 0;
 	return (tkstream);
 }
 
@@ -38,10 +39,12 @@ void				tkstream_close(t_token_stream **tkstream)
 t_token				*tkstream_next(t_token_stream *const tkstream)
 {
 	cstream_skip_whitespaces(tkstream->cstream);
-	if (cstream_peek(tkstream->cstream) == '\0')
+	if (cstream_peek(tkstream->cstream) == '\0'
+			|| !tkstream_read_token(tkstream))
+	{
+		tkstream->cur = NULL;
 		return (NULL);
-	if (!tkstream_read_token(tkstream))
-		return (NULL);
+	}
 	return (tkstream->cur);
 }
 
@@ -50,13 +53,4 @@ t_token				*tkstream_peek(t_token_stream *const tkstream)
 	if (tkstream->cur)
 		return (tkstream->cur);
 	return (tkstream_next(tkstream));
-}
-
-int					tkstream_error(t_token_stream const *const tkstream,
-		char const *const error)
-{
-	ft_dprintf(STDERR_FILENO, "%s:%u:%u: error: %s\n",
-			tkstream->cstream->file_path,
-			tkstream->line, tkstream->col, error);
-	return (0);
 }

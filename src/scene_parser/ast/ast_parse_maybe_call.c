@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/15 17:25:53 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/04 16:38:28 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/06 18:48:54 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static int				add_arg(t_token **tk_call, t_token **tk_arg)
 	}
 	while (++i < (*tk_call)->as.call.args_len)
 		(*tk_call)->as.call.args[i] = args[i];
-	free(args);
+	ft_memdel((void**)&args);
 	(*tk_call)->as.call.args[(*tk_call)->as.call.args_len] = *tk_arg;
 	(*tk_call)->as.call.args_len++;
 	return (1);
@@ -44,11 +44,8 @@ static int				parse_args(t_token_stream *const tkstream,
 	{
 		if (tk->type == token_type_punc && tk->as.punc.value == ')')
 			break ;
-		if (!(tk_arg = ast_parse_expr(tkstream)) || !add_arg(tk_call, &tk_arg))
-		{
-			return (0);
-		}
-		if (!(tk = tkstream_peek(tkstream)))
+		if (!(tk_arg = ast_parse_expr(tkstream)) || !add_arg(tk_call, &tk_arg)
+				|| !(tk = tkstream_peek(tkstream)))
 			return (0);
 		if (tk->type == token_type_punc && tk->as.punc.value == ',')
 			token_destroy(&tk);

@@ -6,13 +6,13 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/19 18:57:19 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/04 21:31:39 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/06 18:49:36 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "scene_parser.h"
 
-static void		tkstream_read_comment(t_token_stream const* tkstream)
+static void		tkstream_read_comment(t_token_stream const *tkstream)
 {
 	while (cstream_peek(tkstream->cstream) == '#')
 	{
@@ -40,8 +40,7 @@ static t_token	*read_token(t_token_stream *const tkstream, int *is_unsupported)
 		{
 			if (!(((t_f_token_read*)f_tokens[i * 2 + 1])(tkstream)))
 				ft_memdel((void**)&tkstream->cur);
-			else
-				return (tkstream->cur);
+			return (tkstream->cur);
 		}
 	}
 	*is_unsupported = (i == TKSTREAM_NB_F_TOKENS && tkstream->cur);
@@ -55,13 +54,13 @@ t_token			*tkstream_read_token(t_token_stream *const tkstream)
 
 	tkstream_read_comment(tkstream);
 	if (!(tkstream->cur = (t_token*)malloc(sizeof(*tkstream->cur))))
-		return (perror_string(ERR_MEMORY));
+		return (tkstream_perror(tkstream, ERR_MEMORY));
 	tkstream->col = tkstream->cstream->col;
 	tkstream->line = tkstream->cstream->line;
 	if (!read_token(tkstream, &is_unsupported))
 	{
 		if (is_unsupported)
-			cstream_error(tkstream->cstream, "unknown token");
+			tkstream_ferror(tkstream, "unknown token");
 		return (NULL);
 	}
 	return (tkstream->cur);

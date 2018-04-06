@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/04 18:50:03 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/04 17:54:37 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/06 16:58:51 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,14 @@ static char		*concat_char_is_escaped(char **str, char c, int escaped)
 	if (!escaped)
 	{
 		if (!(*str = ft_strjoin_char_free(str, c, 1, STRJOIN_FREE_S1)))
-			return (perror_string(ERR_MEMORY));
+			return (NULL);
 	}
 	else if (c != '"')
 	{
 		if (!(*str = ft_strjoin_char_free(str, '\\', 1, STRJOIN_FREE_S1)))
-			return (perror_string(ERR_MEMORY));
+			return (NULL);
 		if (!(*str = ft_strjoin_char_free(str, c, 1, STRJOIN_FREE_S1)))
-			return (perror_string(ERR_MEMORY));
+			return (NULL);
 	}
 	return (*str);
 }
@@ -38,7 +38,8 @@ t_token			*tkstream_read_str(t_token_stream *const tkstream)
 	int			escaped;
 
 	cstream_next(tkstream->cstream);
-	str = NULL;
+	if (!(str = ft_strnew(0)))
+		return (tkstream_perror(tkstream, ERR_MEMORY));
 	while ((c = cstream_next(tkstream->cstream)))
 	{
 		escaped = (c == '\\');
@@ -49,7 +50,7 @@ t_token			*tkstream_read_str(t_token_stream *const tkstream)
 		if (!concat_char_is_escaped(&str, c, escaped))
 		{
 			ft_strdel(&str);
-			return (NULL);
+			return (tkstream_perror(tkstream, ERR_MEMORY));
 		}
 	}
 	tkstream->cur->type = token_type_str;

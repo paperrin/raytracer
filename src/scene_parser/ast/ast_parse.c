@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/05 16:21:37 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/04 22:51:32 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/06 18:38:29 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,20 +22,17 @@ static int			parse_program(t_ast *const ast,
 	ast->v_tokens = ft_vector_create(sizeof(t_token*), NULL, NULL);
 	while (cstream_peek(tkstream->cstream) > -1)
 	{
-		if (!(tk_new = ast_parse_expr(tkstream)))
+		if (!(tk_new = ast_parse_expr(tkstream)) || tkstream->did_error)
 		{
 			if (cstream_peek(tkstream->cstream) < -1)
-			{
-				ft_dprintf(STDERR_FILENO, "error: \"%s\": file read error\n",
-						tkstream->cstream->file_path);
-				return (0);
-			}
-			return (1);
+				return (tkstream_ferror(tkstream, "read error"));
+			return (!tkstream->did_error);
 		}
+		if (tk_new->type != token_type_op && tk_new->type != token_type_call)
+			return (tkstream_error(tkstream, "unexpected instruction"));
 		if (!(token = (t_token**)ft_vector_push_back(&ast->v_tokens, NULL)))
-			return (error_string(ERR_MEMORY));
+			return (tkstream_error(tkstream, ERR_MEMORY));
 		*token = tk_new;
-
 	}
 	return (1);
 }
@@ -52,7 +49,7 @@ t_ast				*ast_parse(char const *const file_path)
 		if (!parse_program(ast, tkstream))
 		{
 			ast_destroy(&ast);
-			return (NULL);
+			return (perror_string("AST parsing failed"));
 		}
 	}
 	else

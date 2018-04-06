@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/04 17:35:47 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/04 23:14:40 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/06 18:49:58 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int				token_op_print(t_token const *const token,
 	token_indent(indent_depth + 1);
 	ft_putendl("type: \"OP\",");
 	token_indent(indent_depth + 1);
-	ft_printf("value: \"%c\"\n", token->as.op.value);
+	ft_printf("value: \"%c\",\n", token->as.op.value);
 	token_indent(indent_depth + 1);
 	ft_putendl("left:");
 	if (!token_print(token->as.op.left, indent_depth + 2))
@@ -36,7 +36,7 @@ int				token_op_print(t_token const *const token,
 	return (1);
 }
 
-void		token_op_destroy(t_token *token)
+void			token_op_destroy(t_token *token)
 {
 	if (token->as.op.left)
 		token_destroy(&token->as.op.left);

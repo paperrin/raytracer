@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/13 14:25:38 by paperrin          #+#    #+#             */
-/*   Updated: 2018/01/30 22:17:41 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/06 19:29:57 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,16 +17,10 @@
 ** Please care of data packing when changing data types / structure order
 */
 
-# ifdef CONFIG_USE_DOUBLE
-#  ifdef cl_khr_fp64
-#   pragma OPENCL EXTENSION cl_khr_fp64 : enable
-#   define DOUBLE_SUPPORT_AVAILABLE
-#  elif defined cl_amd_fp64
-#   pragma OPENCL EXTENSION cl_amd_fp64 : enable
-#   define DOUBLE_SUPPORT_AVAILABLE
-#  endif
-# endif
-
+/*
+** The define blocks below can't be normed, because `cl_xxxx` can't be
+** prefixed by `t_`, otherwise, code won't work
+*/
 # ifdef IS_KERNEL
 typedef	float			cl_float;
 typedef	float2			cl_float2;
@@ -39,7 +33,6 @@ typedef	double2			cl_double2;
 typedef	double3			cl_double3;
 typedef	double4			cl_double4;
 typedef	double8			cl_double8;
-typedef	double16		cl_double16;
 typedef char			cl_uchar;
 typedef short			cl_short;
 typedef int				cl_int;
@@ -65,6 +58,16 @@ typedef cl_float3		t_real3;
 typedef cl_float4		t_real4;
 typedef cl_float8		t_real8;
 typedef cl_float16		t_real16;
+# endif
+
+# ifdef CONFIG_USE_DOUBLE
+#  ifdef cl_khr_fp64
+#   pragma OPENCL EXTENSION cl_khr_fp64 : enable
+#   define DOUBLE_SUPPORT_AVAILABLE
+#  elif defined cl_amd_fp64
+#   pragma OPENCL EXTENSION cl_amd_fp64 : enable
+#   define DOUBLE_SUPPORT_AVAILABLE
+#  endif
 # endif
 
 typedef cl_short		t_obj_type;

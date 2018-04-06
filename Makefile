@@ -16,7 +16,7 @@ CC			=	gcc
 
 CFLAGS		=	-g -O3 -Wall -Wextra -Werror -std=c89 -pedantic \
 				-Wmissing-prototypes -Wstrict-prototypes \
-				-Wold-style-definition -Wno-long-long
+				-Wold-style-definition -Wno-long-long -fsanitize=address
 
 RM			=	rm -rf
 
@@ -83,6 +83,7 @@ CFILES		=	\
 				scene_parser/cstream/cstream_skip_chars.c				\
 				\
 				scene_parser/tkstream/tkstream.c					\
+				scene_parser/tkstream/tkstream_error.c				\
 				scene_parser/tkstream/tkstream_read_token.c			\
 				scene_parser/tkstream/tkstream_read_punc.c			\
 				scene_parser/tkstream/tkstream_read_str.c			\
