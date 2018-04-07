@@ -6,13 +6,13 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/05 17:23:37 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/06 17:58:23 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/07 01:47:11 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "scene_parser.h"
 
-void		token_destroy(t_token **token)
+void		token_content_destroy(t_token *const token)
 {
 	static void		*f_token_type_destroy[TOKEN_DESTROY_NB_F_TOKENS * 2] = {
 		(void*)token_type_punc, (void*)&token_punc_destroy,
@@ -23,18 +23,25 @@ void		token_destroy(t_token **token)
 		(void*)token_type_call, (void*)&token_call_destroy};
 	int				i;
 
-	if (!token || !(*token))
+	if (!token)
 		return ;
 	i = -1;
 	while (++i < TOKEN_DESTROY_NB_F_TOKENS)
 	{
-		if ((*token)->type
+		if (token->type
 				== (unsigned int)f_token_type_destroy[i * 2])
 		{
-			((t_f_token_destroy*)f_token_type_destroy[i * 2 + 1])(*token);
-			ft_memdel((void**)token);
+			((t_f_token_destroy*)f_token_type_destroy[i * 2 + 1])(token);
 			return ;
 		}
 	}
 	error_string("token_destroy(): unknown token type");
+}
+
+void		token_destroy(t_token **token)
+{
+	if (!token || !(*token))
+		return ;
+	token_content_destroy(*token);
+	ft_memdel((void**)token);
 }

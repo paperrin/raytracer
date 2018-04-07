@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/17 15:51:44 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/06 19:31:54 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/07 01:47:52 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 
 # define TKSTREAM_NB_F_TOKENS 6
 # define TOKEN_DESTROY_NB_F_TOKENS 6
+# define TOKEN_EVAL_NB_F_TOKENS 3
 
 typedef enum		e_token_type
 {
@@ -37,6 +38,8 @@ typedef struct s_token_stream	t_token_stream;
 typedef t_token	*(t_f_token_read)(t_token_stream *const);
 typedef int		(t_f_token_print)(t_token const *const, unsigned int);
 typedef void	(t_f_token_destroy)(t_token*);
+typedef int		(t_f_token_eval)(t_token const *const, t_token *const,
+			t_app *const);
 
 typedef struct		s_token_var
 {
@@ -157,6 +160,16 @@ int					token_var_print(t_token const *const token,
 int					token_call_print(t_token const *const token,
 		unsigned int indent_depth);
 
+int					token_eval(t_token const *const tk_expr,
+		t_token *const tk_result, t_app *const app);
+int					token_op_eval(t_token const *const tk_expr,
+		t_token *const tk_result, t_app *const app);
+int					token_var_eval(t_token const *const tk_expr,
+		t_token *const tk_result, t_app *const app);
+int					token_call_eval(t_token const *const tk_expr,
+		t_token *const tk_result, t_app *const app);
+
+void				token_content_destroy(t_token *const token);
 void				token_destroy(t_token **token);
 void				token_punc_destroy(t_token *token);
 void				token_num_destroy(t_token *token);
@@ -173,5 +186,8 @@ void				*ast_error(t_token_stream *const tkstream,
 		char const *const err_str);
 t_token				*ast_parse_expr(t_token_stream *const tkstream);
 t_token				*ast_parse_maybe_call(t_token_stream *const tkstream);
+void				ast_print(t_ast const *const ast);
+
+int					ast_eval(t_ast const *const ast, t_app *const app);
 
 #endif

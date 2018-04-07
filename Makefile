@@ -93,16 +93,21 @@ CFILES		=	\
 				\
 				scene_parser/token/token_destroy.c							\
 				scene_parser/token/token_print.c							\
+				scene_parser/token/token_eval.c								\
 				scene_parser/token/token_punc.c								\
 				scene_parser/token/token_op.c								\
 				scene_parser/token/token_var.c								\
 				scene_parser/token/token_str.c								\
 				scene_parser/token/token_call.c								\
 				scene_parser/token/token_num.c								\
+				scene_parser/token/token_op_eval.c							\
+				scene_parser/token/token_call_eval.c						\
+				scene_parser/token/token_var_eval.c							\
 				\
 				scene_parser/ast/ast_parse.c						\
 				scene_parser/ast/ast_parse_expr.c					\
 				scene_parser/ast/ast_parse_maybe_call.c				\
+				scene_parser/ast/ast_eval.c							\
 				\
 				main.c											\
 				process_input.c									\

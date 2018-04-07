@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/09 16:14:42 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/06 19:33:44 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/07 02:21:55 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,16 +18,11 @@
 int			app_create(t_app *app)
 {
 	t_ast *ast;
-	int		i;
 
 	if ((ast = ast_parse("example.rt")))
 	{
-		i = -1;
-		while (++i < (int)ft_vector_size(&ast->v_tokens))
-		{
-			token_print(((t_token**)ast->v_tokens.begin)[i], 0);
-			ft_putendl(",");
-		}
+		if (!ast_eval(ast, app))
+			error_string("Failed AST interpretation");
 		ast_destroy(&ast);
 	}
 	else

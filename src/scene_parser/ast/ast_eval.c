@@ -1,26 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   token_var.c                                        :+:      :+:    :+:   */
+/*   ast_eval.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/04/04 17:57:01 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/07 01:49:41 by paperrin         ###   ########.fr       */
+/*   Created: 2018/04/07 00:24:51 by paperrin          #+#    #+#             */
+/*   Updated: 2018/04/07 01:58:07 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "scene_parser.h"
 
-int				token_var_print(t_token const *const token,
-		unsigned int indent_depth)
+int					ast_eval(t_ast const *const ast, t_app *const app)
 {
-	token_indent(indent_depth);
-	ft_printf("{ type: \"VAR\", name: \"%s\" }", token->as.var.name);
-	return (1);
-}
+	int		i;
+	int		tokens_size;
+	t_token	tk_result;
 
-void			token_var_destroy(t_token *token)
-{
-	ft_memdel((void**)&token->as.var.name);
+	tokens_size = ft_vector_size(&ast->v_tokens);
+	if (!ast || !tokens_size || !app)
+		return (0);
+	i = -1;
+	while (++i < tokens_size)
+	{
+		if (!token_eval(*(t_token**)ft_vector_at(&ast->v_tokens, i),
+					&tk_result, app))
+		{
+			break ;
+		}
+	}
+	if (i != tokens_size)
+		return (0);
+	return (1);
 }

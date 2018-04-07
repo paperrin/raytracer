@@ -6,12 +6,11 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/05 16:21:37 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/06 18:38:29 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/07 00:49:11 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "scene_parser.h"
-#include <stdio.h>
 
 static int			parse_program(t_ast *const ast,
 		t_token_stream *const tkstream)
@@ -56,6 +55,22 @@ t_ast				*ast_parse(char const *const file_path)
 		error_string(ERR_MEMORY);
 	tkstream_close(&tkstream);
 	return (ast);
+}
+
+void				ast_print(t_ast const *const ast)
+{
+	int		i;
+	int		size;
+
+	ft_putendl("{");
+	size =	(int)ft_vector_size(&ast->v_tokens);
+	i = -1;
+	while (++i < size)
+	{
+		token_print(((t_token**)ast->v_tokens.begin)[i], 1);
+		ft_putendl((i < size - 1) ? "," : "");
+	}
+	ft_putendl("}");
 }
 
 void				ast_destroy(t_ast **ast)
