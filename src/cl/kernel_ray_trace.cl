@@ -16,10 +16,10 @@ kernel void			kernel_ray_trace(
 
 	state = ray_states[gid];
 	state.obj_id = -1;
-	if (state.importance > 1e-4)
+	if (state.importance > config->color_epsilon)
 	{
-		obj_id_nearest = ray_throw_get_first_hit_obj(&state.ray, objs, *objs_size, &t_nearest);
-		state.t = (t_nearest < 200000) ? t_nearest : -1;
+		obj_id_nearest = ray_throw_get_first_hit_obj(config, &state.ray, objs, *objs_size, &t_nearest);
+		state.t = (t_nearest < config->z_far) ? t_nearest : -1;
 		state.obj_id = obj_id_nearest;
 		if (obj_id_nearest > -1)
 			atomic_inc(n_hits);

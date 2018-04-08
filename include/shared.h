@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/13 14:25:38 by paperrin          #+#    #+#             */
-/*   Updated: 2018/03/25 18:50:11 by ilarbi           ###   ########.fr       */
+/*   Updated: 2018/04/02 19:29:12 by tlernoul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,19 +90,34 @@ typedef cl_float3 (t_f_specular_model)(t_material, t_real3, t_ray, t_real3, t_re
 
 typedef enum			e_shading_model
 {
-	shading_model_phong = 0,
-	shading_model_blinn
+	e_shading_model_phong = 0,
+	e_shading_model_blinn
 }						t_e_shading_model;
+
+typedef enum			e_post_filter
+{
+	e_post_filter_none = 0,
+	e_post_filter_sepia = 1 << 0,
+	e_post_filter_grayscale = 1 << 1
+}						t_e_post_filter;
 
 typedef struct			s_config
 {
-	cl_float3			ambient;
+	cl_float3			ambient_c;
+	cl_float			ambient_i;
+	cl_float3			camera_light_c;
+	cl_float			camera_light_i;
+	cl_float			color_epsilon;
+	cl_uint				projection_depth;
+	t_real				intersection_bias;
+	t_real				z_far;
 	cl_uint				samples_width;
 	t_e_shading_model	shading_model;
 	cl_uint2			screen_size;
 	cl_int				max_depth;
 	cl_int				cur_depth;
 	cl_int				mouse_pxl_id;
+	cl_uint				post_filters;
 }						t_config;
 
 /*
@@ -122,6 +137,7 @@ typedef struct			s_ray_state
 	cl_float			importance;
 	cl_uint				pxl_id;
 	t_obj_id			obj_id;
+	cl_float3			color_factor;
 }						t_ray_state;
 
 /*
@@ -130,10 +146,10 @@ typedef struct			s_ray_state
 
 typedef enum			e_obj_type
 {
-	type_sphere,
-	type_plane,
-	type_cylinder,
-	type_cone
+	e_type_sphere,
+	e_type_plane,
+	e_type_cylinder,
+	e_type_cone
 }						t_e_obj_type;
 
 typedef struct			s_plane
@@ -191,6 +207,7 @@ struct					s_material
 	cl_float3			specular_color;
 	cl_float			specular_exp;
 	cl_float			indice_of_refraction;
+	cl_uint				projection;
 	cl_int				texture_id;
 };
 
@@ -216,9 +233,9 @@ typedef struct			s_texture
 
 typedef enum			e_light_type
 {
-	light_type_point,
-	light_type_spot,
-	light_type_dir
+	e_light_type_point,
+	e_light_type_spot,
+	e_light_type_dir
 }						t_light_type;
 
 typedef struct			s_light_point

@@ -6,20 +6,23 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/09 16:14:42 by paperrin          #+#    #+#             */
-/*   Updated: 2018/03/25 18:57:57 by ilarbi           ###   ########.fr       */
+/*   Updated: 2018/04/05 20:43:32 by tlernoul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
+#include "error.h"
 #include "ppm.h"
 
-int			app_create(t_app *app)
+int			app_create(t_app *app, const char **argv)
 {
+	if (!arg_dispatch(&app->ocl, argv))
+		return (0);
 	if (!window_create(&app->win, APP_WIDTH, APP_HEIGHT, APP_TITLE))
 		return (0);
 	if (!image_create(&app->draw_buf, app->win.width, app->win.height))
 		app_destroy(app, EXIT_FAILURE);
-	if (!(opencl_create(&app->ocl, 1)))
+	if (!(opencl_create(&app->ocl)))
 		app_destroy(app, EXIT_FAILURE);
 	if (!kernel_ray_gen_primary_create(app) && !error_string("error: ray gen kernel creation failed\n"))
 		app_destroy(app, EXIT_FAILURE);
@@ -28,6 +31,8 @@ int			app_create(t_app *app)
 	if (!kernel_clear_create(app) && !error_string("error: clear kernel creation failed\n"))
 		app_destroy(app, EXIT_FAILURE);
 	if (!kernel_ray_shade_create(app) && !error_string("error: shade kernel creation failed\n"))
+		app_destroy(app, EXIT_FAILURE);
+	if (!kernel_post_process_create(app) && !error_string("error: post process kernel creation failed\n"))
 		app_destroy(app, EXIT_FAILURE);
 	app->config.screen_size.s[0] = app->win.width;
 	app->config.screen_size.s[1] = app->win.height;
@@ -45,6 +50,7 @@ void		app_destroy(t_app *app, int exit_status)
 	kernel_ray_trace_destroy(app);
 	kernel_clear_destroy(app);
 	kernel_ray_shade_destroy(app);
+	kernel_post_process_destroy(app);
 	opencl_destroy(&app->ocl);
 	image_destroy(&app->draw_buf);
 	window_destroy(&app->win);
@@ -78,6 +84,8 @@ void		render(void *user_ptr, double elapsed)
 		rays_per_sec += app->n_rays;
 		if (!kernel_ray_shade_launch(app) && !error_string("error: shade kernel launch failed\n"))
 			app_destroy(app, EXIT_FAILURE);
+		if (!kernel_post_process_launch(app) && !error_string("error: post process kernel launch failed\n"))
+			app_destroy(app, EXIT_FAILURE);
 	}
 	clFinish(app->ocl.cmd_queue);
 	if (CL_SUCCESS != (err = clEnqueueReadBuffer(app->ocl.cmd_queue, app->kernel_clear.args[0]
@@ -100,7 +108,7 @@ void		render(void *user_ptr, double elapsed)
 	}
 }
 
-int			main(int ac, char **av)
+int			main(int ac, const char **av)
 {
 	t_app				app;
 	t_obj				*obj;
@@ -145,41 +153,41 @@ int			main(int ac, char **av)
 	app.scene.v_material = ft_vector_create(sizeof(t_material), NULL, NULL);
 	if (!(mat = (t_material*)ft_vector_push_back(&app.scene.v_material, NULL)))
 		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
-	mat->color = vec3f(0.5, 0.5, 0.5);
+	mat->color = vec3f(0.4, 0.2, 0.2);
 	mat->reflection = 0;
 	mat->refraction = 0;
-	mat->texture_id = 0;
+	mat->texture_id = -1;
 	if (!(mat = (t_material*)ft_vector_push_back(&app.scene.v_material, NULL)))
 		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
-	mat->color = vec3f(1, 0, 0);
+	mat->color = vec3f(0.1, 0.5, 0.4);
 	mat->reflection = 0;
 	mat->refraction = 0;
 	mat->indice_of_refraction = 0;
 	mat->texture_id = -1;
 	if (!(mat = (t_material*)ft_vector_push_back(&app.scene.v_material, NULL)))
 		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
-	mat->color = vec3f(0, 1, 0);
+	mat->color = vec3f(0.2, 0.4, 0.2);
 	mat->reflection = 0;
 	mat->refraction = 0;
 	mat->indice_of_refraction = 0;
 	mat->texture_id = -1;
 	if (!(mat = (t_material*)ft_vector_push_back(&app.scene.v_material, NULL)))
 		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
-	mat->color = vec3f(0, 0, 1);
+	mat->color = vec3f(0.1, 0.3, 0.6);
 	mat->reflection = 0;
 	mat->refraction = 0;
 	mat->indice_of_refraction = 0;
 	mat->texture_id = -1;
 	if (!(mat = (t_material*)ft_vector_push_back(&app.scene.v_material, NULL)))
 		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
-	mat->color = vec3f(0.7, 0.2, 0.5);
+	mat->color = vec3f(0.2, 0.3, 0.7);
 	mat->reflection = 0;
 	mat->refraction = 0;
 	mat->indice_of_refraction = 0;
 	mat->texture_id = -1;
 	if (!(mat = (t_material*)ft_vector_push_back(&app.scene.v_material, NULL)))
 		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
-	mat->color = vec3f(0.3, 0.9, 0.5);
+	mat->color = vec3f(0.3, 0.7, 0.2);
 	mat->reflection = 0;
 	mat->refraction = 0;
 	mat->indice_of_refraction = 0;
@@ -187,13 +195,14 @@ int			main(int ac, char **av)
 	if (!(mat = (t_material*)ft_vector_push_back(&app.scene.v_material, NULL)))
 		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
 	mat->color = vec3f(1, 1, 1);
-	mat->reflection = 0.05;
-	mat->refraction = 0.40;
-	mat->indice_of_refraction = 0.65;
-	mat->texture_id = -1;
-	mat->specular = 10;
+	mat->reflection = 0.1;
+	mat->refraction = 0.65;
+	mat->indice_of_refraction = 1.3330;
+	mat->texture_id = 0;
+	mat->specular = 1;
 	mat->specular_color = vec3f(1, 1, 1);
-	mat->specular_exp = 200;
+	mat->specular_exp = 100;
+	mat->projection = 1;
 
 	app.scene.v_texture = ft_vector_create(sizeof(t_texture), NULL, NULL);
 	if (!(pixels = ft_ppm_file_read("textures/max_val.ppm", &width, &height, &max_val)))
@@ -211,24 +220,33 @@ int			main(int ac, char **av)
 
 	app.config.screen_size.s[0] = APP_WIDTH;
 	app.config.screen_size.s[1] = APP_HEIGHT;
+	app.config.color_epsilon = 1.f / 255;
+	app.config.intersection_bias = 1e-3;
+	app.config.z_far = 20000;
 
-	app.config.ambient = vec3f(0.1, 0.1, 0.1);
+	app.config.ambient_c = vec3f(1, 1, 1);
+	app.config.ambient_i = 0.2;
+	app.config.camera_light_c = vec3f(1, 1, 1);
+	app.config.camera_light_i = 0.2;
 	app.config.samples_width = 1;
 	app.config.max_depth = 2;
+	app.config.projection_depth = 0;
+	app.config.post_filters = e_post_filter_none;
 
 	app.scene.v_light = ft_vector_create(sizeof(t_light), NULL, NULL);
 	if (!(light = (t_light*)ft_vector_push_back(&app.scene.v_light, NULL)))
 		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
-	light->type = light_type_point;
+	light->type = e_light_type_point;
 	light->color = vec3f(1, 1, 1);
-	light->intensity = 150;
-	light->as.point.pos = vec3r(0, 1, -1);
-	
+	light->intensity = 220;
+	light->as.point.pos = vec3r(0, 0.8, -1);
+
+
 	app.cam.cam_data.pos = vec3r(0, 0, -1);
 	(void)ac;
 	(void)av;
 
-	if (!app_create(&app))
+	if (!app_create(&app, av))
 		return (EXIT_FAILURE);
 	app_destroy(&app, EXIT_SUCCESS);
 	return (EXIT_SUCCESS);

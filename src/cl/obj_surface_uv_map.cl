@@ -10,9 +10,9 @@ t_real2			obj_plane_surface_uv_map(t_plane *plane, t_real3 point);
 
 t_real2			obj_surface_uv_map(t_obj *obj, t_real3 point)
 {
-	if (obj->type == type_sphere)
+	if (obj->type == e_type_sphere)
 		return (obj_sphere_surface_uv_map(&obj->as.sphere, point));
-	else if (obj->type == type_plane)
+	else if (obj->type == e_type_plane)
 		return (obj_plane_surface_uv_map(&obj->as.plane, point));
 	return ((t_real2)(0, 0));
 }

@@ -49,20 +49,23 @@ CFILES		=	\
 				graphics/window_callback_mouse_scroll.c			\
 				graphics/image.c								\
 				\
-				opencl/opencl_get_device_info.c					\
+				opencl/opencl_get_info.c						\
 				opencl/opencl_create.c							\
 				opencl/opencl_kernel_destroy.c					\
 				opencl/opencl_kernel_load_from_file.c			\
 				opencl/opencl_kernel_load_from_file_utils.c		\
 				opencl/opencl_kernel_create_n_args.c			\
-				opencl/opencl_print_device_info.c				\
+				opencl/opencl_print_info.c						\
 				opencl/opencl_destroy.c							\
 				opencl/opencl_kernel_arg.c						\
+				opencl/opencl_platform_utils.c					\
+				opencl/opencl_device_utils.c					\
 				\
 				kernel/kernel_ray_gen_primary.c					\
 				kernel/kernel_ray_trace.c						\
 				kernel/kernel_clear.c							\
 				kernel/kernel_ray_shade.c						\
+				kernel/kernel_post_process.c					\
 				\
 				callbacks/callback_key.c						\
 				callbacks/callback_mouse_motion.c				\
@@ -77,7 +80,10 @@ CFILES		=	\
 				vec/vec3f.c										\
 				\
 				obj/obj_sphere.c								\
-				obj/obj_plane.c								\
+				obj/obj_plane.c									\
+				\
+				prompt/arg_dispatch.c							\
+				prompt/arg_devices.c							\
 				\
 				main.c											\
 				process_input.c									\
