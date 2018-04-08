@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   opencl_print_device_info.c                         :+:      :+:    :+:   */
+/*   opencl_print_info.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alngo <alngo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tlernoul <tlernoul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/12/13 18:05:56 by alngo             #+#    #+#             */
-/*   Updated: 2017/12/16 15:08:55 by alngo            ###   ########.fr       */
+/*   Created: 2018/04/02 20:49:11 by tlernoul          #+#    #+#             */
+/*   Updated: 2018/04/02 21:19:39 by tlernoul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,4 +16,11 @@ void		opencl_print_device_info(t_ocl_device_info const *info)
 {
 	ft_printf("Using:\n\tvendor: %s\n\tmodel: %s\n"
 			, info->vendor_name, info->device_name);
+}
+
+void		opencl_print_platform_info(t_ocl_platform_info const *info)
+{
+	ft_printf("Opencl version: %s\nCurrent platform: %s\nSupported platforms: %s\n"
+			, info->platform_version, info->platform_name,
+			info->supported_extensions);
 }

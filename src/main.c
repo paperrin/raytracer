@@ -6,20 +6,23 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/09 16:14:42 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/02 19:25:14 by tlernoul         ###   ########.fr       */
+/*   Updated: 2018/04/05 20:43:32 by tlernoul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
+#include "error.h"
 #include "ppm.h"
 
-int			app_create(t_app *app)
+int			app_create(t_app *app, const char **argv)
 {
+	if (!arg_dispatch(&app->ocl, argv))
+		return (0);
 	if (!window_create(&app->win, APP_WIDTH, APP_HEIGHT, APP_TITLE))
 		return (0);
 	if (!image_create(&app->draw_buf, app->win.width, app->win.height))
 		app_destroy(app, EXIT_FAILURE);
-	if (!(opencl_create(&app->ocl, 1)))
+	if (!(opencl_create(&app->ocl)))
 		app_destroy(app, EXIT_FAILURE);
 	if (!kernel_ray_gen_primary_create(app) && !error_string("error: ray gen kernel creation failed\n"))
 		app_destroy(app, EXIT_FAILURE);
@@ -105,7 +108,7 @@ void		render(void *user_ptr, double elapsed)
 	}
 }
 
-int			main(int ac, char **av)
+int			main(int ac, const char **av)
 {
 	t_app				app;
 	t_obj				*obj;
@@ -243,7 +246,7 @@ int			main(int ac, char **av)
 	(void)ac;
 	(void)av;
 
-	if (!app_create(&app))
+	if (!app_create(&app, av))
 		return (EXIT_FAILURE);
 	app_destroy(&app, EXIT_SUCCESS);
 	return (EXIT_SUCCESS);

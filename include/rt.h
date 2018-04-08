@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/09 16:36:38 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/02 16:44:37 by tlernoul         ###   ########.fr       */
+/*   Updated: 2018/04/05 20:46:23 by tlernoul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include "vec.h"
 # include "image.h"
 # include "camera.h"
+# include "error.h"
 
 # define APP_WIDTH 720
 # define APP_HEIGHT 480
@@ -53,16 +54,15 @@ typedef struct		s_app
 	t_config		config;
 }					t_app;
 
-int					app_create(t_app *app);
+int					app_create(t_app *app, const char *argv[]);
 void				app_destroy(t_app *app, int exit_status);
+
+int					arg_dispatch(t_opencl *ocl, const char *argv[]);
+int					arg_devices(t_opencl *ocl, const char *args);
 
 void				callback_key(void *user_ptr, int key, int action);
 void				callback_mouse_motion(void *user_ptr, double x, double y);
 void				process_input(t_app *app, double elapsed);
-
-int					error_cl_code(cl_int err_code);
-void				*perror_cl_code(cl_int err_code);
-int					error_string(char const *const error_str);
 
 t_obj				obj_sphere(t_real3 pos, t_real radius, t_mat_id material);
 t_obj				obj_plane(t_real3 pos, t_real3 normal, t_real3 up, t_mat_id material);

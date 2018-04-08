@@ -6,7 +6,7 @@
 #    By: paperrin <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/12/04 23:22:26 by paperrin          #+#    #+#              #
-#    Updated: 2018/04/01 23:39:11 by tlernoul         ###   ########.fr        #
+#    Updated: 2018/04/08 19:23:59 by tlernoul         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -73,6 +73,8 @@ SET(SRC_FILES
 	src/opencl/opencl_print_device_info.c
 	src/opencl/opencl_destroy.c
 	src/opencl/opencl_kernel_arg.c
+	src/opencl/opencl_platform_utils.c
+	src/opencl/opencl_device_utils.c
 
 	src/kernel/kernel_ray_gen_primary.c
 	src/kernel/kernel_ray_trace.c
@@ -94,6 +96,9 @@ SET(SRC_FILES
 
 	src/obj/obj_sphere.c
 	src/obj/obj_plane.c
+
+	src/prompt/arg_dispatch.c
+	src/prompt/arg_devices.c
 
 	src/main.c
 	src/process_input.c
