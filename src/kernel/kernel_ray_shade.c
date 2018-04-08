@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/16 22:37:07 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/05 20:46:39 by tlernoul         ###   ########.fr       */
+/*   Updated: 2018/04/08 22:59:55 by ilarbi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ int				kernel_ray_shade_launch(t_app *app)
 				, CL_TRUE, 0, sizeof(cl_uint), &app->n_rays, 0, NULL, NULL)) != CL_SUCCESS)
 			return (error_cl_code(err));
 	}
-	return (1);
+	return (-1);
 }
 
 void		kernel_ray_shade_destroy(t_app *app)

@@ -79,11 +79,11 @@ CFILES		=	\
 				vec/vec3r.c										\
 				vec/vec3f.c										\
 				\
-				obj/obj_sphere.c								\
-				obj/obj_plane.c									\
-				\
 				prompt/arg_dispatch.c							\
 				prompt/arg_devices.c							\
+				obj/obj_sphere.c							\
+				obj/obj_plane.c								\
+				obj/obj_aligned_cube.c						\
 				\
 				main.c											\
 				process_input.c									\
