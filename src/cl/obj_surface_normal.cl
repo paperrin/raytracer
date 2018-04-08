@@ -35,7 +35,7 @@ t_real3			obj_aligned_cube_surface_normal(t_aligned_cube *aligned_cube, t_real3 
 	t_real		min;
 
 	min = FLT_MAX;
-	point -= aligned_cube->pos;// supposed to be center...
+	point -= aligned_cube->pos;
 	extents = aligned_cube->size / 2; 
 	dist = fabs(extents - fabs(point));
 	if (dist.x < min)

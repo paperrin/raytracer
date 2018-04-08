@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/09 16:14:42 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/05 23:07:13 by ilarbi           ###   ########.fr       */
+/*   Updated: 2018/04/08 22:43:10 by ilarbi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,9 +111,10 @@ int			main(int ac, char **av)
 	size_t			width;
 	size_t			height;
 	unsigned int	max_val;
+	float			offset;
 
 	app.scene.v_obj = ft_vector_create(sizeof(t_obj), NULL, NULL);
-
+/*
 	if (!(obj = (t_obj*)ft_vector_push_back(&app.scene.v_obj, NULL)))
 		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
 	*obj = obj_sphere(vec3r(0, 0, 0.5), 0.2, 6);
@@ -140,13 +141,42 @@ int			main(int ac, char **av)
 
 	if (!(obj = (t_obj*)ft_vector_push_back(&app.scene.v_obj, NULL)))
 		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
-	*obj = obj_plane(vec3r(0, 2, 0), vec3r(0, -1, 0), vec3r(1, 0, 0), 5);
+	*obj = obj_plane(vec3r(0, 2, 0), vec3r(0, -1, 0), vec3r(1, 0, 0), 5);*/
 /*
 ** axis_aligned_cube
 */
+	offset = 0.51;
+	
 	if (!(obj = (t_obj*)ft_vector_push_back(&app.scene.v_obj, NULL)))
 		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
-	*obj = obj_aligned_cube(vec3r(0, 0, 0.5), vec3r(1, 1, 1), 7);
+	*obj = obj_aligned_cube(vec3r(-offset, -offset, offset), vec3r(1, 1, 1), 7);
+	if (!(obj = (t_obj*)ft_vector_push_back(&app.scene.v_obj, NULL)))
+		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
+	*obj = obj_aligned_cube(vec3r(offset, -offset, offset), vec3r(1, 1, 1), 7);
+	if (!(obj = (t_obj*)ft_vector_push_back(&app.scene.v_obj, NULL)))
+		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
+	*obj = obj_aligned_cube(vec3r(-offset, offset, offset), vec3r(1, 1, 1), 7);
+	if (!(obj = (t_obj*)ft_vector_push_back(&app.scene.v_obj, NULL)))
+		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
+	*obj = obj_aligned_cube(vec3r(offset, offset, offset), vec3r(1, 1, 1), 7);
+	if (!(obj = (t_obj*)ft_vector_push_back(&app.scene.v_obj, NULL)))
+		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
+	*obj = obj_aligned_cube(vec3r(-offset, -offset, -offset), vec3r(1, 1, 1), 7);
+	if (!(obj = (t_obj*)ft_vector_push_back(&app.scene.v_obj, NULL)))
+		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
+	*obj = obj_aligned_cube(vec3r(offset, -offset, -offset), vec3r(1, 1, 1), 7);
+	if (!(obj = (t_obj*)ft_vector_push_back(&app.scene.v_obj, NULL)))
+		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
+	*obj = obj_aligned_cube(vec3r(-offset, offset, -offset), vec3r(1, 1, 1), 7);
+	
+
+
+
+	if (!(obj = (t_obj*)ft_vector_push_back(&app.scene.v_obj, NULL)))
+		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
+	*obj = obj_aligned_cube(vec3r(0, 0, 0), vec3r(10, 10, 10), 5);
+
+
 
 	app.scene.v_material = ft_vector_create(sizeof(t_material), NULL, NULL);
 	if (!(mat = (t_material*)ft_vector_push_back(&app.scene.v_material, NULL)))
@@ -185,8 +215,8 @@ int			main(int ac, char **av)
 	mat->texture_id = -1;
 	if (!(mat = (t_material*)ft_vector_push_back(&app.scene.v_material, NULL)))
 		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
-	mat->color = vec3f(0.3, 0.9, 0.5);
-	mat->reflection = 0;
+	mat->color = vec3f(1, 1, 1);
+	mat->reflection = 0.;
 	mat->refraction = 0;
 	mat->indice_of_refraction = 0;
 	mat->texture_id = -1;
@@ -199,14 +229,16 @@ int			main(int ac, char **av)
 	mat->texture_id = 0;
 	mat->specular = 10;
 	mat->specular_color = vec3f(1, 1, 1);
-	mat->specular_exp = 200;
+	mat->specular_exp = 20;
+/*AABB
+*/ 
 	if (!(mat = (t_material*)ft_vector_push_back(&app.scene.v_material, NULL)))
 		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
 	mat->color = vec3f(1, 1, 1);
-	mat->reflection = 0.0;
-	mat->refraction = 0.0;
-	mat->indice_of_refraction = 1.00;
-	mat->texture_id = -1;
+	mat->reflection = 0;
+	mat->refraction = 0.8;
+	mat->indice_of_refraction = 1;
+	mat->texture_id = 0;
 	mat->specular = 1;
 	mat->specular_color = vec3f(1, 1, 1);
 	mat->specular_exp = 20;
@@ -242,8 +274,8 @@ int			main(int ac, char **av)
 		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
 	light->type = light_type_point;
 	light->color = vec3f(1, 1, 1);
-	light->intensity = 150;
-	light->as.point.pos = vec3r(1, 1, -1);
+	light->intensity = 250;
+	light->as.point.pos = vec3r(0, 0, 0);
 	
 	app.cam.cam_data.pos = vec3r(0, 0, -1);
 	(void)ac;
