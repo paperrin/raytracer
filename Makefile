@@ -107,7 +107,10 @@ CFILES		=	\
 				scene_parser/ast/ast_parse.c						\
 				scene_parser/ast/ast_parse_expr.c					\
 				scene_parser/ast/ast_parse_maybe_call.c				\
-				scene_parser/ast/ast_eval.c							\
+				\
+				scene_parser/interpreter/interpreter.c					\
+				scene_parser/interpreter/interpreter_class.c			\
+				scene_parser/interpreter/interpreter_method.c			\
 				\
 				main.c											\
 				process_input.c									\

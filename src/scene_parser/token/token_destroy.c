@@ -6,11 +6,11 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/05 17:23:37 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/07 01:47:11 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/09 17:04:36 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "scene_parser.h"
+#include "scene_parser/token.h"
 
 void		token_content_destroy(t_token *const token)
 {

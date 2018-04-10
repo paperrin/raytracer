@@ -6,11 +6,11 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/04 21:21:52 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/06 16:44:44 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/09 16:59:53 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "scene_parser.h"
+#include "scene_parser/tkstream.h"
 
 t_token			*tkstream_read_num(t_token_stream *const tkstream)
 {

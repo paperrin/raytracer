@@ -6,11 +6,11 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/04 17:09:56 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/06 18:52:29 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/09 17:04:36 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "scene_parser.h"
+#include "scene_parser/token.h"
 
 void			token_indent(unsigned int indent_depth)
 {

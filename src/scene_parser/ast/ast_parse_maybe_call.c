@@ -6,11 +6,11 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/15 17:25:53 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/06 18:48:54 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/09 16:34:07 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "scene_parser.h"
+#include "scene_parser/ast.h"
 
 static int				add_arg(t_token **tk_call, t_token **tk_arg)
 {

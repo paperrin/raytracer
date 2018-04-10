@@ -6,11 +6,11 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/05 16:21:37 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/07 00:49:11 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/09 16:33:22 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "scene_parser.h"
+#include "scene_parser/ast.h"
 
 static int			parse_program(t_ast *const ast,
 		t_token_stream *const tkstream)

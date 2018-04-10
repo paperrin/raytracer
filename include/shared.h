@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/13 14:25:38 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/06 19:29:57 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/08 14:43:14 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ typedef	double2			cl_double2;
 typedef	double3			cl_double3;
 typedef	double4			cl_double4;
 typedef	double8			cl_double8;
+typedef	double16		cl_double16;
 typedef char			cl_uchar;
 typedef short			cl_short;
 typedef int				cl_int;

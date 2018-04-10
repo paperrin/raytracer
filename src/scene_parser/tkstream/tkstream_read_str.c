@@ -6,11 +6,11 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/04 18:50:03 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/06 16:58:51 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/09 16:59:53 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "scene_parser.h"
+#include "scene_parser/tkstream.h"
 
 static char		*concat_char_is_escaped(char **str, char c, int escaped)
 {

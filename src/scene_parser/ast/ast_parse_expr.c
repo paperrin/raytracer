@@ -6,11 +6,11 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/06 19:31:56 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/06 18:47:31 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/09 16:33:46 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "scene_parser.h"
+#include "scene_parser/ast.h"
 
 static t_token		*handle_operand(t_token_stream *const tkstream,
 		t_token *tk)

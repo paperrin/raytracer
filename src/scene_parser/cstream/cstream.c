@@ -6,11 +6,11 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/17 18:22:36 by paperrin          #+#    #+#             */
-/*   Updated: 2018/03/05 16:49:50 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/09 16:34:25 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "scene_parser.h"
+#include "scene_parser/cstream.h"
 
 t_char_stream		*cstream_open(char const *const file_path)
 {

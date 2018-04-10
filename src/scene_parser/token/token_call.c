@@ -6,11 +6,11 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/04 17:16:41 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/04 23:13:18 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/09 17:07:53 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "scene_parser.h"
+#include "scene_parser/token.h"
 
 static int		token_print_args(t_token const *const token,
 		unsigned int indent_depth)

@@ -6,11 +6,11 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/23 19:01:08 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/04 23:14:04 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/09 17:04:36 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "scene_parser.h"
+#include "scene_parser/token.h"
 
 t_token		*token_num(float value)
 {

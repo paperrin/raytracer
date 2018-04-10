@@ -6,27 +6,65 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/09 16:14:42 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/07 02:21:55 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/10 02:26:36 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
 #include "ppm.h"
 
-#include "scene_parser.h"
+#include "scene_parser/ast.h"
+#include "scene_parser/interpreter.h"
+
+int			add_global_class(t_interpreter *interpreter);
+
+static int	f_method_print(t_token *const tk_this,
+		t_token const *const tk_args, size_t n_args, t_token *const tk_return)
+{
+	(void)tk_this;
+	(void)tk_return;
+	if (!n_args || tk_args[0].type != token_type_str)
+		return (error_string("wrong argument: print(string)"));
+	ft_putendl(tk_args[0].as.str.value);
+	return (1);
+}
+
+int			add_global_class(t_interpreter *interpreter)
+{
+	if (!(interpreter_class_add(interpreter, e_class_type_none,
+					interpreter_method_create("print", &f_method_print))))
+		return (error_string("could not add class"));
+	return (1);
+}
 
 int			app_create(t_app *app)
 {
-	t_ast *ast;
+	t_interpreter	*interpreter;
+	t_ast			*ast;
 
-	if ((ast = ast_parse("example.rt")))
+	if ((ast = ast_parse("example_func.rt")))
 	{
-		if (!ast_eval(ast, app))
+		if (!(interpreter = interpreter_create(app)))
+		{
+			error_string(ERR_MEMORY);
+			return (0);
+		}
+		if (!add_global_class(interpreter))
+			return (0);
+
+		if (!interpreter_ast_eval(interpreter, ast))
 			error_string("Failed AST interpretation");
+
 		ast_destroy(&ast);
+		interpreter_destroy(&interpreter);
+		ft_putendl("\nSuccess !");
+		return (0);
 	}
 	else
+	{
+		error_string("Failed AST parsing");
 		return (0);
+	}
 
 	if (!window_create(&app->win, 720, 480, APP_TITLE))
 		return (0);
@@ -79,7 +117,7 @@ void		render(void *user_ptr, double elapsed)
 	if (!kernel_clear_launch(app))
 		app_destroy(app, EXIT_FAILURE);
 	depth = -1;
-	while (++depth <= 1)
+	while (++depth <= 2)
 	{
 		if (!kernel_ray_trace_launch(app))
 			app_destroy(app, EXIT_FAILURE);
@@ -108,6 +146,7 @@ void		render(void *user_ptr, double elapsed)
 int			main(int ac, char **av)
 {
 	t_app				app;
+/*
 	t_obj				*obj;
 	t_light				*light;
 	t_material			*mat;
@@ -156,7 +195,7 @@ int			main(int ac, char **av)
 	if (!(mat = (t_material*)ft_vector_push_back(&app.scene.v_material, NULL)))
 		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
 	mat->color = vec3f(1, 0.3, 0.3);
-	mat->reflection = 0.8;
+	mat->reflection = 1;
 	mat->refraction = 0;
 	mat->texture_id = -1;
 
@@ -196,6 +235,7 @@ int			main(int ac, char **av)
 	light->as.point.pos = vec3r(-0.5, 0.8, 0.9);
 
 	app.cam.cam_data.pos = vec3r(0, 0.5, -2);
+*/
 	(void)ac;
 	(void)av;
 
