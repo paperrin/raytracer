@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/09 16:14:42 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/08 23:17:46 by ilarbi           ###   ########.fr       */
+/*   Updated: 2018/04/10 22:36:04 by ilarbi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -270,6 +270,7 @@ int			main(int ac, const char **av)
 	app.config.color_epsilon = 1.f / 255;
 	app.config.intersection_bias = 1e-3;
 	app.config.z_far = 20000;
+	app.screenshot_path = "/Users/ilarbi/Desktop/Screen shot "; 
 
 	app.config.ambient_c = vec3f(1, 1, 1);
 	app.config.ambient_i = 0.2;
