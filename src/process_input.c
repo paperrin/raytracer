@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/19 19:21:17 by paperrin          #+#    #+#             */
-/*   Updated: 2018/01/23 01:53:18 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/03/27 17:26:55 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,10 @@ static void		process_input_mouse(t_app *app, double elapsed)
 	double			x;
 	double			y;
 
+	glfwGetCursorPos(app->win.glfw_win, &x, &y);
+	app->config.mouse_pxl_id = (int)x + (int)y * APP_WIDTH;
 	if (!app->mouse_captured)
 		return ;
-	glfwGetCursorPos(app->win.glfw_win, &x, &y);
 	if (x != last_x)
 		app->cam.rot.s[1] -= rot * elapsed * ((x < last_x) * 2 - 1);
 	if (y != last_y)
@@ -33,7 +34,7 @@ static void		process_input_mouse(t_app *app, double elapsed)
 
 static void		process_input_key(t_app *app, double elapsed)
 {
-	const double	move = 50;
+	const double	move = 80;
 	char			a_pressed;
 	char			s_pressed;
 	char			d_pressed;

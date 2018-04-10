@@ -6,7 +6,7 @@
 #    By: paperrin <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/12/04 23:22:26 by paperrin          #+#    #+#              #
-#    Updated: 2018/01/19 00:13:54 by alngo            ###   ########.fr        #
+#    Updated: 2018/02/14 18:29:26 by paperrin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -76,23 +76,41 @@ SET(SRC_FILES
 
 	src/kernel/kernel_ray_gen_primary.c
 	src/kernel/kernel_ray_trace.c
+	src/kernel/kernel_clear.c
+	src/kernel/kernel_ray_shade.c
 
 	src/callbacks/callback_key.c
+	src/callbacks/callback_mouse_motion.c
+
+	src/camera/camera.c
+	src/camera/camera_rotation.c
+	src/camera/camera_translate.c
+	src/camera/matrix_real16.c
+	src/camera/matrix_real16_rot.c
 
 	src/vec/vec3r.c
+	src/vec/vec3f.c
 
 	src/obj/obj_sphere.c
+	src/obj/obj_plane.c
 
 	src/main.c
+	src/process_input.c
 	src/error.c
 )
 files_import(
 	include/shared.h
+	src/cl/atomic_add.cl
+	src/cl/kernel_clear.cl
 	src/cl/kernel_ray_gen_primary.cl
+	src/cl/kernel_ray_shade.cl
 	src/cl/kernel_ray_trace.cl
-	src/cl/kernel_compute_texels.cl
-	src/cl/kernel_ray_gen_next.cl
-	src/cl/kernel_combine_texels.cl
+	src/cl/light_get_dir.cl
+	src/cl/obj_ray_hit.cl
+	src/cl/obj_surface_color.cl
+	src/cl/obj_surface_normal.cl
+	src/cl/obj_surface_uv_map.cl
+	src/cl/shade.cl
 )
 add_executable(rt ${SRC_FILES})
 

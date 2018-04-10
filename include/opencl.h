@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/10 15:33:54 by paperrin          #+#    #+#             */
-/*   Updated: 2018/01/17 23:38:38 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/03/29 16:48:27 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,9 @@ void					opencl_kernel_arg_select_id(t_ocl_kernel *kernel
 		, size_t id);
 int						opencl_kernel_arg_selected_create(t_ocl_kernel *kernel
 		, cl_mem_flags flags, size_t size, void *host_ptr);
-void					opencl_kernel_arg_selected_use_kernel_arg_id(
+int						opencl_kernel_arg_set(t_ocl_kernel *kernel, size_t id,
+		size_t arg_size, void const *arg_value);
+int						opencl_kernel_arg_selected_use_kernel_arg_id(
 		t_ocl_kernel *kernel, t_ocl_kernel *kernel_src, size_t id);
 void					opencl_kernel_arg_selected_destroy(
 		t_ocl_kernel *kernel);

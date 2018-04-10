@@ -1,38 +1,49 @@
-#include "shared.h"
+#ifndef OBJ_RAY_HIT_CL
+# define OBJ_RAY_HIT_CL
+
+# include "shared.h"
 
 t_real				solve_quadratic(t_real3 abc, t_real *values);
 t_real				obj_ray_hit(constant t_obj *obj,
 		t_ray *ray);
 t_real				obj_sphere_ray_hit(constant t_sphere *sphere,
 		t_ray *ray);
-cl_int				ray_throw_get_first_hit_obj(t_ray *ray,
+cl_int				ray_throw_get_first_hit_obj(global t_config const *const config, t_ray *ray,
 		constant t_obj *objs, cl_uint objs_size, t_real *t_nearest);
-cl_int			ray_throw_get_any_hit_obj(t_ray *ray,
-		constant t_obj *objs, cl_uint objs_size, cl_float *t);
 t_real				obj_cone_ray_hit(constant t_cone *cone, t_ray *ray);
+cl_int				ray_throw_get_any_hit_obj(global t_config const *const config, t_ray *ray,
+		constant t_obj *objs, cl_uint objs_size, t_real *t);
 t_real				obj_plane_ray_hit(constant t_plane *plane, t_ray *ray);
+
 
 t_real			solve_quadratic(t_real3 abc, t_real *values)
 {
 	t_real		discr;
+	t_real		sq_discr;
 	t_real		tmp;
 
 	discr = abc[1] * abc[1] - 4 * abc[0] * abc[2];
 	if (discr < 0)
 		return (-1);
-	discr = sqrt(discr);
-	values[0] = (-abc[1] - discr) / (2 * abc[0]);
-	values[1] = (-abc[1] + discr) / (2 * abc[0]);
+	sq_discr = sqrt(discr);
+	values[0] = (-abc[1] - sq_discr) / (2 * abc[0]);
+	values[1] = (-abc[1] + sq_discr) / (2 * abc[0]);
 	if (values[1] < values[0])
 	{
 		tmp = values[1];
 		values[1] = values[0];
 		values[0] = tmp;
 	}
+	if (values[0] < 0)
+	{
+		tmp = values[1];
+		values[1] = values[0];
+		values[0] = tmp;
+	}	
 	return (discr);
 }
 
-cl_int			ray_throw_get_first_hit_obj(t_ray *ray,
+cl_int			ray_throw_get_first_hit_obj(global t_config const *const config, t_ray *ray,
 		constant t_obj *objs, cl_uint objs_size, t_real *t_nearest)
 {
 	t_real		t;
@@ -40,7 +51,7 @@ cl_int			ray_throw_get_first_hit_obj(t_ray *ray,
 	cl_int		obj_id_nearest;
 
 	i = -1;
-	*t_nearest = 200000;
+	*t_nearest = config->z_far;
 	obj_id_nearest = -1;
 	while (++i < (t_obj_id)objs_size)
 	{
@@ -53,12 +64,12 @@ cl_int			ray_throw_get_first_hit_obj(t_ray *ray,
 	return (obj_id_nearest);
 }
 
-cl_int			ray_throw_get_any_hit_obj(t_ray *ray,
+cl_int			ray_throw_get_any_hit_obj(global t_config const *const config, t_ray *ray,
 		constant t_obj *objs, cl_uint objs_size, t_real *t)
 {
 	cl_int		i;
 
-	*t = 200000;
+	*t = config->z_far;
 	i = -1;
 	while (++i < (t_obj_id)objs_size)
 	{
@@ -88,12 +99,11 @@ t_real			obj_plane_ray_hit(constant t_plane *plane, t_ray *ray)
 	t_real3		p;
 
 	denom =	dot(plane->normal, ray->dir);
-	if (-denom > 1e-10)
+	if (fabs(denom) > 1e-10)
 	{
 		p = plane->pos - ray->origin;
 		t = dot(plane->normal, p) / denom;
-		if (t >= 0)
-			return (t);
+		return (t);
 	}
 	return (-1);
 }
@@ -117,22 +127,19 @@ t_real		obj_cone_ray_hit(constant t_cone *cone, t_ray *ray)
 {
 	t_real3		abc;
 	t_real		hits[2];
-	t_real		csquare;
-	t_real		ssquare;
+	t_real		tan_a;
+/*	t_real		csquare;
+	t_real		ssquare;*/
 	t_real3		dp;
 
-	csquare = cos(cone->angle) * cos(cone->angle);
-	ssquare = sin(cone->angle) * sin(cone->angle);
 	dp = ray->origin - cone->pos;
-	abc[0] = csquare * dot((ray->dir - dot(ray->dir, cone->up) * cone->up), 
-				(ray->dir - dot(ray->dir, cone->up) * cone->up)) - ssquare * 
-				dot(ray->dir , cone->up) * dot(ray->dir , cone->up);
-	abc[1] = 2 * csquare * dot((ray->dir - dot(ray->dir, cone->up) *
-				cone->up), (dp - dot(dp, cone->up) * cone->up)) - 
-				2 * ssquare * dot(ray->dir, cone->up) * dot(dp, cone->up);
-	abc[2] = csquare * dot((dp - dot(dp, cone->up) * cone->up), (dp - dot(dp, cone->up) * cone->up)) -
-				ssquare * dot(dp, cone->up) * dot(dp, cone->up);
+	tan_a = tan(cone->angle);
+	abc[0] = dot(ray->dir, ray->dir) - (1 + tan_a * tan_a) * dot(ray->dir, cone->up) * dot(ray->dir, cone->up);
+	abc[1] = (dot(ray->dir, dp) - (1 + tan_a * tan_a) * dot(ray->dir, cone->up) * dot(dp, cone->up)) * 2;
+	abc[2] = dot(dp, dp) - (1 + tan_a * tan_a) * dot(dp, cone->up) * dot(dp, cone->up);
 	if (solve_quadratic(abc, hits) < 0)
 		return (-1);
 	return (hits[0]);
 }
+
+#endif

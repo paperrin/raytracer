@@ -6,7 +6,7 @@
 #    By: paperrin <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/12/04 23:06:12 by paperrin          #+#    #+#              #
-#    Updated: 2017/12/16 22:57:26 by paperrin         ###   ########.fr        #
+#    Updated: 2018/02/14 18:37:24 by paperrin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,9 @@ SET(SRC_FILES
 	src/ft_memccpy.c
 	src/ft_memmove.c
 	src/ft_memchr.c
+	src/ft_memchr_any.c
 	src/ft_memcmp.c
+	src/ft_memrealloc.c
 	src/ft_strlen.c
 	src/ft_wstrlen.c
 	src/ft_strdup.c
@@ -197,6 +199,10 @@ SET(SRC_FILES
 	src/instream/ft_input_stream_file.c
 	src/file/ft_file_get_size.c
 	src/file/ft_file_to_string.c
+	src/fstream/ft_fstream_read_open.c
+	src/fstream/ft_fstream_sread_to_any_char.c
+	src/fstream/internal_ft_fstream_read_more.c
+	src/ppm/ppm.c
 )
 
 add_library(ft ${SRC_FILES})

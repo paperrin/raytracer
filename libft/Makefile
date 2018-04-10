@@ -16,7 +16,7 @@ CC			=	gcc
 
 CFLAGS		=	-g -O3 -Wall -Wextra -Werror -std=c89 -pedantic \
 				-Wmissing-prototypes -Wstrict-prototypes \
-				-Wold-style-definition -Wno-long-long -fsanitize=address
+				-Wold-style-definition -Wno-long-long
 
 RM			=	rm -rf
 
@@ -211,7 +211,10 @@ CFILES		=	ft_swap.c			\
 				fstream/internal_ft_fstream_read_more.c			\
 				fstream/ft_fstream_sread_to_any_char.c			\
 				fstream/ft_fstream_read_open.c					\
-				ppm/ppm.c
+				ppm/ft_ppm_file_write.c \
+				ppm/ft_ppm_file_read.c \
+				ppm/ft_ppm_read_header.c \
+				ppm/ft_ppm_from_floats.c
 
 SRC			=	$(CFILES:%=$(SRC_DIR)%)
 
