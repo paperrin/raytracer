@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/16 16:22:11 by paperrin          #+#    #+#             */
-/*   Updated: 2018/01/23 04:01:52 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/08 22:56:16 by ilarbi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ t_obj		obj_sphere(t_real3 pos, t_real radius, t_mat_id material)
 {
 	t_obj		obj;
 
-	obj.type = type_sphere;
+	obj.type = e_type_sphere;
 	obj.material_id = material;
 	obj.as.sphere.pos = pos;
 	obj.as.sphere.up = vec3r(0, 1, 0);

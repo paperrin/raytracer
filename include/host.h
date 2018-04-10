@@ -1,26 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   vec.h                                              :+:      :+:    :+:   */
+/*   host.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ilarbi <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/12/16 16:32:50 by paperrin          #+#    #+#             */
-/*   Updated: 2018/01/25 22:58:24 by alngo            ###   ########.fr       */
+/*   Created: 2018/04/08 22:27:58 by ilarbi            #+#    #+#             */
+/*   Updated: 2018/04/08 22:29:15 by ilarbi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef VEC_H
-# define VEC_H
+#ifndef HOST_H
+# define HOST_H
 
-# include "opencl.h"
 # include "shared.h"
 
-t_real3		vec3r(t_real x, t_real y, t_real z);
-t_real		vec3r_dot(t_real3 a, t_real3 b);
-t_real		vec3r_mag(t_real3 vec);
-t_real3		vec3r_norm(t_real3 vec);
+typedef union	u_real2s
+{
+	t_real2		v;
+	t_real		s[2];
+}				t_real2s;
 
-cl_float3	vec3f(cl_float x, cl_float y, cl_float z);
+typedef union	u_real3s
+{
+	t_real3		v;
+	t_real		s[3];
+}				t_real3s;
 
 #endif

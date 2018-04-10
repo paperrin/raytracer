@@ -6,26 +6,48 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/21 15:56:38 by paperrin          #+#    #+#             */
-/*   Updated: 2018/01/17 23:39:09 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/08 19:55:17 by tlernoul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "opencl.h"
+#include "error.h"
 
-static int			set_device(t_opencl *ocl, int use_gpu)
+static int			set_platform(t_opencl *ocl)
 {
-	cl_int			err;
-	cl_device_id	cpu;
+	if (!(ocl->platform = opencl_get_platform_id(ocl->platform_id)))
+		return (error_cl_code(CL_INVALID_VALUE));
+	return (1);
+}
 
-	err = clGetDeviceIDs(NULL, CL_DEVICE_TYPE_CPU, 1, &cpu, NULL);
-	if (!use_gpu || clGetDeviceIDs(NULL, CL_DEVICE_TYPE_GPU, 1, &(ocl->device), NULL)
-			!= CL_SUCCESS)
+static int			set_device(t_opencl *ocl)
+{
+	if (!(ocl->device = opencl_get_device_id(ocl->platform, ocl->device_id)))
+		return (error_cl_code(CL_DEVICE_NOT_FOUND));
+	return (1);
+}
+
+static int			set_and_print_platform_info(t_opencl *ocl)
+{
+	ocl->platform_info.platform_version = opencl_get_platform_info(
+			ocl->platform, CL_PLATFORM_VERSION);
+	ocl->platform_info.platform_name = opencl_get_platform_info(
+			ocl->platform, CL_PLATFORM_NAME);
+	ocl->platform_info.supported_extensions = opencl_get_platform_info(
+			ocl->platform, CL_PLATFORM_EXTENSIONS);
+	if (!ocl->platform_info.platform_name ||
+				!ocl->platform_info.platform_version ||
+							!ocl->platform_info.supported_extensions)
 	{
-		if (err != CL_SUCCESS)
-			return (0);
-		ocl->device = cpu;
-		clReleaseDevice(cpu);
+		if (ocl->platform_info.platform_name)
+			free(ocl->platform_info.platform_name);
+		else if (ocl->platform_info.platform_version)
+			free(ocl->platform_info.platform_version);
+		else
+			free(ocl->platform_info.supported_extensions);
+		return (0);
 	}
+	opencl_print_platform_info(&ocl->platform_info);
 	return (1);
 }
 
@@ -47,18 +69,17 @@ static int			set_and_print_device_info(t_opencl *ocl)
 	return (1);
 }
 
-int					opencl_create(t_opencl *ocl, int use_gpu)
+int					opencl_create(t_opencl *ocl)
 {
 	cl_int			err;
 
-	if (!set_device(ocl, use_gpu))
+	if (!set_platform(ocl) || !set_and_print_platform_info(ocl))
+		return (0);
+	if (!set_device(ocl))
 		return (0);
 	if (!set_and_print_device_info(ocl))
-	{
-		clReleaseDevice(ocl->device);
 		return (0);
-	}
-	ocl->context = clCreateContext(0, 1, &(ocl->device), NULL, NULL
+	ocl->context = clCreateContext(0, 1, &ocl->device, NULL, NULL
 			, &err);
 	if (err)
 		return (0);

@@ -49,20 +49,23 @@ CFILES		=	\
 				graphics/window_callback_mouse_scroll.c			\
 				graphics/image.c								\
 				\
-				opencl/opencl_get_device_info.c					\
+				opencl/opencl_get_info.c						\
 				opencl/opencl_create.c							\
 				opencl/opencl_kernel_destroy.c					\
 				opencl/opencl_kernel_load_from_file.c			\
 				opencl/opencl_kernel_load_from_file_utils.c		\
 				opencl/opencl_kernel_create_n_args.c			\
-				opencl/opencl_print_device_info.c				\
+				opencl/opencl_print_info.c						\
 				opencl/opencl_destroy.c							\
 				opencl/opencl_kernel_arg.c						\
+				opencl/opencl_platform_utils.c					\
+				opencl/opencl_device_utils.c					\
 				\
 				kernel/kernel_ray_gen_primary.c					\
 				kernel/kernel_ray_trace.c						\
 				kernel/kernel_clear.c							\
 				kernel/kernel_ray_shade.c						\
+				kernel/kernel_post_process.c					\
 				\
 				callbacks/callback_key.c						\
 				callbacks/callback_mouse_motion.c				\
@@ -78,6 +81,7 @@ CFILES		=	\
 				\
 				obj/obj_sphere.c								\
 				obj/obj_plane.c									\
+				obj/obj_aligned_cube.c						\
 				\
 				scene_parser/cstream/cstream.c							\
 				scene_parser/cstream/cstream_skip_chars.c				\
@@ -114,6 +118,9 @@ CFILES		=	\
 				scene_parser/interpreter/interpreter_find_method.c		\
 				\
 				scene_parser/hooks/interpreter_add_class_console.c		\
+				\
+				prompt/arg_dispatch.c							\
+				prompt/arg_devices.c							\
 				\
 				main.c											\
 				process_input.c									\

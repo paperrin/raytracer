@@ -1,19 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   opencl_print_device_info.c                         :+:      :+:    :+:   */
+/*   obj_aligned_cube.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alngo <alngo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ilarbi <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/12/13 18:05:56 by alngo             #+#    #+#             */
-/*   Updated: 2017/12/16 15:08:55 by alngo            ###   ########.fr       */
+/*   Created: 2018/03/25 22:16:31 by ilarbi            #+#    #+#             */
+/*   Updated: 2018/04/08 23:11:16 by ilarbi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "opencl.h"
+#include "rt.h"
 
-void		opencl_print_device_info(t_ocl_device_info const *info)
+t_obj		obj_aligned_cube(t_real3 pos, t_real3 size, t_mat_id material)
 {
-	ft_printf("Using:\n\tvendor: %s\n\tmodel: %s\n"
-			, info->vendor_name, info->device_name);
+	t_obj	obj;
+	
+	obj.type = e_type_aligned_cube;
+	obj.material_id = material;
+	obj.as.aligned_cube.pos = pos;
+	obj.as.aligned_cube.size = size;
+	return (obj);
 }

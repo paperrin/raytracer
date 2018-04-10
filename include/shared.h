@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/13 14:25:38 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/08 14:43:14 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/11 00:38:18 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,8 @@ typedef cl_double3		t_real3;
 typedef cl_double4		t_real4;
 typedef cl_double8		t_real8;
 typedef cl_double16		t_real16;
+#define REAL_MAX DBL_MAX
+#define REAL_MIN DBL_MIN
 # else
 typedef cl_float		t_real;
 typedef cl_float2		t_real2;
@@ -59,6 +61,8 @@ typedef cl_float3		t_real3;
 typedef cl_float4		t_real4;
 typedef cl_float8		t_real8;
 typedef cl_float16		t_real16;
+#define REAL_MAX FLT_MAX
+#define REAL_MIN FLT_MIN
 # endif
 
 # ifdef CONFIG_USE_DOUBLE
@@ -75,6 +79,9 @@ typedef cl_short		t_obj_type;
 typedef cl_int			t_obj_id;
 typedef cl_short		t_mat_id;
 
+typedef	struct s_material	t_material;
+typedef	struct s_ray		t_ray;
+
 typedef struct			s_camera_data
 {
 	t_real3				pos;
@@ -84,21 +91,49 @@ typedef struct			s_camera_data
 	t_real				pxl_ratio;
 }						t_camera_data;
 
+typedef cl_float3 (t_f_specular_model)(t_material, t_real3, t_ray, t_real3, t_real3, cl_float3);
+
+typedef enum			e_shading_model
+{
+	e_shading_model_phong = 0,
+	e_shading_model_blinn
+}						t_e_shading_model;
+
+typedef enum			e_post_filter
+{
+	e_post_filter_none = 0,
+	e_post_filter_sepia = 1 << 0,
+	e_post_filter_grayscale = 1 << 1
+}						t_e_post_filter;
+
 typedef struct			s_config
 {
-	cl_float3			ambient;
+	cl_float3			ambient_c;
+	cl_float			ambient_i;
+	cl_float3			camera_light_c;
+	cl_float			camera_light_i;
+	cl_float			color_epsilon;
+	cl_uint				projection_depth;
+	t_real				intersection_bias;
+	t_real				z_far;
 	cl_uint				samples_width;
+	t_e_shading_model	shading_model;
+	cl_uint2			screen_size;
+	cl_int				max_depth;
+	cl_int				cur_depth;
+	cl_int				mouse_pxl_id;
+	cl_uint				post_filters;
 }						t_config;
 
 /*
 ** Rays
 */
 
-typedef struct			s_ray
+struct					s_ray
 {
 	t_real3				origin;
 	t_real3				dir;
-}						t_ray;
+};
 
 typedef struct			s_ray_state
 {
@@ -107,6 +142,7 @@ typedef struct			s_ray_state
 	cl_float			importance;
 	cl_uint				pxl_id;
 	t_obj_id			obj_id;
+	cl_float3			color_factor;
 }						t_ray_state;
 
 /*
@@ -115,10 +151,11 @@ typedef struct			s_ray_state
 
 typedef enum			e_obj_type
 {
-	type_sphere,
-	type_plane,
-	type_cylinder,
-	type_cone
+	e_type_sphere,
+	e_type_plane,
+	e_type_cylinder,
+	e_type_cone,
+	e_type_aligned_cube
 }						t_e_obj_type;
 
 typedef struct			s_plane
@@ -152,12 +189,19 @@ typedef struct			s_cone
 	t_real				radius;
 }						t_cone;
 
+typedef	struct			s_aligned_cube
+{
+	t_real3				pos;
+	t_real3				size;
+}						t_aligned_cube;
+
 typedef union			u_obj_container
 {
 	t_plane				plane;
 	t_sphere			sphere;
 	t_cylinder			cylinder;
 	t_cone				cone;
+	t_aligned_cube		aligned_cube;
 }						t_obj_container;
 
 typedef struct			s_obj
@@ -167,13 +211,18 @@ typedef struct			s_obj
 	t_obj_container		as;
 }						t_obj;
 
-typedef struct			s_material
+struct					s_material
 {
 	cl_float3			color;
 	cl_float			reflection;
 	cl_float			refraction;
+	cl_float			specular;
+	cl_float3			specular_color;
+	cl_float			specular_exp;
+	cl_float			indice_of_refraction;
+	cl_uint				projection;
 	cl_int				texture_id;
-}						t_material;
+};
 
 typedef enum			e_filter
 {
@@ -186,6 +235,7 @@ typedef struct			s_texture
 	cl_long				pixels_offset;
 	cl_uint				width;
 	cl_uint				height;
+	cl_uint				max_val;
 	t_filter			filter;
 
 }						t_texture;
@@ -196,9 +246,9 @@ typedef struct			s_texture
 
 typedef enum			e_light_type
 {
-	light_type_point,
-	light_type_spot,
-	light_type_dir
+	e_light_type_point,
+	e_light_type_spot,
+	e_light_type_dir
 }						t_light_type;
 
 typedef struct			s_light_point
@@ -210,6 +260,10 @@ typedef struct			s_light_spot
 {
 	t_real3				pos;
 	t_real3				dir;
+	t_real				beam_angle;
+	t_real				field_angle;
+	t_real				beam_aperture;
+	t_real				field_aperture;
 }						t_light_spot;
 
 typedef struct			s_light_dir

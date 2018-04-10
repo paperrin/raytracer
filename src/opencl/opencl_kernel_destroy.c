@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/16 19:33:51 by paperrin          #+#    #+#             */
-/*   Updated: 2017/12/21 15:13:17 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/06 23:02:59 by tlernoul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ int				opencl_kernel_destroy(t_ocl_kernel *kernel)
 {
 	cl_int		err;
 
+	if (!kernel->program)
+		return(0);
 	if ((err = clReleaseProgram(kernel->program)) != CL_SUCCESS)
 		return (error_cl_code(err));
 	if ((err = clReleaseKernel(kernel->kernel)) != CL_SUCCESS)
