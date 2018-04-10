@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/19 18:57:19 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/09 16:59:53 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/11 00:18:22 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static void		tkstream_read_comment(t_token_stream const *tkstream)
 
 static t_token	*read_token(t_token_stream *const tkstream, int *is_unsupported)
 {
-	static void			*f_tokens[TKSTREAM_NB_F_TOKENS * 2] = {
+	static void			*f_tokens[TOKEN_READ_NB_F_TOKENS * 2] = {
 		(void*)",()", (void*)&tkstream_read_punc,
 		(void*)"\"", (void*)&tkstream_read_str,
 		(void*)"0123456789", (void*)&tkstream_read_num,
@@ -34,7 +34,7 @@ static t_token	*read_token(t_token_stream *const tkstream, int *is_unsupported)
 
 	i = -1;
 	*is_unsupported = 0;
-	while (++i < TKSTREAM_NB_F_TOKENS && tkstream->cur)
+	while (++i < TOKEN_READ_NB_F_TOKENS && tkstream->cur)
 	{
 		if (ft_strchr((char*)f_tokens[i * 2], cstream_peek(tkstream->cstream)))
 		{
@@ -43,7 +43,7 @@ static t_token	*read_token(t_token_stream *const tkstream, int *is_unsupported)
 			return (tkstream->cur);
 		}
 	}
-	*is_unsupported = (i == TKSTREAM_NB_F_TOKENS && tkstream->cur);
+	*is_unsupported = (i == TOKEN_READ_NB_F_TOKENS && tkstream->cur);
 	ft_memdel((void**)&tkstream->cur);
 	return (NULL);
 }

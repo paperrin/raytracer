@@ -6,19 +6,22 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/09 19:50:51 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/10 02:06:01 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/10 23:17:06 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "scene_parser/interpreter.h"
 
 int					interpreter_class_add(t_interpreter *const interpreter,
-		t_e_class_type class_type, t_method *class_ctor)
+		t_e_class_type class_type, t_method *const class_ctor)
 {
 	t_method	**new_class;
 
 	if (!class_ctor)
 		return (0);
+	if (interpreter_find_method_class_type(interpreter, class_type))
+		return (error_string("interpreter: could not add class, \
+class type already exists"));
 	if (!(new_class = (t_method**)ft_vector_push_back(
 					&interpreter->v_classes, NULL)))
 		return (error_string(ERR_MEMORY));
@@ -27,7 +30,8 @@ int					interpreter_class_add(t_interpreter *const interpreter,
 	return (1);
 }
 
-static int			class_add_method(t_method *class, t_method *method)
+static int			class_add_method(t_method *const class,
+		t_method *const method)
 {
 	t_method		**new;
 
@@ -37,32 +41,19 @@ static int			class_add_method(t_method *class, t_method *method)
 	return (1);
 }
 
-t_method			*interpreter_class_find_type(
-		t_interpreter const *const interpreter, t_e_class_type class_type)
-{
-	t_method	*cur_class;
-	int			classes_size;
-	int			i;
-
-	classes_size = ft_vector_size(&interpreter->v_classes);
-	i = -1;
-	while (++i < classes_size)
-	{
-		cur_class = ((t_method**)interpreter->v_classes.begin)[i];
-		if (cur_class->class_type == class_type)
-			return (cur_class);
-	}
-	return (NULL);
-}
-
-int					interpreter_class_add_method(t_interpreter *const interpreter,
-		t_e_class_type class_type, t_method *method)
+int					interpreter_class_add_method(
+		t_interpreter *const interpreter,
+		t_e_class_type class_type, t_method *const method)
 {
 	t_method	*class;
 
-	if (!(class = interpreter_class_find_type(interpreter, class_type)))
+	if (!(class = interpreter_find_method_class_type(interpreter, class_type)))
 		return (error_string(
 				"interpreter: failed to add method to non-existant class"));
+	if (interpreter_class_type_find_method_name(interpreter,
+				class_type, method->name))
+		return (error_string("interpreter: could not add method, \
+method name already exists"));
 	if (!class_add_method(class, method))
 		return (0);
 	return (1);

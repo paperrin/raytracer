@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/04 17:09:56 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/09 17:04:36 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/10 23:56:49 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void			token_indent(unsigned int indent_depth)
 int				token_print(t_token const *const token,
 		unsigned int indent_depth)
 {
-	static void			*f_print_tokens[TKSTREAM_NB_F_TOKENS * 2] = {
+	static void			*f_print_tokens[TOKEN_PRINT_NB_F_TOKENS * 2] = {
 		(void*)token_type_punc, (void*)&token_punc_print,
 		(void*)token_type_str, (void*)&token_str_print,
 		(void*)token_type_num, (void*)&token_num_print,
@@ -34,7 +34,7 @@ int				token_print(t_token const *const token,
 	int					i;
 
 	i = -1;
-	while (token && ++i < TKSTREAM_NB_F_TOKENS)
+	while (token && ++i < TOKEN_PRINT_NB_F_TOKENS)
 	{
 		if (token->type == (unsigned int)f_print_tokens[i * 2])
 		{

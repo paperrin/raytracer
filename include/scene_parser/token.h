@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/08 17:08:51 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/10 01:04:35 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/10 23:56:27 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,10 @@
 # define TOKEN_H
 
 # include "rt.h"
+# include "scene_parser/class_type.h"
 
-# define TKSTREAM_NB_F_TOKENS 6
+# define TOKEN_READ_NB_F_TOKENS 5
+# define TOKEN_PRINT_NB_F_TOKENS 6
 # define TOKEN_DESTROY_NB_F_TOKENS 6
 # define TOKEN_EVAL_NB_F_TOKENS 3
 # define TOKEN_DUP_NB_F_TOKENS 6
@@ -28,7 +30,7 @@ typedef enum				e_token_type
 	token_type_var,
 	token_type_op,
 	token_type_call,
-	token_type_ptr
+	token_type_class
 }							t_e_token_type;
 
 typedef struct s_token			t_token;
@@ -71,10 +73,11 @@ typedef struct				s_token_op
 	t_token					*right;
 }							t_token_op;
 
-typedef struct				s_token_obj
+typedef struct				s_token_class
 {
-	void					*value;
-}							t_token_ptr;
+	t_e_class_type			class_type;
+	void					*ptr;
+}							t_token_class;
 
 typedef union				u_token_container
 {
@@ -84,7 +87,7 @@ typedef union				u_token_container
 	t_token_str				str;
 	t_token_var				var;
 	t_token_op				op;
-	t_token_ptr				obj;
+	t_token_class			class;
 }							t_u_token_container;
 
 struct						s_token

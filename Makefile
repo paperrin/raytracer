@@ -111,6 +111,9 @@ CFILES		=	\
 				scene_parser/interpreter/interpreter.c					\
 				scene_parser/interpreter/interpreter_class.c			\
 				scene_parser/interpreter/interpreter_method.c			\
+				scene_parser/interpreter/interpreter_find_method.c		\
+				\
+				scene_parser/hooks/interpreter_add_class_console.c		\
 				\
 				main.c											\
 				process_input.c									\
