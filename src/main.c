@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/09 16:14:42 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/11 00:48:06 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/11 01:12:17 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@
 
 int			app_create(t_app *app, const char **argv)
 {
-	/*
 	t_interpreter	*interpreter;
 	t_ast			*ast;
 
@@ -47,7 +46,7 @@ int			app_create(t_app *app, const char **argv)
 		error_string(">Failed AST parsing");
 		return (0);
 	}
-*/
+
 	if (!arg_dispatch(&app->ocl, argv))
 		return (0);
 	if (!window_create(&app->win, APP_WIDTH, APP_HEIGHT, APP_TITLE))

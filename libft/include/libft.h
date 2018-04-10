@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/03 12:52:47 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/11 00:36:28 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/11 01:21:13 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,6 +132,7 @@ char			*ft_uitoa_dec(uintmax_t nb, int alt, char prefix
 		, int precision);
 char			*ft_ftoa(long double nb, unsigned int n_decimal,
 		const char *sep);
+int				ft_putfloat(long double nb);
 void			ft_putchar(char c);
 void			ft_putchar(char c);
 void			ft_putwchar(wchar_t c);

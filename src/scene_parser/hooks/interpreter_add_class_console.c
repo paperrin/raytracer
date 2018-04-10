@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/10 23:39:23 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/10 23:42:20 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/11 01:30:05 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,26 @@ static int	f_class_console(t_token *const tk_this,
 static int	f_method_print(t_token *const tk_this,
 		t_token const *const tk_args, size_t n_args, t_token *const tk_return)
 {
-	if (!n_args || tk_args[0].type != token_type_str)
-		return (error_string("Wrong argument: print(string)"));
-	ft_putendl(tk_args[0].as.str.value);
+	int		ret;
+
 	*tk_return = *tk_this;
-	return (1);
+	ret = 1;
+	if (!n_args)
+		return (error_string("print(): missing argument"));
+ 	if (tk_args[0].type == token_type_str)
+		ft_putendl(tk_args[0].as.str.value);
+	else if (tk_args[0].type == token_type_num)
+	{
+		if (!(ret = ft_putfloat(tk_args[0].as.num.value)))
+			error_string(ERR_MEMORY);
+		ft_putendl("");
+	}
+	else
+	{
+		ret = 0;
+		error_string("printf(): invalid argument, expected number or string");
+	}
+	return (ret);
 }
 
 int			interpreter_add_class_console(t_interpreter *interpreter)

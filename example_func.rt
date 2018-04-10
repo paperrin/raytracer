@@ -1,3 +1,2 @@
-Console().print("this is a test 0")
-Console().print("this is a test 1")
-Console().print("this is a test 2")
+Console().print("this is a test")
+Console().print(3 / 123)

@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/06 19:31:56 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/09 16:33:46 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/11 01:40:01 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static t_token		*handle_operand(t_token_stream *const tkstream,
 {
 	if (!tk || tk->type != token_type_op)
 		return (tk);
-	if (tk->as.op.value != '+' && tk->as.op.value != '-')
+	if (!ft_strchr("+-*/", tk->as.op.value))
 	{
 		token_destroy(&tk);
 		return (tkstream_perror(tkstream, "unexpected operator"));
