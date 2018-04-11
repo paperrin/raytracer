@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/07 01:53:51 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/11 01:36:48 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/11 19:53:02 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ static int			token_call_args_create(t_interpreter *const interpreter,
 {
 	int			args_len;
 	t_token		*cur_arg;
+	t_token		tk_this;
 	int			i;
 
 	args_len = tk_call->as.call.args_len;
@@ -26,7 +27,8 @@ static int			token_call_args_create(t_interpreter *const interpreter,
 	while (++i < args_len)
 	{
 		cur_arg = tk_call->as.call.args[i];
-		if (!token_eval(interpreter, NULL, cur_arg, args_eval[i]))
+		tk_this = token_class(e_class_type_none, NULL);
+		if (!token_eval(interpreter, &tk_this, cur_arg, args_eval[i]))
 		{
 			ft_memdel((void**)args_eval);
 			return (0);
@@ -45,17 +47,19 @@ int					token_call_eval(
 		t_token const *const tk_expr, t_token *const tk_result)
 {
 	int					ret;
-	t_token				*args_eval;
+	t_hook_args			args;
 	t_method			*method;
 
-	if (!token_call_args_create(interpreter, tk_expr, &args_eval))
+	if (!token_call_args_create(interpreter, tk_expr, &args.tokens))
 		return (0);
 	if (!(method = interpreter_class_type_find_method_name(
 					interpreter, tk_this->as.class.class_type,
 					tk_expr->as.call.func)))
-		return (0);
-	ret = (*method->f_hook)(tk_this, args_eval,
-			tk_expr->as.call.args_len, tk_result);
-	token_call_args_destroy(&args_eval);
+		return (error_string("interpreter: undefined function"));
+	args.size = tk_expr->as.call.args_len;
+	args.hook_name = tk_expr->as.call.func;
+	*tk_result = token_class(method->class_type, NULL);
+	ret = (*method->f_hook)(interpreter, tk_this, args, tk_result);
+	token_call_args_destroy(&args.tokens);
 	return (ret);
 }

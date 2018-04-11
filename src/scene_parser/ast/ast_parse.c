@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/05 16:21:37 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/11 00:19:14 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/11 20:03:10 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ void				ast_print(t_ast const *const ast)
 	int		size;
 
 	ft_putendl("{");
-	size =	(int)ft_vector_size(&ast->v_tokens);
+	size = (int)ft_vector_size(&ast->v_tokens);
 	i = -1;
 	while (++i < size)
 	{

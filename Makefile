@@ -104,6 +104,8 @@ CFILES		=	\
 				scene_parser/token/token_str.c								\
 				scene_parser/token/token_call.c								\
 				scene_parser/token/token_num.c								\
+				scene_parser/token/token_bool.c								\
+				scene_parser/token/token_class.c							\
 				scene_parser/token/token_op_eval.c							\
 				scene_parser/token/token_call_eval.c						\
 				scene_parser/token/token_var_eval.c							\
@@ -115,9 +117,11 @@ CFILES		=	\
 				scene_parser/interpreter/interpreter.c					\
 				scene_parser/interpreter/interpreter_class.c			\
 				scene_parser/interpreter/interpreter_method.c			\
+				scene_parser/interpreter/interpreter_var.c				\
 				scene_parser/interpreter/interpreter_find_method.c		\
 				\
 				scene_parser/hooks/interpreter_add_class_console.c		\
+				scene_parser/hooks/hook_valid_args.c					\
 				\
 				prompt/arg_dispatch.c							\
 				prompt/arg_devices.c							\

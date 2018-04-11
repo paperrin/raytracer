@@ -1,27 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   hooks.h                                            :+:      :+:    :+:   */
+/*   token_bool.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/04/10 23:37:25 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/11 19:21:51 by paperrin         ###   ########.fr       */
+/*   Created: 2018/04/11 17:53:24 by paperrin          #+#    #+#             */
+/*   Updated: 2018/04/11 18:35:24 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef HOOKS_H
-# define HOOKS_H
+#include "scene_parser/token.h"
 
-# include <stdio.h>
-# include <stdarg.h>
-# include "scene_parser/interpreter.h"
+void		token_bool_destroy(t_token *token)
+{
+	(void)token;
+}
 
-int			hook_valid_args(t_hook_args const *const passed_args,
-		size_t const n_expected_args, ...);
+t_token		token_bool(int value)
+{
+	t_token		token;
 
-int			hook_error(char const *const hook_name, char const *const error);
-
-int			interpreter_add_class_console(t_interpreter *interpreter);
-
-#endif
+	token.type = token_type_bool;
+	token.as.boolean.value = value;
+	return (token);
+}

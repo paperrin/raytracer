@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/09 16:14:42 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/11 01:12:17 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/11 19:25:31 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ int			app_create(t_app *app, const char **argv)
 		}
 		if (!interpreter_add_class_console(interpreter))
 			return (0);
-
 		if (!interpreter_ast_eval(interpreter, ast))
 			error_string(">Failed AST interpretation");
 

@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/04 18:50:03 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/09 16:59:53 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/11 19:59:06 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,29 @@ static char		*concat_char_is_escaped(char **str, char c, int escaped)
 	return (*str);
 }
 
+static void		replace_esc_codes(char **str)
+{
+	static char		*esc_codes[TKSTREAM_NB_ESC_CODES * 2] = {
+		"\\n", "\n",
+		"\\t", "\t",
+		"\\r", "\r",
+		"\\v", "\v",
+		"\\f", "\f"};
+	int				i;
+	char			*s;
+
+	i = -1;
+	while (++i < TKSTREAM_NB_ESC_CODES)
+	{
+		s = *str;
+		while ((s = ft_strstr(s, esc_codes[i * 2])))
+		{
+			*s = *esc_codes[i * 2 + 1];
+			ft_strcpy(&s[1], &s[2]);
+		}
+	}
+}
+
 t_token			*tkstream_read_str(t_token_stream *const tkstream)
 {
 	char		*str;
@@ -53,6 +76,7 @@ t_token			*tkstream_read_str(t_token_stream *const tkstream)
 			return (tkstream_perror(tkstream, ERR_MEMORY));
 		}
 	}
+	replace_esc_codes(&str);
 	tkstream->cur->type = token_type_str;
 	tkstream->cur->as.str.value = str;
 	return (tkstream->cur);

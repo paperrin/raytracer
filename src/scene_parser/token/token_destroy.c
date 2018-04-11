@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/05 17:23:37 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/09 17:04:36 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/11 17:52:32 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@ void		token_content_destroy(t_token *const token)
 		(void*)token_type_str, (void*)&token_str_destroy,
 		(void*)token_type_var, (void*)&token_var_destroy,
 		(void*)token_type_op, (void*)&token_op_destroy,
-		(void*)token_type_call, (void*)&token_call_destroy};
+		(void*)token_type_call, (void*)&token_call_destroy,
+		(void*)token_type_bool, (void*)&token_bool_destroy};
 	int				i;
 
 	if (!token)

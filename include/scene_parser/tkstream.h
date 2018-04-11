@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/09 16:18:28 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/09 17:05:56 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/11 20:20:14 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,9 @@
 # include "scene_parser/cstream.h"
 # include "scene_parser/token.h"
 
-typedef struct		s_token_stream t_token_stream;
+# define TKSTREAM_NB_ESC_CODES 5
+
+typedef struct s_token_stream		t_token_stream;
 
 typedef t_token	*(t_f_token_read)(t_token_stream *const);
 

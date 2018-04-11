@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/07 01:53:59 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/11 01:37:41 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/11 20:16:24 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,19 +45,22 @@ int					token_op_eval(
 	t_token		tk_left_eval;
 	t_token		tk_right_eval;
 
-	if (tk_this)
-	{
-		tk_this->as.class.class_type = e_class_type_none;
-		tk_this->as.class.ptr = NULL;
-	}
 	if (!token_eval(interpreter, tk_this, tk_expr->as.op.left, &tk_left_eval))
 		return (0);
 	if (tk_expr->as.op.value == '.')
 		*tk_this = tk_left_eval;
 	if (!token_eval(interpreter, tk_this, tk_expr->as.op.right, &tk_right_eval))
 		return (0);
-	if (tk_expr->as.op.value != '.' && !token_do_op(tk_expr->as.op.value,
+	if (tk_expr->as.op.value != '.')
+	{
+		if (!token_do_op(tk_expr->as.op.value,
 				&tk_left_eval, &tk_right_eval, tk_result))
-		return (0);
+			return (0);
+	}
+	else
+	{
+		*tk_result = tk_right_eval;
+		*tk_this = tk_right_eval;
+	}
 	return (1);
 }

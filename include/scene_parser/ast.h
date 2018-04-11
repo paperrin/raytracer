@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/09 16:26:00 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/09 19:13:06 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/11 20:19:46 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 # include "rt.h"
 # include "scene_parser/token.h"
 # include "scene_parser/tkstream.h"
+
+# define OPERATOR_PRECEDENCE_NB_OPS 5
 
 typedef struct			s_ast
 {

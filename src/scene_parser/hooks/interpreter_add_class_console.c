@@ -6,45 +6,50 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/10 23:39:23 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/11 01:30:05 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/11 20:03:48 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "scene_parser/hooks.h"
 
-static int	f_class_console(t_token *const tk_this,
-		t_token const *const tk_args, size_t n_args, t_token *const tk_return)
+static int	f_class_console(t_interpreter *const interpreter,
+		t_token *const tk_this, t_hook_args const args,
+		t_token *const tk_return)
 {
+	(void)interpreter;
 	(void)tk_this;
 	(void)tk_return;
-	(void)tk_args;
-	if (n_args)
-		return (error_string("Too many arguments: Console()"));
-	tk_return->as.class.class_type = e_class_type_console;
+	if (!hook_valid_args(&args, 0))
+		return (0);
 	return (1);
 }
 
-static int	f_method_print(t_token *const tk_this,
-		t_token const *const tk_args, size_t n_args, t_token *const tk_return)
+static int	f_method_print(t_interpreter *const interpreter,
+		t_token *const tk_this, t_hook_args const args,
+		t_token *const tk_return)
 {
 	int		ret;
 
-	*tk_return = *tk_this;
+	(void)interpreter;
+	(void)tk_this;
+	(void)tk_return;
+	if (!hook_valid_args(&args, 1,
+				token_type_str | token_type_num | token_type_bool))
+		return (0);
 	ret = 1;
-	if (!n_args)
-		return (error_string("print(): missing argument"));
- 	if (tk_args[0].type == token_type_str)
-		ft_putendl(tk_args[0].as.str.value);
-	else if (tk_args[0].type == token_type_num)
+	if (args.tokens[0].type == token_type_str)
+		ft_putstr(args.tokens[0].as.str.value);
+	else if (args.tokens[0].type == token_type_num)
 	{
-		if (!(ret = ft_putfloat(tk_args[0].as.num.value)))
+		if (!(ret = ft_putfloat(args.tokens[0].as.num.value)))
 			error_string(ERR_MEMORY);
-		ft_putendl("");
 	}
-	else
+	else if (args.tokens[0].type == token_type_bool)
 	{
-		ret = 0;
-		error_string("printf(): invalid argument, expected number or string");
+		if (args.tokens[0].as.boolean.value)
+			ft_putstr("true");
+		else
+			ft_putstr("false");
 	}
 	return (ret);
 }
