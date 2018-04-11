@@ -126,6 +126,11 @@ CFILES		=	\
 				prompt/arg_dispatch.c							\
 				prompt/arg_devices.c							\
 				\
+				scene/scene.c											\
+				scene/scene_sphere.c									\
+				scene/scene_plane.c										\
+				scene/scene_aligned_cube.c								\
+				\
 				main.c											\
 				process_input.c									\
 				error.c

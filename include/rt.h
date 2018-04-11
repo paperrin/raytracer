@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/09 16:36:38 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/11 00:39:48 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/11 22:36:01 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include "image.h"
 # include "camera.h"
 # include "error.h"
+# include "ft_math.h"
 
 # define APP_WIDTH 720
 # define APP_HEIGHT 480
@@ -30,6 +31,7 @@
 
 typedef struct		s_scene
 {
+	t_matrix		mx;
 	t_vector		v_material;
 	t_vector		v_obj;
 	t_vector		v_light;
@@ -55,6 +57,14 @@ typedef struct		s_app
 	char			mouse_captured;
 	t_config		config;
 }					t_app;
+
+int					scene_create(t_scene *const scene);
+void				scene_destroy(t_scene *const scene);
+int					scene_load(t_scene *const scene, t_app *const app);
+
+t_obj				*scene_add_sphere(t_scene *const scene);
+t_obj				*scene_add_plane(t_scene *const scene);
+t_obj				*scene_add_aligned_cube(t_scene *const scene);
 
 int					app_create(t_app *app, const char *argv[]);
 void				app_destroy(t_app *app, int exit_status);

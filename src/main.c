@@ -6,13 +6,12 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/09 16:14:42 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/11 19:25:31 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/11 21:20:58 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
 #include "error.h"
-#include "ppm.h"
 
 #include "scene_parser/ast.h"
 #include "scene_parser/interpreter.h"
@@ -20,16 +19,14 @@
 
 int			app_create(t_app *app, const char **argv)
 {
+	/*
 	t_interpreter	*interpreter;
 	t_ast			*ast;
 
 	if ((ast = ast_parse("example_func.rt")))
 	{
 		if (!(interpreter = interpreter_create(app)))
-		{
-			error_string(ERR_MEMORY);
 			return (0);
-		}
 		if (!interpreter_add_class_console(interpreter))
 			return (0);
 		if (!interpreter_ast_eval(interpreter, ast))
@@ -44,7 +41,7 @@ int			app_create(t_app *app, const char **argv)
 	{
 		error_string(">Failed AST parsing");
 		return (0);
-	}
+	}*/
 
 	if (!arg_dispatch(&app->ocl, argv))
 		return (0);
@@ -76,6 +73,7 @@ int			app_create(t_app *app, const char **argv)
 
 void		app_destroy(t_app *app, int exit_status)
 {
+	scene_destroy(&app->scene);
 	kernel_ray_gen_primary_destroy(app);
 	kernel_ray_trace_destroy(app);
 	kernel_clear_destroy(app);
@@ -141,149 +139,12 @@ void		render(void *user_ptr, double elapsed)
 int			main(int ac, const char **av)
 {
 	t_app				app;
-	t_obj				*obj;
-	t_light				*light;
-	t_material			*mat;
-	t_texture			*texture;
-	unsigned char		*pixels;
-	size_t				width;
-	size_t				height;
-	unsigned int		max_val;
-	float				offset;
-
-	app.scene.v_obj = ft_vector_create(sizeof(t_obj), NULL, NULL);
-
-	offset = 0.51;
-
-	if (!(obj = (t_obj*)ft_vector_push_back(&app.scene.v_obj, NULL)))
-		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
-	*obj = obj_aligned_cube(vec3r(-offset, -offset, offset), vec3r(1, 1, 1), 7);
-	if (!(obj = (t_obj*)ft_vector_push_back(&app.scene.v_obj, NULL)))
-		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
-	*obj = obj_aligned_cube(vec3r(offset, -offset, offset), vec3r(1, 1, 1), 7);
-	if (!(obj = (t_obj*)ft_vector_push_back(&app.scene.v_obj, NULL)))
-		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
-	*obj = obj_aligned_cube(vec3r(-offset, offset, offset), vec3r(1, 1, 1), 7);
-	if (!(obj = (t_obj*)ft_vector_push_back(&app.scene.v_obj, NULL)))
-		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
-	*obj = obj_aligned_cube(vec3r(offset, offset, offset), vec3r(1, 1, 1), 7);
-	if (!(obj = (t_obj*)ft_vector_push_back(&app.scene.v_obj, NULL)))
-		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
-	*obj = obj_aligned_cube(vec3r(-offset, -offset, -offset), vec3r(1, 1, 1), 7);
-	if (!(obj = (t_obj*)ft_vector_push_back(&app.scene.v_obj, NULL)))
-		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
-	*obj = obj_aligned_cube(vec3r(offset, -offset, -offset), vec3r(1, 1, 1), 7);
-	if (!(obj = (t_obj*)ft_vector_push_back(&app.scene.v_obj, NULL)))
-		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
-	*obj = obj_aligned_cube(vec3r(-offset, offset, -offset), vec3r(1, 1, 1), 7);
-
-
-
-
-	if (!(obj = (t_obj*)ft_vector_push_back(&app.scene.v_obj, NULL)))
-		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
-	*obj = obj_aligned_cube(vec3r(0, 0, 0), vec3r(10, 10, 10), 5);
-
-
-
-	app.scene.v_material = ft_vector_create(sizeof(t_material), NULL, NULL);
-	if (!(mat = (t_material*)ft_vector_push_back(&app.scene.v_material, NULL)))
-		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
-	mat->color = vec3f(0.4, 0.2, 0.2);
-	mat->reflection = 0;
-	mat->refraction = 0;
-	mat->texture_id = -1;
-	if (!(mat = (t_material*)ft_vector_push_back(&app.scene.v_material, NULL)))
-		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
-	mat->color = vec3f(1, 1, 1);
-	mat->reflection = 0.8;
-	mat->refraction = 0;
-	mat->texture_id = -1;
-	if (!(mat = (t_material*)ft_vector_push_back(&app.scene.v_material, NULL)))
-		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
-	mat->color = vec3f(0.1, 0.3, 0.6);
-	mat->reflection = 0;
-	mat->refraction = 0;
-	mat->indice_of_refraction = 0;
-	mat->texture_id = -1;
-	if (!(mat = (t_material*)ft_vector_push_back(&app.scene.v_material, NULL)))
-		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
-	mat->color = vec3f(0.2, 0.3, 0.7);
-	mat->reflection = 0;
-	mat->refraction = 0;
-	mat->indice_of_refraction = 0;
-	mat->texture_id = -1;
-	if (!(mat = (t_material*)ft_vector_push_back(&app.scene.v_material, NULL)))
-		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
-	mat->color = vec3f(1, 0.3, 0.3);
-	mat->reflection = 1;
-	mat->refraction = 0;
-	mat->indice_of_refraction = 0;
-	mat->texture_id = -1;
-	if (!(mat = (t_material*)ft_vector_push_back(&app.scene.v_material, NULL)))
-		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
-	mat->color = vec3f(1, 1, 1);
-	mat->reflection = 0.1;
-	mat->refraction = 0.65;
-	mat->indice_of_refraction = 1.3330;
-	mat->texture_id = 0;
-	mat->specular = 1;
-	mat->specular_color = vec3f(1, 1, 1);
-	mat->projection = 1;
-	mat->specular_exp = 20;
-
-	if (!(mat = (t_material*)ft_vector_push_back(&app.scene.v_material, NULL)))
-		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
-	mat->color = vec3f(1, 1, 1);
-	mat->reflection = 0;
-	mat->refraction = 0.8;
-	mat->indice_of_refraction = 1;
-	mat->texture_id = 0;
-	mat->specular = 1;
-	mat->specular_color = vec3f(1, 1, 1);
-	mat->projection = 1;
-	mat->specular_exp = 20;
-
-	app.scene.v_texture = ft_vector_create(sizeof(t_texture), NULL, NULL);
-	if (!(pixels = ft_ppm_file_read("textures/max_val.ppm", &width, &height, &max_val)))
-		return (error_string("Could not read ppm file"));
-	if (!(texture = (t_texture*)ft_vector_push_back(&app.scene.v_texture, NULL)))
-		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
-	app.scene.texture_pixels = (cl_uchar*)pixels;
-	app.scene.n_texture_pixels = width * height * (max_val <= 255 ? 1 : 2);
-	texture->pixels_offset = 0;
-	texture->width = width;
-	texture->height = height;
-	texture->max_val = max_val;
-	texture->filter = e_filter_nearest;
-
-	app.config.screen_size.s[0] = APP_WIDTH;
-	app.config.screen_size.s[1] = APP_HEIGHT;
-	app.config.color_epsilon = 1.f / 255;
-	app.config.intersection_bias = 1e-3;
-	app.config.z_far = 20000;
-
-	app.config.ambient_c = vec3f(1, 1, 1);
-	app.config.ambient_i = 0.2;
-	app.config.camera_light_c = vec3f(1, 1, 1);
-	app.config.camera_light_i = 0.2;
-	app.config.samples_width = 1;
-	app.config.max_depth = 2;
-	app.config.projection_depth = 50;
-	app.config.post_filters = e_post_filter_none;
-
-	app.scene.v_light = ft_vector_create(sizeof(t_light), NULL, NULL);
-	if (!(light = (t_light*)ft_vector_push_back(&app.scene.v_light, NULL)))
-		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
-	light->type = e_light_type_point;
-	light->color = vec3f(1, 1, 1);
-	light->intensity = 250;
-	light->as.point.pos = vec3r(0, 0, 0);
-
-	app.cam.cam_data.pos = vec3r(0, 0, -1);
 	(void)ac;
-	(void)av;
 
+	if (!scene_create(&app.scene))
+		return (EXIT_FAILURE);
+	if (!scene_load(&app.scene, &app))
+		app_destroy(&app, EXIT_FAILURE);
 	if (!app_create(&app, av))
 		return (EXIT_FAILURE);
 	app_destroy(&app, EXIT_SUCCESS);
