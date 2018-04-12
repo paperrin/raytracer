@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/09 16:36:38 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/11 22:36:01 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/12 18:48:00 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@
 typedef struct		s_scene
 {
 	t_matrix		mx;
+	t_matrix		mx_r;
 	t_vector		v_material;
 	t_vector		v_obj;
 	t_vector		v_light;
@@ -65,6 +66,12 @@ int					scene_load(t_scene *const scene, t_app *const app);
 t_obj				*scene_add_sphere(t_scene *const scene);
 t_obj				*scene_add_plane(t_scene *const scene);
 t_obj				*scene_add_aligned_cube(t_scene *const scene);
+
+void				scene_rotate(t_scene *const scene, float x, float y, float z);
+void				scene_translate(t_scene *const scene, float x, float y, float z);
+void				scene_transform(t_real3 *const vec3r, t_matrix const *const mx);
+void				scene_transform_pos(t_scene const *const scene, t_real3 *const vec3r);
+void				scene_transform_dir(t_scene const *const scene, t_real3 *const vec3r);
 
 int					app_create(t_app *app, const char *argv[]);
 void				app_destroy(t_app *app, int exit_status);

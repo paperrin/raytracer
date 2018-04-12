@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/11 22:33:43 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/11 22:41:43 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/12 18:53:38 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,5 +30,6 @@ t_obj			*scene_add_aligned_cube(t_scene *const scene)
 	if (!(obj = (t_obj*)ft_vector_push_back(&scene->v_obj, NULL)))
 		return (perror_string(ERR_MEMORY));
 	*obj = aligned_cube_default();
+	scene_transform_pos(scene, &obj->as.aligned_cube.pos);
 	return (obj);
 }

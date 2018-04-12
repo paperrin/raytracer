@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/13 14:25:38 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/11 00:38:18 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/12 23:51:43 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -219,7 +219,7 @@ struct					s_material
 	cl_float			specular;
 	cl_float3			specular_color;
 	cl_float			specular_exp;
-	cl_float			indice_of_refraction;
+	cl_float			refraction_index;
 	cl_uint				projection;
 	cl_int				texture_id;
 };
@@ -283,6 +283,8 @@ typedef struct			s_light
 	t_light_type		type;
 	cl_float3			color;
 	cl_float			intensity;
+	cl_float			glare;
+	cl_float			fallback;
 	t_light_container	as;
 }						t_light;
 

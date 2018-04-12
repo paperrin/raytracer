@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/11 20:58:15 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/11 22:57:32 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/13 00:15:28 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ int		scene_create(t_scene *const scene)
 	scene->v_texture = ft_vector_create(sizeof(t_texture), NULL, NULL);
 	scene->v_light = ft_vector_create(sizeof(t_light), NULL, NULL);
 	ft_matrix_to_identity(&scene->mx);
+	ft_matrix_to_identity(&scene->mx_r);
 	return (1);
 }
 
@@ -31,19 +32,6 @@ void	scene_destroy(t_scene *const scene)
 	ft_vector_destroy(&scene->v_light);
 }
 
-void	scene_transform_real3(t_scene *const scene, t_real3 vec3r)
-{
-	t_vec3f		vec3f;
-
-	vec3f.x = (float)vec3r.s[0];
-	vec3f.y = (float)vec3r.s[1];
-	vec3f.z = (float)vec3r.s[2];
-	vec3f = ft_vec3f_transform(&vec3f, *scene->mx);
-	vec3r.s[0] = (t_real)vec3f.x;
-	vec3r.s[1] = (t_real)vec3f.y;
-	vec3r.s[2] = (t_real)vec3f.z;
-}
-
 int		scene_load(t_scene *const scene, t_app *const app)
 {
 	t_light				*light;
@@ -53,7 +41,29 @@ int		scene_load(t_scene *const scene, t_app *const app)
 	size_t				width;
 	size_t				height;
 	unsigned int		max_val;
+	int					i;
 
+	i = -1;
+	while (++i < 30)
+	{
+		scene_rotate(scene, 0, M_PI / 25, 0);
+		scene_translate(scene, 0.1, 0.1, 0);
+		if (!scene_add_sphere(scene))
+			return (0);
+	}
+
+	ft_matrix_to_identity(&scene->mx);
+	ft_matrix_to_identity(&scene->mx_r);
+	scene_rotate(scene, 0, M_PI, 0);
+	scene_translate(scene, 0, 0, 2);
+	i = -1;
+	while (++i < 30)
+	{
+		scene_rotate(scene, 0, M_PI / 25, 0);
+		scene_translate(scene, 0.1, 0.1, 0);
+		if (!scene_add_sphere(scene))
+			return (0);
+	}
 
 	app->config.screen_size.s[0] = APP_WIDTH;
 	app->config.screen_size.s[1] = APP_HEIGHT;
@@ -62,9 +72,9 @@ int		scene_load(t_scene *const scene, t_app *const app)
 	app->config.z_far = 20000;
 
 	app->config.ambient_c = vec3f(1, 1, 1);
-	app->config.ambient_i = 0.05;
+	app->config.ambient_i = 0.1;
 	app->config.camera_light_c = vec3f(1, 1, 1);
-	app->config.camera_light_i = 0.05;
+	app->config.camera_light_i = 0.1;
 	app->config.samples_width = 1;
 	app->config.max_depth = 0;
 	app->config.projection_depth = 0;
@@ -84,21 +94,23 @@ int		scene_load(t_scene *const scene, t_app *const app)
 
 	if (!(mat = (t_material*)ft_vector_push_back(&scene->v_material, NULL)))
 		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
-	mat->color = vec3f(1, 1, 1);
+	mat->color = vec3f(1, 0.7, 0.2);
 	mat->reflection = 0;
 	mat->refraction = 0;
-	mat->texture_id = 0;
+	mat->texture_id = -1;
+
 	if (!(light = (t_light*)ft_vector_push_back(&scene->v_light, NULL)))
 		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
 	light->type = e_light_type_point;
 	light->color = vec3f(1, 1, 1);
 	light->intensity = 200;
-	light->as.point.pos = vec3r(3, 3, -3);
+	light->fallback = 1;
+	light->glare = 0;
+	light->as.point.pos = vec3r(2, 3, 1);
 
 	app->cam.cam_data.pos = vec3r(0, 0, -1);
 
-	if (!scene_add_sphere(scene))
-		return (0);
+
 	return (1);
 	/*
 	t_obj				*obj;

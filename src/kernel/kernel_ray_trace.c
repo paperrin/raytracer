@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/22 18:06:33 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/11 00:34:01 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/12 23:45:31 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,19 +54,16 @@ int				kernel_ray_trace_launch(t_app *app)
 	cl_int		err;
 
 	app->n_hits = 0;
-	if (app->n_rays > 0)
-	{
-		app->kernel_ray_trace.work_size = app->win.width * app->win.height * app->config.samples_width * app->config.samples_width * pow(2, app->config.cur_depth);
-		if ((err = clEnqueueWriteBuffer(app->ocl.cmd_queue, app->kernel_ray_trace.args[3]
-				, CL_TRUE, 0, sizeof(cl_uint), (void*)&app->n_hits, 0, NULL, NULL)) != CL_SUCCESS)
-			return (error_cl_code(err));
-		if ((err = clEnqueueNDRangeKernel(app->ocl.cmd_queue, app->kernel_ray_trace.kernel
-				, 1, NULL, &app->kernel_ray_trace.work_size, NULL, 0, NULL, NULL)) != CL_SUCCESS)
-			return (error_cl_code(err));
-		if ((err = clEnqueueReadBuffer(app->ocl.cmd_queue, app->kernel_ray_trace.args[3]
-				, CL_TRUE, 0, sizeof(cl_uint), &app->n_hits, 0, NULL, NULL)) != CL_SUCCESS)
-			return (error_cl_code(err));
-	}
+	app->kernel_ray_trace.work_size = app->win.width * app->win.height * app->config.samples_width * app->config.samples_width * pow(2, app->config.cur_depth);
+	if ((err = clEnqueueWriteBuffer(app->ocl.cmd_queue, app->kernel_ray_trace.args[3]
+			, CL_TRUE, 0, sizeof(cl_uint), (void*)&app->n_hits, 0, NULL, NULL)) != CL_SUCCESS)
+		return (error_cl_code(err));
+	if ((err = clEnqueueNDRangeKernel(app->ocl.cmd_queue, app->kernel_ray_trace.kernel
+			, 1, NULL, &app->kernel_ray_trace.work_size, NULL, 0, NULL, NULL)) != CL_SUCCESS)
+		return (error_cl_code(err));
+	if ((err = clEnqueueReadBuffer(app->ocl.cmd_queue, app->kernel_ray_trace.args[3]
+			, CL_TRUE, 0, sizeof(cl_uint), &app->n_hits, 0, NULL, NULL)) != CL_SUCCESS)
+		return (error_cl_code(err));
 	return (1);
 }
 

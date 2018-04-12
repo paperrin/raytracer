@@ -3,6 +3,7 @@
 #include "shade.cl"
 #include "atomic_add.cl"
 #include "get_secondary_ray.cl"
+#include "get_light_glare_color.cl"
 
 kernel void			kernel_ray_shade(
 		constant read_only t_obj *objs,
@@ -51,14 +52,8 @@ kernel void			kernel_ray_shade(
 				textures, *textures_size,
 				texture_pixels, *n_texture_pixels,
 				lights, *lights_size);
+
 		color *= state.color_factor;
-		color *= (state.importance - state.importance * (mats[obj.material_id].reflection + mats[obj.material_id].refraction));
-		color /= config->samples_width * config->samples_width;
-		atomic_addf(&pixels[state.pxl_id * 4 + 0], color.r);
-		atomic_addf(&pixels[state.pxl_id * 4 + 1], color.g);
-		atomic_addf(&pixels[state.pxl_id * 4 + 2], color.b);
-		state.color_factor *= obj_surface_color(&obj, mats, textures, textures_size,
-					texture_pixels, n_texture_pixels, hit_pos);
 
 		if (config->cur_depth < config->max_depth)
 		{
@@ -70,7 +65,7 @@ kernel void			kernel_ray_shade(
 					state_refrac = state;
 					atomic_inc(n_new_rays);
 					state_refrac.ray = get_refracted_ray(config, &obj, state.ray, hit_pos, normal,
-								mats[obj.material_id].indice_of_refraction);
+								mats[obj.material_id].refraction_index);
 					state_refrac.importance = state.importance * mats[obj.material_id].refraction;
 					state_refrac.t = -1;
 					state_refrac.obj_id = -1;
@@ -87,6 +82,17 @@ kernel void			kernel_ray_shade(
 				}
 		}
 	}
+
+	color += get_light_glare_color(config, objs, *objs_size, lights, *lights_size, state.ray);
+
+	color *= (state.importance - state.importance * (mats[obj.material_id].reflection + mats[obj.material_id].refraction));
+	color /= config->samples_width * config->samples_width;
+	atomic_addf(&pixels[state.pxl_id * 4 + 0], color.r);
+	atomic_addf(&pixels[state.pxl_id * 4 + 1], color.g);
+	atomic_addf(&pixels[state.pxl_id * 4 + 2], color.b);
+	state.color_factor *= obj_surface_color(&obj, mats, textures, textures_size,
+				texture_pixels, n_texture_pixels, hit_pos);
+
 	if (config->cur_depth < config->max_depth)
 	{
 		block_size = config->screen_size.x * config->screen_size.y;

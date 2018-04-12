@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/11 22:21:23 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/11 23:00:28 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/13 00:11:57 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static t_obj	sphere_default(void)
 	obj.as.sphere.pos = vec3r(0, 0, 0);
 	obj.as.sphere.up = vec3r(0, 1, 0);
 	obj.as.sphere.front = vec3r(0, 0, 1);
-	obj.as.sphere.radius = 0.5;
+	obj.as.sphere.radius = 0.3;
 	return (obj);
 }
 
@@ -32,8 +32,8 @@ t_obj			*scene_add_sphere(t_scene *const scene)
 	if (!(obj = (t_obj*)ft_vector_push_back(&scene->v_obj, NULL)))
 		return (perror_string(ERR_MEMORY));
 	*obj = sphere_default();
-	scene_transform_real3(scene, &obj->as_sphere.pos);
-	scene_transform_real3(scene, &obj->as_sphere.up);
-	scene_transform_real3(scene, &obj->as_sphere.front);
+	scene_transform_pos(scene, &obj->as.sphere.pos);
+	scene_transform_dir(scene, &obj->as.sphere.up);
+	scene_transform_dir(scene, &obj->as.sphere.front);
 	return (obj);
 }

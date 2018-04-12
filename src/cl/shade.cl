@@ -97,7 +97,7 @@ float3			shade(global t_config const *const config, t_obj obj, t_real3 hit_pos, 
 	i = -1;
 	while (++i < (int)lights_size)
 	{
-		light_ray.dir = light_get_dir(lights[i], hit_pos, &light_color, &light_dist);
+		light_ray.dir = light_get_dir(config, lights[i], hit_pos, &light_color, &light_dist);
 		ndl = dot(light_ray.dir, surface_normal);
 		if (ndl < 0)
 			continue ;

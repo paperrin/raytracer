@@ -12,7 +12,6 @@ kernel void			kernel_ray_gen_primary(
 			gid % config->samples_width,
 			gid % n_samples / config->samples_width);
 
-	ray_states[gid].ray.origin = cam->pos;
 	ray_states[gid].ray.dir = normalize(
 		cam->dir
 		+ ((t_real)(pxl_id % config->screen_size.x * config->samples_width + pos.x) / (config->screen_size.x * config->samples_width / 2) - 1)
@@ -21,6 +20,7 @@ kernel void			kernel_ray_gen_primary(
 			* ((t_real)config->screen_size.y / config->screen_size.x)
 			* cam->up
 	);
+	ray_states[gid].ray.origin = cam->pos;
 	ray_states[gid].color_factor = (float3)(1);
 	ray_states[gid].importance = 1.f;
 	ray_states[gid].pxl_id = pxl_id;

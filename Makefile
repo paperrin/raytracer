@@ -127,6 +127,7 @@ CFILES		=	\
 				prompt/arg_devices.c							\
 				\
 				scene/scene.c											\
+				scene/scene_transform.c									\
 				scene/scene_sphere.c									\
 				scene/scene_plane.c										\
 				scene/scene_aligned_cube.c								\

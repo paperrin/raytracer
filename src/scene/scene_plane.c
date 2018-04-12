@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/11 22:28:27 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/11 22:41:29 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/12 18:52:56 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,5 +31,8 @@ t_obj			*scene_add_plane(t_scene *const scene)
 	if (!(obj = (t_obj*)ft_vector_push_back(&scene->v_obj, NULL)))
 		return (perror_string(ERR_MEMORY));
 	*obj = plane_default();
+	scene_transform_pos(scene, &obj->as.plane.pos);
+	scene_transform_dir(scene, &obj->as.plane.normal);
+	scene_transform_dir(scene, &obj->as.plane.up);
 	return (obj);
 }

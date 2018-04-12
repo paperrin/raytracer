@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/16 22:37:07 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/11 00:34:38 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/12 23:43:56 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,18 +103,15 @@ int				kernel_ray_shade_launch(t_app *app)
 	app->n_rays = 0;
 	app->kernel_ray_shade.work_size = app->win.width * app->win.height
 		* app->config.samples_width * app->config.samples_width * pow(2, app->config.cur_depth);
-	if (app->n_hits > 0)
-	{
-		if ((err = clEnqueueWriteBuffer(app->ocl.cmd_queue, app->kernel_ray_shade.args[11]
-				, CL_TRUE, 0, sizeof(cl_uint), &app->n_rays, 0, NULL, NULL)) != CL_SUCCESS)
-			return (error_cl_code(err));
-		if ((err = clEnqueueNDRangeKernel(app->ocl.cmd_queue, app->kernel_ray_shade.kernel
-				, 1, NULL, &app->kernel_ray_shade.work_size, NULL, 0, NULL, NULL)) != CL_SUCCESS)
-			return (error_cl_code(err));
-		if ((err = clEnqueueReadBuffer(app->ocl.cmd_queue, app->kernel_ray_shade.args[11]
-				, CL_TRUE, 0, sizeof(cl_uint), &app->n_rays, 0, NULL, NULL)) != CL_SUCCESS)
-			return (error_cl_code(err));
-	}
+	if ((err = clEnqueueWriteBuffer(app->ocl.cmd_queue, app->kernel_ray_shade.args[11]
+			, CL_TRUE, 0, sizeof(cl_uint), &app->n_rays, 0, NULL, NULL)) != CL_SUCCESS)
+		return (error_cl_code(err));
+	if ((err = clEnqueueNDRangeKernel(app->ocl.cmd_queue, app->kernel_ray_shade.kernel
+			, 1, NULL, &app->kernel_ray_shade.work_size, NULL, 0, NULL, NULL)) != CL_SUCCESS)
+		return (error_cl_code(err));
+	if ((err = clEnqueueReadBuffer(app->ocl.cmd_queue, app->kernel_ray_shade.args[11]
+			, CL_TRUE, 0, sizeof(cl_uint), &app->n_rays, 0, NULL, NULL)) != CL_SUCCESS)
+		return (error_cl_code(err));
 	return (-1);
 }
 
