@@ -12,13 +12,17 @@ t_real2			obj_aligned_cube_surface_uv_map(t_aligned_cube *aligned_cube, t_real3 
 
 t_real2			obj_surface_uv_map(t_obj *obj, t_real3 point)
 {
+	t_real2		uv;
+
 	if (obj->type == e_type_sphere)
-		return (obj_sphere_surface_uv_map(&obj->as.sphere, point));
+		uv = obj_sphere_surface_uv_map(&obj->as.sphere, point);
 	else if (obj->type == e_type_plane)
-		return (obj_plane_surface_uv_map(&obj->as.plane, point));
+		uv = obj_plane_surface_uv_map(&obj->as.plane, point);
 	else if (obj->type == e_type_aligned_cube)
-		return (obj_aligned_cube_surface_uv_map(&obj->as.aligned_cube, point));
-	return ((t_real2)(0, 0));
+		uv = obj_aligned_cube_surface_uv_map(&obj->as.aligned_cube, point);
+	else
+		return ((t_real2)(0, 0));
+	return (uv);
 }
 
 t_real2			obj_sphere_surface_uv_map(t_sphere *sphere, t_real3 point)

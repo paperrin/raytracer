@@ -20,6 +20,8 @@ float3		texture_uv_color(
 		global uchar *texture_pixels, ulong n_texture_pixels,
 		t_real2 uv);
 
+t_real2		transform_uv(t_real2 uv, t_real2 translate, t_real2 scale);
+
 float3		obj_surface_color(
 		t_obj *obj,
 		constant t_material *materials,
@@ -27,10 +29,13 @@ float3		obj_surface_color(
 		global uchar *texture_pixels, ulong n_texture_pixels,
 		t_real3 point)
 {
+	t_texture texture;
+
 	if (materials[obj->material_id].texture_id == -1)
 		return (materials[obj->material_id].color);
 	else if ((uint)materials[obj->material_id].texture_id < textures_size)
 	{
+		texture = textures[materials[obj->material_id].texture_id];
 		return (texture_uv_color(
 					&textures[materials[obj->material_id].texture_id],
 					texture_pixels,
@@ -76,6 +81,14 @@ float3		texture_get_color(constant t_texture *texture, global uchar *texture_pix
 	return ((float3)((float)color.r / texture->max_val, (float)color.g / texture->max_val, (float)color.b / texture->max_val));
 }
 
+t_real2		transform_uv(t_real2 uv, t_real2 translate, t_real2 scale)
+{
+	uv /= scale;
+	uv += translate;
+	uv -= floor(uv);
+	return (uv);
+}
+
 float3		texture_uv_color(
 		constant t_texture *texture,
 		global uchar *texture_pixels, ulong n_texture_pixels,
@@ -85,6 +98,7 @@ float3		texture_uv_color(
 	float3	colors[4];
 	float2	interp;
 
+	uv = transform_uv(uv, texture->translate, texture->scale);
 	uv = (t_real2)(uv.x * texture->width, uv.y * texture->height);
 	pos = (uint2)(uv.x, uv.y);
 	colors[0] = texture_get_color(texture, texture_pixels, n_texture_pixels, pos.x, pos.y);

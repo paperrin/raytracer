@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/09 16:14:42 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/10 22:36:04 by ilarbi           ###   ########.fr       */
+/*   Updated: 2018/04/14 18:47:56 by ilarbi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -177,6 +177,10 @@ int			main(int ac, const char **av)
 		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
 	*obj = obj_aligned_cube(vec3r(-offset, offset, -offset), vec3r(1, 1, 1), 7);
 	
+	/*if (!(obj = (t_obj*)ft_vector_push_back(&app.scene.v_obj, NULL)))
+		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
+	*obj = obj_sphere(vec3r(3, 0, 0.5), 0.2, 7);
+*/
 
 
 
@@ -244,13 +248,26 @@ int			main(int ac, const char **av)
 		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
 	mat->color = vec3f(1, 1, 1);
 	mat->reflection = 0;
-	mat->refraction = 0.8;
+	mat->refraction = 0;
 	mat->indice_of_refraction = 1;
 	mat->texture_id = 0;
 	mat->specular = 1;
 	mat->specular_color = vec3f(1, 1, 1);
 	mat->projection = 1;
 	mat->specular_exp = 20;
+
+	if (!(mat = (t_material*)ft_vector_push_back(&app.scene.v_material, NULL)))
+		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
+	mat->color = vec3f(1, 1, 1);
+	mat->reflection = 0;
+	mat->refraction = 0;
+	mat->indice_of_refraction = 1;
+	mat->texture_id = 0;
+	mat->specular = 1;
+	mat->specular_color = vec3f(1, 1, 1);
+	mat->projection = 1;
+	mat->specular_exp = 20;
+
 
 	app.scene.v_texture = ft_vector_create(sizeof(t_texture), NULL, NULL);
 	if (!(pixels = ft_ppm_file_read("textures/max_val.ppm", &width, &height, &max_val)))
@@ -264,6 +281,10 @@ int			main(int ac, const char **av)
 	texture->height = height;
 	texture->max_val = max_val;
 	texture->filter = e_filter_nearest;
+	texture->translate.s[0] = 0.5;
+	texture->translate.s[1] = 0.5;
+	texture->scale.s[0] = 1 / +INFINITY;
+	texture->scale.s[1] = 1 / +INFINITY;
 
 	app.config.screen_size.s[0] = APP_WIDTH;
 	app.config.screen_size.s[1] = APP_HEIGHT;
