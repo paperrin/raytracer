@@ -10,17 +10,24 @@ float3		obj_surface_color(
 		constant t_texture *textures, uint textures_size,
 		global uchar *texture_pixels, ulong n_texture_pixels,
 		t_real3 point);
+
 float3		texture_get_color(
 		constant t_texture *texture,
 		global uchar *texture_pixels,
 		ulong n_texture_pixels,
 		uint x, uint y);
-float3		texture_uv_color(
+
+float3		texture_image_uv_color(
 		constant t_texture *textures,
 		global uchar *texture_pixels, ulong n_texture_pixels,
 		t_real2 uv);
 
 t_real2		transform_uv(t_real2 uv, t_real2 translate, t_real2 scale);
+
+float3		texture_checkerboard_uv_color(
+			t_texture *texture, t_real2 uv);
+
+float3		texture_default(t_real2 uv);
 
 float3		obj_surface_color(
 		t_obj *obj,
@@ -36,26 +43,43 @@ float3		obj_surface_color(
 	else if ((uint)materials[obj->material_id].texture_id < textures_size)
 	{
 		texture = textures[materials[obj->material_id].texture_id];
-		return (texture_uv_color(
+		if (texture.type == e_texture_type_image)
+		{
+			return (texture_image_uv_color(
 					&textures[materials[obj->material_id].texture_id],
 					texture_pixels,
 					n_texture_pixels,
 					obj_surface_uv_map(obj, point)));
+		}
+		else if (texture.type == e_texture_type_checkerboard)
+			return (texture_checkerboard_uv_color(&texture, obj_surface_uv_map(obj, point)));
+
 	}
-	return ((float3)(0.078, 1, 0.576));
+	return (texture_default(obj_surface_uv_map(obj, point)));
+}
+
+float3	texture_default(t_real2 uv)
+{
+	t_texture text;
+
+	text.scale = (t_real2)(0.25);
+	text.translate = (t_real2)(0);
+	text.as.checkerboard.color1 = (t_real3)(1, 1, 1);	
+	text.as.checkerboard.color2 = (t_real3)(1, 0, 0.70);	
+	return (texture_checkerboard_uv_color(&text, uv));	
 }
 
 float3		texture_get_color(constant t_texture *texture, global uchar *texture_pixels, ulong n_texture_pixels, uint x, uint y)
 {
 	uint3			color;
-	ulong		offset;
+	ulong			offset;
 	int				n_bytes;
 	uchar3			c;		
 
-	n_bytes = (texture->max_val <= 255) ? 1 : 2;
-	x = x % texture->width;
-	y = y % texture->height;
-	offset = texture->pixels_offset + (y * texture->width + x) * n_bytes;
+	n_bytes = (texture->as.image.max_val <= 255) ? 1 : 2;
+	x = x % texture->as.image.width;
+	y = y % texture->as.image.height;
+	offset = texture->as.image.pixels_offset + (y * texture->as.image.width + x) * n_bytes;
 	if (offset >= n_texture_pixels)
 		return ((float3)(1, 0.078, 0.576));
 	
@@ -78,7 +102,7 @@ float3		texture_get_color(constant t_texture *texture, global uchar *texture_pix
 		color.g |= c.g;
 		color.b |= c.b;
 	}
-	return ((float3)((float)color.r / texture->max_val, (float)color.g / texture->max_val, (float)color.b / texture->max_val));
+	return ((float3)((float)color.r / texture->as.image.max_val, (float)color.g / texture->as.image.max_val, (float)color.b / texture->as.image.max_val));
 }
 
 t_real2		transform_uv(t_real2 uv, t_real2 translate, t_real2 scale)
@@ -89,7 +113,7 @@ t_real2		transform_uv(t_real2 uv, t_real2 translate, t_real2 scale)
 	return (uv);
 }
 
-float3		texture_uv_color(
+float3		texture_image_uv_color(
 		constant t_texture *texture,
 		global uchar *texture_pixels, ulong n_texture_pixels,
 		t_real2 uv)
@@ -99,7 +123,7 @@ float3		texture_uv_color(
 	float2	interp;
 
 	uv = transform_uv(uv, texture->translate, texture->scale);
-	uv = (t_real2)(uv.x * texture->width, uv.y * texture->height);
+	uv = (t_real2)(uv.x * texture->as.image.width, uv.y * texture->as.image.height);
 	pos = (uint2)(uv.x, uv.y);
 	colors[0] = texture_get_color(texture, texture_pixels, n_texture_pixels, pos.x, pos.y);
 	if (texture->filter != e_filter_bilinear)
@@ -111,6 +135,16 @@ float3		texture_uv_color(
 	colors[1] = colors[0] * (1 - interp.x) + colors[1] * interp.x;
 	colors[2] = colors[2] * (1 - interp.x) + colors[3] * interp.x;
 	return (colors[1] * (1 - interp.y) + colors[2] * interp.y);
+}
+
+float3		texture_checkerboard_uv_color(
+			t_texture *texture, t_real2 uv)
+{
+	uv = transform_uv(uv, texture->translate, texture->scale);
+	if  (((int)(uv.x * 2) + (int)(uv.y * 2)) % 2 == 0)
+		return(texture->as.checkerboard.color1);
+	else
+		return (texture->as.checkerboard.color2);
 }
 
 #endif

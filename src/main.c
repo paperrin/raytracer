@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/09 16:14:42 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/14 18:47:56 by ilarbi           ###   ########.fr       */
+/*   Updated: 2018/04/14 22:53:38 by ilarbi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -276,16 +276,19 @@ int			main(int ac, const char **av)
 		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
 	app.scene.texture_pixels = (cl_uchar*)pixels;
 	app.scene.n_texture_pixels = width * height * (max_val <= 255 ? 1 : 2);
-	texture->pixels_offset = 0;
-	texture->width = width;
-	texture->height = height;
-	texture->max_val = max_val;
+/*	texture->type = e_texture_type_checkerboard;
+	texture->as.image.pixels_offset = 0;
+	texture->as.image.width = width;
+	texture->as.image.height = height;
+	texture->as.image.max_val = max_val;
 	texture->filter = e_filter_nearest;
-	texture->translate.s[0] = 0.5;
-	texture->translate.s[1] = 0.5;
-	texture->scale.s[0] = 1 / +INFINITY;
-	texture->scale.s[1] = 1 / +INFINITY;
-
+	texture->translate.s[0] = 0.;
+	texture->translate.s[1] = 0.;
+	texture->scale.s[0] = 0.1;
+	texture->scale.s[1] = 0.2;
+	texture->as.checkerboard.color1 = vec3f(1, 0, 0);
+	texture->as.checkerboard.color2 = vec3f(0, 0, 0.70);
+*/
 	app.config.screen_size.s[0] = APP_WIDTH;
 	app.config.screen_size.s[1] = APP_HEIGHT;
 	app.config.color_epsilon = 1.f / 255;
