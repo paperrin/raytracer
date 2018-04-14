@@ -6,7 +6,7 @@
 /*   By: tlernoul <tlernoul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/01 23:33:13 by tlernoul          #+#    #+#             */
-/*   Updated: 2018/04/05 20:46:35 by tlernoul         ###   ########.fr       */
+/*   Updated: 2018/04/14 22:01:28 by tlernoul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,16 +15,21 @@
 int			kernel_post_process_create(t_app *app)
 {
 	app->kernel_post_process.work_size = app->kernel_clear.work_size;
-	if (!opencl_kernel_create_n_args(&app->kernel_post_process, &app->ocl, 2))
+	if (!opencl_kernel_create_n_args(&app->kernel_post_process, &app->ocl, 3))
 		return (0);
 	if (!opencl_kernel_load_from_file(&app->kernel_post_process,
 				"./src/cl/kernel_post_process.cl", "-I ./include/"))
 		return (0);
 	opencl_kernel_arg_select_id(&app->kernel_post_process, 0);
-	if (!opencl_kernel_arg_selected_use_kernel_arg_id(&app->kernel_post_process, &app->kernel_clear, 0))
+	if (!opencl_kernel_arg_selected_use_kernel_arg_id(&app->kernel_post_process, &app->kernel_ray_gen, 0))
 		return (0);
 	opencl_kernel_arg_select_id(&app->kernel_post_process, 1);
-	if (!opencl_kernel_arg_selected_use_kernel_arg_id(&app->kernel_post_process, &app->kernel_ray_gen, 0))
+	if (!opencl_kernel_arg_selected_use_kernel_arg_id(&app->kernel_post_process, &app->kernel_clear, 0))
+		return (0);
+	opencl_kernel_arg_select_id(&app->kernel_post_process, 2);
+	if (!opencl_kernel_arg_selected_create(&app->kernel_clear
+			, CL_MEM_WRITE_ONLY
+			, sizeof(cl_float) * 4 * app->kernel_clear.work_size, NULL))
 		return (0);
 	return (1);
 }

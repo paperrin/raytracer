@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/09 16:14:42 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/14 18:47:56 by ilarbi           ###   ########.fr       */
+/*   Updated: 2018/04/14 22:05:58 by tlernoul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ void		render(void *user_ptr, double elapsed)
 			app_destroy(app, EXIT_FAILURE);
 	}
 	clFinish(app->ocl.cmd_queue);
-	if (CL_SUCCESS != (err = clEnqueueReadBuffer(app->ocl.cmd_queue, app->kernel_clear.args[0]
+	if (CL_SUCCESS != (err = clEnqueueReadBuffer(app->ocl.cmd_queue, app->kernel_post_process.args[2]
 			, CL_TRUE, 0, sizeof(cl_float) * 4 * app->win.width * app->win.height
 			, app->draw_buf.pixels, 0, 0, 0)))
 	{
