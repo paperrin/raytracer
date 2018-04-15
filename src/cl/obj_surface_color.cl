@@ -29,6 +29,9 @@ float3		texture_checkerboard_uv_color(
 
 float3		texture_default(t_real2 uv);
 
+float3		texture_sine_uv_color(t_texture *texture, t_real2 uv);
+
+
 float3		obj_surface_color(
 		t_obj *obj,
 		constant t_material *materials,
@@ -53,7 +56,8 @@ float3		obj_surface_color(
 		}
 		else if (texture.type == e_texture_type_checkerboard)
 			return (texture_checkerboard_uv_color(&texture, obj_surface_uv_map(obj, point)));
-
+		else if (texture.type == e_texture_type_sine)
+			return (texture_sine_uv_color(&texture, obj_surface_uv_map(obj, point)));
 	}
 	return (texture_default(obj_surface_uv_map(obj, point)));
 }
@@ -109,7 +113,6 @@ t_real2		transform_uv(t_real2 uv, t_real2 translate, t_real2 scale)
 {
 	uv /= scale;
 	uv += translate;
-	uv -= floor(uv);
 	return (uv);
 }
 
@@ -122,6 +125,7 @@ float3		texture_image_uv_color(
 	float3	colors[4];
 	float2	interp;
 
+	uv -= floor(uv);
 	uv = transform_uv(uv, texture->translate, texture->scale);
 	uv = (t_real2)(uv.x * texture->as.image.width, uv.y * texture->as.image.height);
 	pos = (uint2)(uv.x, uv.y);
@@ -140,11 +144,27 @@ float3		texture_image_uv_color(
 float3		texture_checkerboard_uv_color(
 			t_texture *texture, t_real2 uv)
 {
+	uv -= floor(uv);
 	uv = transform_uv(uv, texture->translate, texture->scale);
 	if  (((int)(uv.x * 2) + (int)(uv.y * 2)) % 2 == 0)
 		return(texture->as.checkerboard.color1);
 	else
 		return (texture->as.checkerboard.color2);
+}
+
+float3		texture_sine_uv_color(t_texture *texture, t_real2 uv)
+{
+	t_real2	sine;
+	float3	colorx;
+	float3	colory;
+
+	uv = transform_uv(uv, texture->translate, texture->scale);
+	sine.x = sin(uv.x * 2 * M_PI_F);
+	sine.y = sin(uv.y * 2 * M_PI_F);
+	sine = (1 + sine) / 2;
+	colorx = texture->as.sine.color1 * sine.x + texture->as.sine.color2 * (1 - sine.x);
+	colory = texture->as.sine.color3 * sine.y + texture->as.sine.color4 * (1 - sine.y);
+	return (colorx * texture->as.sine.factors.x + colory * texture->as.sine.factors.y);
 }
 
 #endif

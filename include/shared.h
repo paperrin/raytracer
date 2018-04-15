@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/13 14:25:38 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/14 22:06:24 by ilarbi           ###   ########.fr       */
+/*   Updated: 2018/04/15 22:31:28 by ilarbi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -244,6 +244,8 @@ typedef struct			s_texture_sine
 {
 	cl_float3			color1;
 	cl_float3			color2;
+	cl_float3			color3;
+	cl_float3			color4;
 	t_real2				factors;
 }						t_texture_sine;
 

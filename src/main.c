@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/09 16:14:42 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/14 22:53:38 by ilarbi           ###   ########.fr       */
+/*   Updated: 2018/04/15 22:40:22 by ilarbi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -177,18 +177,22 @@ int			main(int ac, const char **av)
 		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
 	*obj = obj_aligned_cube(vec3r(-offset, offset, -offset), vec3r(1, 1, 1), 7);
 	
-	/*if (!(obj = (t_obj*)ft_vector_push_back(&app.scene.v_obj, NULL)))
+	if (!(obj = (t_obj*)ft_vector_push_back(&app.scene.v_obj, NULL)))
 		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
 	*obj = obj_sphere(vec3r(3, 0, 0.5), 0.2, 7);
-*/
+
 
 
 
 	if (!(obj = (t_obj*)ft_vector_push_back(&app.scene.v_obj, NULL)))
 		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
 	*obj = obj_aligned_cube(vec3r(0, 0, 0), vec3r(10, 10, 10), 5);
-
-
+/*
+** plane
+*/
+	if (!(obj = (t_obj*)ft_vector_push_back(&app.scene.v_obj, NULL)))
+		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
+	*obj = obj_plane(vec3r(0, -0.1, 0), vec3r(0, 1, 0), vec3r(1, 0, 0), 7);
 
 	app.scene.v_material = ft_vector_create(sizeof(t_material), NULL, NULL);
 	if (!(mat = (t_material*)ft_vector_push_back(&app.scene.v_material, NULL)))
@@ -276,7 +280,7 @@ int			main(int ac, const char **av)
 		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
 	app.scene.texture_pixels = (cl_uchar*)pixels;
 	app.scene.n_texture_pixels = width * height * (max_val <= 255 ? 1 : 2);
-/*	texture->type = e_texture_type_checkerboard;
+	texture->type = e_texture_type_checkerboard;
 	texture->as.image.pixels_offset = 0;
 	texture->as.image.width = width;
 	texture->as.image.height = height;
@@ -284,11 +288,23 @@ int			main(int ac, const char **av)
 	texture->filter = e_filter_nearest;
 	texture->translate.s[0] = 0.;
 	texture->translate.s[1] = 0.;
-	texture->scale.s[0] = 0.1;
-	texture->scale.s[1] = 0.2;
+	texture->scale.s[0] = 1;
+	texture->scale.s[1] = 1;
 	texture->as.checkerboard.color1 = vec3f(1, 0, 0);
 	texture->as.checkerboard.color2 = vec3f(0, 0, 0.70);
-*/
+/*
+	texture->type = e_texture_type_sine;
+	texture->as.sine.color1 = vec3f(0.3, 0.3, 0.3);	
+	texture->as.sine.color2 = vec3f(1, 1, 1);	
+	texture->as.sine.color3 = vec3f(0, 0, 1);	
+	texture->as.sine.color4 = vec3f(1, 0, 0);
+	texture->as.sine.factors.s[0] = 1.;
+	texture->as.sine.factors.s[1] = 0.;
+	texture->translate.s[0] = 0.;
+	texture->translate.s[1] = 0.;
+	texture->scale.s[0] = 0.1;
+	texture->scale.s[1] = 1.;
+*/	
 	app.config.screen_size.s[0] = APP_WIDTH;
 	app.config.screen_size.s[1] = APP_HEIGHT;
 	app.config.color_epsilon = 1.f / 255;
