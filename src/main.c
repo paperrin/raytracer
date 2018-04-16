@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/09 16:14:42 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/16 02:33:59 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/16 02:37:53 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,8 +110,8 @@ void		render(void *user_ptr, double elapsed)
 int			main(int ac, const char **av)
 {
 	t_app				app;
-	(void)ac;
 
+	(void)ac;
 	if (!app_create(&app, av))
 		return (EXIT_FAILURE);
 	app_destroy(&app, EXIT_SUCCESS);

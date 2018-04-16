@@ -78,6 +78,7 @@ CFILES		=	\
 				\
 				vec/vec3r.c										\
 				vec/vec3f.c										\
+				vec/vec2r.c										\
 				\
 				obj/obj_sphere.c								\
 				obj/obj_plane.c									\

@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/09 16:36:38 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/16 01:59:33 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/16 02:39:45 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 # include "camera.h"
 # include "error.h"
 # include "ft_math.h"
+# include "ppm.h"
 
 # define APP_WIDTH 720
 # define APP_HEIGHT 480
@@ -48,6 +49,7 @@ typedef struct		s_app
 {
 	t_window		win;
 	t_scene			scene;
+	char			*screenshot_path;
 	t_camera		cam;
 	t_image			draw_buf;
 	t_opencl		ocl;
@@ -126,5 +128,9 @@ void				kernel_clear_destroy(t_app *app);
 int					kernel_post_process_create(t_app *app);
 int					kernel_post_process_launch(t_app *app);
 void				kernel_post_process_destroy(t_app *app);
+
+
+char	            *get_unique_file_name(const char *path, const char *ext);
+int					save_screenshot(t_app *app);
 
 #endif

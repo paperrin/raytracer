@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/11 20:58:15 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/16 02:32:49 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/16 02:51:29 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ int		scene_load(t_scene *const scene, t_app *const app)
 */
 	if (!(texture = scene_add_texture(scene, "tex_brick", "textures/brick.ppm")))
 		return (0);
+	texture->scale = vec2r(0.2, 0.2);
 
 	if (!(texture = scene_add_texture(scene, "tex_max_val", "textures/max_val.ppm")))
 		return (0);
@@ -102,8 +103,16 @@ int		scene_load(t_scene *const scene, t_app *const app)
 
 	if (!(light = scene_add_point_light(scene, NULL)))
 		return (0);
-	light->intensity = 100;
+	light->intensity = 80;
 	light->fallback = 1;
+	light->glare = 0;
+
+	scene_translate(scene, -3, 1, 4);
+
+	if (!(light = scene_add_point_light(scene, NULL)))
+		return (0);
+	light->intensity = 0.1;
+	light->fallback = 0;
 	light->glare = 0;
 
 	ft_matrix_to_identity(&scene->mx);
@@ -123,9 +132,9 @@ int		scene_load(t_scene *const scene, t_app *const app)
 	app->config.z_far = 20000;
 
 	app->config.ambient_c = vec3f(1, 1, 1);
-	app->config.ambient_i = 0.1;
+	app->config.ambient_i = 0.025;
 	app->config.camera_light_c = vec3f(1, 1, 1);
-	app->config.camera_light_i = 0.1;
+	app->config.camera_light_i = 0.025;
 	app->config.samples_width = 1;
 	app->config.max_depth = 0;
 	app->config.projection_depth = 0;

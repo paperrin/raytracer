@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/16 00:44:23 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/16 01:38:49 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/16 02:46:36 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,11 +45,14 @@ static int			scene_texture_load_from_file(t_scene *const scene,
 
 	if (!(pixels = ft_ppm_file_read(path, &width, &height, &max_val)))
 		return (error_string("Could not read ppm file"));
-	texture->pixels_offset = scene->n_texture_pixels;
-	texture->width = width;
-	texture->height = height;
-	texture->max_val = max_val;
-	texture->filter = e_filter_nearest;
+	texture->type = e_texture_type_image;
+	texture->as.image.pixels_offset = scene->n_texture_pixels;
+	texture->as.image.width = width;
+	texture->as.image.height = height;
+	texture->as.image.max_val = max_val;
+	texture->as.image.filter = e_filter_nearest;
+	texture->translate = vec2r(0, 0);
+	texture->scale = vec2r(1, 1);
 	if (!scene_add_texture_pixels(scene, &pixels,
 				width * height * (max_val <= 255 ? 1 : 2)))
 		return (0);

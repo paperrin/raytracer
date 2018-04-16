@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/13 14:25:38 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/15 23:48:06 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/16 02:42:28 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -230,14 +230,50 @@ typedef enum			e_filter
 	e_filter_bilinear
 }						t_filter;
 
-typedef struct			s_texture
+typedef	struct			s_texture_image
 {
 	cl_long				pixels_offset;
 	cl_uint				width;
 	cl_uint				height;
 	cl_uint				max_val;
 	t_filter			filter;
+}						t_texture_image;
 
+typedef struct			s_texture_checkerboard
+{
+	cl_float3			color1;
+	cl_float3			color2;
+}						t_texture_checkerboard;
+
+typedef struct			s_texture_sine
+{
+	cl_float3			color1;
+	cl_float3			color2;
+	cl_float3			color3;
+	cl_float3			color4;
+	t_real2				factors;
+}						t_texture_sine;
+
+typedef union			u_texture_origin
+{
+	t_texture_image			image;
+	t_texture_checkerboard	checkerboard;
+	t_texture_sine			sine;
+}						t_u_texture_origin;
+
+typedef	enum			e_texture_type
+{
+	e_texture_type_image,
+	e_texture_type_checkerboard,
+	e_texture_type_sine
+}						t_e_texture_type;
+
+typedef struct			s_texture
+{
+	t_e_texture_type	type;
+	t_u_texture_origin	as;
+	t_real2				translate;
+	t_real2				scale;
 }						t_texture;
 
 /*
