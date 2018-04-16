@@ -50,8 +50,6 @@ t_real3				light_dir_get_dir(global t_config *config, t_light light, t_real3 to_
 t_real3				light_spot_get_dir(global t_config *config, t_light light, t_real3 to_pos,
 	cl_float3 *color, t_real *dist)
 {
-	const t_real	middle_gradient = 1;
-	const t_real	field_intensity = 0.05;
 	t_real3			dir;
 	t_real			radial_dist;
 	t_real			r2;
@@ -66,20 +64,20 @@ t_real3				light_spot_get_dir(global t_config *config, t_light light, t_real3 to
 	if (radial_dist < light.as.spot.field_aperture)
 	{
 		*color = light.color;
-		if (radial_dist < light.as.spot.beam_aperture * (1 - middle_gradient))
+		if (radial_dist < light.as.spot.beam_aperture * (1 - light.as.spot.beam_gradient))
 			*color *= light.intensity;
 		else if (radial_dist < light.as.spot.beam_aperture)
 		{
-			*color *= field_intensity * light.intensity
-				+ light.intensity * (1 - field_intensity)
-				* (1 - ((radial_dist - light.as.spot.beam_aperture * (1 - middle_gradient))
-					/ (light.as.spot.beam_aperture - light.as.spot.beam_aperture * (1 - middle_gradient))));
+			*color *= light.as.spot.field_intensity * light.intensity
+				+ light.intensity * (1 - light.as.spot.field_intensity)
+				* (1 - ((radial_dist - light.as.spot.beam_aperture * (1 - light.as.spot.beam_gradient))
+					/ (light.as.spot.beam_aperture - light.as.spot.beam_aperture * (1 - light.as.spot.beam_gradient))));
 		}
 		else
 		{
 			outter_intensity = (1 - ((radial_dist - light.as.spot.beam_aperture)
 					/ (light.as.spot.field_aperture - light.as.spot.beam_aperture)));
-			*color *= field_intensity * light.intensity
+			*color *= light.as.spot.field_intensity * light.intensity
 				* outter_intensity * outter_intensity;
 		}
 	}

@@ -6,14 +6,14 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/30 21:07:04 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/09 23:09:05 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/15 15:01:18 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_vector.h"
 
 t_vector		ft_vector_create(size_t data_size,
-		int (*f_copy)(char*, char*), void (*f_free)(char*))
+		int (*f_copy)(void*, void*), void (*f_free)(void*))
 {
 	t_vector		vector;
 

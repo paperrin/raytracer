@@ -6,44 +6,15 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/09 16:14:42 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/12 15:21:41 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/16 02:33:59 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
-#include "error.h"
-
-#include "scene_parser/ast.h"
-#include "scene_parser/interpreter.h"
-#include "scene_parser/hooks.h"
 
 int			app_create(t_app *app, const char **argv)
 {
-	/*
-	t_interpreter	*interpreter;
-	t_ast			*ast;
-
-	if ((ast = ast_parse("example_func.rt")))
-	{
-		if (!(interpreter = interpreter_create(app)))
-			return (0);
-		if (!interpreter_add_class_console(interpreter))
-			return (0);
-		if (!interpreter_ast_eval(interpreter, ast))
-			error_string(">Failed AST interpretation");
-
-		ast_destroy(&ast);
-		interpreter_destroy(&interpreter);
-		ft_putendl("\n>Success !");
-		return (0);
-	}
-	else
-	{
-		error_string(">Failed AST parsing");
-		return (0);
-	}*/
-
-	if (!arg_dispatch(&app->ocl, argv))
+	if (!arg_dispatch(app, argv))
 		return (0);
 	if (!window_create(&app->win, APP_WIDTH, APP_HEIGHT, APP_TITLE))
 		return (0);
@@ -141,10 +112,6 @@ int			main(int ac, const char **av)
 	t_app				app;
 	(void)ac;
 
-	if (!scene_create(&app.scene))
-		return (EXIT_FAILURE);
-	if (!scene_load(&app.scene, &app))
-		app_destroy(&app, EXIT_FAILURE);
 	if (!app_create(&app, av))
 		return (EXIT_FAILURE);
 	app_destroy(&app, EXIT_SUCCESS);

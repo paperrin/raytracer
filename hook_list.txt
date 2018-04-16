@@ -1,0 +1,79 @@
+
+color: (<num r{0-1}>, <num g{0-1}>, <num b{0-1}>) || (<str color{"0x000000"-"0xFFFFFF"}>) normalized
+dir: (<num x{0-1}>, <num y{0-1}>, <num z{0-1}>) normalized
+pos: (<num x{-0+}>, <num y{-0+}>, <num z{-0+}>)
+
+================================================
+
+push()
+pop()
+
+translate(0, 0, 0)
+rotate(0, 0, 0)
+
+DistantLight([str name])
+	.color(<color lightColor>)
+	.intensity(<num lightStrength {0+}>)
+	.glare(<num lightGlare {0+}>)
+	.dir(<dir lightDir>)
+
+PointLight([str name])
+	.color(<color lightColor>)
+	.intensity(<num lightStrength {0+}>)
+	.dispersion(<num lightDispersion {0+}>)
+	.glare(<num lightGlare {0+}>)
+	.pos(<pos lightPos>)
+
+SpotLight([str name])
+	.color(<color lightColor>)
+	.intensity(<num lightStrength {0+}>)
+	.dispersion(<num lightDispersion {0+}>)
+	.glare(<num lightGlare {0+}>)
+	.pos(<pos lightPos>)
+	.dir(<dir lightDir>)
+	.fieldAperture(<num aperture{0-1}>)
+	.fieldIntensity(<num fractionOfIntensity{0-1}>)
+	.beamAperture(<num aperture{0-1}>)
+	.beamGradient(<num fractionOfBeamAperture{0-1}>)
+
+WaveTexture(<str name>)
+	.xWaveColors(<color firstColor>, <color secondColor>)
+	.yWaveColors(<color firstColor>, <color secondColor>)
+	.xWaveOpacity(<num opacity{0-1}>)
+	.yWaveOpacity(<num opacity{0-1}>)
+	.offset(<num x{-0+}>, <num y{-0+}>)
+	.scale(<num xyScale{-0+}> || <<num x{-0+}>, <num y{-0+}>>)
+
+CheckerboardTexture(<str name>)
+	.colors(<color firstColor>, <color secondColor>)
+	.offset(<num x{-0+}>, <num y{-0+}>)
+	.scale(<num xyScale{-0+}> || <<num x{-0+}>, <num y{-0+}>>)
+
+Texture(<str name>, <str imagePath>)
+	.offset(<num x{-0+}>, <num y{-0+}>)
+	.scale(<num xyScale{-0+}> || <<num x{-0+}>, <num y{-0+}>>)
+	.filter(<var NEAREST> | <var BILINEAR>)
+
+Sphere([str name])
+
+AlignedCube([str name])
+
+Cone([str name])
+
+Cylinder([str name])
+
+Plane([str name])
+
+Camera()
+	.pos()
+
+Config()
+	.ambient()
+	.ambientIntensity()
+	.cameraLight()
+	.cameraLightIntensity()
+	.recursionDepth()
+	.projectionDepth()
+	.postFilters()
+
+

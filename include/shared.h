@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/13 14:25:38 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/12 23:51:43 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/15 23:48:06 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -260,10 +260,10 @@ typedef struct			s_light_spot
 {
 	t_real3				pos;
 	t_real3				dir;
-	t_real				beam_angle;
-	t_real				field_angle;
 	t_real				beam_aperture;
+	t_real				beam_gradient;
 	t_real				field_aperture;
+	t_real				field_intensity;
 }						t_light_spot;
 
 typedef struct			s_light_dir

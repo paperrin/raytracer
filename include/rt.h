@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/09 16:36:38 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/12 18:48:00 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/16 01:59:33 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include "opencl.h"
 # include "window.h"
 # include "ft_vector.h"
+# include "ft_map.h"
 # include "shared.h"
 # include "vec.h"
 # include "image.h"
@@ -33,10 +34,12 @@ typedef struct		s_scene
 {
 	t_matrix		mx;
 	t_matrix		mx_r;
-	t_vector		v_material;
-	t_vector		v_obj;
-	t_vector		v_light;
-	t_vector		v_texture;
+	t_vector		v_mx;
+	t_vector		v_mx_r;
+	t_map			m_material;
+	t_map			m_obj;
+	t_map			m_light;
+	t_map			m_texture;
 	cl_uchar		*texture_pixels;
 	cl_ulong		n_texture_pixels;
 }					t_scene;
@@ -63,9 +66,22 @@ int					scene_create(t_scene *const scene);
 void				scene_destroy(t_scene *const scene);
 int					scene_load(t_scene *const scene, t_app *const app);
 
-t_obj				*scene_add_sphere(t_scene *const scene);
-t_obj				*scene_add_plane(t_scene *const scene);
-t_obj				*scene_add_aligned_cube(t_scene *const scene);
+t_map				scene_map_create(size_t val_size);
+void				*scene_map_search(t_map const *const map,
+		char const *const name);
+int					scene_map_search_index(t_map const *const map,
+		char const *const name);
+void				*scene_map_add(t_map *const map,
+		char const *const name);
+
+t_obj				*scene_add_sphere(t_scene *const scene, char const *const name);
+t_obj				*scene_add_plane(t_scene *const scene, char const *const name);
+t_obj				*scene_add_aligned_cube(t_scene *const scene, char const *const name);
+t_material			*scene_add_material(t_scene *const scene, char const *const name);
+t_light				*scene_add_dir_light(t_scene *const scene, char const *const name);
+t_light				*scene_add_spot_light(t_scene *const scene, char const *const name);
+t_light				*scene_add_point_light(t_scene *const scene, char const *const name);
+t_texture			*scene_add_texture(t_scene *const scene, char const *const name, char const *const path);
 
 void				scene_rotate(t_scene *const scene, float x, float y, float z);
 void				scene_translate(t_scene *const scene, float x, float y, float z);
@@ -76,7 +92,7 @@ void				scene_transform_dir(t_scene const *const scene, t_real3 *const vec3r);
 int					app_create(t_app *app, const char *argv[]);
 void				app_destroy(t_app *app, int exit_status);
 
-int					arg_dispatch(t_opencl *ocl, const char *argv[]);
+int					arg_dispatch(t_app *const app, const char *argv[]);
 int					arg_devices(t_opencl *ocl, const char *args);
 
 void				callback_key(void *user_ptr, int key, int action);

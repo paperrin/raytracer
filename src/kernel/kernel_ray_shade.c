@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/16 22:37:07 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/12 23:43:56 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/16 01:22:17 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,33 +32,33 @@ int				kernel_ray_shade_create(t_app *app)
 	if (!opencl_kernel_arg_selected_use_kernel_arg_id(&app->kernel_ray_shade
 				, &app->kernel_ray_trace, 1))
 		return (0);
-	mats_size = ft_vector_size(&app->scene.v_material);
+	mats_size = ft_map_size(&app->scene.m_material);
 	opencl_kernel_arg_select_id(&app->kernel_ray_shade, 2);
 	if (!opencl_kernel_arg_selected_create(&app->kernel_ray_shade
 			, CL_MEM_READ_ONLY | CL_MEM_COPY_HOST_PTR
-			, sizeof(t_material) * mats_size, (void*)app->scene.v_material.begin))
+			, sizeof(t_material) * mats_size, (void*)app->scene.m_material.v_values.begin))
 		return (0);
 	opencl_kernel_arg_select_id(&app->kernel_ray_shade, 3);
 	if (!opencl_kernel_arg_selected_create(&app->kernel_ray_shade
 			, CL_MEM_READ_ONLY | CL_MEM_COPY_HOST_PTR
 			, sizeof(cl_uint), (void*)&mats_size))
 		return (0);
-	lights_size = ft_vector_size(&app->scene.v_light);
+	lights_size = ft_map_size(&app->scene.m_light);
 	opencl_kernel_arg_select_id(&app->kernel_ray_shade, 4);
 	if (!opencl_kernel_arg_selected_create(&app->kernel_ray_shade
 			, CL_MEM_READ_ONLY | CL_MEM_COPY_HOST_PTR
-			, sizeof(t_light) * lights_size, (void*)app->scene.v_light.begin))
+			, sizeof(t_light) * lights_size, (void*)app->scene.m_light.v_values.begin))
 		return (0);
 	opencl_kernel_arg_select_id(&app->kernel_ray_shade, 5);
 	if (!opencl_kernel_arg_selected_create(&app->kernel_ray_shade
 			, CL_MEM_READ_ONLY | CL_MEM_COPY_HOST_PTR
 			, sizeof(cl_uint), (void*)&lights_size))
 		return (0);
-	textures_size = ft_vector_size(&app->scene.v_texture);
+	textures_size = ft_map_size(&app->scene.m_texture);
 	opencl_kernel_arg_select_id(&app->kernel_ray_shade, 6);
 	if (!opencl_kernel_arg_selected_create(&app->kernel_ray_shade
 			, CL_MEM_READ_ONLY | CL_MEM_COPY_HOST_PTR
-			, sizeof(t_texture) * textures_size, (void*)app->scene.v_texture.begin))
+			, sizeof(t_texture) * textures_size, (void*)app->scene.m_texture.v_values.begin))
 		return (0);
 	opencl_kernel_arg_select_id(&app->kernel_ray_shade, 7);
 	if (!opencl_kernel_arg_selected_create(&app->kernel_ray_shade

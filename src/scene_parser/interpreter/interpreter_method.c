@@ -6,13 +6,13 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/09 22:44:19 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/11 19:59:24 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/15 15:27:53 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "scene_parser/interpreter.h"
 
-static void		f_method_destroy(char *buff)
+static void		f_method_destroy(void *buff)
 {
 	t_method		**method;
 

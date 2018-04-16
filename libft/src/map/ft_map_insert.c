@@ -1,28 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_vector_at.c                                     :+:      :+:    :+:   */
+/*   ft_map_insert.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/11/30 21:10:08 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/15 15:22:38 by paperrin         ###   ########.fr       */
+/*   Created: 2018/04/15 16:08:56 by paperrin          #+#    #+#             */
+/*   Updated: 2018/04/15 18:44:14 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_vector.h"
+#include "ft_map.h"
 
-void			*ft_vector_at(t_vector const *const vector, size_t index)
+int				ft_map_insert(t_map *const map,
+		void **ret_key, void **ret_val)
 {
-	return ((char*)vector->begin + index * vector->data_size);
-}
-
-void			*ft_vector_begin(t_vector const *const vector)
-{
-	return ((char*)vector->begin - vector->data_size);
-}
-
-void			*ft_vector_end(t_vector const *const vector)
-{
-	return ((char*)vector->end + vector->data_size);
+	if (!(*ret_key = ft_vector_push_back(&map->v_keys, NULL)))
+		return (0);
+	if (!(*ret_val = ft_vector_push_back(&map->v_values, NULL)))
+	{
+		ft_vector_pop_back(&map->v_keys, NULL);
+		*ret_key = NULL;
+		return (0);
+	}
+	return (1);
 }

@@ -6,13 +6,13 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/09 23:27:39 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/11 21:14:41 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/15 15:27:27 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "scene_parser/interpreter.h"
 
-static void		f_var_destroy(char *buff)
+static void		f_var_destroy(void *buff)
 {
 	t_interpreter_var	*var;
 

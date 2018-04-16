@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/11 22:21:23 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/13 00:11:57 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/15 18:53:12 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,12 @@ static t_obj	sphere_default(void)
 	return (obj);
 }
 
-t_obj			*scene_add_sphere(t_scene *const scene)
+t_obj			*scene_add_sphere(t_scene *const scene, char const *const name)
 {
 	t_obj		*obj;
 
-	if (!(obj = (t_obj*)ft_vector_push_back(&scene->v_obj, NULL)))
-		return (perror_string(ERR_MEMORY));
+	if (!(obj = (t_obj*)scene_map_add(&scene->m_obj, name)))
+		return (NULL);
 	*obj = sphere_default();
 	scene_transform_pos(scene, &obj->as.sphere.pos);
 	scene_transform_dir(scene, &obj->as.sphere.up);

@@ -197,6 +197,9 @@ CFILES		=	ft_swap.c			\
 				vector/ft_vector_pop_at.c					\
 				vector/ft_vector_erase.c					\
 				vector/internal_ft_vector_range.c			\
+				map/ft_map.c							\
+				map/ft_map_insert.c						\
+				map/ft_map_at.c							\
 				graph/ft_graph_create_edge_table.c	\
 				graph/ft_graph_poly_fill.c			\
 				graph/ft_graph_env_rect.c			\

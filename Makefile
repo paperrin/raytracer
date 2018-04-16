@@ -127,10 +127,17 @@ CFILES		=	\
 				prompt/arg_devices.c							\
 				\
 				scene/scene.c											\
+				scene/scene_map.c										\
+				scene/scene_map_search.c								\
 				scene/scene_transform.c									\
 				scene/scene_sphere.c									\
 				scene/scene_plane.c										\
 				scene/scene_aligned_cube.c								\
+				scene/scene_point_light.c								\
+				scene/scene_dir_light.c									\
+				scene/scene_spot_light.c								\
+				scene/scene_material.c									\
+				scene/scene_texture.c									\
 				\
 				main.c											\
 				process_input.c									\

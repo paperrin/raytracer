@@ -1,28 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   internal_ft_vector.h                               :+:      :+:    :+:   */
+/*   ft_map.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/12/01 22:19:59 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/15 15:24:26 by paperrin         ###   ########.fr       */
+/*   Created: 2018/04/14 22:50:11 by paperrin          #+#    #+#             */
+/*   Updated: 2018/04/14 22:56:57 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef INTERNAL_FT_VECTOR_H
-# define INTERNAL_FT_VECTOR_H
+#ifndef FT_MAP_H
+# define FT_MAP_H
 
 # include "ft_vector.h"
 
-/*
-** vector/internal_ft_vector_range.c
-*/
-int				internal_ft_vector_copy_range(t_vector *vector, void *dst
-		, void *src, size_t n);
-void			internal_ft_vector_free_range(t_vector *vector, void *data
-		, size_t n);
-void			*internal_ft_vector_perase_n_should_free(t_vector *vector,
-		void *elem_first, size_t n, int should_free);
+t_vector		ft_vector_create(size_t data_size, int (*f_copy)(char*, char*),
+		void (*f_free)(char*));
+void			ft_vector_destroy(t_vector *vector);
+
+size_t			ft_vector_size(t_vector const *const vector);
+
+char			*ft_vector_push_back(t_vector *vector,
+		char const *const elem);
 
 #endif

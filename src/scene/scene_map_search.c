@@ -1,28 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_vector_at.c                                     :+:      :+:    :+:   */
+/*   scene_map_search.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/11/30 21:10:08 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/15 15:22:38 by paperrin         ###   ########.fr       */
+/*   Created: 2018/04/15 19:42:26 by paperrin          #+#    #+#             */
+/*   Updated: 2018/04/15 19:43:37 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_vector.h"
+#include "rt.h"
 
-void			*ft_vector_at(t_vector const *const vector, size_t index)
+void			*scene_map_search(t_map const *const map,
+		char const *const name)
 {
-	return ((char*)vector->begin + index * vector->data_size);
+	if (!name)
+		return (NULL);
+	return (ft_map_at(map, (void*)&name));
 }
 
-void			*ft_vector_begin(t_vector const *const vector)
+int				scene_map_search_index(t_map const *const map,
+		char const *const name)
 {
-	return ((char*)vector->begin - vector->data_size);
-}
-
-void			*ft_vector_end(t_vector const *const vector)
-{
-	return ((char*)vector->end + vector->data_size);
+	if (!name)
+		return (-1);
+	return (ft_map_index_at(map, (void*)&name));
 }

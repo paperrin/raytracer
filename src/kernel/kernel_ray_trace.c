@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/22 18:06:33 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/12 23:45:31 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/15 18:48:21 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,11 @@ int				kernel_ray_trace_create(t_app *app)
 	if (!opencl_kernel_load_from_file(&app->kernel_ray_trace
 				, "./src/cl/kernel_ray_trace.cl", "-I ./include/ -I ./src/cl/"))
 		return (0);
-	objs_size = ft_vector_size(&app->scene.v_obj);
+	objs_size = ft_map_size(&app->scene.m_obj);
 	opencl_kernel_arg_select_id(&app->kernel_ray_trace, 0);
 	if (!opencl_kernel_arg_selected_create(&app->kernel_ray_trace
 			, CL_MEM_READ_ONLY | CL_MEM_COPY_HOST_PTR
-			, sizeof(t_obj) * objs_size, (void*)app->scene.v_obj.begin))
+			, sizeof(t_obj) * objs_size, (void*)app->scene.m_obj.v_values.begin))
 		return (0);
 	opencl_kernel_arg_select_id(&app->kernel_ray_trace, 1);
 	if (!opencl_kernel_arg_selected_create(&app->kernel_ray_trace
