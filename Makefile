@@ -70,9 +70,7 @@ CFILES		=	\
 				callbacks/callback_key.c						\
 				callbacks/callback_mouse_motion.c				\
 				\
-				camera/camera.c									\
 				camera/camera_rotation.c						\
-				camera/camera_translate.c						\
 				camera/matrix_real16.c							\
 				camera/matrix_real16_rot.c						\
 				\
@@ -131,6 +129,7 @@ CFILES		=	\
 				scene/scene_map.c										\
 				scene/scene_map_search.c								\
 				scene/scene_transform.c									\
+				scene/scene_transform_stack.c							\
 				scene/scene_sphere.c									\
 				scene/scene_plane.c										\
 				scene/scene_aligned_cube.c								\
@@ -139,6 +138,9 @@ CFILES		=	\
 				scene/scene_spot_light.c								\
 				scene/scene_material.c									\
 				scene/scene_texture.c									\
+				scene/scene_texture_wave.c								\
+				scene/scene_texture_checkerboard.c						\
+				scene/scene_camera.c									\
 				\
 				main.c											\
 				process_input.c									\

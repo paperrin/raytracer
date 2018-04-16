@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/11 20:58:15 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/16 02:51:29 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/18 02:02:40 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ int		scene_create(t_scene *const scene)
 	scene->m_light = scene_map_create(sizeof(t_light));
 	scene->m_material = scene_map_create(sizeof(t_material));
 	scene->m_texture = scene_map_create(sizeof(t_texture));
+	scene->v_mx = ft_vector_create(sizeof(t_matrix), NULL, NULL);
+	scene->v_mx_r = ft_vector_create(sizeof(t_matrix), NULL, NULL);
 	ft_matrix_to_identity(&scene->mx);
 	ft_matrix_to_identity(&scene->mx_r);
 	return (1);
@@ -31,6 +33,8 @@ void	scene_destroy(t_scene *const scene)
 	ft_map_destroy(&scene->m_light);
 	ft_map_destroy(&scene->m_material);
 	ft_map_destroy(&scene->m_texture);
+	ft_vector_destroy(&scene->v_mx);
+	ft_vector_destroy(&scene->v_mx_r);
 	ft_memdel((void**)&scene->texture_pixels);
 }
 
@@ -49,6 +53,12 @@ int		scene_load(t_scene *const scene, t_app *const app)
 	texture->scale = vec2r(0.2, 0.2);
 
 	if (!(texture = scene_add_texture(scene, "tex_max_val", "textures/max_val.ppm")))
+		return (0);
+
+	if (!(texture = scene_add_texture_wave(scene, "tex_wave")))
+		return (0);
+
+	if (!(texture = scene_add_texture_checkerboard(scene, "tex_checker")))
 		return (0);
 
 /*
@@ -70,34 +80,69 @@ int		scene_load(t_scene *const scene, t_app *const app)
 	if ((mat->texture_id = scene_map_search_index(&scene->m_texture, "tex_max_val")) < 0)
 		return (error_string("could not find material"));
 
+	if (!(mat = scene_add_material(scene, "mat_wave")))
+		return (0);
+	mat->color = vec3f(1, 0.0, 0.0);
+	mat->reflection = 0;
+	mat->refraction = 0;
+	if ((mat->texture_id = scene_map_search_index(&scene->m_texture, "tex_wave")) < 0)
+		return (error_string("could not find material"));
+
+	if (!(mat = scene_add_material(scene, "mat_checker")))
+		return (0);
+	mat->color = vec3f(1, 0.0, 0.0);
+	mat->reflection = 0;
+	mat->refraction = 0;
+	mat->specular = 1;
+	mat->specular_exp = 10;
+	if ((mat->texture_id = scene_map_search_index(&scene->m_texture, "tex_checker")) < 0)
+		return (error_string("could not find material"));
+
+	if (!(mat = scene_add_material(scene, "mat_white")))
+		return (0);
+	mat->color = vec3f(1, 1, 1);
+	mat->reflection = 0;
+	mat->refraction = 0;
+	mat->texture_id = -1;
 /*
 ** Scene
 */
 
-	if (!(obj = scene_add_aligned_cube(scene, NULL)))
+	if (!(obj = scene_add_sphere(scene, NULL)))
 		return (0);
-	obj->as.aligned_cube.size = vec3r(20, 20, 20);
-	if ((obj->material_id = scene_map_search_index(&scene->m_material, "mat_brick")) < 0)
+	obj->as.sphere.radius = 10;
+	if ((obj->material_id = scene_map_search_index(&scene->m_material, "mat_white")) < 0)
 		return (error_string("could not find material"));
 
-	ft_matrix_to_identity(&scene->mx);
-	ft_matrix_to_identity(&scene->mx_r);
-
-	scene_translate(scene, -1, 0, 0);
+	scene_transform_pop(scene);
+	scene_translate(scene, -1, 0, -1);
 	if (!(obj = scene_add_sphere(scene, NULL)))
 		return (0);
 	if ((obj->material_id = scene_map_search_index(&scene->m_material, "mat_brick")) < 0)
 		return (error_string("could not find material"));
 
-	scene_translate(scene, 2, 0, 0);
+	scene_transform_pop(scene);
+	scene_translate(scene, 1, 0, 1);
 	if (!(obj = scene_add_sphere(scene, NULL)))
 		return (0);
 	if ((obj->material_id = scene_map_search_index(&scene->m_material, "mat_max_val")) < 0)
 		return (error_string("could not find material"));
 
-	ft_matrix_to_identity(&scene->mx);
-	ft_matrix_to_identity(&scene->mx_r);
+	scene_transform_pop(scene);
+	scene_translate(scene, -1, 0, 1);
+	if (!(obj = scene_add_aligned_cube(scene, NULL)))
+		return (0);
+	if ((obj->material_id = scene_map_search_index(&scene->m_material, "mat_wave")) < 0)
+		return (error_string("could not find material"));
 
+	scene_transform_pop(scene);
+	scene_translate(scene, 1, 0, -1);
+	if (!(obj = scene_add_aligned_cube(scene, NULL)))
+		return (0);
+	if ((obj->material_id = scene_map_search_index(&scene->m_material, "mat_checker")) < 0)
+		return (error_string("could not find material"));
+
+	scene_transform_pop(scene);
 	scene_translate(scene, 0, 2, -2);
 	scene_rotate(scene, M_PI / 2, 0, 0);
 
@@ -107,17 +152,7 @@ int		scene_load(t_scene *const scene, t_app *const app)
 	light->fallback = 1;
 	light->glare = 0;
 
-	scene_translate(scene, -3, 1, 4);
-
-	if (!(light = scene_add_point_light(scene, NULL)))
-		return (0);
-	light->intensity = 0.1;
-	light->fallback = 0;
-	light->glare = 0;
-
-	ft_matrix_to_identity(&scene->mx);
-	ft_matrix_to_identity(&scene->mx_r);
-
+	scene_transform_pop(scene);
 	scene_translate(scene, 0, 2, 0);
 	if (!(light = scene_add_point_light(scene, NULL)))
 		return (0);
@@ -140,8 +175,7 @@ int		scene_load(t_scene *const scene, t_app *const app)
 	app->config.projection_depth = 0;
 	app->config.post_filters = e_post_filter_none;
 
-	app->cam.cam_data.pos = vec3r(0, 0, -1);
-
+	scene_add_camera(scene, app);
 
 	return (1);
 }

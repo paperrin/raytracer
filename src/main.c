@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/09 16:14:42 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/16 02:37:53 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/18 01:20:09 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void		render(void *user_ptr, double elapsed)
 
 	app = (t_app*)user_ptr;
 	process_input(app, (last_time < 0) ? 0 : elapsed);
-	camera_update(&app->cam);
+	scene_camera_update(&app->cam);
 	if (!kernel_ray_gen_primary_launch(app) && !error_string("error: ray gen kernel launch failed\n"))
 		app_destroy(app, EXIT_FAILURE);
 	if (!kernel_clear_launch(app) && !error_string("error: clear kernel launch failed\n"))

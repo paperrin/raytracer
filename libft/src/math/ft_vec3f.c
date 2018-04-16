@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/12 14:23:41 by paperrin          #+#    #+#             */
-/*   Updated: 2017/12/05 14:59:39 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/16 23:34:27 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,5 +58,16 @@ t_vec3f			ft_vec3f_transform(t_vec3f const *const vec
 	ret.x = cross_multiply(vec, mx, 0) / w;
 	ret.y = cross_multiply(vec, mx, 1) / w;
 	ret.z = cross_multiply(vec, mx, 2) / w;
+	return (ret);
+}
+
+t_vec3f			ft_vec3f_matrix_rot(t_vec3f const *const vec
+		, t_matrix const *const mx)
+{
+	t_vec3f		ret;
+
+	ret.x = vec->x * mx->m[0] + vec->y * mx->m[1] + vec->z * mx->m[2];
+	ret.y = vec->x * mx->m[4] + vec->y * mx->m[5] + vec->z * mx->m[6];
+	ret.z = vec->x * mx->m[8] + vec->y * mx->m[9] + vec->z * mx->m[10];
 	return (ret);
 }

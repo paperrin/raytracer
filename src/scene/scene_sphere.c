@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/11 22:21:23 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/15 18:53:12 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/16 21:18:50 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static t_obj	sphere_default(void)
 	obj.as.sphere.pos = vec3r(0, 0, 0);
 	obj.as.sphere.up = vec3r(0, 1, 0);
 	obj.as.sphere.front = vec3r(0, 0, 1);
-	obj.as.sphere.radius = 0.3;
+	obj.as.sphere.radius = 0.5;
 	return (obj);
 }
 

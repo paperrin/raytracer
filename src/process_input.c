@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/19 19:21:17 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/09 21:10:59 by ilarbi           ###   ########.fr       */
+/*   Updated: 2018/04/18 01:10:50 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,13 +41,13 @@ static void		process_input_key(t_app *app, double elapsed)
 	char			w_pressed;
 	char			r_pressed;
 	char			f_pressed;
-	const double	rot = 250;
+	const double	rot = 200;
 	char			j_pressed;
 	char			l_pressed;
 	char			i_pressed;
 	char			k_pressed;
-	char			y_pressed;
-	char			h_pressed;
+	char			u_pressed;
+	char			o_pressed;
 
 	a_pressed = glfwGetKey(app->win.glfw_win, GLFW_KEY_A) == GLFW_PRESS;
 	s_pressed = glfwGetKey(app->win.glfw_win, GLFW_KEY_S) == GLFW_PRESS;
@@ -56,23 +56,24 @@ static void		process_input_key(t_app *app, double elapsed)
 	r_pressed = glfwGetKey(app->win.glfw_win, GLFW_KEY_R) == GLFW_PRESS;
 	f_pressed = glfwGetKey(app->win.glfw_win, GLFW_KEY_F) == GLFW_PRESS;
 	if (a_pressed || d_pressed)
-		camera_translate_x(&app->cam, (d_pressed - a_pressed) * move * elapsed);
+		scene_camera_translate(&app->cam, (d_pressed - a_pressed) * move * elapsed, 0, 0);
 	if (r_pressed || f_pressed)
-		camera_translate_y(&app->cam, (r_pressed - f_pressed) * move * elapsed);
+		scene_camera_translate(&app->cam, 0, (r_pressed - f_pressed) * move * elapsed, 0);
 	if (w_pressed || s_pressed)
-		camera_translate_z(&app->cam, (w_pressed - s_pressed) * move * elapsed);
+		scene_camera_translate(&app->cam, 0, 0, (w_pressed - s_pressed) * move * elapsed);
 	j_pressed = glfwGetKey(app->win.glfw_win, GLFW_KEY_J) == GLFW_PRESS;
 	l_pressed = glfwGetKey(app->win.glfw_win, GLFW_KEY_L) == GLFW_PRESS;
 	i_pressed = glfwGetKey(app->win.glfw_win, GLFW_KEY_I) == GLFW_PRESS;
 	k_pressed = glfwGetKey(app->win.glfw_win, GLFW_KEY_K) == GLFW_PRESS;
-	y_pressed = glfwGetKey(app->win.glfw_win, GLFW_KEY_Y) == GLFW_PRESS;
-	h_pressed = glfwGetKey(app->win.glfw_win, GLFW_KEY_H) == GLFW_PRESS;
-	if (j_pressed || l_pressed)
-		app->cam.rot.s[1] += (l_pressed - j_pressed) * rot * elapsed;
+	u_pressed = glfwGetKey(app->win.glfw_win, GLFW_KEY_U) == GLFW_PRESS;
+	o_pressed = glfwGetKey(app->win.glfw_win, GLFW_KEY_O) == GLFW_PRESS;
+
 	if (i_pressed || k_pressed)
 		app->cam.rot.s[0] += (k_pressed - i_pressed) * rot * elapsed;
-	if (y_pressed || h_pressed)
-		app->cam.rot.s[2] += (h_pressed - y_pressed) * rot * elapsed;
+	if (j_pressed || l_pressed)
+		app->cam.rot.s[1] += (l_pressed - j_pressed) * rot * elapsed;
+	if (u_pressed || o_pressed)
+		app->cam.rot.s[2] += (u_pressed - o_pressed) * rot * elapsed;
 }
 
 void			process_input(t_app *app, double elapsed)

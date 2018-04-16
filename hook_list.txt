@@ -66,6 +66,7 @@ Plane([str name])
 
 Camera()
 	.pos()
+	.rot()
 
 Config()
 	.ambient()
@@ -75,5 +76,3 @@ Config()
 	.recursionDepth()
 	.projectionDepth()
 	.postFilters()
-
-

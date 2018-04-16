@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/30 19:50:27 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/15 15:35:09 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/18 01:53:23 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,8 @@ void			*ft_vector_push_back(t_vector *vector,
 ** vector/ft_vector_at.c
 */
 void			*ft_vector_at(t_vector const *const vector, size_t index);
+void			*ft_vector_front(t_vector const *const vector);
+void			*ft_vector_back(t_vector const *const vector);
 void			*ft_vector_begin(t_vector const *const vector);
 void			*ft_vector_end(t_vector const *const vector);
 

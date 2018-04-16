@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/09 15:17:25 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/11 22:16:59 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/17 18:24:39 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,7 @@ void			ft_matrix_rot(t_matrix *mx, float x, float y, float z);
 void			ft_matrix_rot_x(t_matrix *mx, float alpha);
 void			ft_matrix_rot_y(t_matrix *mx, float alpha);
 void			ft_matrix_rot_z(t_matrix *mx, float alpha);
+void			ft_matrix_rot_axis(t_matrix *const mx, t_vec3f axis, float alpha);
 
 t_vec3f			ft_vec3f(float x, float y, float z);
 t_vec3f			*ft_vec3f_new(float x, float y, float z);
@@ -95,6 +96,8 @@ t_vec3f			ft_vec3f_rot_y(t_vec3f vec, float angle);
 t_vec3f			ft_vec3f_rot_z(t_vec3f vec, float angle);
 t_vec3f			ft_vec3f_rot(t_vec3f vec, float x, float y, float z);
 t_vec3f			ft_vec3f_scale(t_vec3f vec, float scale);
+t_vec3f			ft_vec3f_matrix_rot(t_vec3f const *const vec
+		, t_matrix const *const mx);
 
 t_vec3d			ft_vec3d(double x, double y, double z);
 t_vec3d			*ft_vec3d_new(double x, double y, double z);

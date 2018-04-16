@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/09 16:36:38 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/16 02:39:45 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/18 01:55:38 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@
 # define APP_WIDTH 720
 # define APP_HEIGHT 480
 # define APP_TITLE "R-T RT"
+# define APP_SCREENSHOT_PATH "./Screen Shot "
 
 # define ERR_MEMORY "not enough memory"
 
@@ -49,7 +50,6 @@ typedef struct		s_app
 {
 	t_window		win;
 	t_scene			scene;
-	char			*screenshot_path;
 	t_camera		cam;
 	t_image			draw_buf;
 	t_opencl		ocl;
@@ -84,12 +84,19 @@ t_light				*scene_add_dir_light(t_scene *const scene, char const *const name);
 t_light				*scene_add_spot_light(t_scene *const scene, char const *const name);
 t_light				*scene_add_point_light(t_scene *const scene, char const *const name);
 t_texture			*scene_add_texture(t_scene *const scene, char const *const name, char const *const path);
+t_texture			*scene_add_texture_wave(t_scene *const scene, char const *const name);
+t_texture			*scene_add_texture_checkerboard(t_scene *const scene, char const *const name);
+void				scene_add_camera(t_scene *const scene, t_app *const app);
+void				scene_camera_translate(t_camera *const cam, double x, double y, double z);
+void				scene_camera_update(t_camera *const cam);
 
 void				scene_rotate(t_scene *const scene, float x, float y, float z);
 void				scene_translate(t_scene *const scene, float x, float y, float z);
 void				scene_transform(t_real3 *const vec3r, t_matrix const *const mx);
 void				scene_transform_pos(t_scene const *const scene, t_real3 *const vec3r);
 void				scene_transform_dir(t_scene const *const scene, t_real3 *const vec3r);
+int					scene_transform_push(t_scene *const scene);
+void				scene_transform_pop(t_scene *const scene);
 
 int					app_create(t_app *app, const char *argv[]);
 void				app_destroy(t_app *app, int exit_status);
