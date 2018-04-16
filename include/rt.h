@@ -68,6 +68,9 @@ void				process_input(t_app *app, double elapsed);
 
 t_obj				obj_sphere(t_real3 pos, t_real radius, t_mat_id material);
 t_obj				obj_plane(t_real3 pos, t_real3 normal, t_real3 up, t_mat_id material);
+t_obj				obj_cone(t_real3 pos, t_real3 up, t_real3 normal, t_real angle);
+t_obj				obj_cylinder(t_real3 pos, t_real3 up, t_real3 normal,
+		t_real radius, t_mat_id material);
 t_obj				obj_aligned_cube(t_real3 pos, t_real3 size, t_mat_id material);
 
 void				render(void *user_ptr, double elapsed);

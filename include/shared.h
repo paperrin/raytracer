@@ -171,17 +171,18 @@ typedef struct			s_sphere
 typedef struct			s_cylinder
 {
 	t_real3				pos;
-	t_real3				up;
 	t_real3				normal;
+	t_real3				up;
 	t_real				radius;
+	t_mat_id 			material;
 }						t_cylinder;
 
 typedef struct			s_cone
 {
 	t_real3				pos;
 	t_real3				up;
+	t_real				angle;
 	t_real3				normal;
-	t_real				radius;
 }						t_cone;
 
 typedef	struct			s_aligned_cube
@@ -231,7 +232,7 @@ typedef	struct			s_texture_image
 	cl_uint				width;
 	cl_uint				height;
 	cl_uint				max_val;
-	
+
 }						t_texture_image;
 
 typedef struct			s_texture_checkerboard

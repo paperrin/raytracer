@@ -84,6 +84,8 @@ CFILES		=	\
 				obj/obj_sphere.c							\
 				obj/obj_plane.c								\
 				obj/obj_aligned_cube.c						\
+				obj/obj_cone.c									\
+				obj/obj_cylinder.c								\
 				\
 				main.c											\
 				process_input.c									\
