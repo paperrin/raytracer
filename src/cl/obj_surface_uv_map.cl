@@ -58,7 +58,6 @@ t_real2			obj_plane_surface_uv_map(t_plane *plane, t_real3 point)
 	point -= plane->pos;
 	uv.x = dot(plane->up, point);
 	uv.y = dot(right, point);
-	uv -= (t_real2)(floor(uv.x), floor(uv.y));
 	return (uv);
 }
 

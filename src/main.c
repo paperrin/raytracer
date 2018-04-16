@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/09 16:14:42 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/16 18:47:20 by eabgrall         ###   ########.fr       */
+/*   Updated: 2018/04/16 19:45:48 by eabgrall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,6 @@ int			main(int ac, const char **av)
 	size_t			width;
 	size_t			height;
 	unsigned int	max_val;
-	float			offset;
 
 	app.scene.v_obj = ft_vector_create(sizeof(t_obj), NULL, NULL);
 
@@ -136,61 +135,6 @@ int			main(int ac, const char **av)
 	if (!(obj = (t_obj*)ft_vector_push_back(&app.scene.v_obj, NULL)))
 		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
 	*obj = obj_sphere(vec3r(-2, 0, 0), 1, 0);
-/*
-	if (!(obj = (t_obj*)ft_vector_push_back(&app.scene.v_obj, NULL)))
-		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
-	*obj = obj_plane(vec3r(2, 0, 0), vec3r(-1, 0, 0), vec3r(0, 1, 0), 2);
-
-	if (!(obj = (t_obj*)ft_vector_push_back(&app.scene.v_obj, NULL)))
-		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
-	*obj = obj_plane(vec3r(0, 0, 2), vec3r(0, 0, -1), vec3r(0, 1, 0), 3);
-
-	if (!(obj = (t_obj*)ft_vector_push_back(&app.scene.v_obj, NULL)))
-		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
-	*obj = obj_plane(vec3r(0, 0, -2), vec3r(0, 0, 1), vec3r(0, 1, 0), 4);
-
-	if (!(obj = (t_obj*)ft_vector_push_back(&app.scene.v_obj, NULL)))
-		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
-	*obj = obj_plane(vec3r(0, 2, 0), vec3r(0, -1, 0), vec3r(1, 0, 0), 5);*/
-/*
-** axis_aligned_cube
-*/
-	offset = 0.51;
-
-/*	if (!(obj = (t_obj*)ft_vector_push_back(&app.scene.v_obj, NULL)))
-		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
-	*obj = obj_aligned_cube(vec3r(-offset, -offset, offset), vec3r(1, 1, 1), 7);
-	if (!(obj = (t_obj*)ft_vector_push_back(&app.scene.v_obj, NULL)))
-		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
-	*obj = obj_aligned_cube(vec3r(offset, -offset, offset), vec3r(1, 1, 1), 7);
-	if (!(obj = (t_obj*)ft_vector_push_back(&app.scene.v_obj, NULL)))
-		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
-	*obj = obj_aligned_cube(vec3r(-offset, offset, offset), vec3r(1, 1, 1), 7);
-	if (!(obj = (t_obj*)ft_vector_push_back(&app.scene.v_obj, NULL)))
-		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
-	*obj = obj_aligned_cube(vec3r(offset, offset, offset), vec3r(1, 1, 1), 7);
-	if (!(obj = (t_obj*)ft_vector_push_back(&app.scene.v_obj, NULL)))
-		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
-	*obj = obj_aligned_cube(vec3r(-offset, -offset, -offset), vec3r(1, 1, 1), 7);
-	if (!(obj = (t_obj*)ft_vector_push_back(&app.scene.v_obj, NULL)))
-		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
-	*obj = obj_aligned_cube(vec3r(offset, -offset, -offset), vec3r(1, 1, 1), 7);
-	if (!(obj = (t_obj*)ft_vector_push_back(&app.scene.v_obj, NULL)))
-		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
-	*obj = obj_aligned_cube(vec3r(-offset, offset, -offset), vec3r(1, 1, 1), 7);
-*/
-	/*if (!(obj = (t_obj*)ft_vector_push_back(&app.scene.v_obj, NULL)))
-		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
-	*obj = obj_sphere(vec3r(3, 0, 0.5), 0.2, 7);
-*/
-
-
-/*
-	if (!(obj = (t_obj*)ft_vector_push_back(&app.scene.v_obj, NULL)))
-		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
-	*obj = obj_aligned_cube(vec3r(0, 0, 0), vec3r(10, 10, 10), 5);
-*/
-
 
 	app.scene.v_material = ft_vector_create(sizeof(t_material), NULL, NULL);
 	if (!(mat = (t_material*)ft_vector_push_back(&app.scene.v_material, NULL)))
@@ -283,7 +227,7 @@ int			main(int ac, const char **av)
 		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
 	app.scene.texture_pixels = (cl_uchar*)pixels;
 	app.scene.n_texture_pixels = width * height * (max_val <= 255 ? 1 : 2);
-/*	texture->type = e_texture_type_checkerboard;
+	texture->type = e_texture_type_checkerboard;
 	texture->as.image.pixels_offset = 0;
 	texture->as.image.width = width;
 	texture->as.image.height = height;
@@ -291,11 +235,11 @@ int			main(int ac, const char **av)
 	texture->filter = e_filter_nearest;
 	texture->translate.s[0] = 0.;
 	texture->translate.s[1] = 0.;
-	texture->scale.s[0] = 0.1;
-	texture->scale.s[1] = 0.2;
+	texture->scale.s[0] = 1;
+	texture->scale.s[1] = 1;
 	texture->as.checkerboard.color1 = vec3f(1, 0, 0);
 	texture->as.checkerboard.color2 = vec3f(0, 0, 0.70);
-*/
+	
 	app.config.screen_size.s[0] = APP_WIDTH;
 	app.config.screen_size.s[1] = APP_HEIGHT;
 	app.config.color_epsilon = 1.f / 255;
