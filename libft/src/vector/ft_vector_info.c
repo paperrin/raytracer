@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/30 22:10:02 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/15 15:19:00 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/18 03:31:18 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@ size_t				ft_vector_size(t_vector const *const vector)
 {
 	if (!vector->begin)
 		return (0);
-	return (((char*)vector->end - (char*)vector->begin) / vector->data_size) + 1;
+	return (((char*)vector->end - (char*)vector->begin)
+			/ vector->data_size) + 1;
 }
 
 size_t				ft_vector_size_bytes(t_vector const *const vector)

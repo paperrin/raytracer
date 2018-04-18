@@ -6,7 +6,7 @@
 /*   By: tlernoul <tlernoul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/04 14:35:22 by tlernoul          #+#    #+#             */
-/*   Updated: 2018/04/16 02:20:45 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/18 03:13:14 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,8 @@ static int		arg_device(t_app *const app, const char *argv[], int arg_index)
 	return (1);
 }
 
-static int		arg_scene_file(t_app *const app, const char *argv[], int arg_index)
+static int		arg_scene_file(t_app *const app, const char *argv[]
+		, int arg_index)
 {
 	t_interpreter	*interpreter;
 	t_ast			*ast;
@@ -50,7 +51,7 @@ static int		arg_scene_file(t_app *const app, const char *argv[], int arg_index)
 	return (1);
 }
 
-int			arg_dispatch(t_app *const app, const char *argv[])
+int				arg_dispatch(t_app *const app, const char *argv[])
 {
 	int		arg_index;
 

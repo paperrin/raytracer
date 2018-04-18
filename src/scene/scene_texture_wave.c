@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/16 21:02:17 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/16 21:12:24 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/18 02:39:59 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,10 @@ static t_texture	texture_wave_default(void)
 	tex.translate = vec2r(0, 0);
 	tex.scale = vec2r(1, 1);
 	tex.as.sine.color1 = vec3f(0, 0, 0);
-    tex.as.sine.color2 = vec3f(1, 1, 1);
-    tex.as.sine.color3 = vec3f(0, 0, 0);
-    tex.as.sine.color4 = vec3f(1, 1, 1);
-    tex.as.sine.factors = vec2r(1, 0);
+	tex.as.sine.color2 = vec3f(1, 1, 1);
+	tex.as.sine.color3 = vec3f(0, 0, 0);
+	tex.as.sine.color4 = vec3f(1, 1, 1);
+	tex.as.sine.factors = vec2r(1, 0);
 	return (tex);
 }
 

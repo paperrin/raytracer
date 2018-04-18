@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/21 20:27:32 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/11 00:36:49 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/18 03:27:54 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,14 +22,14 @@
 
 # define FT_FSTREAM_READ_SIZE 4096
 
-typedef struct			s_fstream
+typedef struct	s_fstream
 {
 	int					fd;
 	char				*read_buf;
 	size_t				read_offset;
 	size_t				read_buf_n_bytes;
 	size_t				read_buf_size;
-}						t_fstream;
+}				t_fstream;
 
 t_fstream		*ft_fstream_read_open(char const *const path);
 void			ft_fstream_close(t_fstream **fstream);

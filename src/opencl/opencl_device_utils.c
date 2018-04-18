@@ -6,7 +6,7 @@
 /*   By: tlernoul <tlernoul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/08 17:18:13 by tlernoul          #+#    #+#             */
-/*   Updated: 2018/04/08 19:54:10 by tlernoul         ###   ########.fr       */
+/*   Updated: 2018/04/18 03:25:43 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,8 @@ cl_device_id	*opencl_get_device_ids(cl_platform_id platform)
 	int				err;
 
 	device_number = opencl_get_device_number(platform);
-	if (!(devices = (cl_device_id*)malloc(sizeof(cl_device_id) * device_number)))
+	if (!(devices = (cl_device_id*)malloc(
+					sizeof(cl_device_id) * device_number)))
 		return (0);
 	if (CL_SUCCESS != (err = clGetDeviceIDs(platform, CL_DEVICE_TYPE_ALL,
 						device_number, devices, NULL)))
@@ -56,9 +57,9 @@ cl_device_id	opencl_get_device_id(cl_platform_id platform, cl_uint id)
 	}
 	else
 	{
-		if (CL_SUCCESS != (err = clGetDeviceIDs(platform, CL_DEVICE_TYPE_DEFAULT,
-							1, &device, NULL)))
+		if (CL_SUCCESS != (err = clGetDeviceIDs(platform
+						, CL_DEVICE_TYPE_DEFAULT, 1, &device, NULL)))
 			return (perror_cl_code(err));
 	}
-	return(device);
+	return (device);
 }

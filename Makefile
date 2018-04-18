@@ -78,10 +78,6 @@ CFILES		=	\
 				vec/vec3f.c										\
 				vec/vec2r.c										\
 				\
-				obj/obj_sphere.c								\
-				obj/obj_plane.c									\
-				obj/obj_aligned_cube.c						\
-				\
 				scene_parser/cstream/cstream.c							\
 				scene_parser/cstream/cstream_skip_chars.c				\
 				\
@@ -132,6 +128,8 @@ CFILES		=	\
 				scene/scene_transform_stack.c							\
 				scene/scene_sphere.c									\
 				scene/scene_plane.c										\
+				scene/scene_cylinder.c									\
+				scene/scene_cone.c										\
 				scene/scene_aligned_cube.c								\
 				scene/scene_point_light.c								\
 				scene/scene_dir_light.c									\
@@ -141,12 +139,6 @@ CFILES		=	\
 				scene/scene_texture_wave.c								\
 				scene/scene_texture_checkerboard.c						\
 				scene/scene_camera.c									\
-				\
-				obj/obj_sphere.c							\
-				obj/obj_plane.c								\
-				obj/obj_aligned_cube.c						\
-				obj/obj_cone.c									\
-				obj/obj_cylinder.c								\
 				\
 				main.c											\
 				process_input.c									\

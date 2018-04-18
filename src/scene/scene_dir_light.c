@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/15 21:05:49 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/15 21:33:34 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/18 02:38:41 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,8 @@ static t_light		dir_light_default(void)
 	return (light);
 }
 
-t_light				*scene_add_dir_light(t_scene *const scene, char const *const name)
+t_light				*scene_add_dir_light(t_scene *const scene
+		, char const *const name)
 {
 	t_light			*light;
 

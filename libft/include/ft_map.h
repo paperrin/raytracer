@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/15 15:28:38 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/15 19:45:23 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/18 03:32:12 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,17 +15,17 @@
 
 # include "ft_vector.h"
 
-typedef struct			s_map_pair
+typedef struct	s_map_pair
 {
 	void				*key;
 	void				*val;
-}						t_map_pair;
+}				t_map_pair;
 
-typedef struct			s_map
+typedef struct	s_map
 {
 	t_vector			v_keys;
 	t_vector			v_values;
-}						t_map;
+}				t_map;
 
 t_map			ft_map_create(size_t key_size, size_t val_size);
 void			ft_map_cmp_key_val_set(t_map *const map,

@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/17 14:34:09 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/11 00:35:14 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/18 03:17:03 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,8 @@ int		kernel_clear_launch(t_app *app)
 {
 	cl_int		error;
 
-	if (CL_SUCCESS != (error = clEnqueueNDRangeKernel(app->ocl.cmd_queue, app->kernel_clear.kernel
+	if (CL_SUCCESS != (error = clEnqueueNDRangeKernel(app->ocl.cmd_queue
+					, app->kernel_clear.kernel
 			, 1, NULL, &app->kernel_clear.work_size, NULL, 0, NULL, NULL)))
 		return (error_cl_code(error));
 	return (1);

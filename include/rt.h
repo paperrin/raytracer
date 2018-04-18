@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/09 16:36:38 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/18 01:55:38 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/18 03:18:55 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,25 +76,46 @@ int					scene_map_search_index(t_map const *const map,
 void				*scene_map_add(t_map *const map,
 		char const *const name);
 
-t_obj				*scene_add_sphere(t_scene *const scene, char const *const name);
-t_obj				*scene_add_plane(t_scene *const scene, char const *const name);
-t_obj				*scene_add_aligned_cube(t_scene *const scene, char const *const name);
-t_material			*scene_add_material(t_scene *const scene, char const *const name);
-t_light				*scene_add_dir_light(t_scene *const scene, char const *const name);
-t_light				*scene_add_spot_light(t_scene *const scene, char const *const name);
-t_light				*scene_add_point_light(t_scene *const scene, char const *const name);
-t_texture			*scene_add_texture(t_scene *const scene, char const *const name, char const *const path);
-t_texture			*scene_add_texture_wave(t_scene *const scene, char const *const name);
-t_texture			*scene_add_texture_checkerboard(t_scene *const scene, char const *const name);
-void				scene_add_camera(t_scene *const scene, t_app *const app);
-void				scene_camera_translate(t_camera *const cam, double x, double y, double z);
+t_obj				*scene_add_sphere(
+		t_scene *const scene, char const *const name);
+t_obj				*scene_add_plane(
+		t_scene *const scene, char const *const name);
+t_obj				*scene_add_cylinder(
+		t_scene *const scene, char const *const name);
+t_obj				*scene_add_cone(
+		t_scene *const scene, char const *const name);
+t_obj				*scene_add_aligned_cube(
+		t_scene *const scene, char const *const name);
+t_material			*scene_add_material(
+		t_scene *const scene, char const *const name);
+t_light				*scene_add_dir_light(
+		t_scene *const scene, char const *const name);
+t_light				*scene_add_spot_light(
+		t_scene *const scene, char const *const name);
+t_light				*scene_add_point_light(
+		t_scene *const scene, char const *const name);
+t_texture			*scene_add_texture(
+		t_scene *const scene, char const *const name, char const *const path);
+t_texture			*scene_add_texture_wave(
+		t_scene *const scene, char const *const name);
+t_texture			*scene_add_texture_checkerboard(
+		t_scene *const scene, char const *const name);
+void				scene_add_camera(
+		t_scene *const scene, t_app *const app);
+void				scene_camera_translate(
+		t_camera *const cam, double x, double y, double z);
 void				scene_camera_update(t_camera *const cam);
 
-void				scene_rotate(t_scene *const scene, float x, float y, float z);
-void				scene_translate(t_scene *const scene, float x, float y, float z);
-void				scene_transform(t_real3 *const vec3r, t_matrix const *const mx);
-void				scene_transform_pos(t_scene const *const scene, t_real3 *const vec3r);
-void				scene_transform_dir(t_scene const *const scene, t_real3 *const vec3r);
+void				scene_rotate(
+		t_scene *const scene, float x, float y, float z);
+void				scene_translate(
+		t_scene *const scene, float x, float y, float z);
+void				scene_transform(
+		t_real3 *const vec3r, t_matrix const *const mx);
+void				scene_transform_pos(
+		t_scene const *const scene, t_real3 *const vec3r);
+void				scene_transform_dir(
+		t_scene const *const scene, t_real3 *const vec3r);
 int					scene_transform_push(t_scene *const scene);
 void				scene_transform_pop(t_scene *const scene);
 
@@ -107,13 +128,6 @@ int					arg_devices(t_opencl *ocl, const char *args);
 void				callback_key(void *user_ptr, int key, int action);
 void				callback_mouse_motion(void *user_ptr, double x, double y);
 void				process_input(t_app *app, double elapsed);
-
-t_obj				obj_sphere(t_real3 pos, t_real radius, t_mat_id material);
-t_obj				obj_plane(t_real3 pos, t_real3 normal, t_real3 up, t_mat_id material);
-t_obj				obj_cone(t_real3 pos, t_real3 up, t_real3 normal, t_real angle);
-t_obj				obj_cylinder(t_real3 pos, t_real3 up, t_real3 normal,
-		t_real radius, t_mat_id material);
-t_obj				obj_aligned_cube(t_real3 pos, t_real3 size, t_mat_id material);
 
 void				render(void *user_ptr, double elapsed);
 
@@ -139,8 +153,7 @@ int					kernel_post_process_create(t_app *app);
 int					kernel_post_process_launch(t_app *app);
 void				kernel_post_process_destroy(t_app *app);
 
-
-char	            *get_unique_file_name(const char *path, const char *ext);
+char				*get_unique_file_name(const char *path, const char *ext);
 int					save_screenshot(t_app *app);
 
 #endif

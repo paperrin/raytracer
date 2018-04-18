@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/15 21:05:50 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/15 23:49:29 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/18 02:39:24 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,8 @@ static t_light		spot_light_default(void)
 	return (light);
 }
 
-t_light				*scene_add_spot_light(t_scene *const scene, char const *const name)
+t_light				*scene_add_spot_light(t_scene *const scene
+		, char const *const name)
 {
 	t_light			*light;
 

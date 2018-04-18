@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/07 18:08:28 by paperrin          #+#    #+#             */
-/*   Updated: 2017/12/07 18:47:38 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/18 03:39:29 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,15 +55,8 @@ static int	f_next(t_in_stream *in_stream)
 	return (in_stream->current);
 }
 
-int			ft_in_stream_file_open(t_in_stream *in_stream, const char *path)
+static int	alloc_stream_buffer(t_in_stream *in_stream)
 {
-	if (!(in_stream->in_source = (void*)malloc(sizeof(t_in_stream_file))))
-		return (0);
-	if ((((t_in_stream_file*)in_stream->in_source)->fd = open(path, O_RDONLY)) < 0)
-	{
-		ft_memdel(&in_stream->in_source);
-		return (0);
-	}
 	if (!(in_stream->buf = (char*)malloc(sizeof(*in_stream->buf)
 					* INPUT_STREAM_FILE_BUF_SIZE)))
 	{
@@ -71,6 +64,21 @@ int			ft_in_stream_file_open(t_in_stream *in_stream, const char *path)
 		ft_memdel(&in_stream->in_source);
 		return (0);
 	}
+	return (1);
+}
+
+int			ft_in_stream_file_open(t_in_stream *in_stream, const char *path)
+{
+	if (!(in_stream->in_source = (void*)malloc(sizeof(t_in_stream_file))))
+		return (0);
+	if ((((t_in_stream_file*)in_stream->in_source)->fd = open(path, O_RDONLY))
+			< 0)
+	{
+		ft_memdel(&in_stream->in_source);
+		return (0);
+	}
+	if (!alloc_stream_buffer(in_stream))
+		return (0);
 	in_stream->pos = 0;
 	in_stream->available = 0;
 	in_stream->f_next = &f_next;

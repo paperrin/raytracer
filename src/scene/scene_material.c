@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/15 19:49:09 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/16 02:27:52 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/18 02:40:26 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,8 @@ static t_material	material_default(void)
 	return (material);
 }
 
-t_material			*scene_add_material(t_scene *const scene, char const *const name)
+t_material			*scene_add_material(t_scene *const scene
+		, char const *const name)
 {
 	t_material		*mat;
 

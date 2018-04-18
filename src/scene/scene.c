@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/11 20:58:15 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/18 02:02:40 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/18 02:35:18 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ int		scene_load(t_scene *const scene, t_app *const app)
 
 	if (!(texture = scene_add_texture_wave(scene, "tex_wave")))
 		return (0);
+	texture->scale = vec2r(0.04, 1);
 
 	if (!(texture = scene_add_texture_checkerboard(scene, "tex_checker")))
 		return (0);
@@ -143,9 +144,22 @@ int		scene_load(t_scene *const scene, t_app *const app)
 		return (error_string("could not find material"));
 
 	scene_transform_pop(scene);
+	scene_translate(scene, 2, 0, 0);
+	if (!(obj = scene_add_cylinder(scene, NULL)))
+		return (0);
+	if ((obj->material_id = scene_map_search_index(&scene->m_material, "mat_checker")) < 0)
+		return (error_string("could not find material"));
+
+	scene_transform_pop(scene);
+	scene_translate(scene, -2, 0, 0);
+	if (!(obj = scene_add_cone(scene, NULL)))
+		return (0);
+	if ((obj->material_id = scene_map_search_index(&scene->m_material, "mat_wave")) < 0)
+		return (error_string("could not find material"));
+
+	scene_transform_pop(scene);
 	scene_translate(scene, 0, 2, -2);
 	scene_rotate(scene, M_PI / 2, 0, 0);
-
 	if (!(light = scene_add_point_light(scene, NULL)))
 		return (0);
 	light->intensity = 80;

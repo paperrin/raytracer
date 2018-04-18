@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/30 23:05:58 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/15 15:26:30 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/18 03:31:42 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,8 @@ void			*internal_ft_vector_perase_n_should_free(t_vector *vector,
 	vector_size = ft_vector_size(vector);
 	if (elem_first < vector->begin || elem_first > vector->end || n < 1)
 		return (elem_first);
-	elem_first_index = ((char*)elem_first - (char*)vector->begin) / vector->data_size;
+	elem_first_index = ((char*)elem_first - (char*)vector->begin)
+		/ vector->data_size;
 	n = MIN(n, vector_size - elem_first_index);
 	if (should_free)
 		internal_ft_vector_free_range(vector, elem_first, n);

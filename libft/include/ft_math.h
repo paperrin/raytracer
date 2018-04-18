@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/09 15:17:25 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/17 18:24:39 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/18 03:29:07 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,8 @@ void			ft_matrix_rot(t_matrix *mx, float x, float y, float z);
 void			ft_matrix_rot_x(t_matrix *mx, float alpha);
 void			ft_matrix_rot_y(t_matrix *mx, float alpha);
 void			ft_matrix_rot_z(t_matrix *mx, float alpha);
-void			ft_matrix_rot_axis(t_matrix *const mx, t_vec3f axis, float alpha);
+void			ft_matrix_rot_axis(t_matrix *const mx, t_vec3f axis
+		, float alpha);
 
 t_vec3f			ft_vec3f(float x, float y, float z);
 t_vec3f			*ft_vec3f_new(float x, float y, float z);

@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/16 21:23:26 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/18 01:23:24 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/18 02:39:04 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static t_camera		camera_default(void)
 void				scene_add_camera(t_scene *const scene, t_app *const app)
 {
 	(void)scene;
-	app->cam = camera_default();;
+	app->cam = camera_default();
 }
 
 void				scene_camera_translate(t_camera *const cam,
