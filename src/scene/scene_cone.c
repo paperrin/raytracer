@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/18 02:26:01 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/18 02:28:38 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/18 23:18:14 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,10 @@ static t_obj	cone_default(void)
 	t_obj	obj;
 
 	obj.type = e_type_cone;
-	obj.material_id = 0;
-	obj.as.cone.pos = vec3r(0, 0, 0);
-	obj.as.cone.up = vec3r(0, 1, 0);
-	obj.as.cone.normal = vec3r(0, 0, 1);
+	obj.material_id = -1;
+	obj.pos = vec3r(0, 0, 0);
+	obj.up = vec3r(0, 1, 0);
+	obj.normal = vec3r(0, 0, 1);
 	obj.as.cone.angle = M_PI / 8;
 	return (obj);
 }
@@ -32,8 +32,8 @@ t_obj			*scene_add_cone(t_scene *const scene, char const *const name)
 	if (!(obj = (t_obj*)scene_map_add(&scene->m_obj, name)))
 		return (NULL);
 	*obj = cone_default();
-	scene_transform_pos(scene, &obj->as.cone.pos);
-	scene_transform_dir(scene, &obj->as.cone.up);
-	scene_transform_dir(scene, &obj->as.cone.normal);
+	scene_transform_pos(scene, &obj->pos);
+	scene_transform_dir(scene, &obj->up);
+	scene_transform_dir(scene, &obj->normal);
 	return (obj);
 }

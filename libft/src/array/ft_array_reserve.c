@@ -6,7 +6,7 @@
 /*   By: paperrin <paperrin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/27 01:04:59 by paperrin          #+#    #+#             */
-/*   Updated: 2017/12/05 15:25:13 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/19 01:29:29 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@ t_array_it		ft_array_reserve(t_array *array
 	t_array		new;
 	size_t		i;
 
-	reserve_front = MAX(reserve_front, array->reserve_front);
-	reserve_back = MAX(reserve_back, array->reserve_back);
+	reserve_front = ft_max(reserve_front, array->reserve_front);
+	reserve_back = ft_max(reserve_back, array->reserve_back);
 	if (reserve_front <= array->reserve_front
 			&& reserve_back <= array->reserve_back)
 		return (array->begin);

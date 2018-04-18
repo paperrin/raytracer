@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/15 19:49:09 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/18 02:40:26 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/18 18:52:53 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,14 @@ static t_material	material_default(void)
 	material.color = vec3f(1, 1, 1);
 	material.reflection = 0;
 	material.refraction = 0;
+	material.emission = 0;
+	material.ignores_light = 0;
 	material.specular = 0;
 	material.specular_color = vec3f(1, 1, 1);
 	material.specular_exp = 100;
 	material.refraction_index = 1;
 	material.projection = 1;
-	material.texture_id = -2;
+	material.texture_id = -1;
 	return (material);
 }
 

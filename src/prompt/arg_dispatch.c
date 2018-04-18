@@ -6,7 +6,7 @@
 /*   By: tlernoul <tlernoul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/04 14:35:22 by tlernoul          #+#    #+#             */
-/*   Updated: 2018/04/18 03:59:27 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/18 19:54:40 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static int		arg_scene_file(t_app *const app, const char *argv[]
 		return (0);
 	if (!(interpreter = interpreter_create(app)))
 		return (0);
-	if (!interpreter_add_class_console(interpreter))
+	if (!interpreter_add_all_hooks(interpreter))
 		return (0);
 	if (!interpreter_ast_eval(interpreter, ast))
 		return (0);

@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/10 23:39:23 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/11 20:03:48 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/18 22:12:24 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,11 +56,12 @@ static int	f_method_print(t_interpreter *const interpreter,
 
 int			interpreter_add_class_console(t_interpreter *interpreter)
 {
-	if (!(interpreter_class_add(interpreter, e_class_type_console,
+	const t_e_class_type		class_type = e_class_type_console;
+	if (!(interpreter_class_add(interpreter, class_type,
 					interpreter_method_create("Console", &f_class_console))))
-		return (error_string("could not add class"));
-	if (!(interpreter_class_add_method(interpreter, e_class_type_console,
+		return (0);
+	if (!(interpreter_class_add_method(interpreter, class_type,
 					interpreter_method_create("print", &f_method_print))))
-		return (error_string("could not add method"));
+		return (0);
 	return (1);
 }

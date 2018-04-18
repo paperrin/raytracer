@@ -160,6 +160,8 @@ CFILES		=	ft_swap.c			\
 				math/ft_vec2f_add.c			\
 				math/ft_vec2f_mag.c			\
 				math/ft_vec2f_rot_scale.c	\
+				math/ft_clampf.c			\
+				math/ft_clamp.c				\
 				printf/ft_printf_field.c			\
 				printf/ft_printf_core.c				\
 				printf/ft_printf_parse.c			\

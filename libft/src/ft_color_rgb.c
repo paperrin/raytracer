@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/07 20:08:06 by paperrin          #+#    #+#             */
-/*   Updated: 2017/12/05 14:54:58 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/19 01:26:28 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,9 @@ t_color_rgb		ft_color_rgb_add_rgba(t_color_rgb rgb, t_color_rgba rgba)
 	float	a_base;
 
 	a_base = 1 - rgba.a;
-	r = MIN(255, (rgb.r * a_base + rgba.r * rgba.a));
-	g = MIN(255, (rgb.g * a_base + rgba.g * rgba.a));
-	b = MIN(255, (rgb.b * a_base + rgba.b * rgba.a));
+	r = ft_min(255, (rgb.r * a_base + rgba.r * rgba.a));
+	g = ft_min(255, (rgb.g * a_base + rgba.g * rgba.a));
+	b = ft_min(255, (rgb.b * a_base + rgba.b * rgba.a));
 	return (ft_color_rgb(r, g, b));
 }
 

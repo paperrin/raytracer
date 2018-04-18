@@ -45,22 +45,22 @@ int			is_in_shadow(global t_config const *const config, float3 *perceived_l_colo
 	t_obj				obj;
 	cl_uint				p_depth = 0;
 
-	if (!config->projection_depth && ray_throw_get_any_hit_obj(config, &light_ray, objs, objs_size, &t) > -1 && light_dist > t)
-		return (1);
 	*perceived_l_color = (float3)(1, 1, 1);
 	while ((obj_id = ray_throw_get_first_hit_obj(config, &light_ray, objs, objs_size, &t)) > -1 && light_dist > t)
 	{
 		obj = objs[obj_id];
 		mat = &mats[obj.material_id];
+		hit_pos = light_ray.origin + light_ray.dir * t;
+		light_ray.origin = hit_pos + obj_surface_normal(&obj, hit_pos, light_ray) * (t_real)-config->intersection_bias;
+		light_dist -= t + t * config->intersection_bias;
+		if (mat->ignores_light)
+			continue ;
 		importance *= mat->refraction;
 		if (p_depth >= config->projection_depth || !mat->projection
 				|| importance < config->color_epsilon)
 			return (1);
-		hit_pos = light_ray.origin + light_ray.dir * t;
 		*perceived_l_color *= obj_surface_color(&obj, mats, textures, textures_size,
 				texture_pixels, n_texture_pixels, hit_pos) * importance;
-		light_ray.origin = hit_pos + obj_surface_normal(&obj, hit_pos, light_ray) * (t_real)-config->intersection_bias;
-		light_dist -= t + t * config->intersection_bias;
 		p_depth++;
 	}
 	return (0);
@@ -84,8 +84,6 @@ float3			shade(global t_config const *const config, t_obj obj, t_real3 hit_pos, 
 	float3			perceived_l_color;
 	float			vdn;
 
-	surface_normal = obj_surface_normal(&obj, hit_pos, ray);
-	light_ray.origin = hit_pos;
 	surface_color = obj_surface_color(
 			&obj,
 			mats,
@@ -93,23 +91,29 @@ float3			shade(global t_config const *const config, t_obj obj, t_real3 hit_pos, 
 			texture_pixels, n_texture_pixels,
 			hit_pos);
 	color = (float3)(0, 0, 0);
-	vdn = dot(-surface_normal, ray.dir);
 	i = -1;
-	while (++i < (int)lights_size)
+	if (!mats[obj.material_id].ignores_light)
 	{
-		light_ray.dir = light_get_dir(config, lights[i], hit_pos, &light_color, &light_dist);
-		ndl = dot(light_ray.dir, surface_normal);
-		if (ndl < 0)
-			continue ;
-		if (!is_in_shadow(config, &perceived_l_color, light_ray, light_color, light_dist, objs, objs_size, mats,
-					mats_size, textures, textures_size, texture_pixels, n_texture_pixels))
+		surface_normal = obj_surface_normal(&obj, hit_pos, ray);
+		light_ray.origin = hit_pos;
+		vdn = dot(-surface_normal, ray.dir);
+		while (++i < (int)lights_size)
 		{
-			color += surface_color * perceived_l_color * light_color * (float)ndl;
-			color += get_specular_color(config, mats[obj.material_id], ray.dir, light_ray, hit_pos, surface_normal, perceived_l_color * light_color);
+			light_ray.dir = light_get_dir(config, lights[i], hit_pos, &light_color, &light_dist);
+			ndl = dot(light_ray.dir, surface_normal);
+			if (ndl < 0)
+				continue ;
+			if (!is_in_shadow(config, &perceived_l_color, light_ray, light_color, light_dist, objs, objs_size, mats,
+						mats_size, textures, textures_size, texture_pixels, n_texture_pixels))
+			{
+				color += surface_color * perceived_l_color * light_color * (float)ndl;
+				color += get_specular_color(config, mats[obj.material_id], ray.dir, light_ray, hit_pos, surface_normal, perceived_l_color * light_color);
+			}
 		}
+		color += surface_color * config->camera_light_c * config->camera_light_i * vdn;
+		color += surface_color * config->ambient_c * config->ambient_i;
 	}
-	color += surface_color * config->camera_light_c * config->camera_light_i * vdn;
-	color += surface_color * config->ambient_c * config->ambient_i;
+	color += surface_color * mats[obj.material_id].emission;
 	color = tone_map(color);
 	return (color);
 }

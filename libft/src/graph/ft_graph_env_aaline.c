@@ -6,7 +6,7 @@
 /*   By: paperrin <paperrin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/09 02:36:07 by paperrin          #+#    #+#             */
-/*   Updated: 2017/10/16 12:44:09 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/19 01:30:44 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static void		plot(t_graph_env *env, int x, int y, float a)
 {
 	t_color_rgba	rgba;
 
-	a = 1 - MIN(1, a);
+	a = 1 - ft_minf(1, a);
 	rgba = ft_color_rgba(env->fill_rgba.r, env->fill_rgba.g, env->fill_rgba.b
 			, env->fill_rgba.a * a);
 	(*env->f_put_pixel_rgba)(ft_vec3f(x, y, 0), rgba, env->put_pixel_param);

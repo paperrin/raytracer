@@ -1,15 +1,15 @@
 #include "shared.h"
 
-t_real3				light_get_dir(global t_config *config, t_light light, t_real3 to_pos,
+t_real3				light_get_dir(const global t_config *config, t_light light, t_real3 to_pos,
 		cl_float3 *color, t_real *dist);
-t_real3				light_point_get_dir(global t_config *config, t_light light, t_real3 to_pos,
+t_real3				light_point_get_dir(const global t_config *config, t_light light, t_real3 to_pos,
 		cl_float3 *color, t_real *dist);
-t_real3				light_dir_get_dir(global t_config *config, t_light light, t_real3 to_pos,
+t_real3				light_dir_get_dir(const global t_config *config, t_light light, t_real3 to_pos,
 		cl_float3 *color, t_real *dist);
-t_real3				light_spot_get_dir(global t_config *config, t_light light, t_real3 to_pos,
+t_real3				light_spot_get_dir(const global t_config *config, t_light light, t_real3 to_pos,
 		cl_float3 *color, t_real *dist);
 
-t_real3				light_get_dir(global t_config *config, t_light light, t_real3 to_pos,
+t_real3				light_get_dir(const global t_config *config, t_light light, t_real3 to_pos,
 		cl_float3 *color, t_real *dist)
 {
 	*dist = -1;
@@ -23,7 +23,7 @@ t_real3				light_get_dir(global t_config *config, t_light light, t_real3 to_pos,
 	return ((t_real3)(0, 0, 0));
 }
 
-t_real3				light_point_get_dir(global t_config *config, t_light light, t_real3 to_pos,
+t_real3				light_point_get_dir(const global t_config *config, t_light light, t_real3 to_pos,
 		cl_float3 *color, t_real *dist)
 {
 	t_real3		dir;
@@ -39,7 +39,7 @@ t_real3				light_point_get_dir(global t_config *config, t_light light, t_real3 t
 	return (dir);
 }
 
-t_real3				light_dir_get_dir(global t_config *config, t_light light, t_real3 to_pos,
+t_real3				light_dir_get_dir(const global t_config *config, t_light light, t_real3 to_pos,
 	cl_float3 *color, t_real *dist)
 {
 	*dist = REAL_MAX;
@@ -47,7 +47,7 @@ t_real3				light_dir_get_dir(global t_config *config, t_light light, t_real3 to_
 	return (-light.as.dir.dir);
 }
 
-t_real3				light_spot_get_dir(global t_config *config, t_light light, t_real3 to_pos,
+t_real3				light_spot_get_dir(const global t_config *config, t_light light, t_real3 to_pos,
 	cl_float3 *color, t_real *dist)
 {
 	t_real3			dir;

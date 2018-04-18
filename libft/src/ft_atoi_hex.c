@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/05 23:17:26 by paperrin          #+#    #+#             */
-/*   Updated: 2017/08/06 00:15:41 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/19 02:12:03 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ static int		is_whitespace(char c)
 
 static int		is_char_in_base(char c, int base)
 {
+	c = ft_tolower(c);
 	if (base >= 2 && base <= 10)
 		return (c >= '0' && c <= '1' + base - 1);
 	else if (base > 10 && base <= 36)
@@ -34,7 +35,9 @@ int				ft_atoi_hex_is_valid(const char *str)
 	p = (char*)str;
 	while (is_whitespace(*p))
 		p++;
-	if (p[0] && p[1] && !ft_strncmp(p, "0x", 2) && is_char_in_base(p[2], 16))
+	if (p[0] && p[1]
+			&& p[0] == '0' && ft_tolower(p[1]) == 'x'
+			&& is_char_in_base(p[2], 16))
 		return (p - str + 2);
 	return (0);
 }

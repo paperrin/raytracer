@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/15 21:05:49 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/18 02:38:41 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/18 18:14:51 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static t_light		dir_light_default(void)
 	light.intensity = 1;
 	light.glare = 0;
 	light.fallback = 0;
-	light.as.dir.dir = vec3r(0, 0, 1);
+	light.as.dir.dir = vec3r(0, -1, 0);
 	return (light);
 }
 

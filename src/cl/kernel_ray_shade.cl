@@ -53,7 +53,6 @@ kernel void			kernel_ray_shade(
 				texture_pixels, *n_texture_pixels,
 				lights, *lights_size);
 
-		color *= state.color_factor;
 
 		if (config->cur_depth < config->max_depth)
 		{
@@ -83,8 +82,10 @@ kernel void			kernel_ray_shade(
 		}
 	}
 
-	color += get_light_glare_color(config, objs, *objs_size, lights, *lights_size, state.ray);
+	if (config->cur_depth == 0)
+		color += get_light_glare_color(config, objs, *objs_size, lights, *lights_size, mats, mats_size, state.ray);
 
+	color *= state.color_factor;
 	color *= (state.importance - state.importance * (mats[obj.material_id].reflection + mats[obj.material_id].refraction));
 	color /= config->samples_width * config->samples_width;
 	atomic_addf(&pixels[state.pxl_id * 4 + 0], color.r);

@@ -1,0 +1,7 @@
+Material("mat_water")
+	.color(0.2, 0.7, 1)
+ObjSphere()
+	.radius(1)
+	.material("mat_water")
+Console()
+	.print("Yooohooo !\n")

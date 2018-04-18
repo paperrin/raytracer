@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/18 02:22:53 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/18 02:28:53 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/18 23:18:28 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,10 @@ static t_obj	cylinder_default(void)
 	t_obj	obj;
 
 	obj.type = e_type_cylinder;
-	obj.material_id = 0;
-	obj.as.cylinder.pos = vec3r(0, 0, 0);
-	obj.as.cylinder.up = vec3r(0, 1, 0);
-	obj.as.cylinder.normal = vec3r(0, 0, 1);
+	obj.material_id = -1;
+	obj.pos = vec3r(0, 0, 0);
+	obj.up = vec3r(0, 1, 0);
+	obj.normal = vec3r(0, 0, 1);
 	obj.as.cylinder.radius = 0.5;
 	return (obj);
 }
@@ -33,8 +33,8 @@ t_obj			*scene_add_cylinder(t_scene *const scene,
 	if (!(obj = (t_obj*)scene_map_add(&scene->m_obj, name)))
 		return (NULL);
 	*obj = cylinder_default();
-	scene_transform_pos(scene, &obj->as.cylinder.pos);
-	scene_transform_dir(scene, &obj->as.cylinder.up);
-	scene_transform_dir(scene, &obj->as.cylinder.normal);
+	scene_transform_pos(scene, &obj->pos);
+	scene_transform_dir(scene, &obj->up);
+	scene_transform_dir(scene, &obj->normal);
 	return (obj);
 }

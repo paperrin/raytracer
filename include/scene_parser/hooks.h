@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/10 23:37:25 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/11 19:21:51 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/20 16:14:42 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,27 @@
 # include <stdarg.h>
 # include "scene_parser/interpreter.h"
 
+/*
+** verifies if arguments match types provided,
+** prints errors, and returns if they are valid
+*/
 int			hook_valid_args(t_hook_args const *const passed_args,
 		size_t const n_expected_args, ...);
+/*
+** verifies if arguments match types provided perfectly
+** and arg number matches expected number, no errors
+*/
+int			hook_args_match(t_hook_args const *const passed_args
+		, size_t const n_expected_args, ...);
 
-int			hook_error(char const *const hook_name, char const *const error);
+int			hook_error(t_hook_args const *const args, char const *const error);
 
-int			interpreter_add_class_console(t_interpreter *interpreter);
+int			interpreter_method_stub_args_set_color(
+		t_hook_args const *const args, cl_float3 *const color);
+
+int			interpreter_add_all_hooks(t_interpreter *const interpreter);
+int			interpreter_add_class_console(t_interpreter *const interpreter);
+int			interpreter_add_class_obj_sphere(t_interpreter *const interpreter);
+int			interpreter_add_class_material(t_interpreter *const interpreter);
 
 #endif

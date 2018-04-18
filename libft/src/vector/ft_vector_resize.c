@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/30 21:09:59 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/15 15:19:37 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/19 01:29:56 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void			*ft_vector_reserve(t_vector *vector, size_t reserve)
 	size_t		new_capacity;
 	size_t		size_byte;
 
-	reserve = MAX(reserve, vector->reserve);
+	reserve = ft_max(reserve, vector->reserve);
 	if (reserve <= vector->reserve)
 		return (vector->begin);
 	new_capacity = ft_vector_size(vector) + reserve;

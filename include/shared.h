@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/13 14:25:38 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/18 02:19:22 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/18 22:57:26 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,47 +158,28 @@ typedef enum			e_obj_type
 	e_type_aligned_cube
 }						t_e_obj_type;
 
-typedef struct			s_plane
-{
-	t_real3				pos;
-	t_real3				up;
-	t_real3				normal;
-}						t_plane;
-
 typedef struct			s_sphere
 {
-	t_real3				pos;
-	t_real3				up;
-	t_real3				front;
 	t_real				radius;
 }						t_sphere;
 
 typedef struct			s_cylinder
 {
-	t_real3				pos;
-	t_real3				normal;
-	t_real3				up;
 	t_real				radius;
-	t_mat_id 			material;
 }						t_cylinder;
 
 typedef struct			s_cone
 {
-	t_real3				pos;
-	t_real3				up;
 	t_real				angle;
-	t_real3				normal;
 }						t_cone;
 
 typedef	struct			s_aligned_cube
 {
-	t_real3				pos;
 	t_real3				size;
 }						t_aligned_cube;
 
 typedef union			u_obj_container
 {
-	t_plane				plane;
 	t_sphere			sphere;
 	t_cylinder			cylinder;
 	t_cone				cone;
@@ -207,8 +188,11 @@ typedef union			u_obj_container
 
 typedef struct			s_obj
 {
-	t_obj_type			type;
 	t_mat_id			material_id;
+	t_obj_type			type;
+	t_real3				pos;
+	t_real3				up;
+	t_real3				normal;
 	t_obj_container		as;
 }						t_obj;
 
@@ -217,6 +201,8 @@ struct					s_material
 	cl_float3			color;
 	cl_float			reflection;
 	cl_float			refraction;
+	cl_float			emission;
+	cl_int				ignores_light;
 	cl_float			specular;
 	cl_float3			specular_color;
 	cl_float			specular_exp;

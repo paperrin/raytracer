@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/07 01:53:51 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/11 19:53:02 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/19 00:54:32 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static int			token_call_args_create(t_interpreter *const interpreter,
 	{
 		cur_arg = tk_call->as.call.args[i];
 		tk_this = token_class(e_class_type_none, NULL);
-		if (!token_eval(interpreter, &tk_this, cur_arg, args_eval[i]))
+		if (!token_eval(interpreter, &tk_this, cur_arg, &(*args_eval)[i]))
 		{
 			ft_memdel((void**)args_eval);
 			return (0);

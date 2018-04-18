@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/09 19:50:51 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/11 20:18:22 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/18 22:09:53 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int			interpreter_class_add(t_interpreter *const interpreter,
 	t_method	**new_class;
 
 	if (!class_ctor)
-		return (0);
+		return (error_string("could not add class with null constructor"));
 	if (interpreter_find_method_class_type(interpreter, class_type))
 	{
 		return (error_string(
@@ -65,6 +65,32 @@ int			interpreter_class_add_method(
 	}
 	method->class_type = class_type;
 	if (!class_add_method(class, method))
+		return (0);
+	return (1);
+}
+
+int			interpreter_class_add_method_batch(t_interpreter *const interpreter
+		, t_e_class_type class_type, size_t const n_methods, ...)
+{
+	char				*method_name;
+	t_f_method_hook		*f_method_hook;
+	int					i;
+
+	va_list(ap);
+	va_start(ap, n_methods);
+	i = -1;
+	while (++i < (int)n_methods)
+	{
+		method_name = va_arg(ap, char*);
+		f_method_hook = va_arg(ap, t_f_method_hook*);
+		if (!method_name || !f_method_hook)
+			break ;
+		if (!interpreter_class_add_method(interpreter, class_type,
+					interpreter_method_create(method_name, f_method_hook)))
+			break ;
+	}
+	va_end(ap);
+	if (i != (int)n_methods)
 		return (0);
 	return (1);
 }

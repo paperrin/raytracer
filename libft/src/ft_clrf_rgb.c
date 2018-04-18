@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/10 21:37:08 by paperrin          #+#    #+#             */
-/*   Updated: 2017/12/05 14:57:49 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/19 01:28:53 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,12 +36,9 @@ t_clrf_rgb		ft_clrf_rgb(float r, float g, float b)
 
 t_clrf_rgb		ft_clrf_rgb_clamp(t_clrf_rgb color)
 {
-	color.r = MIN(color.r, 1);
-	color.g = MIN(color.g, 1);
-	color.b = MIN(color.b, 1);
-	color.r = MAX(color.r, 0);
-	color.g = MAX(color.g, 0);
-	color.b = MAX(color.b, 0);
+	color.r = ft_clampf(color.r, 0, 1);
+	color.g = ft_clampf(color.g, 0, 1);
+	color.b = ft_clampf(color.b, 0, 1);
 	return (color);
 }
 

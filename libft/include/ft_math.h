@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/09 15:17:25 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/18 03:29:07 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/19 01:26:04 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,7 @@
 # include "libft.h"
 # include <math.h>
 
-# define MAX(A, B) ((A) > (B) ? (A) : (B))
-# define MIN(A, B) ((A) < (B) ? (A) : (B))
-
 # define MATH_MX_SIZE 4
-# define MATH_TO_RAD(deg) (deg * M_PI / 180)
-# define MATH_TO_DEG(rad) (rad * 180 / M_PI)
 
 typedef struct	s_vec2i
 {
@@ -136,5 +131,12 @@ float			ft_vec2f_mag(t_vec2f vec);
 float			ft_vec2f_dot(t_vec2f a, t_vec2f b);
 t_vec2f			ft_vec2f_rot(t_vec2f vec, float angle);
 t_vec2f			ft_vec2f_scale(t_vec2f vec, float scale);
+
+long double		ft_minf(long double a, long double b);
+long double		ft_maxf(long double a, long double b);
+long double		ft_clampf(long double val, long double min, long double max);
+intmax_t		ft_min(intmax_t a, intmax_t b);
+intmax_t		ft_max(intmax_t a, intmax_t b);
+intmax_t		ft_clamp(intmax_t val, intmax_t min, intmax_t max);
 
 #endif

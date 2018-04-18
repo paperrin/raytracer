@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/11 20:58:15 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/18 02:35:18 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/18 23:17:42 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,10 @@ int		scene_load(t_scene *const scene, t_app *const app)
 	if (!(texture = scene_add_texture_checkerboard(scene, "tex_checker")))
 		return (0);
 
+	if (!(texture = scene_add_texture(scene, "tex_sky", "../textures/park_pano.ppm")))
+		return (0);
+	texture->as.image.filter = e_filter_bilinear;
+
 /*
 ** Materials
 */
@@ -99,22 +103,54 @@ int		scene_load(t_scene *const scene, t_app *const app)
 	if ((mat->texture_id = scene_map_search_index(&scene->m_texture, "tex_checker")) < 0)
 		return (error_string("could not find material"));
 
-	if (!(mat = scene_add_material(scene, "mat_white")))
+	if (!(mat = scene_add_material(scene, "mat_floor")))
 		return (0);
 	mat->color = vec3f(1, 1, 1);
 	mat->reflection = 0;
 	mat->refraction = 0;
 	mat->texture_id = -1;
+
+	if (!(mat = scene_add_material(scene, "mat_sky")))
+		return (0);
+	mat->color = vec3f(1, 0.0, 0.0);
+	mat->reflection = 0;
+	mat->refraction = 0;
+	mat->specular = 0;
+	mat->specular_exp = 10;
+	mat->emission = 3;
+	mat->ignores_light = 1;
+	if ((mat->texture_id = scene_map_search_index(&scene->m_texture, "tex_sky")) < 0)
+		return (error_string("could not find material"));
+
+	if (!(mat = scene_add_material(scene, "mat_metal")))
+		return (0);
+	mat->color = vec3f(1, 1, 1);
+	mat->reflection = 0.9;
+	mat->refraction = 0;
+	mat->specular = 0;
+	mat->specular_exp = 100;
+	mat->emission = 0.2;
+	mat->ignores_light = 0;
+
+
 /*
 ** Scene
 */
 
+	scene_translate(scene, 0, 0, 1);
+
 	if (!(obj = scene_add_sphere(scene, NULL)))
 		return (0);
-	obj->as.sphere.radius = 10;
-	if ((obj->material_id = scene_map_search_index(&scene->m_material, "mat_white")) < 0)
+	obj->as.sphere.radius = 1000;
+	if ((obj->material_id = scene_map_search_index(&scene->m_material, "mat_sky")) < 0)
 		return (error_string("could not find material"));
-
+/*
+	if (!(obj = scene_add_sphere(scene, NULL)))
+		return (0);
+	if ((obj->material_id = scene_map_search_index(&scene->m_material, "mat_metal")) < 0)
+		return (error_string("could not find material"));
+*/
+/*
 	scene_transform_pop(scene);
 	scene_translate(scene, -1, 0, -1);
 	if (!(obj = scene_add_sphere(scene, NULL)))
@@ -156,7 +192,8 @@ int		scene_load(t_scene *const scene, t_app *const app)
 		return (0);
 	if ((obj->material_id = scene_map_search_index(&scene->m_material, "mat_wave")) < 0)
 		return (error_string("could not find material"));
-
+*/
+	/*
 	scene_transform_pop(scene);
 	scene_translate(scene, 0, 2, -2);
 	scene_rotate(scene, M_PI / 2, 0, 0);
@@ -165,14 +202,15 @@ int		scene_load(t_scene *const scene, t_app *const app)
 	light->intensity = 80;
 	light->fallback = 1;
 	light->glare = 0;
-
+*/
 	scene_transform_pop(scene);
 	scene_translate(scene, 0, 2, 0);
-	if (!(light = scene_add_point_light(scene, NULL)))
+	if (!(light = scene_add_dir_light(scene, NULL)))
 		return (0);
 	light->intensity = 1;
-	light->fallback = 1;
-	light->glare = 0;
+	light->fallback = 0;
+	light->glare = 0.5;
+	light->as.dir.dir = vec3r_norm(vec3r(0.5, -1, 1));
 
 	app->config.screen_size.s[0] = APP_WIDTH;
 	app->config.screen_size.s[1] = APP_HEIGHT;
@@ -185,11 +223,12 @@ int		scene_load(t_scene *const scene, t_app *const app)
 	app->config.camera_light_c = vec3f(1, 1, 1);
 	app->config.camera_light_i = 0.025;
 	app->config.samples_width = 1;
-	app->config.max_depth = 0;
+	app->config.max_depth = 1;
 	app->config.projection_depth = 0;
 	app->config.post_filters = e_post_filter_none;
 
 	scene_add_camera(scene, app);
+	scene_transform_pop(scene);
 
 	return (1);
 }

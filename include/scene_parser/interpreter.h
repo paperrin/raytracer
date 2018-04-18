@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/09 19:01:28 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/11 20:23:37 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/19 00:27:40 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,9 @@ int					interpreter_class_add(t_interpreter *const interpreter,
 int					interpreter_class_add_method(
 		t_interpreter *const interpreter,
 		t_e_class_type class_type, t_method *const method);
+int					interpreter_class_add_method_batch(
+		t_interpreter *const interpreter, t_e_class_type class_type,
+		size_t const n_methods, ...);
 
 t_method			*interpreter_find_method_class_type(
 		t_interpreter const *const interpreter, t_e_class_type class_type);
