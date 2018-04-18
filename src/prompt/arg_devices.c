@@ -6,7 +6,7 @@
 /*   By: tlernoul <tlernoul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/04 14:44:45 by tlernoul          #+#    #+#             */
-/*   Updated: 2018/04/08 19:30:28 by tlernoul         ###   ########.fr       */
+/*   Updated: 2018/04/18 03:57:18 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ static int	get_platforms(cl_uint pf_nb, cl_char *platform_n)
 			return (0);
 	}
 	free(platforms);
-	ft_printf("\nusage: rt -d <platform_id>:<device_id>\n");
+	ft_printf("\n" APP_USAGE);
 	return (1);
 }
 

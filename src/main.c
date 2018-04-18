@@ -6,15 +6,15 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/09 16:14:42 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/18 02:18:51 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/18 03:51:31 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
 
-int			app_create(t_app *app, const char **argv)
+int			app_create(t_app *app, int ac, const char **argv)
 {
-	if (!arg_dispatch(app, argv))
+	if (!arg_dispatch(app, ac, argv))
 		return (0);
 	if (!window_create(&app->win, APP_WIDTH, APP_HEIGHT, APP_TITLE))
 		return (0);
@@ -112,7 +112,7 @@ int			main(int ac, const char **av)
 	t_app				app;
 
 	(void)ac;
-	if (!app_create(&app, av))
+	if (!app_create(&app, ac, av))
 		return (EXIT_FAILURE);
 	app_destroy(&app, EXIT_SUCCESS);
 	return (EXIT_SUCCESS);

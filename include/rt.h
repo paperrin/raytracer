@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/09 16:36:38 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/18 03:18:55 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/18 04:01:20 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@
 # define APP_HEIGHT 480
 # define APP_TITLE "R-T RT"
 # define APP_SCREENSHOT_PATH "./Screen Shot "
+# define APP_USAGE "usage: ./rt [-d [platform_id:device_id]] <file.rt>\n"
 
 # define ERR_MEMORY "not enough memory"
 
@@ -119,10 +120,10 @@ void				scene_transform_dir(
 int					scene_transform_push(t_scene *const scene);
 void				scene_transform_pop(t_scene *const scene);
 
-int					app_create(t_app *app, const char *argv[]);
+int					app_create(t_app *app, int ac, const char *argv[]);
 void				app_destroy(t_app *app, int exit_status);
 
-int					arg_dispatch(t_app *const app, const char *argv[]);
+int					arg_dispatch(t_app *const app, int ac, const char *argv[]);
 int					arg_devices(t_opencl *ocl, const char *args);
 
 void				callback_key(void *user_ptr, int key, int action);

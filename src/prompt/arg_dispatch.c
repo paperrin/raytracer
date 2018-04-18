@@ -6,7 +6,7 @@
 /*   By: tlernoul <tlernoul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/04 14:35:22 by tlernoul          #+#    #+#             */
-/*   Updated: 2018/04/18 03:13:14 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/18 03:59:27 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,18 +51,22 @@ static int		arg_scene_file(t_app *const app, const char *argv[]
 	return (1);
 }
 
-int				arg_dispatch(t_app *const app, const char *argv[])
+int				arg_dispatch(t_app *const app, int ac, const char *argv[])
 {
 	int		arg_index;
 
-	if (!argv[1])
-		return (error_string("missing scene file"));
 	arg_index = 1;
-	if (argv[1][0] == '-' && argv[1][1] == 'd')
+	if (ac > 1 && argv[1][0] == '-' && argv[1][1] == 'd')
 	{
-		if (!arg_device(app, argv, arg_index))
+		if (ac < 2 || !arg_device(app, argv, arg_index))
 			return (0);
 		arg_index += 2;
+	}
+	if (ac < arg_index + 1)
+	{
+		error_string("missing scene file");
+		ft_printf("\n" APP_USAGE);
+		return (0);
 	}
 	return (arg_scene_file(app, argv, arg_index));
 }
