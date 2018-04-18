@@ -3,12 +3,15 @@
 
 #include "shared.h"
 
-t_real3			obj_surface_normal_ext(t_obj *obj, t_real3 point);
 t_real3			obj_surface_normal(t_obj *obj, t_real3 point, t_ray ray);
-t_real3			obj_sphere_surface_normal(t_sphere *sphere, t_real3 point);
-t_real3			obj_plane_surface_normal(t_plane *plane, t_real3 point);
+t_real3			obj_surface_normal_ext(t_obj *obj, t_real3 point);
 t_real3			normal_reflect_ray(t_real3 normal, t_ray ray);
+
+t_real3			obj_cone_surface_normal(t_cone *cone, t_real3 point);
+t_real3			obj_sphere_surface_normal(t_sphere *sphere, t_real3 point);
+t_real3			obj_cylinder_surface_normal(t_cylinder *cylinder, t_real3 point);
 t_real3			obj_aligned_cube_surface_normal(t_aligned_cube *aligned_cube, t_real3 point);
+t_real3			obj_plane_surface_normal(t_plane *plane, t_real3 point);
 
 t_real3			normal_reflect_ray(t_real3 normal, t_ray ray)
 {
@@ -30,7 +33,37 @@ t_real3			obj_surface_normal_ext(t_obj *obj, t_real3 point)
 		return (obj_plane_surface_normal(&obj->as.plane, point));
 	else if (obj->type == e_type_aligned_cube)
 		return (obj_aligned_cube_surface_normal(&obj->as.aligned_cube, point));
+	else if (obj->type == e_type_cone)
+		return (obj_cone_surface_normal(&obj->as.cone, point));
+	else if (obj->type == e_type_cylinder)
+		return (obj_cylinder_surface_normal(&obj->as.cylinder, point));
 	return ((t_real3)(0, 0, 0));
+}
+
+t_real3			obj_cone_surface_normal(t_cone *cone, t_real3 point)
+{
+	t_real3		normal;
+	t_real3		surface_tangeant;
+	t_real3		rel_pos;
+
+	rel_pos = point - cone->pos;
+	surface_tangeant = cross(rel_pos, cone->up);
+	normal = cross(rel_pos, surface_tangeant);
+	normal = normalize(normal);
+	return (normal);
+}
+
+t_real3			obj_cylinder_surface_normal(t_cylinder *cylinder, t_real3 point)
+{
+	t_real3		normal;
+	t_real3		surface_tangeant;
+	t_real3		rel_pos;
+
+	rel_pos = point - cylinder->pos;
+	surface_tangeant = cross(rel_pos, cylinder->up);
+	normal = cross(cylinder->up, surface_tangeant);
+	normal = normalize(normal);
+	return (normal);
 }
 
 t_real3			obj_aligned_cube_surface_normal(t_aligned_cube *aligned_cube, t_real3 point)
@@ -42,7 +75,7 @@ t_real3			obj_aligned_cube_surface_normal(t_aligned_cube *aligned_cube, t_real3 
 
 	min = FLT_MAX;
 	point -= aligned_cube->pos;
-	extents = aligned_cube->size / 2; 
+	extents = aligned_cube->size / 2;
 	dist = fabs(extents - fabs(point));
 	if (dist.x < min)
 	{
