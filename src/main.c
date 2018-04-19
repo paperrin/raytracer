@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/09 16:14:42 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/15 22:40:22 by ilarbi           ###   ########.fr       */
+/*   Updated: 2018/04/19 21:35:59 by ilarbi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -313,9 +313,9 @@ int			main(int ac, const char **av)
 	app.screenshot_path = "/Users/ilarbi/Desktop/Screen shot "; 
 
 	app.config.ambient_c = vec3f(1, 1, 1);
-	app.config.ambient_i = 0.2;
+	app.config.ambient_i = 0.125;
 	app.config.camera_light_c = vec3f(1, 1, 1);
-	app.config.camera_light_i = 0.2;
+	app.config.camera_light_i = 0.125;
 	app.config.samples_width = 1;
 	app.config.max_depth = 2;
 	app.config.projection_depth = 50;
@@ -327,7 +327,7 @@ int			main(int ac, const char **av)
 	light->type = e_light_type_point;
 	light->color = vec3f(1, 1, 1);
 	light->intensity = 250;
-	light->as.point.pos = vec3r(0, 0, 0);
+	light->as.point.pos = vec3r(3, 4, 0);
 	
 	app.cam.cam_data.pos = vec3r(0, 0, -1);
 	(void)ac;

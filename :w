@@ -36,19 +36,52 @@ t_real3			obj_surface_normal_ext(t_obj *obj, t_real3 point)
 
 t_real3			obj_aligned_cube_surface_normal(t_aligned_cube *aligned_cube, t_real3 point)
 {
-	t_real3		normal;
-	t_real3		dist;
+	t_real3s	normal;
+	t_real3		extents;
+	t_real3s	dist;
+	t_real3s	pt;
 	t_real		min;
+	int			i;
 
+	i = 0;
+	pt.v = point;
 	min = FLT_MAX;
-	point -= aligned_cube->pos;
-	dist = fabs(aligned_cube->size / 2 - fabs(point));
-	min = fmin(dist.x, fmin(dist.y, dist.z));
-
-	normal.x = (min == dist.x) * ((point.x > 0) * 2 - 1);
-	normal.y = (min == dist.y) * ((point.y > 0) * 2 - 1);
-	normal.z = (min == dist.z) * ((point.z > 0) * 2 - 1);
-	return (normalize(normal));
+	pt.v -= aligned_cube->pos;
+	extents = aligned_cube->size / 2; 
+	dist.v = fabs(extents - fabs(pt.v));
+	min = fmin(dist.v.x, fmin(dist.v.y, dist.v.z));
+/*
+	if (dist.x < min)
+	if (min == dist.x)
+	{
+		min = dist.x;
+		normal = (point.x >= 0.0) ? (t_real3)(1, 0, 0) : (t_real3)(-1, 0, 0);
+		normal.x = (point.x >= 0.0) ? 1 : -1;
+	}
+	if (dist.y < min)
+	if (min == dist.y)
+	{
+		min = dist.y;
+		normal = (point.y >= 0.0) ? (t_real3)(0, 1, 0) : (t_real3)(0, -1, 0);
+		normal.y = (point.y >= 0) ? 1 : -1;
+	}
+	if (dist.z < min)
+	if (min == dist.z)
+	{
+		min = dist.z;
+		normal = (point.z >= 0.0) ? (t_real3)(0, 0, 1) : (t_real3)(0, 0, -1);
+		normal.z = (point.z >= 0.0) ? 1 :  -1;
+	}
+*/
+	while (i < 3)
+	{
+		if (min - dist.s[i] <= 1e-3)
+			normal.s[i] = pt.s[i] / fabs(pt.s[i]);
+		else
+			normal.s[i] = 0;
+		i++;
+	}
+	return (normal.v);
 }
 
 t_real3			obj_sphere_surface_normal(t_sphere *sphere, t_real3 point)
