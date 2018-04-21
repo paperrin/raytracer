@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/18 23:31:20 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/18 23:52:30 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/20 22:13:33 by ilarbi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ static int	f_class_sphere(t_interpreter *const interpreter,
 {
 	t_obj		*obj;
 
-	(void)interpreter;
 	(void)tk_this;
 	if (!hook_valid_args(&args, 0))
 		return (0);

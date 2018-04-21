@@ -120,6 +120,7 @@ CFILES		=	\
 				scene_parser/hooks/interpreter_method_stub_args_set_color.c						\
 				scene_parser/hooks/obj/internal_obj_methods.c									\
 				scene_parser/hooks/obj/interpreter_add_class_obj_sphere.c						\
+				scene_parser/hooks/obj/interpreter_add_class_obj_aligned_cube.c					\
 				scene_parser/hooks/material/interpreter_add_class_material.c					\
 				scene_parser/hooks/material/internal_material_method_color.c					\
 				scene_parser/hooks/hook_valid_args.c											\

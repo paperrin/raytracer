@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/11 20:58:15 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/18 23:17:42 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/20 18:37:48 by ilarbi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,9 +62,6 @@ int		scene_load(t_scene *const scene, t_app *const app)
 	if (!(texture = scene_add_texture_checkerboard(scene, "tex_checker")))
 		return (0);
 
-	if (!(texture = scene_add_texture(scene, "tex_sky", "../textures/park_pano.ppm")))
-		return (0);
-	texture->as.image.filter = e_filter_bilinear;
 
 /*
 ** Materials
@@ -119,8 +116,6 @@ int		scene_load(t_scene *const scene, t_app *const app)
 	mat->specular_exp = 10;
 	mat->emission = 3;
 	mat->ignores_light = 1;
-	if ((mat->texture_id = scene_map_search_index(&scene->m_texture, "tex_sky")) < 0)
-		return (error_string("could not find material"));
 
 	if (!(mat = scene_add_material(scene, "mat_metal")))
 		return (0);

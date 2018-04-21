@@ -76,6 +76,7 @@ Sphere([str name])
 AlignedCube([str name])
 	.pos()
 	.size(<num size> || <num xSize>, <num ySize>, <num zSize>)
+	.material(<str material_name>)
 
 Cone([str name])
 	.pos()
