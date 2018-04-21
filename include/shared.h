@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/13 14:25:38 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/21 03:31:33 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/21 08:52:20 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,6 +166,7 @@ typedef struct			s_sphere
 typedef struct			s_cylinder
 {
 	t_real				radius;
+	t_real				caps[2];
 }						t_cylinder;
 
 typedef struct			s_cone

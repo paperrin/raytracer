@@ -163,7 +163,6 @@ t_real				obj_cylinder_ray_hit(constant t_obj const *const obj, t_ray *ray)
 	abc[1] *= 2;
 	abc[2] = dot(diff, diff) - dot(diff, obj->up) * dot(diff, obj->up)
 		- obj->as.cylinder.radius * obj->as.cylinder.radius;
-
 	if (solve_quadratic(abc, hits) < 0)
 		return (-1);
 	return (hits[0]);

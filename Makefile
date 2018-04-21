@@ -121,6 +121,9 @@ CFILES		=	\
 				scene_parser/hooks/global/interpreter_method_transform.c						\
 				scene_parser/hooks/obj/internal_obj_methods.c									\
 				scene_parser/hooks/obj/interpreter_add_class_obj_sphere.c						\
+				scene_parser/hooks/obj/interpreter_add_class_obj_cylinder.c						\
+				scene_parser/hooks/obj/interpreter_add_class_obj_plane.c						\
+				scene_parser/hooks/obj/interpreter_add_class_obj_cone.c							\
 				scene_parser/hooks/material/interpreter_add_class_material.c					\
 				scene_parser/hooks/material/internal_material_method_color.c					\
 				scene_parser/hooks/material/internal_material_method_reflection.c				\

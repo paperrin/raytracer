@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/10 23:37:25 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/21 05:32:51 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/21 10:31:50 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,9 @@ int			interpreter_method_stub_args_set_color(
 int			interpreter_add_all_hooks(t_interpreter *const interpreter);
 int			interpreter_add_class_console(t_interpreter *const interpreter);
 int			interpreter_add_class_obj_sphere(t_interpreter *const interpreter);
+int			interpreter_add_class_obj_cylinder(t_interpreter *const interpreter);
+int			interpreter_add_class_obj_plane(t_interpreter *const interpreter);
+int			interpreter_add_class_obj_cone(t_interpreter *const interpreter);
 int			interpreter_add_class_material(t_interpreter *const interpreter);
 int			interpreter_add_hooks_transform(t_interpreter *const interpreter);
 int			interpreter_add_class_point_light(t_interpreter *const interpreter);

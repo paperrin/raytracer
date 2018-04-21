@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/21 05:15:33 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/21 07:07:20 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/21 08:21:43 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,11 @@ static int	f_class_config(t_interpreter *const interpreter,
 		t_token *const tk_this, t_hook_args const args,
 		t_token *const tk_return)
 {
-	t_light		*light;
-
+	(void)interpreter;
 	(void)tk_this;
+	(void)tk_return;
 	if (!hook_valid_args(&args, 0))
 		return (0);
-	if (!(light = scene_add_point_light(&interpreter->app->scene, NULL)))
-		return (0);
-	tk_return->as.class.ptr = (void*)light;
 	return (1);
 }
 

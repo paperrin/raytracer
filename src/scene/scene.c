@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/11 20:58:15 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/21 05:54:42 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/21 11:42:15 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ void	scene_destroy(t_scene *const scene)
 
 int		scene_load(t_scene *const scene, t_app *const app)
 {
-	t_light				*light;
 	t_texture			*texture;
 
 /*
@@ -59,10 +58,6 @@ int		scene_load(t_scene *const scene, t_app *const app)
 
 	if (!(texture = scene_add_texture_checkerboard(scene, "tex_checker")))
 		return (0);
-
-	if (!(texture = scene_add_texture(scene, "tex_sky", "../textures/park_pano.ppm")))
-		return (0);
-	texture->as.image.filter = e_filter_bilinear;
 
 /*
 ** Scene
@@ -137,7 +132,6 @@ int		scene_load(t_scene *const scene, t_app *const app)
 	light->glare = 0.5;
 	light->as.dir.dir = vec3r_norm(vec3r(0.5, -1, 1));
 */
-	(void)light;
 
 	scene_add_camera(scene, app);
 	scene_transform_pop(scene);
