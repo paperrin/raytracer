@@ -118,6 +118,8 @@ CFILES		=	\
 				scene_parser/hooks/interpreter_add_all_hooks.c									\
 				scene_parser/hooks/interpreter_add_class_console.c								\
 				scene_parser/hooks/interpreter_method_stub_args_set_color.c						\
+				scene_parser/hooks/interpreter_method_stub_args_set_pos.c						\
+				scene_parser/hooks/interpreter_method_stub_args_set_rot.c						\
 				scene_parser/hooks/global/interpreter_method_transform.c						\
 				scene_parser/hooks/obj/internal_obj_methods.c									\
 				scene_parser/hooks/obj/interpreter_add_class_obj_sphere.c						\
@@ -139,6 +141,9 @@ CFILES		=	\
 				scene_parser/hooks/texture/internal_texture_method_scale.c						\
 				scene_parser/hooks/texture/internal_texture_method_filter.c						\
 				scene_parser/hooks/light/interpreter_add_class_point_light.c					\
+				scene_parser/hooks/light/interpreter_add_class_distant_light.c					\
+				scene_parser/hooks/light/interpreter_add_class_spot_light.c						\
+				scene_parser/hooks/light/internal_spot_light_methods.c							\
 				scene_parser/hooks/light/internal_light_method_color.c							\
 				scene_parser/hooks/light/internal_light_method_intensity.c						\
 				scene_parser/hooks/light/internal_light_method_glare.c							\
@@ -152,6 +157,7 @@ CFILES		=	\
 				scene_parser/hooks/config/internal_config_method_screen_size.c					\
 				scene_parser/hooks/config/internal_config_method_sample_level.c					\
 				scene_parser/hooks/config/internal_config_method_zfar.c							\
+				scene_parser/hooks/camera/interpreter_add_class_camera.c						\
 				scene_parser/hooks/hook_valid_args.c											\
 				\
 				prompt/arg_dispatch.c							\

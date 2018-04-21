@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/10 16:42:38 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/21 17:20:28 by ilarbi           ###   ########.fr       */
+/*   Updated: 2018/04/21 21:26:18 by ilarbi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ typedef enum			e_class_type
 	e_class_type_obj_cone,
 	e_class_type_obj_aligned_cube,
 	e_class_type_point_light,
-	e_class_type_dir_light,
+	e_class_type_distant_light,
 	e_class_type_spot_light,
 	e_class_type_camera,
 	e_class_type_material,

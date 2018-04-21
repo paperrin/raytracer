@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/21 10:30:02 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/21 11:37:15 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/21 16:44:20 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,9 +52,11 @@ int			interpreter_add_class_obj_cone(t_interpreter *const interpreter)
 	if (!interpreter_class_add(interpreter, class_type,
 			interpreter_method_create("ObjCone", &f_class_cone)))
 		return (0);
-	if (!interpreter_class_add_method_batch(interpreter, class_type, 2,
+	if (!interpreter_class_add_method_batch(interpreter, class_type, 4,
 			"angle", &f_method_angle,
-			"material", &f_internal_obj_method_material))
+			"material", &f_internal_obj_method_material,
+			"pos", &f_internal_obj_method_pos,
+			"rot", &f_internal_obj_method_rot))
 		return (0);
 	return (1);
 }

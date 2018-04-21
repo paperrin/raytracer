@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/21 10:25:54 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/21 10:29:27 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/21 16:44:40 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,10 @@ int			interpreter_add_class_obj_plane(t_interpreter *const interpreter)
 	if (!interpreter_class_add(interpreter, class_type,
 					interpreter_method_create("ObjPlane", &f_class_plane)))
 		return (0);
-	if (!interpreter_class_add_method_batch(interpreter, class_type, 1,
-			"material", &f_internal_obj_method_material))
+	if (!interpreter_class_add_method_batch(interpreter, class_type, 3,
+			"material", &f_internal_obj_method_material,
+			"pos", &f_internal_obj_method_pos,
+			"rot", &f_internal_obj_method_rot))
 		return (0);
 	return (1);
 }

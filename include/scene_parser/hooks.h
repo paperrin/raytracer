@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/10 23:37:25 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/21 17:48:44 by ilarbi           ###   ########.fr       */
+/*   Updated: 2018/04/21 21:26:37 by ilarbi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,11 @@ int			hook_error_str(t_hook_args const *const args
 
 int			interpreter_method_stub_args_set_color(
 		t_hook_args const *const args, cl_float3 *const color);
+int			interpreter_method_stub_args_set_pos(
+		t_hook_args const *const args, t_real3 *const pos);
+int				interpreter_method_stub_args_set_rot(
+		t_hook_args const *const args,
+		t_real3 *const dir1, t_real3 *const dir2, t_real3 *const dir3);
 
 int			interpreter_add_all_hooks(t_interpreter *const interpreter);
 int			interpreter_add_class_console(t_interpreter *const interpreter);
@@ -54,6 +59,9 @@ int			interpreter_add_class_material(t_interpreter *const interpreter);
 int			interpreter_add_class_texture(t_interpreter *const interpreter);
 int			interpreter_add_hooks_transform(t_interpreter *const interpreter);
 int			interpreter_add_class_point_light(t_interpreter *const interpreter);
+int			interpreter_add_class_distant_light(t_interpreter *const interpreter);
+int			interpreter_add_class_spot_light(t_interpreter *const interpreter);
 int			interpreter_add_class_config(t_interpreter *const interpreter);
+int			interpreter_add_class_camera(t_interpreter *const interpreter);
 
 #endif
