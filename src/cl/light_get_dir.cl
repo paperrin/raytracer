@@ -34,8 +34,8 @@ t_real3				light_point_get_dir(const global t_config *config, t_light light, t_r
 	*dist = sqrt(r2);
 	dir /= *dist;
 	*color = light.color * light.intensity;
-	if (light.fallback > config->color_epsilon)
-		*color /= (float)(light.fallback * 4 * M_PI_F * (float)r2);
+	if (light.dispersion > config->color_epsilon)
+		*color /= (float)(light.dispersion * 4 * M_PI_F * (float)r2);
 	return (dir);
 }
 
@@ -81,7 +81,7 @@ t_real3				light_spot_get_dir(const global t_config *config, t_light light, t_re
 				* outter_intensity * outter_intensity;
 		}
 	}
-	if (light.fallback > config->color_epsilon)
-		*color /= (float)(light.fallback * 4 * M_PI_F * (float)r2);
+	if (light.dispersion > config->color_epsilon)
+		*color /= (float)(light.dispersion * 4 * M_PI_F * (float)r2);
 	return (dir);
 }

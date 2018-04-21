@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/18 23:47:16 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/19 00:54:47 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/21 02:06:59 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,18 @@ int			interpreter_add_class_material(t_interpreter *const interpreter)
 	if (!interpreter_class_add(interpreter, class_type,
 					interpreter_method_create("Material", &f_class_material)))
 		return (0);
-	if (!interpreter_class_add_method_batch(interpreter, class_type, 1,
-				"color", &f_internal_material_method_color))
+	if (!interpreter_class_add_method_batch(interpreter, class_type, 11,
+			"color", &f_internal_material_method_color,
+			"reflection", &f_internal_material_method_reflection,
+			"refraction", &f_internal_material_method_refraction,
+			"refractionIndex", &f_internal_material_method_refraction_index,
+			"specular", &f_internal_material_method_specular,
+			"specularExp", &f_internal_material_method_specular_exp,
+			"specularColor", &f_internal_material_method_specular_color,
+			"emission", &f_internal_material_method_emission,
+			"ignoresLight", &f_internal_material_method_ignores_light,
+			"doProjection", &f_internal_material_method_projection,
+			"colorMap", &f_internal_material_method_color_map))
 		return (0);
 	return (1);
 }

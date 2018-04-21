@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/09 19:50:51 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/18 22:09:53 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/20 21:55:59 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,14 +33,14 @@ int			interpreter_class_add(t_interpreter *const interpreter,
 	return (1);
 }
 
-static int	class_add_method(t_method *const class,
+static int	method_vector_add_method(t_vector *const v_methods,
 		t_method *const method)
 {
-	t_method		**new;
+	t_method		**new_method;
 
-	if (!(new = (t_method**)ft_vector_push_back(&class->v_methods, NULL)))
+	if (!(new_method = (t_method**)ft_vector_push_back(v_methods, NULL)))
 		return (error_string(ERR_MEMORY));
-	*new = method;
+	*new_method = method;
 	return (1);
 }
 
@@ -48,23 +48,23 @@ int			interpreter_class_add_method(
 		t_interpreter *const interpreter,
 		t_e_class_type class_type, t_method *const method)
 {
-	t_method	*class;
+	t_vector	*v_methods;
 
-	if (!(class = interpreter_find_method_class_type(interpreter, class_type)))
+	if (!(v_methods = interpreter_find_method_vector_class_type(
+					interpreter, class_type)))
 	{
 		return (error_string(
 					"interpreter: failed to add method "
 					"to non-existant class"));
 	}
-	if (interpreter_class_type_find_method_name(interpreter,
-				class_type, method->name))
+	if (interpreter_method_vector_find_method_name(v_methods, method->name))
 	{
 		return (error_string(
 					"interpreter: could not add method, "
 					"method name already exists"));
 	}
 	method->class_type = class_type;
-	if (!class_add_method(class, method))
+	if (!method_vector_add_method(v_methods, method))
 		return (0);
 	return (1);
 }

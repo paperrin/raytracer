@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/13 14:25:38 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/18 22:57:26 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/21 03:31:33 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -307,7 +307,7 @@ typedef struct			s_light
 	cl_float3			color;
 	cl_float			intensity;
 	cl_float			glare;
-	cl_float			fallback;
+	cl_float			dispersion;
 	t_light_container	as;
 }						t_light;
 

@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/11 20:58:15 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/18 23:17:42 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/21 03:01:59 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -203,6 +203,7 @@ int		scene_load(t_scene *const scene, t_app *const app)
 	light->fallback = 1;
 	light->glare = 0;
 */
+	/*
 	scene_transform_pop(scene);
 	scene_translate(scene, 0, 2, 0);
 	if (!(light = scene_add_dir_light(scene, NULL)))
@@ -211,7 +212,8 @@ int		scene_load(t_scene *const scene, t_app *const app)
 	light->fallback = 0;
 	light->glare = 0.5;
 	light->as.dir.dir = vec3r_norm(vec3r(0.5, -1, 1));
-
+*/
+	(void)light;
 	app->config.screen_size.s[0] = APP_WIDTH;
 	app->config.screen_size.s[1] = APP_HEIGHT;
 	app->config.color_epsilon = 1.f / 255;
@@ -219,12 +221,12 @@ int		scene_load(t_scene *const scene, t_app *const app)
 	app->config.z_far = 20000;
 
 	app->config.ambient_c = vec3f(1, 1, 1);
-	app->config.ambient_i = 0.025;
+	app->config.ambient_i = 0.1;
 	app->config.camera_light_c = vec3f(1, 1, 1);
-	app->config.camera_light_i = 0.025;
+	app->config.camera_light_i = 0.0;
 	app->config.samples_width = 1;
-	app->config.max_depth = 1;
-	app->config.projection_depth = 0;
+	app->config.max_depth = 0;
+	app->config.projection_depth = 2;
 	app->config.post_filters = e_post_filter_none;
 
 	scene_add_camera(scene, app);

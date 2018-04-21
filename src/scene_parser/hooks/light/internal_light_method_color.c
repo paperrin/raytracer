@@ -1,27 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   internal_material_method_color.c                   :+:      :+:    :+:   */
+/*   internal_light_method_color.c                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/04/19 00:10:12 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/21 02:33:53 by paperrin         ###   ########.fr       */
+/*   Created: 2018/04/21 03:08:41 by paperrin          #+#    #+#             */
+/*   Updated: 2018/04/21 03:20:18 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "scene_parser/hooks.h"
-#include "./internal_material_methods.h"
+#include "./internal_light_methods.h"
 
-int				f_internal_material_method_color(
+int				f_internal_light_method_color(
 		t_interpreter *const interpreter,
 		t_token *const tk_this, t_hook_args const args,
 		t_token *const tk_return)
 {
-	t_material		*material;
+	t_light		*light;
 
 	(void)interpreter;
 	*tk_return = *tk_this;
-	material = tk_this->as.class.ptr;
-	return (interpreter_method_stub_args_set_color(&args, &material->color));
+	light = tk_this->as.class.ptr;
+	return (interpreter_method_stub_args_set_color(&args, &light->color));
 }

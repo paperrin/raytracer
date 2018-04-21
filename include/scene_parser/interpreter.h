@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/09 19:01:28 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/19 00:27:40 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/20 21:55:00 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,10 @@ t_method			*interpreter_find_method_class_type(
 t_method			*interpreter_class_type_find_method_name(
 		t_interpreter *const interpreter, t_e_class_type class_type,
 		char const *const name);
+t_method			*interpreter_method_vector_find_method_name(
+		t_vector *const v_methods, char const *const name);
+t_vector			*interpreter_find_method_vector_class_type(
+		t_interpreter *const interpreter, t_e_class_type class_type);
 
 int					interpreter_var_add_is_constant(
 		t_interpreter *const interpreter, char *const name, t_token value,
