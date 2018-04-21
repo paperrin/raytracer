@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/11 16:29:37 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/20 21:39:03 by ilarbi           ###   ########.fr       */
+/*   Updated: 2018/04/21 15:03:05 by ilarbi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,14 @@
 int			hook_error(t_hook_args const *const args, char const *const error)
 {
 	ft_dprintf(STDERR_FILENO, "error: %s(): %s\n", args->hook_name, error);
+	return (0);
+}
+
+int			hook_error_str(t_hook_args const *const args
+		, char const *const error, char const *const error_2)
+{
+	ft_dprintf(STDERR_FILENO, "error: %s(): %s: %s\n", args->hook_name
+			, error, error_2);
 	return (0);
 }
 

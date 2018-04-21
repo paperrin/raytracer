@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/15 21:05:48 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/18 02:39:13 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/21 03:33:01 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static t_light		point_light_default(void)
 	light.color = vec3f(1, 1, 1);
 	light.intensity = 1;
 	light.glare = 0;
-	light.fallback = 0;
+	light.dispersion = 0;
 	light.as.point.pos = vec3r(0, 0, 0);
 	return (light);
 }

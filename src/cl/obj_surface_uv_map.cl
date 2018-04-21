@@ -36,16 +36,13 @@ t_real2			obj_sphere_surface_uv_map(t_obj const *const obj, t_real3 point)
 	t_real3		surface_normal;
 	t_real		phi;
 	t_real2		uv;
-	t_real		theta;
 
 	surface_normal = normalize(point - obj->pos);
 	phi = acos(-dot(obj->up, surface_normal));
 	uv.y = 1.f - (phi / M_PI_F);
-	theta = acos(clamp(dot(obj->normal, surface_normal) / sin(phi), -1.f, 1.f)) / (2.f * M_PI_F);
+	uv.x = acos(clamp(dot(obj->normal, surface_normal) / sin(phi), -1.f, 1.f)) / (2.f * M_PI_F);
 	if (dot(cross(obj->normal, obj->up), surface_normal) <= 0)
-		uv.x = 1 - theta;
-	else
-		uv.x = theta;
+		uv.x = 1 - uv.x;
 	return (uv);
 }
 
@@ -65,7 +62,6 @@ t_real2			obj_cylinder_surface_uv_map(t_obj const *const obj, t_real3 point)
 {
 	t_real3		surface_normal;
 	t_real2		uv;
-	t_real		theta;
 	t_real		phi;
 	t_real		h;
 	t_real		d;
@@ -77,28 +73,26 @@ t_real2			obj_cylinder_surface_uv_map(t_obj const *const obj, t_real3 point)
 
 	surface_normal = obj_cylinder_surface_normal(obj, point);
 	phi = acos(-dot(obj->normal, surface_normal));
-	theta = acos(dot(obj->normal, surface_normal)) / ((t_real)2 * M_PI_F);
+	uv.x = acos(dot(obj->normal, surface_normal)) / ((t_real)2 * M_PI_F);
 	if (dot(cross(obj->normal, obj->up), surface_normal) <= 0)
-		uv.x = 1 - theta;
-	else
-		uv.x = theta;
+		uv.x = 1 - uv.x;
 	return (uv);
 }
 
 t_real2			obj_cone_surface_uv_map(t_obj const *const obj, t_real3 point)
 {
 	t_real2		uv;
-	t_real3		center_to_pos;
+	t_real3		surface_normal;
 	t_real		side;
 
 	side = 1;
-	if(dot(obj->up, point - obj->pos) < 0)
+	if(dot(obj->up, point - obj->pos) > 0)
 		side = -side;
 	uv.y = cos(obj->as.cone.angle) * length(point - obj->pos) * side;
-	center_to_pos = obj_cone_surface_normal(obj, point);
-	uv.x = acos(dot(center_to_pos, obj->normal)) / (M_PI_F * (t_real)2);
-	if (dot(cross(obj->normal, obj->up), center_to_pos) <= 0)
-		uv.x = (t_real)1 - uv.x;
+	surface_normal = obj_cone_surface_normal(obj, point);
+	uv.x = acos(clamp(dot(obj->normal, surface_normal), -1.f, 1.f)) / (2.f * M_PI_F);
+	if (dot(cross(obj->normal, obj->up), surface_normal) <= 0)
+		uv.x = 1 - uv.x;
 	return (uv);
 }
 

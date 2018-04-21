@@ -6,13 +6,13 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/10 15:36:52 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/10 23:27:36 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/21 15:17:02 by ilarbi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "scene_parser/interpreter.h"
 
-static t_method		*interpreter_method_vector_find_method_name(
+t_method			*interpreter_method_vector_find_method_name(
 		t_vector *const v_methods, char const *const name)
 {
 	t_method		*method;
@@ -30,7 +30,7 @@ static t_method		*interpreter_method_vector_find_method_name(
 	return (NULL);
 }
 
-static t_vector		*interpreter_find_method_vector_class_type(
+t_vector			*interpreter_find_method_vector_class_type(
 		t_interpreter *const interpreter, t_e_class_type class_type)
 {
 	t_method		*method;

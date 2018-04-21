@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/18 02:22:53 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/18 23:18:28 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/21 08:56:37 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ static t_obj	cylinder_default(void)
 	obj.up = vec3r(0, 1, 0);
 	obj.normal = vec3r(0, 0, 1);
 	obj.as.cylinder.radius = 0.5;
+	obj.as.cylinder.caps[0] = -1;
+	obj.as.cylinder.caps[1] = 1;
 	return (obj);
 }
 

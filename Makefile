@@ -118,11 +118,40 @@ CFILES		=	\
 				scene_parser/hooks/interpreter_add_all_hooks.c									\
 				scene_parser/hooks/interpreter_add_class_console.c								\
 				scene_parser/hooks/interpreter_method_stub_args_set_color.c						\
+				scene_parser/hooks/global/interpreter_method_transform.c						\
 				scene_parser/hooks/obj/internal_obj_methods.c									\
 				scene_parser/hooks/obj/interpreter_add_class_obj_sphere.c						\
 				scene_parser/hooks/obj/interpreter_add_class_obj_aligned_cube.c					\
+				scene_parser/hooks/obj/interpreter_add_class_obj_cylinder.c						\
+				scene_parser/hooks/obj/interpreter_add_class_obj_plane.c						\
+				scene_parser/hooks/obj/interpreter_add_class_obj_cone.c							\
 				scene_parser/hooks/material/interpreter_add_class_material.c					\
 				scene_parser/hooks/material/internal_material_method_color.c					\
+				scene_parser/hooks/material/internal_material_method_reflection.c				\
+				scene_parser/hooks/material/internal_material_method_refraction.c				\
+				scene_parser/hooks/material/internal_material_method_specular.c					\
+				scene_parser/hooks/material/internal_material_method_emission.c					\
+				scene_parser/hooks/material/internal_material_method_ignores_light.c			\
+				scene_parser/hooks/material/internal_material_method_projection.c				\
+				scene_parser/hooks/material/internal_material_method_color_map.c				\
+				scene_parser/hooks/texture/interpreter_add_class_texture.c						\
+				scene_parser/hooks/texture/internal_texture_method_translate.c					\
+				scene_parser/hooks/texture/internal_texture_method_scale.c						\
+				scene_parser/hooks/texture/internal_texture_method_filter.c						\
+				scene_parser/hooks/light/interpreter_add_class_point_light.c					\
+				scene_parser/hooks/light/internal_light_method_color.c							\
+				scene_parser/hooks/light/internal_light_method_intensity.c						\
+				scene_parser/hooks/light/internal_light_method_glare.c							\
+				scene_parser/hooks/light/internal_light_method_dispersion.c						\
+				scene_parser/hooks/config/interpreter_add_class_config.c						\
+				scene_parser/hooks/config/internal_config_method_ambient.c						\
+				scene_parser/hooks/config/internal_config_method_camera_light.c					\
+				scene_parser/hooks/config/internal_config_method_recursion_depth.c				\
+				scene_parser/hooks/config/internal_config_method_projection_depth.c				\
+				scene_parser/hooks/config/internal_config_method_post_filter.c					\
+				scene_parser/hooks/config/internal_config_method_screen_size.c					\
+				scene_parser/hooks/config/internal_config_method_sample_level.c					\
+				scene_parser/hooks/config/internal_config_method_zfar.c							\
 				scene_parser/hooks/hook_valid_args.c											\
 				\
 				prompt/arg_dispatch.c							\

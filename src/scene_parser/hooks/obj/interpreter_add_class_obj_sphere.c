@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/18 23:31:20 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/20 22:13:33 by ilarbi           ###   ########.fr       */
+/*   Updated: 2018/04/21 15:00:31 by ilarbi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,12 +35,11 @@ static int	f_method_radius(t_interpreter *const interpreter,
 	t_obj	*obj;
 
 	(void)interpreter;
-	(void)tk_return;
+	*tk_return = *tk_this;
 	if (!hook_valid_args(&args, 1, token_type_num))
 		return (0);
 	obj = tk_this->as.class.ptr;
-	obj->as.sphere.radius = args.tokens[0].as.num.value;
-	*tk_return = *tk_this;
+	obj->as.sphere.radius = ft_maxf(args.tokens[0].as.num.value, 0);
 	return (1);
 }
 

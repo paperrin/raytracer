@@ -6,20 +6,28 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/23 19:01:08 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/09 17:04:36 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/21 06:33:04 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "scene_parser/token.h"
 
-t_token		*token_num(float value)
+t_token		token_num(float value)
+{
+	t_token		token;
+
+	token.type = token_type_num;
+	token.as.num.value = value;
+	return (token);
+}
+
+t_token		*token_num_alloc(float value)
 {
 	t_token		*token;
 
 	if (!(token = (t_token*)malloc(sizeof(*token))))
 		return (NULL);
-	token->type = token_type_num;
-	token->as.num.value = value;
+	*token = token_num(value);
 	return (token);
 }
 

@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/18 01:27:17 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/18 02:05:16 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/20 22:46:29 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,15 +31,15 @@ int		scene_transform_push(t_scene *const scene)
 
 void	scene_transform_pop(t_scene *const scene)
 {
-	if (ft_vector_size(&scene->v_mx) < 1)
+	ft_vector_pop_back(&scene->v_mx, NULL);
+	ft_vector_pop_back(&scene->v_mx_r, NULL);
+	if (ft_vector_empty(&scene->v_mx))
 	{
 		ft_matrix_to_identity(&scene->mx);
 		ft_matrix_to_identity(&scene->mx_r);
 	}
 	else
 	{
-		ft_vector_pop_back(&scene->v_mx, NULL);
-		ft_vector_pop_back(&scene->v_mx_r, NULL);
 		scene->mx = *(t_matrix*)ft_vector_back(&scene->v_mx);
 		scene->mx_r = *(t_matrix*)ft_vector_back(&scene->v_mx_r);
 	}

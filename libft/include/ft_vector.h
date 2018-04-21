@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/30 19:50:27 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/18 01:53:23 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/20 22:33:09 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ size_t			ft_vector_size(t_vector const *const vector);
 size_t			ft_vector_size_bytes(t_vector const *const vector);
 size_t			ft_vector_capacity(t_vector const *const vector);
 size_t			ft_vector_capacity_bytes(t_vector const *const vector);
+int				ft_vector_empty(t_vector const *const vector);
 
 /*
 ** vector/ft_vector_resize.c

@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/13 14:25:38 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/20 21:50:25 by ilarbi           ###   ########.fr       */
+/*   Updated: 2018/04/21 21:07:46 by ilarbi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,6 +166,7 @@ typedef struct			s_sphere
 typedef struct			s_cylinder
 {
 	t_real				radius;
+	t_real				caps[2];
 }						t_cylinder;
 
 typedef struct			s_cone
@@ -307,7 +308,7 @@ typedef struct			s_light
 	cl_float3			color;
 	cl_float			intensity;
 	cl_float			glare;
-	cl_float			fallback;
+	cl_float			dispersion;
 	t_light_container	as;
 }						t_light;
 

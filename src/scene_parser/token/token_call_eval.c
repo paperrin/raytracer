@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/07 01:53:51 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/19 00:54:32 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/21 15:19:41 by ilarbi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,12 @@ int					token_call_eval(
 	if (!(method = interpreter_class_type_find_method_name(
 					interpreter, tk_this->as.class.class_type,
 					tk_expr->as.call.func)))
-		return (error_string("interpreter: undefined function"));
+	{
+		ft_dprintf(STDERR_FILENO
+				, "error: interpreter: undefined function: %s\n"
+				, tk_expr->as.call.func);
+		return (0);
+	}
 	args.size = tk_expr->as.call.args_len;
 	args.hook_name = tk_expr->as.call.func;
 	*tk_result = token_class(method->class_type, NULL);

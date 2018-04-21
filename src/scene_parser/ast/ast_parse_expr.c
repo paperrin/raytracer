@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/06 19:31:56 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/11 20:04:13 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/21 06:31:33 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static t_token		*handle_operand_sign(t_token_stream *const tkstream,
 		token_destroy(&tk);
 		return (tkstream_perror(tkstream, "unexpected operator"));
 	}
-	if (!(tk->as.op.left = token_num(0)))
+	if (!(tk->as.op.left = token_num_alloc(0)))
 	{
 		token_destroy(&tk);
 		return (tkstream_perror(tkstream, ERR_MEMORY));
