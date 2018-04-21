@@ -135,6 +135,15 @@ CFILES		=	\
 				scene_parser/hooks/light/internal_light_method_intensity.c						\
 				scene_parser/hooks/light/internal_light_method_glare.c							\
 				scene_parser/hooks/light/internal_light_method_dispersion.c						\
+				scene_parser/hooks/config/interpreter_add_class_config.c						\
+				scene_parser/hooks/config/internal_config_method_ambient.c						\
+				scene_parser/hooks/config/internal_config_method_camera_light.c					\
+				scene_parser/hooks/config/internal_config_method_recursion_depth.c				\
+				scene_parser/hooks/config/internal_config_method_projection_depth.c				\
+				scene_parser/hooks/config/internal_config_method_post_filter.c					\
+				scene_parser/hooks/config/internal_config_method_screen_size.c					\
+				scene_parser/hooks/config/internal_config_method_sample_level.c					\
+				scene_parser/hooks/config/internal_config_method_zfar.c							\
 				scene_parser/hooks/hook_valid_args.c											\
 				\
 				prompt/arg_dispatch.c							\

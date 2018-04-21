@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/09 19:01:28 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/20 21:55:00 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/21 06:23:43 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,6 +115,8 @@ int					interpreter_var_add(
 		t_interpreter *const interpreter, char *const name, t_token value);
 int					interpreter_constant_add(
 		t_interpreter *const interpreter, char *const name, t_token value);
+int					interpreter_constant_add_batch(t_interpreter *const interpreter,
+		size_t n_constants, ...);
 int					interpreter_find_var_name(t_interpreter *const interpreter,
 		char *const name, t_interpreter_var *const r_var);
 

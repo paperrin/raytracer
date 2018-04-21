@@ -6,17 +6,36 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/09 16:14:42 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/18 03:51:31 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/21 06:55:19 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
 
+static void	app_init(t_app *const app)
+{
+	app->config.ambient_c = vec3f(1, 1, 1);
+	app->config.ambient_i = 0.05;
+	app->config.camera_light_c = vec3f(1, 1, 1);
+	app->config.camera_light_i = 0;
+	app->config.screen_size.s[0] = APP_WIDTH;
+	app->config.screen_size.s[1] = APP_HEIGHT;
+	app->config.color_epsilon = 1.f / 255;
+	app->config.intersection_bias = 1e-3;
+	app->config.z_far = 20000;
+	app->config.samples_width = 1;
+	app->config.max_depth = 0;
+	app->config.projection_depth = 2;
+	app->config.post_filters = e_post_filter_none;
+}
+
 int			app_create(t_app *app, int ac, const char **argv)
 {
 	if (!arg_dispatch(app, ac, argv))
 		return (0);
-	if (!window_create(&app->win, APP_WIDTH, APP_HEIGHT, APP_TITLE))
+	if (!window_create(&app->win
+				, app->config.screen_size.s[0], app->config.screen_size.s[1]
+				, APP_TITLE))
 		return (0);
 	if (!image_create(&app->draw_buf, app->win.width, app->win.height))
 		app_destroy(app, EXIT_FAILURE);
@@ -112,6 +131,7 @@ int			main(int ac, const char **av)
 	t_app				app;
 
 	(void)ac;
+	app_init(&app);
 	if (!app_create(&app, ac, av))
 		return (EXIT_FAILURE);
 	app_destroy(&app, EXIT_SUCCESS);

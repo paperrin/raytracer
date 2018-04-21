@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/08 17:08:51 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/11 20:25:31 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/21 06:31:54 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,7 +130,8 @@ void						token_op_destroy(t_token *token);
 void						token_call_destroy(t_token *token);
 void						token_bool_destroy(t_token *token);
 
-t_token						*token_num(float value);
+t_token						*token_num_alloc(float value);
+t_token						token_num(float value);
 t_token						token_class(t_e_class_type class_type,
 		void *const ptr);
 t_token						token_bool(int value);

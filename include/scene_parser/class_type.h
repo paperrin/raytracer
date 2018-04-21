@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/10 16:42:38 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/21 02:59:23 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/21 05:35:24 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ typedef enum			e_class_type
 {
 	e_class_type_none,
 	e_class_type_console,
+	e_class_type_config,
 	e_class_type_obj_sphere,
 	e_class_type_obj_plane,
 	e_class_type_obj_cylinder,

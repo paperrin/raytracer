@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/18 23:33:03 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/18 23:42:00 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/21 05:44:05 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,7 @@ int		f_internal_obj_method_material(t_interpreter *const interpreter,
 {
 	t_obj	*obj;
 
-	(void)interpreter;
-	(void)tk_return;
+	*tk_return = *tk_this;
 	if (!hook_valid_args(&args, 1, token_type_str))
 		return (0);
 	obj = tk_this->as.class.ptr;
