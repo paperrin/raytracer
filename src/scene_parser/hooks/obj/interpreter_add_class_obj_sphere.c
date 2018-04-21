@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/18 23:31:20 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/21 07:42:10 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/21 16:45:13 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,9 +50,11 @@ int			interpreter_add_class_obj_sphere(t_interpreter *const interpreter)
 	if (!interpreter_class_add(interpreter, class_type,
 					interpreter_method_create("ObjSphere", &f_class_sphere)))
 		return (0);
-	if (!interpreter_class_add_method_batch(interpreter, class_type, 2,
+	if (!interpreter_class_add_method_batch(interpreter, class_type, 4,
 			"radius", &f_method_radius,
-			"material", &f_internal_obj_method_material))
+			"material", &f_internal_obj_method_material,
+			"pos", &f_internal_obj_method_pos,
+			"rot", &f_internal_obj_method_rot))
 		return (0);
 	return (1);
 }

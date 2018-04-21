@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/18 19:55:00 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/21 10:32:02 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/21 19:05:23 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,13 @@ int			interpreter_add_all_hooks(t_interpreter *const interpreter)
 		return (0);
 	if (!interpreter_add_class_point_light(interpreter))
 		return (0);
+	if (!interpreter_add_class_distant_light(interpreter))
+		return (0);
+	if (!interpreter_add_class_spot_light(interpreter))
+		return (0);
 	if (!interpreter_add_class_config(interpreter))
+		return (0);
+	if (!interpreter_add_class_camera(interpreter))
 		return (0);
 	if (!interpreter_add_hooks_transform(interpreter))
 		return (0);
