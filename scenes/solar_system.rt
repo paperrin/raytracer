@@ -1,0 +1,92 @@
+#      radius (km)    | sun dist (km)
+#	sun		695'700.0
+#	mercury	  2'439.7 |    57'000'000
+#	venus	  6'051.8 |   108'000'000
+#	earth	  6'378.1 |   150'000'000
+#		earth-moon: 384'400
+#	moon	  1'738.1
+#	mars	  3'396.2 |   228'000'000
+#	jupiter	 71'492.0 |   779'000'000
+#	saturn	 60'268.0 | 1'430'000'000
+#	uranus	 25'559.0 | 2'880'000'000
+#	neptune	 24'764.0 | 4'500'000'000
+#	pluto	  2'377.0 | 5'910'000'000
+
+#PointLight("sun")
+
+#Texture("tex_sun", "textures/planets/sun.ppm")
+#	.filter(TEXTURE_FILTER_BILINEAR)
+#Texture("tex_mercury", "textures/planets/moon.ppm")
+#	.filter(TEXTURE_FILTER_BILINEAR)
+#Texture("tex_venus", "textures/planets/moon.ppm")
+#	.filter(TEXTURE_FILTER_BILINEAR)
+#Texture("tex_earth", "textures/planets/moon.ppm")
+#	.filter(TEXTURE_FILTER_BILINEAR)
+#Texture("tex_moon", "textures/planets/moon.ppm")
+#	.filter(TEXTURE_FILTER_BILINEAR)
+#Texture("tex_mars", "textures/planets/moon.ppm")
+#	.filter(TEXTURE_FILTER_BILINEAR)
+#Texture("tex_jupiter", "textures/planets/moon.ppm")
+#	.filter(TEXTURE_FILTER_BILINEAR)
+#Texture("tex_saturn", "textures/planets/moon.ppm")
+#	.filter(TEXTURE_FILTER_BILINEAR)
+#Texture("tex_uranus", "textures/planets/moon.ppm")
+#	.filter(TEXTURE_FILTER_BILINEAR)
+#Texture("tex_neptune", "textures/planets/moon.ppm")
+#	.filter(TEXTURE_FILTER_BILINEAR)
+#	.filter(TEXTURE_FILTER_BILINEAR)
+#Texture("tex_pluto", "textures/planets/moon.ppm")
+#	.filter(TEXTURE_FILTER_BILINEAR)
+
+#Material("mat_sun"
+#	.filter(matTUR
+#Material("mat_merc
+#	.filter(matTUR
+#Material("mat_venu
+#	.filter(matTUR
+#Material("mat_eart
+#	.filter(matTUR
+#Material("mat_moon
+#	.filter(matTUR
+#Material("mat_mars
+#	.filter(matTUR
+#Material("mat_jupi
+#	.filter(matTUR
+#Material("mat_satu
+#	.filter(matTUR
+#Material("mat_uran
+#	.filter(matTUR
+#Material("mat_nept
+#	.filter(matTUR
+#	.filter(matTUR
+#Material("mat_plut
+#	.filter(matTUR
+
+
+
+
+
+
+
+
+push()
+	rotate(0, 0, 0)
+	
+	ObjSphere("earth")
+		.radius(6.3781)
+		.colorMap("tex_earth")
+pop()
+
+push()
+	rotate(0, 0, 0)
+	translate(0, 0, 384.400)
+
+	rotate(0, 0, 0)
+	
+	sphere("moon")
+		.radius(1.7381)
+		.colorMap("tex_moon")
+pop()
+
+rotate(-30, 0, 0)
+translate(0, 0, -500)

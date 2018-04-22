@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/11 20:58:15 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/21 20:46:32 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/21 22:18:25 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,11 +41,28 @@ void	scene_destroy(t_scene *const scene)
 int		scene_load(t_scene *const scene, t_app *const app)
 {
 	t_texture			*texture;
+	/*t_material			*material;
+	t_obj				*obj;
+	int					i;
+
+
+	material = scene_add_material(scene, "mat");
+	i = -1;
+	while (++i < 50)
+	{
+		scene_rotate(scene, 0, 0.1, 0);
+		scene_translate(scene, 0, 0.1, 0);
+		scene_transform_push(scene);
+		scene_translate(scene, 0, 0, 1);
+		obj = scene_add_sphere(scene, NULL);
+		obj->material_id = scene_map_search_index(&scene->m_material, "mat");
+		scene_transform_pop(scene);
+	}*/
 
 	if (!(texture = scene_add_texture(scene, "tex_brick", "textures/brick.ppm")))
 		return (0);
 	texture->scale = vec2r(0.2, 0.2);
-	if (!(texture = scene_add_texture(scene, "tex_max_val", "textures/max_val.ppm")))
+	if (!(texture = scene_add_texture(scene, "tex_pano", "../textures/park_pano.ppm")))
 		return (0);
 	if (!(texture = scene_add_texture_wave(scene, "tex_wave")))
 		return (0);
