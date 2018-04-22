@@ -6,18 +6,18 @@
 /*   By: ilarbi <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/21 19:54:53 by ilarbi            #+#    #+#             */
-/*   Updated: 2018/04/21 21:11:53 by ilarbi           ###   ########.fr       */
+/*   Updated: 2018/04/22 22:19:11 by ilarbi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "scene_parser/hooks.h"
 #include "./internal_texture_methods.h"
 
-int     f_internal_texture_method_scale(t_interpreter *const interpreter,
+int		f_internal_texture_method_scale(t_interpreter *const interpreter,
 		t_token *const tk_this, t_hook_args const args,
 		t_token *const tk_return)
 {
-	t_texture   *texture;
+	t_texture	*texture;
 
 	(void)interpreter;
 	*tk_return = *tk_this;

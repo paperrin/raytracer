@@ -6,7 +6,7 @@
 /*   By: ilarbi <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/21 19:45:45 by ilarbi            #+#    #+#             */
-/*   Updated: 2018/04/21 20:55:46 by ilarbi           ###   ########.fr       */
+/*   Updated: 2018/04/22 20:21:59 by ilarbi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,14 @@ int		f_internal_texture_method_scale(
 		t_token *const tk_this, t_hook_args const args,
 		t_token *const tk_return);
 int		f_internal_texture_method_filter(
+		t_interpreter *const interpreter,
+		t_token *const tk_this, t_hook_args const args,
+		t_token *const tk_return);
+int		f_internal_texture_method_color1(
+		t_interpreter *const interpreter,
+		t_token *const tk_this, t_hook_args const args,
+		t_token *const tk_return);
+int		f_internal_texture_method_color2(
 		t_interpreter *const interpreter,
 		t_token *const tk_this, t_hook_args const args,
 		t_token *const tk_return);

@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/11 20:58:15 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/21 21:16:09 by ilarbi           ###   ########.fr       */
+/*   Updated: 2018/04/22 18:58:06 by ilarbi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,21 +40,6 @@ void	scene_destroy(t_scene *const scene)
 
 int		scene_load(t_scene *const scene, t_app *const app)
 {
-/*<<<<<<< HEAD
-	scene_add_camera(scene, app);
-	scene_transform_pop(scene);
-*/	t_texture			*texture;
-
-	if (!(texture = scene_add_texture(scene, "tex_brick", "textures/brick.ppm")))
-		return (0);
-	texture->scale = vec2r(0.2, 0.2);
-	if (!(texture = scene_add_texture(scene, "tex_max_val", "textures/max_val.ppm")))
-		return (0);
-	if (!(texture = scene_add_texture_wave(scene, "tex_wave")))
-		return (0);
-	texture->scale = vec2r(0.04, 1);
-	if (!(texture = scene_add_texture_checkerboard(scene, "tex_checker")))
-		return (0);
 	scene_add_camera(scene, app);
 	return (1);
 }
