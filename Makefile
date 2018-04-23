@@ -121,8 +121,10 @@ CFILES		=	\
 				scene_parser/hooks/interpreter_method_stub_args_set_pos.c						\
 				scene_parser/hooks/interpreter_method_stub_args_set_rot.c						\
 				scene_parser/hooks/global/interpreter_method_transform.c						\
+				scene_parser/hooks/global/internal_global_method_set.c							\
 				scene_parser/hooks/obj/internal_obj_methods.c									\
 				scene_parser/hooks/obj/interpreter_add_class_obj_sphere.c						\
+				scene_parser/hooks/obj/interpreter_add_class_obj_aligned_cube.c					\
 				scene_parser/hooks/obj/interpreter_add_class_obj_cylinder.c						\
 				scene_parser/hooks/obj/interpreter_add_class_obj_plane.c						\
 				scene_parser/hooks/obj/interpreter_add_class_obj_cone.c							\
@@ -135,6 +137,10 @@ CFILES		=	\
 				scene_parser/hooks/material/internal_material_method_ignores_light.c			\
 				scene_parser/hooks/material/internal_material_method_projection.c				\
 				scene_parser/hooks/material/internal_material_method_color_map.c				\
+				scene_parser/hooks/texture/interpreter_add_class_texture.c						\
+				scene_parser/hooks/texture/internal_texture_method_translate.c					\
+				scene_parser/hooks/texture/internal_texture_method_scale.c						\
+				scene_parser/hooks/texture/internal_texture_method_filter.c						\
 				scene_parser/hooks/light/interpreter_add_class_point_light.c					\
 				scene_parser/hooks/light/interpreter_add_class_distant_light.c					\
 				scene_parser/hooks/light/interpreter_add_class_spot_light.c						\

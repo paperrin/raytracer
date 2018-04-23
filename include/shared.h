@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/13 14:25:38 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/21 17:16:42 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/23 00:50:24 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,7 @@ typedef struct			s_camera_data
 	t_real3				dir;
 	t_real3				up;
 	t_real3				right;
+	t_real				fov;
 	t_real				pxl_ratio;
 }						t_camera_data;
 

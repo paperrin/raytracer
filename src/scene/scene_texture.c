@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/16 00:44:23 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/16 02:46:36 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/23 04:45:57 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,10 @@ static int			scene_texture_load_from_file(t_scene *const scene,
 	unsigned int		max_val;
 
 	if (!(pixels = ft_ppm_file_read(path, &width, &height, &max_val)))
-		return (error_string("Could not read ppm file"));
+	{
+		ft_dprintf(STDERR_FILENO, "error: could not open ppm file: %s\n", path);
+		return (0);
+	}
 	texture->type = e_texture_type_image;
 	texture->as.image.pixels_offset = scene->n_texture_pixels;
 	texture->as.image.width = width;

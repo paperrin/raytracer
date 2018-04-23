@@ -8,3 +8,4 @@ obj/
 !src/obj/
 !src/scene_parser/hooks/obj/
 rt
+texture/planets/

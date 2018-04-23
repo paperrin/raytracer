@@ -1,92 +1,98 @@
-#      radius (km)    | sun dist (km)
-#	sun		695'700.0
-#	mercury	  2'439.7 |    57'000'000
-#	venus	  6'051.8 |   108'000'000
-#	earth	  6'378.1 |   150'000'000
-#		earth-moon: 384'400
-#	moon	  1'738.1
-#	mars	  3'396.2 |   228'000'000
-#	jupiter	 71'492.0 |   779'000'000
-#	saturn	 60'268.0 | 1'430'000'000
-#	uranus	 25'559.0 | 2'880'000'000
-#	neptune	 24'764.0 | 4'500'000'000
-#	pluto	  2'377.0 | 5'910'000'000
+
+set("r_scale", 1 / 1000)
+set("d_scale", 1 / 20000)
+
+set("sun_r",     695700.0 * r_scale)
+set("mercury_r",   2439.7 * r_scale) set("mercury_sun_d",   57000000 * d_scale)
+set("venus_r",     6051.8 * r_scale) set("venus_sun_d",    108000000 * d_scale)
+set("earth_r",     6378.1 * r_scale) set("earth_sun_d",    150000000 * d_scale)
+set("moon_r",      1738.1 * r_scale) set("moon_earth_d",      384400 * d_scale)
+set("mars_r",      3396.2 * r_scale) set("mars_sun_d",     228000000 * d_scale)
+set("jupiter_r",  71492.0 * r_scale) set("jupiter_sun_d",  779000000 * d_scale)
+set("saturn_r",   60268.0 * r_scale) set("saturn_sun_d",  1430000000 * d_scale)
+set("uranus_r",   25559.0 * r_scale) set("uranus_sun_d",  2880000000 * d_scale)
+set("neptune_r",  24764.0 * r_scale) set("neptune_sun_d", 4500000000 * d_scale)
+set("pluto_r",     2377.0 * r_scale) set("pluto_sun_d",   5910000000 * d_scale)
 
 #PointLight("sun")
 
 #Texture("tex_sun", "textures/planets/sun.ppm")
 #	.filter(TEXTURE_FILTER_BILINEAR)
-#Texture("tex_mercury", "textures/planets/moon.ppm")
+#Texture("tex_mercury", "textures/planets/mercury.ppm")
 #	.filter(TEXTURE_FILTER_BILINEAR)
-#Texture("tex_venus", "textures/planets/moon.ppm")
+#Texture("tex_venus", "textures/planets/venus.ppm")
 #	.filter(TEXTURE_FILTER_BILINEAR)
-#Texture("tex_earth", "textures/planets/moon.ppm")
+Texture("tex_earth", "texture/planets/earth.ppm")
+   .filter(TEXTURE_FILTER_BILINEAR)
+Texture("tex_moon", "texture/planets/moon.ppm")
+   .filter(TEXTURE_FILTER_BILINEAR)
+#Texture("tex_mars", "textures/planets/mars.ppm")
 #	.filter(TEXTURE_FILTER_BILINEAR)
-#Texture("tex_moon", "textures/planets/moon.ppm")
+#Texture("tex_jupiter", "textures/planets/jupiter.ppm")
 #	.filter(TEXTURE_FILTER_BILINEAR)
-#Texture("tex_mars", "textures/planets/moon.ppm")
+#Texture("tex_saturn", "textures/planets/saturn.ppm")
 #	.filter(TEXTURE_FILTER_BILINEAR)
-#Texture("tex_jupiter", "textures/planets/moon.ppm")
+#Texture("tex_uranus", "textures/planets/uranus.ppm")
 #	.filter(TEXTURE_FILTER_BILINEAR)
-#Texture("tex_saturn", "textures/planets/moon.ppm")
+#Texture("tex_neptune", "textures/planets/neptune.ppm")
 #	.filter(TEXTURE_FILTER_BILINEAR)
-#Texture("tex_uranus", "textures/planets/moon.ppm")
-#	.filter(TEXTURE_FILTER_BILINEAR)
-#Texture("tex_neptune", "textures/planets/moon.ppm")
-#	.filter(TEXTURE_FILTER_BILINEAR)
-#	.filter(TEXTURE_FILTER_BILINEAR)
-#Texture("tex_pluto", "textures/planets/moon.ppm")
+#Texture("tex_pluto", "textures/planets/pluto.ppm")
 #	.filter(TEXTURE_FILTER_BILINEAR)
 
-#Material("mat_sun"
-#	.filter(matTUR
-#Material("mat_merc
-#	.filter(matTUR
-#Material("mat_venu
-#	.filter(matTUR
-#Material("mat_eart
-#	.filter(matTUR
-#Material("mat_moon
-#	.filter(matTUR
-#Material("mat_mars
-#	.filter(matTUR
-#Material("mat_jupi
-#	.filter(matTUR
-#Material("mat_satu
-#	.filter(matTUR
-#Material("mat_uran
-#	.filter(matTUR
-#Material("mat_nept
-#	.filter(matTUR
-#	.filter(matTUR
-#Material("mat_plut
-#	.filter(matTUR
+#Material("mat_sun")
+#	.colorMap("mat_sun")
+#Material("mat_mercury")
+#	.colorMap("mat_mercury")
+#Material("mat_venus")
+#	.colorMap("mat_venus")
+Material("mat_earth")
+	.colorMap("tex_earth")
+Material("mat_moon")
+	.colorMap("tex_moon")
+	.emission(1)
+#Material("mat_mars")
+#	.colorMap("mat_mars")
+#Material("mat_jupiter")
+#	.colorMap("mat_jupiter")
+#Material("mat_saturn")
+#	.colorMap("mat_saturn")
+#Material("mat_uranus")
+#	.colorMap("mat_uranus")
+#Material("mat_neptune")
+#	.colorMap("mat_neptune")
+#Material("mat_pluto")				
+#	.colorMap("mat_pluto")				
 
+Camera()
+	.fov(114)
+	.pos(0, 0, 0)
 
+DistantLight()
 
-
-
-
-
-
+translate(0, 0, 15)
 push()
 	rotate(0, 0, 0)
 	
-	ObjSphere("earth")
-		.radius(6.3781)
-		.colorMap("tex_earth")
+	ObjSphere()
+		.radius(earth_r)
+		.material("mat_earth")
 pop()
 
 push()
 	rotate(0, 0, 0)
-	translate(0, 0, 384.400)
+	translate(0, 0, moon_earth_d)
 
 	rotate(0, 0, 0)
 	
-	sphere("moon")
-		.radius(1.7381)
-		.colorMap("tex_moon")
+	ObjSphere()
+		.radius(moon_r)
+		.material("mat_moon")
 pop()
 
 rotate(-30, 0, 0)
 translate(0, 0, -500)
+
+Config()
+	.sampleLevel(1)
+	.camLightColor(1, 1, 1)
+	.camLightIntensity(1)

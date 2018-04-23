@@ -2,6 +2,7 @@
 # define OBJ_SURFACE_NORMAL_CL
 
 #include "shared.h"
+#include "host.h"
 
 t_real3			obj_surface_normal(t_obj const *const obj, t_real3 point, t_ray ray);
 t_real3			obj_surface_normal_ext(t_obj const *const obj, t_real3 point);
@@ -70,30 +71,18 @@ t_real3			obj_cylinder_surface_normal(t_obj const *const obj, t_real3 point)
 t_real3			obj_aligned_cube_surface_normal(t_obj const *const obj, t_real3 point)
 {
 	t_real3		normal;
-	t_real3		extents;
 	t_real3		dist;
 	t_real		min;
 
 	min = FLT_MAX;
 	point -= obj->pos;
-	extents = obj->as.aligned_cube.size / 2;
-	dist = fabs(extents - fabs(point));
-	if (dist.x < min)
-	{
-		min = dist.x;
-		normal = (point.x > 0.0) ? (t_real3)(1, 0, 0) : (t_real3)(-1, 0, 0);
-	}
-	if (dist.y < min)
-	{
-		min = dist.y;
-		normal = (point.y > 0.0) ? (t_real3)(0, 1, 0) : (t_real3)(0, -1, 0);
-	}
-	if (dist.z < min)
-	{
-		min = dist.z;
-		normal = (point.z > 0.0) ? (t_real3)(0, 0, 1) : (t_real3)(0, 0, -1);
-	}
-	return (normal);
+	dist = fabs(obj->as.aligned_cube.size / 2 - fabs(point));
+	min = fmin(dist.x, fmin(dist.y, dist.z));
+
+	normal.x = (min == dist.x) * ((point.x > 0) * 2 - 1);
+	normal.y = (min == dist.y) * ((point.y > 0) * 2 - 1);
+	normal.z = (min == dist.z) * ((point.z > 0) * 2 - 1);
+	return (normalize(normal));
 }
 
 t_real3			obj_sphere_surface_normal(t_obj const *const obj, t_real3 point)

@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/18 23:33:03 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/21 18:34:39 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/21 21:20:25 by ilarbi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ int		f_internal_obj_method_material(t_interpreter *const interpreter,
 					&interpreter->app->scene.m_material
 					, args.tokens[0].as.str.value)) < 0)
 		return (error_string("could not find material"));
+	*tk_return = *tk_this;
 	return (1);
 }
 

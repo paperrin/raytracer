@@ -1,3 +1,5 @@
+Texture("tex_pano", "../textures/church_pano.ppm")
+
 Material("mat_pano")
 	.colorMap("tex_pano")
 	.ignoresLight()

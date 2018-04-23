@@ -174,23 +174,25 @@ t_real			obj_aligned_cube_ray_hit(constant t_obj const *const obj, t_ray *ray)
 	t_real		t2;
 	t_real		t_min;
 	t_real		t_max;
+	t_real3		invdir;
 	t_real3		box_center;
 
 	t_min = -INFINITY;
 	t_max = +INFINITY;
+	invdir = 1 / ray->dir;
 	box_center = obj->pos - obj->as.aligned_cube.size / 2;
-	t1 = (box_center.x - ray->origin.x) / ray->dir.x;
-	t2 = (box_center.x + obj->as.aligned_cube.size.x - ray->origin.x) / ray->dir.x;
+	t1 = (box_center.x - ray->origin.x) * invdir.x;
+	t2 = (box_center.x + obj->as.aligned_cube.size.x - ray->origin.x) * invdir.x;
 	t_min = fmax(fmin(t1, t2), t_min);
 	t_max = fmin(fmax(t1, t2), t_max);
-
-	t1 = (box_center.y - ray->origin.y) / ray->dir.y;
-	t2 = (box_center.y + obj->as.aligned_cube.size.y - ray->origin.y) / ray->dir.y;
+		
+	t1 = (box_center.y - ray->origin.y) * invdir.y;
+	t2 = (box_center.y + obj->as.aligned_cube.size.y - ray->origin.y) * invdir.y;
 	t_min = fmax(fmin(t1, t2), t_min);
 	t_max = fmin(fmax(t1, t2), t_max);
-
-	t1 = (box_center.z - ray->origin.z) / ray->dir.z;
-	t2 = (box_center.z + obj->as.aligned_cube.size.z - ray->origin.z) / ray->dir.z;
+		
+	t1 = (box_center.z - ray->origin.z) * invdir.z;
+	t2 = (box_center.z + obj->as.aligned_cube.size.z - ray->origin.z) * invdir.z;
 	t_min = fmax(fmin(t1, t2), t_min);
 	t_max = fmin(fmax(t1, t2), t_max);
 	if (t_min < t_max)

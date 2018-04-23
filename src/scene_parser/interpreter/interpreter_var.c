@@ -6,19 +6,19 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/11 18:07:42 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/21 06:23:17 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/23 04:24:51 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "scene_parser/interpreter.h"
 
-int			interpreter_var_add_is_constant(
+int					interpreter_var_add_is_constant(
 		t_interpreter *const interpreter, char *const name, t_token value,
 		int is_constant)
 {
 	t_interpreter_var	*new_var;
 
-	if (interpreter_find_var_name(interpreter, name, NULL))
+	if (interpreter_find_var_name(interpreter, name))
 		return (error_string("could not add var, var already exists"));
 	if (!(new_var = (t_interpreter_var*)ft_vector_push_back(
 					&interpreter->v_vars, NULL)))
@@ -30,19 +30,20 @@ int			interpreter_var_add_is_constant(
 	return (1);
 }
 
-int			interpreter_var_add(
+int					interpreter_var_add(
 		t_interpreter *const interpreter, char *const name, t_token value)
 {
 	return (interpreter_var_add_is_constant(interpreter, name, value, 0));
 }
 
-int			interpreter_constant_add(
+int					interpreter_constant_add(
 		t_interpreter *const interpreter, char *const name, t_token value)
 {
 	return (interpreter_var_add_is_constant(interpreter, name, value, 1));
 }
 
-int			interpreter_constant_add_batch(t_interpreter *const interpreter,
+int					interpreter_constant_add_batch(
+		t_interpreter *const interpreter,
 		size_t n_constants, ...)
 {
 	int			i;
@@ -62,8 +63,8 @@ int			interpreter_constant_add_batch(t_interpreter *const interpreter,
 	return (1);
 }
 
-int			interpreter_find_var_name(t_interpreter *const interpreter,
-		char *const name, t_interpreter_var *const r_var)
+t_interpreter_var	*interpreter_find_var_name(
+		t_interpreter *const interpreter, char *const name)
 {
 	t_interpreter_var	*vars;
 	int					vars_size;
@@ -75,11 +76,7 @@ int			interpreter_find_var_name(t_interpreter *const interpreter,
 	while (++i < vars_size)
 	{
 		if (!ft_strcmp(vars[i].name, name))
-		{
-			if (r_var)
-				*r_var = vars[i];
-			return (1);
-		}
+			return (&vars[i]);
 	}
-	return (0);
+	return (NULL);
 }

@@ -5,6 +5,8 @@ pos: (<num x{-0+}>, <num y{-0+}>, <num z{-0+}>)
 
 ================================================
 
+[x] set(<str var_name>, <num new_var_value>)
+
 [x]	push()
 [x]	pop()
 
@@ -63,8 +65,8 @@ pos: (<num x{-0+}>, <num y{-0+}>, <num z{-0+}>)
 [x]		.texture(<str textureName>)
 	
 [ ]	Texture(<str name>, <str imagePath>)
-[ ]		.offset(<num x{-0+}>, <num y{-0+}>)
-[ ]		.scale(<num xyScale{-0+}> || <<num x{-0+}>, <num y{-0+}>>)
+[x]		.translate(<num x{-0+}>, <num y{-0+}>)
+[x]		.scale(<num xyScale{-0+}> || <<num x{-0+}>, <num y{-0+}>>)
 [ ]		.filter(<var NEAREST> | <var BILINEAR>)
 	
 [x]	Sphere([str name])
@@ -95,6 +97,7 @@ pos: (<num x{-0+}>, <num y{-0+}>, <num z{-0+}>)
 [/]		.rot()
 	
 [x]	Camera()
+[x]		.fov(angle)
 [/]		.pos()
 [/]		.rot()
 	
@@ -109,5 +112,3 @@ pos: (<num x{-0+}>, <num y{-0+}>, <num z{-0+}>)
 [x]		.screenSize(width, height)
 [x]		.sampleLevel()
 [x]		.zFar()
-
-
