@@ -6,7 +6,7 @@
 /*   By: ilarbi <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/20 19:27:24 by ilarbi            #+#    #+#             */
-/*   Updated: 2018/04/21 15:16:10 by ilarbi           ###   ########.fr       */
+/*   Updated: 2018/04/22 19:00:44 by ilarbi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,9 +58,10 @@ int			interpreter_add_class_obj_aligned_cube(
 	if (!interpreter_class_add(interpreter, class_type,
 		interpreter_method_create("ObjAlignedCube", &f_class_aligned_cube)))
 		return (0);
-	if (!interpreter_class_add_method_batch(interpreter, class_type, 2,
+	if (!interpreter_class_add_method_batch(interpreter, class_type, 3,
 		"size", &f_method_size,
-		"material", &f_internal_obj_method_material))
+		"material", &f_internal_obj_method_material,
+		"pos", &f_internal_obj_method_pos))
 		return (0);
 	
 	return (1);	
