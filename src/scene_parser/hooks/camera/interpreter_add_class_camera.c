@@ -6,11 +6,12 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/21 16:15:05 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/23 03:06:21 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/23 18:39:18 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "scene_parser/hooks.h"
+#include "./internal_camera_methods.h"
 
 static int	f_class_camera(t_interpreter *const interpreter,
 		t_token *const tk_this, t_hook_args const args,
@@ -80,10 +81,12 @@ int			interpreter_add_class_camera(t_interpreter *const interpreter)
 	if (!interpreter_class_add(interpreter, class_type,
 					interpreter_method_create("Camera", &f_class_camera)))
 		return (0);
-	if (!interpreter_class_add_method_batch(interpreter, class_type, 3,
+	if (!interpreter_class_add_method_batch(interpreter, class_type, 5,
 			"fov", &f_method_fov,
 			"pos", &f_method_pos,
-			"rot", &f_method_rot))
+			"rot", &f_method_rot,
+			"moveSpeed", &f_internal_camera_method_move_speed,
+			"rotSpeed", &f_internal_camera_method_rot_speed))
 		return (0);
 	return (1);
 }

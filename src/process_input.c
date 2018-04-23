@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/19 19:21:17 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/18 03:11:48 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/23 18:07:47 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static void		process_input_mouse(t_app *app, double elapsed)
 {
-	const double	rot = 250;
+	const double	rot = 3;
 	static double	last_x = APP_WIDTH / 2;
 	static double	last_y = APP_HEIGHT / 2;
 	double			x;
@@ -34,9 +34,7 @@ static void		process_input_mouse(t_app *app, double elapsed)
 
 static void		process_input_key(t_app *app, double elapsed)
 {
-	const double	move_ammount = 80;
 	t_vec3f			move;
-	const double	rot_ammount = 200;
 	t_vec3f			rot;
 
 	move.x = (glfwGetKey(app->win.glfw_win, GLFW_KEY_D) == GLFW_PRESS)
@@ -45,7 +43,7 @@ static void		process_input_key(t_app *app, double elapsed)
 		- (glfwGetKey(app->win.glfw_win, GLFW_KEY_F) == GLFW_PRESS);
 	move.z = (glfwGetKey(app->win.glfw_win, GLFW_KEY_W) == GLFW_PRESS)
 		- (glfwGetKey(app->win.glfw_win, GLFW_KEY_S) == GLFW_PRESS);
-	move = ft_vec3f_scale(move, move_ammount * elapsed);
+	move = ft_vec3f_scale(move, app->cam.move_speed * elapsed);
 	scene_camera_translate(&app->cam, move.x, move.y, move.z);
 	rot.y = (glfwGetKey(app->win.glfw_win, GLFW_KEY_L) == GLFW_PRESS)
 		- (glfwGetKey(app->win.glfw_win, GLFW_KEY_J) == GLFW_PRESS);
@@ -53,7 +51,7 @@ static void		process_input_key(t_app *app, double elapsed)
 		- (glfwGetKey(app->win.glfw_win, GLFW_KEY_I) == GLFW_PRESS);
 	rot.z = (glfwGetKey(app->win.glfw_win, GLFW_KEY_U) == GLFW_PRESS)
 		- (glfwGetKey(app->win.glfw_win, GLFW_KEY_O) == GLFW_PRESS);
-	rot = ft_vec3f_scale(rot, rot_ammount * elapsed);
+	rot = ft_vec3f_scale(rot, app->cam.rot_speed * elapsed);
 	rot = ft_vec3f_add(rot,
 			ft_vec3f(app->cam.rot.s[0], app->cam.rot.s[1], app->cam.rot.s[2]));
 	app->cam.rot = vec3r(rot.x, rot.y, rot.z);

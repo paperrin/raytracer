@@ -98,6 +98,8 @@ pos: (<num x{-0+}>, <num y{-0+}>, <num z{-0+}>)
 	
 [x]	Camera()
 [x]		.fov(angle)
+[x]		.moveSpeed(<num move_speed>)
+[x]		.rotSpeed(<nun rot_speed_deg>)
 [/]		.pos()
 [/]		.rot()
 	

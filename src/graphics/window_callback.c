@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/03 19:14:30 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/12 18:47:04 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/23 18:01:39 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void				window_callback_loop(t_window *win,
 		win->should_close = glfwWindowShouldClose(win->glfw_win);
 		now = glfwGetTime();
 		if (f_loop)
-			(*f_loop)(user_ptr, (now - last_time) * 0.01);
+			(*f_loop)(user_ptr, (now - last_time));
 		last_time = now;
 		if (f_loop)
 			glfwPollEvents();
