@@ -121,6 +121,7 @@ CFILES		=	\
 				scene_parser/hooks/interpreter_method_stub_args_set_pos.c						\
 				scene_parser/hooks/interpreter_method_stub_args_set_rot.c						\
 				scene_parser/hooks/global/interpreter_method_transform.c						\
+				scene_parser/hooks/global/internal_global_method_set.c							\
 				scene_parser/hooks/obj/internal_obj_methods.c									\
 				scene_parser/hooks/obj/interpreter_add_class_obj_sphere.c						\
 				scene_parser/hooks/obj/interpreter_add_class_obj_aligned_cube.c					\
@@ -142,6 +143,7 @@ CFILES		=	\
 				scene_parser/hooks/texture/internal_texture_method_filter.c						\
 				scene_parser/hooks/texture/interpreter_add_class_texture_checkerboard.c			\
 				scene_parser/hooks/texture/internal_texture_method_colors.c						\
+				scene_parser/hooks/texture/internal_texture_method_wave_colors.c						\
 				scene_parser/hooks/texture/interpreter_add_class_texture_sine.c					\
 				scene_parser/hooks/texture/internal_texture_method_factors.c					\
 				scene_parser/hooks/light/interpreter_add_class_point_light.c					\
@@ -162,6 +164,7 @@ CFILES		=	\
 				scene_parser/hooks/config/internal_config_method_sample_level.c					\
 				scene_parser/hooks/config/internal_config_method_zfar.c							\
 				scene_parser/hooks/camera/interpreter_add_class_camera.c						\
+				scene_parser/hooks/camera/internal_camera_method_speed.c						\
 				scene_parser/hooks/hook_valid_args.c											\
 				\
 				prompt/arg_dispatch.c							\

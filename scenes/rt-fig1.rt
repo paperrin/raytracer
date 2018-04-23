@@ -68,3 +68,4 @@ pop()
 
 Config()
 	.sampleLevel(1)
+	.postFilter(POST_FILTER_NONE)

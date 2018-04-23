@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/20 17:08:21 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/20 17:08:53 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/23 03:59:15 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,11 @@
 # define INTERNAL_GLOBAL_METHODS_H
 
 int		f_internal_material_method_color(
+		t_interpreter *const interpreter,
+		t_token *const tk_this, t_hook_args const args,
+		t_token *const tk_return);
+
+int		f_internal_global_method_set(
 		t_interpreter *const interpreter,
 		t_token *const tk_this, t_hook_args const args,
 		t_token *const tk_return);

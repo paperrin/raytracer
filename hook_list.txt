@@ -5,6 +5,8 @@ pos: (<num x{-0+}>, <num y{-0+}>, <num z{-0+}>)
 
 ================================================
 
+[x] set(<str var_name>, <num new_var_value>)
+
 [x]	push()
 [x]	pop()
 
@@ -95,6 +97,9 @@ pos: (<num x{-0+}>, <num y{-0+}>, <num z{-0+}>)
 [/]		.rot()
 	
 [x]	Camera()
+[x]		.fov(angle)
+[x]		.moveSpeed(<num move_speed>)
+[x]		.rotSpeed(<nun rot_speed_deg>)
 [/]		.pos()
 [/]		.rot()
 	
