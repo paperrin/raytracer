@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/10 23:37:25 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/22 22:10:04 by ilarbi           ###   ########.fr       */
+/*   Updated: 2018/04/23 22:08:02 by ilarbi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ int			interpreter_add_class_obj_cone(t_interpreter *const interpreter);
 int			interpreter_add_class_material(t_interpreter *const interpreter);
 int			interpreter_add_class_texture(t_interpreter *const interpreter);
 int			interpreter_add_class_texture_checkerboard(t_interpreter *const interpreter);
+int			interpreter_add_class_texture_sine(t_interpreter *const interpreter);
 int			interpreter_add_hooks_transform(t_interpreter *const interpreter);
 int			interpreter_add_class_point_light(t_interpreter *const interpreter);
 int			interpreter_add_class_distant_light(t_interpreter *const interpreter);
