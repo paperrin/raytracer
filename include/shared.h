@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/13 14:25:38 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/14 23:37:43 by tlernoul         ###   ########.fr       */
+/*   Updated: 2018/04/23 19:41:26 by tlernoul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,6 +118,7 @@ typedef struct			s_config
 	cl_int				cur_depth;
 	cl_int				mouse_pxl_id;
 	cl_uint				post_filters;
+	cl_uint				fxaa;
 }						t_config;
 
 /*
@@ -282,5 +283,40 @@ typedef struct			s_light
 	cl_float			intensity;
 	t_light_container	as;
 }						t_light;
+
+/*t
+** Anti-aliasing
+*/
+
+typedef struct			s_directions
+{
+	cl_float			north;
+	cl_float			south;
+	cl_float			east;
+	cl_float			west;
+}						t_directions;
+
+typedef struct			s_edge
+{
+	cl_float2			uv;
+	cl_float			luma;
+}						t_edge;
+
+typedef struct			s_anti_aliasing
+{
+	cl_float			center;
+	t_directions		orig;
+	t_directions		corners;
+	cl_float			x_axis;
+	cl_float			y_axis;
+	cl_float			range;
+	cl_int				is_horizontal;
+	t_edge				end_one;
+	t_edge				end_two;
+	cl_float			gradscaled;
+	cl_float			final_offset;
+	cl_float			local_average;
+	cl_float			step_length;
+}						t_anti_aliasing;
 
 #endif

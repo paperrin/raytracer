@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/09 16:14:42 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/14 22:05:58 by tlernoul         ###   ########.fr       */
+/*   Updated: 2018/04/23 15:45:14 by tlernoul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,35 @@ void		app_destroy(t_app *app, int exit_status)
 	exit(exit_status);
 }
 
+static void		draw_screen_buffer(t_app *app)
+{
+	cl_int				err;
+
+	clFinish(app->ocl.cmd_queue);
+	if (app->config.fxaa)
+	{
+		if (CL_SUCCESS != (err = clEnqueueReadBuffer(app->ocl.cmd_queue, app->kernel_post_process.args[2]
+			, CL_TRUE, 0, sizeof(cl_float) * 4 * app->win.width * app->win.height
+			, app->draw_buf.pixels, 0, 0, 0)))
+		{
+			error_cl_code(err);
+			app_destroy(app, EXIT_FAILURE);
+		}
+	}
+	else
+	{
+		if (CL_SUCCESS != (err = clEnqueueReadBuffer(app->ocl.cmd_queue, app->kernel_clear.args[0]
+			, CL_TRUE, 0, sizeof(cl_float) * 4 * app->win.width * app->win.height
+			, app->draw_buf.pixels, 0, 0, 0)))
+		{
+			error_cl_code(err);
+			app_destroy(app, EXIT_FAILURE);
+		}
+	}
+	image_put(&app->draw_buf, 0, 0);
+	window_swap_buffers(&app->win);
+}
+
 void		render(void *user_ptr, double elapsed)
 {
 	static double			last_time = -1;
@@ -64,7 +93,6 @@ void		render(void *user_ptr, double elapsed)
 	static unsigned long		rays_per_sec = 0;
 	static size_t			n_frames = 0;
 	t_app				*app;
-	cl_int				err;
 
 	app = (t_app*)user_ptr;
 	process_input(app, (last_time < 0) ? 0 : elapsed);
@@ -84,19 +112,11 @@ void		render(void *user_ptr, double elapsed)
 		rays_per_sec += app->n_rays;
 		if (!kernel_ray_shade_launch(app) && !error_string("error: shade kernel launch failed\n"))
 			app_destroy(app, EXIT_FAILURE);
-		if (!kernel_post_process_launch(app) && !error_string("error: post process kernel launch failed\n"))
-			app_destroy(app, EXIT_FAILURE);
 	}
 	clFinish(app->ocl.cmd_queue);
-	if (CL_SUCCESS != (err = clEnqueueReadBuffer(app->ocl.cmd_queue, app->kernel_post_process.args[2]
-			, CL_TRUE, 0, sizeof(cl_float) * 4 * app->win.width * app->win.height
-			, app->draw_buf.pixels, 0, 0, 0)))
-	{
-		error_cl_code(err);
+	if (!kernel_post_process_launch(app) && !error_string("error: post process kernel launch failed\n"))
 		app_destroy(app, EXIT_FAILURE);
-	}
-	image_put(&app->draw_buf, 0, 0);
-	window_swap_buffers(&app->win);
+	draw_screen_buffer(app);
 	n_frames++;
 	if (glfwGetTime() - last_time > 1)
 	{
@@ -301,13 +321,14 @@ int			main(int ac, const char **av)
 	app.config.max_depth = 2;
 	app.config.projection_depth = 50;
 	app.config.post_filters = e_post_filter_none;
+	app.config.fxaa = 0;
 
 	app.scene.v_light = ft_vector_create(sizeof(t_light), NULL, NULL);
 	if (!(light = (t_light*)ft_vector_push_back(&app.scene.v_light, NULL)))
 		return (error_cl_code(CL_OUT_OF_HOST_MEMORY));
 	light->type = e_light_type_point;
 	light->color = vec3f(1, 1, 1);
-	light->intensity = 250;
+	light->intensity = 450;
 	light->as.point.pos = vec3r(0, 0, 0);
 	
 	app.cam.cam_data.pos = vec3r(0, 0, -1);

@@ -6,7 +6,7 @@
 #    By: paperrin <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/12/04 23:22:26 by paperrin          #+#    #+#              #
-#    Updated: 2018/04/08 19:23:59 by tlernoul         ###   ########.fr        #
+#    Updated: 2018/04/18 17:13:23 by tlernoul         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -118,6 +118,8 @@ files_import(
 	src/cl/obj_surface_normal.cl
 	src/cl/obj_surface_uv_map.cl
 	src/cl/shade.cl
+	src/cl/anti_aliasing.cl
+	src/cl/interpolation.cl
 )
 add_executable(rt ${SRC_FILES})
 

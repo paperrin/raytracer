@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/09 16:52:27 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/12 18:38:55 by ilarbi           ###   ########.fr       */
+/*   Updated: 2018/04/19 17:16:42 by tlernoul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,4 +86,6 @@ void		callback_key(void *user_ptr, int key, int action)
 	}
 	else if (key == GLFW_KEY_Z && action == GLFW_PRESS)
 		app->config.shading_model = !app->config.shading_model;
+	else if (key == GLFW_KEY_T && action == GLFW_PRESS)
+		app->config.fxaa = !app->config.fxaa;
 }
