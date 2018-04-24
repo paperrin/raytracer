@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/18 21:50:02 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/23 02:13:29 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/24 21:56:00 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@ int			kernel_ray_gen_primary_create(t_app *app)
 	if (!opencl_kernel_create_n_args(&app->kernel_ray_gen, &app->ocl, 3))
 		return (0);
 	app->kernel_ray_gen.work_size = app->win.width * app->win.height
-			* app->config.samples_width * app->config.samples_width;
+			* app->config.samples_width * app->config.samples_width
+			* (app->cam.cam_data.is_anaglyph + 1);
 	if (!opencl_kernel_load_from_file(&app->kernel_ray_gen
 				, "./src/cl/kernel_ray_gen_primary.cl", "-I ./include/ -I ./src/cl/"))
 		return (0);

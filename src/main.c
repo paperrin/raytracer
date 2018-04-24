@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/09 16:14:42 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/21 21:16:41 by ilarbi           ###   ########.fr       */
+/*   Updated: 2018/04/24 23:21:14 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,12 @@ static void	app_init(t_app *const app)
 	app->config.max_depth = 0;
 	app->config.projection_depth = 2;
 	app->config.post_filters = e_post_filter_none;
+	app->config.anaglyph_r[0] = vec3f(0.0, 0.7, 0.3);
+	app->config.anaglyph_g[0] = vec3f(0.0, 0.0, 0.0);
+	app->config.anaglyph_b[0] = vec3f(0.0, 0.0, 0.0);
+	app->config.anaglyph_r[1] = vec3f(0.0, 0.0, 0.0);
+	app->config.anaglyph_g[1] = vec3f(0.0, 1.0, 0.0);
+	app->config.anaglyph_b[1] = vec3f(0.0, 0.0, 1.0);
 }
 
 int			app_create(t_app *app, int ac, const char **argv)

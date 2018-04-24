@@ -25,9 +25,7 @@ int				is_in_shadow(global t_config const *const config, float3 *perceived_l_col
 
 float3			tone_map(float3 color)
 {
-	color.r = color.r / (color.r + 1);
-	color.g = color.g / (color.g + 1);
-	color.b = color.b / (color.b + 1);
+	color = fabs(atan(color));
 	return (color);
 }
 

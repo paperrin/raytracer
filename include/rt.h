@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/09 16:36:38 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/22 19:31:13 by ilarbi           ###   ########.fr       */
+/*   Updated: 2018/04/24 23:05:14 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,9 @@
 # define APP_TITLE "R-T RT"
 # define APP_SCREENSHOT_PATH "./Screen Shot "
 # define APP_USAGE "usage: ./rt [-d [platform_id:device_id]] <file.rt>\n"
+
+# define ANAGLYPH_EYE_OFFSET_DEFAULT 0.5
+# define SBS_EYE_OFFSET_DEFAULT 0.5
 
 # define ERR_MEMORY "not enough memory"
 

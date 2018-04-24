@@ -1,4 +1,6 @@
 
+Texture("null", "textures/max_val.ppm")
+
 translate(0, -1, 2)
 
 Material("mat_white")

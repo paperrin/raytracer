@@ -4,6 +4,7 @@
 #include "atomic_add.cl"
 #include "get_secondary_ray.cl"
 #include "get_light_glare_color.cl"
+#include "utils.cl"
 
 kernel void			kernel_ray_shade(
 		constant read_only t_obj *objs,
@@ -19,7 +20,8 @@ kernel void			kernel_ray_shade(
 		global read_write t_ray_state *ray_states,
 		global read_write cl_uint *n_new_rays,
 		global read_write float *pixels,
-		global read_only t_config *config)
+		global read_only t_config *config,
+		constant read_only t_camera_data *cam)
 {
 	const int				gid = get_global_id(0);
 	t_real3					hit_pos;
@@ -33,6 +35,7 @@ kernel void			kernel_ray_shade(
 	char					has_refraction;
 	int						block_size;
 	int						middle_pos;
+	int						n_screen_pixels;
 
 	state = ray_states[gid];
 	color = (cl_float3)(0, 0, 0);
@@ -88,15 +91,19 @@ kernel void			kernel_ray_shade(
 	color *= state.color_factor;
 	color *= (state.importance - state.importance * (mats[obj.material_id].reflection + mats[obj.material_id].refraction));
 	color /= config->samples_width * config->samples_width;
-	atomic_addf(&pixels[state.pxl_id * 4 + 0], color.r);
-	atomic_addf(&pixels[state.pxl_id * 4 + 1], color.g);
-	atomic_addf(&pixels[state.pxl_id * 4 + 2], color.b);
+	if (cam->is_anaglyph)
+		color = filter_anaglyph(config, state.pxl_id, color);
+	n_screen_pixels = get_screen_pixels_count(config);
+	atomic_addf(&pixels[state.pxl_id % n_screen_pixels * 4 + 0], color.r);
+	atomic_addf(&pixels[state.pxl_id % n_screen_pixels * 4 + 1], color.g);
+	atomic_addf(&pixels[state.pxl_id % n_screen_pixels * 4 + 2], color.b);
 	state.color_factor *= obj_surface_color(&obj, mats, textures, textures_size,
 				texture_pixels, n_texture_pixels, hit_pos);
 
+
 	if (config->cur_depth < config->max_depth)
 	{
-		block_size = config->screen_size.x * config->screen_size.y;
+		block_size = config->screen_size.x * config->screen_size.y * (cam->is_anaglyph + 1);
 		middle_pos = config->samples_width * config->samples_width * pown(2.f, config->cur_depth) * block_size;
 		ray_states[gid % middle_pos] = state_refrac;
 		ray_states[gid % middle_pos + middle_pos] = state_reflec;

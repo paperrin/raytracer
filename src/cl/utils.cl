@@ -10,6 +10,11 @@ t_real2				get_current_plane_pos(
 int2				get_current_pxl_pos(global read_only t_config *config);
 t_real2				get_current_sub_pxl_pos(global read_only t_config *config);
 int					get_current_pxl_id(global read_only t_config *config);
+float3				filter_anaglyph(global read_only t_config *config, int pxl_id, float3 color);
+
+int					get_pixel_samples_count(global read_only t_config *config);
+int					get_screen_pixels_count(global read_only t_config *config);
+int					get_screen_samples_count(global read_only t_config *config);
 
 int					get_current_pxl_id(global read_only t_config *config)
 {
@@ -37,10 +42,24 @@ t_real2				get_current_plane_pos(
 	return (plane_pos);
 }
 
+int					get_screen_pixels_count(global read_only t_config *config)
+{
+	return (config->screen_size.x * config->screen_size.y);
+}
+
+int					get_pixel_samples_count(global read_only t_config *config)
+{
+	return (config->samples_width * config->samples_width);
+}
+
+int					get_screen_samples_count(global read_only t_config *config)
+{
+	return (get_screen_pixels_count(config) * get_pixel_samples_count(config));
+}
+
 int2				get_current_pxl_pos(global read_only t_config *config)
 {
-	const int		pxl_id = get_current_pxl_id(config);
-	const int		n_samples = config->samples_width * config->samples_width;
+	const int		pxl_id = get_current_pxl_id(config) % get_screen_pixels_count(config);
 	int2			pxl_pos;
 
 	pxl_pos = (int2)(
@@ -63,6 +82,19 @@ t_real2				get_current_sub_pxl_pos(global read_only t_config *config)
 		(t_real)(sub_pxl_id / config->samples_width) / (t_real)config->samples_width
 	);
 	return (sub_pxl_pos);
+}
+
+float3				filter_anaglyph(global read_only t_config *config, int pxl_id, float3 color)
+{
+	float3		new_color;
+	int			is_right_eye;
+
+	new_color = (float3)(1);
+	is_right_eye = pxl_id > get_screen_pixels_count(config);
+	new_color.r = dot(color, config->anaglyph_r[is_right_eye]);
+	new_color.g = dot(color, config->anaglyph_g[is_right_eye]);
+	new_color.b = dot(color, config->anaglyph_b[is_right_eye]);
+	return (new_color);
 }
 
 #endif

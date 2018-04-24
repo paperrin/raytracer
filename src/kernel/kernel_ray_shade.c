@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/16 22:37:07 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/18 03:26:09 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/24 21:58:54 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int				kernel_ray_shade_create(t_app *app)
 	cl_uint			textures_size;
 
 	app->kernel_ray_shade.work_size = app->win.width * app->win.height;
-	if (!opencl_kernel_create_n_args(&app->kernel_ray_shade, &app->ocl, 14))
+	if (!opencl_kernel_create_n_args(&app->kernel_ray_shade, &app->ocl, 15))
 		return (0);
 	if (!opencl_kernel_load_from_file(&app->kernel_ray_shade
 				, "./src/cl/kernel_ray_shade.cl", "-I ./include/ -I ./src/cl/"))
@@ -96,6 +96,10 @@ int				kernel_ray_shade_create(t_app *app)
 	if (!opencl_kernel_arg_selected_use_kernel_arg_id(&app->kernel_ray_shade
 			, &app->kernel_ray_gen, 0))
 		return (0);
+	opencl_kernel_arg_select_id(&app->kernel_ray_shade, 14);
+	if (!opencl_kernel_arg_selected_use_kernel_arg_id(&app->kernel_ray_shade
+			, &app->kernel_ray_gen, 1))
+		return (0);
 	return (1);
 }
 
@@ -106,7 +110,8 @@ int				kernel_ray_shade_launch(t_app *app)
 	app->n_rays = 0;
 	app->kernel_ray_shade.work_size = app->win.width * app->win.height
 		* app->config.samples_width * app->config.samples_width
-		* pow(2, app->config.cur_depth);
+		* pow(2, app->config.cur_depth)
+		* (app->cam.cam_data.is_anaglyph + 1);
 	if ((err = clEnqueueWriteBuffer(app->ocl.cmd_queue
 					, app->kernel_ray_shade.args[11]
 			, CL_TRUE, 0, sizeof(cl_uint), &app->n_rays, 0, NULL, NULL))

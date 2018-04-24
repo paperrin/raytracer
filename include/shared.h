@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/13 14:25:38 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/23 04:57:42 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/24 23:20:40 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,8 @@ typedef struct			s_camera_data
 	t_real3				up;
 	t_real3				right;
 	t_real				fov;
-	t_real				pxl_ratio;
+	t_real				eye_offset;
+	int					is_anaglyph;
 }						t_camera_data;
 
 typedef cl_float3 (t_f_specular_model)(t_material, t_real3, t_ray, t_real3, t_real3, cl_float3);
@@ -124,6 +125,9 @@ typedef struct			s_config
 	cl_int				cur_depth;
 	cl_int				mouse_pxl_id;
 	cl_uint				post_filters;
+	cl_float3			anaglyph_r[2];
+	cl_float3			anaglyph_g[2];
+	cl_float3			anaglyph_b[2];
 }						t_config;
 
 /*

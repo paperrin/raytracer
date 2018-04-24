@@ -33,7 +33,7 @@ float3		get_light_glare_color(
 	{
 		if (lights[i].glare < config->color_epsilon)
 			continue ;
-		light_ray.dir = light_get_dir(config, lights[i], light_ray.origin, &light_color, &light_dist);
+		light_ray.dir = light_get_dir_options(config, lights[i], light_ray.origin, &light_color, &light_dist, 1, 0);
 		edl = dot(eye_ray.dir, light_ray.dir);
 		if (edl < config->color_epsilon)
 			continue ;

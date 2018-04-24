@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/22 18:06:33 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/18 03:23:26 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/24 21:54:00 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,8 @@ int				kernel_ray_trace_launch(t_app *app)
 	app->n_hits = 0;
 	app->kernel_ray_trace.work_size = app->win.width * app->win.height
 		* app->config.samples_width * app->config.samples_width
-		* pow(2, app->config.cur_depth);
+		* pow(2, app->config.cur_depth)
+		* (app->cam.cam_data.is_anaglyph + 1);
 	if ((err = clEnqueueWriteBuffer(app->ocl.cmd_queue
 					, app->kernel_ray_trace.args[3]
 			, CL_TRUE, 0, sizeof(cl_uint), (void*)&app->n_hits, 0, NULL, NULL))

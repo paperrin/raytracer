@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/21 01:29:01 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/21 17:15:11 by ilarbi           ###   ########.fr       */
+/*   Updated: 2018/04/25 00:12:06 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,6 @@ int				f_internal_material_method_emission(
 	material = (t_material*)tk_this->as.class.ptr;
 	if (!hook_valid_args(&args, 1, token_type_num))
 		return (0);
-	material->emission = ft_clampf(args.tokens[0].as.num.value, 0, 1);
+	material->emission = ft_maxf(args.tokens[0].as.num.value, 0);
 	return (1);
 }

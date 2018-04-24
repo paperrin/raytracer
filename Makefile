@@ -162,6 +162,7 @@ CFILES		=	\
 				scene_parser/hooks/config/internal_config_method_zfar.c							\
 				scene_parser/hooks/camera/interpreter_add_class_camera.c						\
 				scene_parser/hooks/camera/internal_camera_method_speed.c						\
+				scene_parser/hooks/camera/internal_camera_method_anaglyph.c						\
 				scene_parser/hooks/hook_valid_args.c											\
 				\
 				prompt/arg_dispatch.c							\
