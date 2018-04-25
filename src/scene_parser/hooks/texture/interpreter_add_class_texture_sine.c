@@ -6,7 +6,7 @@
 /*   By: ilarbi <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/22 22:11:13 by ilarbi            #+#    #+#             */
-/*   Updated: 2018/04/22 22:19:01 by ilarbi           ###   ########.fr       */
+/*   Updated: 2018/04/23 22:18:00 by ilarbi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static int	f_class_texture_sine(t_interpreter *const interpreter,
 	(void)tk_this;
 	if (!hook_valid_args(&args, 1, token_type_str))
 		return (0);
-	if (!(texture = scene_add_texture(&interpreter->app->scene,
+	if (!(texture = scene_add_texture_wave(&interpreter->app->scene,
 		args.tokens[0].as.str.value)))
 		return (0);
 	tk_return->as.class.ptr = (void*)texture;
@@ -36,10 +36,14 @@ int			interpreter_add_class_texture_sine(t_interpreter *const interpreter)
 	if (!interpreter_class_add(interpreter, class_type,
 		interpreter_method_create("TextureSine", &f_class_texture_sine)))
 		return (0);
-	if (!interpreter_class_add_method_batch(interpreter, class_type, 3,
+	if (!interpreter_class_add_method_batch(interpreter, class_type, 9,
 		"translate", &f_internal_texture_method_translate,
 		"scale", &f_internal_texture_method_scale,
-		"xWaveColor1", &f_internal_texture_method_))
+		"xWaveColor1", &f_internal_texture_method_x_wave_color1,
+		"xWaveColor2", &f_internal_texture_method_x_wave_color2,
+		"yWaveColor3", &f_internal_texture_method_y_wave_color1,
+		"yWaveColor4", &f_internal_texture_method_y_wave_color2,
+		"factors", &f_internal_texture_method_factors))
 		return (0);
 	return (1);
 }

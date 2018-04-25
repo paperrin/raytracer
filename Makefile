@@ -143,6 +143,9 @@ CFILES		=	\
 				scene_parser/hooks/texture/internal_texture_method_filter.c						\
 				scene_parser/hooks/texture/interpreter_add_class_texture_checkerboard.c			\
 				scene_parser/hooks/texture/internal_texture_method_colors.c						\
+				scene_parser/hooks/texture/internal_texture_method_wave_colors.c						\
+				scene_parser/hooks/texture/interpreter_add_class_texture_sine.c					\
+				scene_parser/hooks/texture/internal_texture_method_factors.c					\
 				scene_parser/hooks/light/interpreter_add_class_point_light.c					\
 				scene_parser/hooks/light/interpreter_add_class_distant_light.c					\
 				scene_parser/hooks/light/interpreter_add_class_spot_light.c						\
