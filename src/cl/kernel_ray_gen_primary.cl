@@ -36,7 +36,7 @@ kernel void			kernel_ray_gen_primary(
 			if (!is_right_eye)
 				eye_half_offset *= -1;
 		}
-		ray_origin += eye_half_offset;
+		ray_origin -= eye_half_offset;
 	}
 
 	ray_states[gid].ray.origin = ray_origin;

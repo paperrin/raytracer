@@ -158,12 +158,15 @@ float3		texture_sine_uv_color(t_texture *texture, t_real2 uv)
 	float3	colorx;
 	float3	colory;
 
+	uv -= floor(uv);
 	uv = transform_uv(uv, texture->translate, texture->scale);
 	sine.x = sin(uv.x * 2 * M_PI_F);
 	sine.y = sin(uv.y * 2 * M_PI_F);
-	sine = (1 + sine) / 2;
+	sine = (sine + 1.f) / 2;
 	colorx = texture->as.sine.color1 * sine.x + texture->as.sine.color2 * (1 - sine.x);
 	colory = texture->as.sine.color3 * sine.y + texture->as.sine.color4 * (1 - sine.y);
+	if (colory.r + colory.b < 0)
+		printf("%f\n", sine.y);
 	return (colorx * texture->as.sine.factors.x + colory * texture->as.sine.factors.y);
 }
 

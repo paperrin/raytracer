@@ -32,11 +32,18 @@ t_real2				get_current_plane_pos(
 		constant read_only t_camera_data *cam)
 {
 	const t_real	screen_ratio = (t_real)config->screen_size.y / config->screen_size.x;
-	t_real			plane_size = tan(cam->fov / 2) * 2;
+	t_real2			plane_size = (t_real2)(tan(cam->fov / 2) * 2, tan(cam->fov / 2) * 2);
 	t_real2			pxl_pos;
 	t_real2			plane_pos;
 
-	pxl_pos = (t_real2)convert_float2(get_current_pxl_pos(config)) + get_current_sub_pxl_pos(config);
+	pxl_pos = (t_real2)convert_float2(get_current_pxl_pos(config));
+	if (cam->eye_offset > 0 && !cam->is_anaglyph)
+	{
+		if (pxl_pos.x >= config->screen_size.x / 2)
+			pxl_pos.x = (int)pxl_pos.x % (config->screen_size.x / 2);
+		plane_size /= 2;
+	}
+	pxl_pos += get_current_sub_pxl_pos(config);
 	plane_pos = pxl_pos / (t_real2)convert_float2(config->screen_size) * plane_size - plane_size / 2;
 	plane_pos.y *= screen_ratio;
 	return (plane_pos);

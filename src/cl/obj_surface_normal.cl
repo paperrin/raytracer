@@ -55,6 +55,9 @@ t_real3			obj_cone_surface_normal(t_obj const *const obj, t_real3 point)
 	return (normal);
 }
 
+/*
+** Take care while modifying, obj_surface_cylinder_uv_map() depends on this :
+*/
 t_real3			obj_cylinder_surface_normal(t_obj const *const obj, t_real3 point)
 {
 	t_real3		normal;

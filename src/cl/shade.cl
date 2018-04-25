@@ -8,7 +8,7 @@
 #include "light_get_dir.cl"
 #include "get_specular_color.cl"
 
-float3			shade(global t_config const *const config, t_obj obj, t_real3 hit_pos, t_ray ray,
+float3			shade(global t_config const *const config, t_obj obj, t_real3 hit_pos, t_real3 normal, float3 surface_color, t_ray ray,
 		constant t_obj *objs, uint objs_size,
 		constant t_material *mats, uint mats_size,
 		constant t_texture *textures, uint textures_size,
@@ -64,7 +64,7 @@ int			is_in_shadow(global t_config const *const config, float3 *perceived_l_colo
 	return (0);
 }
 
-float3			shade(global t_config const *const config, t_obj obj, t_real3 hit_pos, t_ray ray,
+float3			shade(global t_config const *const config, t_obj obj, t_real3 hit_pos, t_real3 normal, float3 surface_color, t_ray ray,
 		constant t_obj *objs, uint objs_size,
 		constant t_material *mats, uint mats_size,
 		constant t_texture *textures, uint textures_size,
@@ -78,34 +78,24 @@ float3			shade(global t_config const *const config, t_obj obj, t_real3 hit_pos, 
 	int				i;
 	t_real			ndl;
 	t_real			light_dist;
-	float3			surface_color;
 	float3			perceived_l_color;
 	float			vdn;
 
-	surface_color = obj_surface_color(
-			&obj,
-			mats,
-			textures, textures_size,
-			texture_pixels, n_texture_pixels,
-			hit_pos);
 	color = (float3)(0, 0, 0);
 	i = -1;
 	if (!mats[obj.material_id].ignores_light)
 	{
-		surface_normal = obj_surface_normal(&obj, hit_pos, ray);
-		light_ray.origin = hit_pos;
-		vdn = dot(-surface_normal, ray.dir);
+		light_ray.origin = hit_pos + normal * config->intersection_bias;
+		vdn = dot(-normal, ray.dir);
 		while (++i < (int)lights_size)
 		{
 			light_ray.dir = light_get_dir(config, lights[i], hit_pos, &light_color, &light_dist);
-			ndl = dot(light_ray.dir, surface_normal);
-			if (ndl < 0)
-				continue ;
-			if (!is_in_shadow(config, &perceived_l_color, light_ray, light_color, light_dist, objs, objs_size, mats,
+			ndl = dot(light_ray.dir, normal);
+			if (ndl > 0 && !is_in_shadow(config, &perceived_l_color, light_ray, light_color, light_dist, objs, objs_size, mats,
 						mats_size, textures, textures_size, texture_pixels, n_texture_pixels))
 			{
 				color += surface_color * perceived_l_color * light_color * (float)ndl;
-				color += get_specular_color(config, mats[obj.material_id], ray.dir, light_ray, hit_pos, surface_normal, perceived_l_color * light_color);
+				color += get_specular_color(config, mats[obj.material_id], ray.dir, light_ray, hit_pos, normal, perceived_l_color * light_color);
 			}
 		}
 		color += surface_color * config->camera_light_c * config->camera_light_i * vdn;

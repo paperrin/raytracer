@@ -6,6 +6,7 @@ Camera()
 
 Config()
 	.sampleLevel(1)
+	.camLightIntensity(1)
 
 Texture("null", "textures/max_val.ppm")
 

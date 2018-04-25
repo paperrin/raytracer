@@ -31,6 +31,7 @@ kernel void			kernel_ray_shade(
 	t_ray_state				state;
 	t_ray_state				state_reflec;
 	t_ray_state				state_refrac;
+	float3					surface_color;
 	char					has_reflection;
 	char					has_refraction;
 	int						block_size;
@@ -48,8 +49,9 @@ kernel void			kernel_ray_shade(
 		obj = objs[state.obj_id];
 		hit_pos = state.ray.origin + state.t * state.ray.dir;
 		normal = obj_surface_normal(&obj, hit_pos, state.ray);
-		hit_pos += normal * config->intersection_bias;
-		color = shade(config, obj, hit_pos, state.ray,
+		surface_color = obj_surface_color(&obj, mats, textures, textures_size,
+				texture_pixels, n_texture_pixels, hit_pos);
+		color = shade(config, obj, hit_pos, normal, surface_color, state.ray,
 				objs, *objs_size,
 				mats, mats_size,
 				textures, *textures_size,
@@ -97,8 +99,7 @@ kernel void			kernel_ray_shade(
 	atomic_addf(&pixels[state.pxl_id % n_screen_pixels * 4 + 0], color.r);
 	atomic_addf(&pixels[state.pxl_id % n_screen_pixels * 4 + 1], color.g);
 	atomic_addf(&pixels[state.pxl_id % n_screen_pixels * 4 + 2], color.b);
-	state.color_factor *= obj_surface_color(&obj, mats, textures, textures_size,
-				texture_pixels, n_texture_pixels, hit_pos);
+	state.color_factor *= surface_color;
 
 
 	if (config->cur_depth < config->max_depth)
