@@ -12,6 +12,7 @@ float		get_local_average(global t_config const *const config, t_anti_aliasing *l
 void		find_edges(global t_config const *const config, t_anti_aliasing *luma, float2 uv, global float4 const *pixels, int2 size);
 float		get_interval(int i);
 float		get_final_offset(global t_config const *const config, t_anti_aliasing *luma, float lumaend1, float lumaend2, float dist1, float dist2);
+float		sub_pixel_aa(t_anti_aliasing *luma);
 
 float		get_luma(float4 const pixel)
 {
@@ -69,6 +70,7 @@ float4		fast_approx_anti_aliasing(global t_config const *const config, t_anti_al
 		printf("-%f / %f + 0.5 = %f\n", fmin(dist1, dist2), dist1 + dist2, luma->final_offset);
 		printf("is horizontal ? %d gradscale = %f avg = %f\n////////", luma->is_horizontal, luma->gradscaled, luma->local_average);
 	}
+	luma->final_offset = sub_pixel_aa(luma);
 	//return (lum);
 	return (get_pixel_xy(pixels, finaluv, size));
 }
@@ -108,7 +110,7 @@ float		get_local_average(global t_config const *const config, t_anti_aliasing *l
 	float	gradient1 = luma1 - luma->center;
 	float	gradient2 = luma2 - luma->center;
 
-	luma->step_length = luma->is_horizontal ? 1.f / (float)size.x : 1.f / (float)size.y;
+	luma->step_length = luma->is_horizontal ? 1.f : 1.f;
 	luma->gradscaled = 0.25f * fmax(fabs(gradient1), fabs(gradient2));
 	if (fabs(gradient1) >= fabs(gradient2))
 	{
@@ -123,36 +125,38 @@ void		find_edges(global t_config const *const config, t_anti_aliasing *luma, flo
 {
 	float2	currentuv = uv;
 	float2	offset;
-	float	center_delta;
 	int		reached1 = 0;
 	int		reached2 = 0;
 	int		reachedboth = 0;
 	int		i = FXAA_SEARCH_START;
 
 	if (luma->is_horizontal)
-		currentuv.y += luma->step_length * 0.5;
+		currentuv.y += luma->step_length * 0.5f;
 	else
-		currentuv.x += luma->step_length * 0.5;
-	offset = luma->is_horizontal ? (float2)(1.f / (float)size.x, 0.0) : (float2)(0.0, 1.f / (float)size.y);
+		currentuv.x += luma->step_length * 0.5f;
+	offset = luma->is_horizontal ? (float2)(1.f, 0.0) : (float2)(0.0, 1.f);
 	luma->end_one.uv = currentuv - offset;
 	luma->end_two.uv = currentuv + offset;
 	luma->end_one.luma = get_luma(get_pixel_xy(pixels, luma->end_one.uv, size)) - luma->local_average;
 	luma->end_two.luma = get_luma(get_pixel_xy(pixels, luma->end_two.uv, size)) - luma->local_average;
 	reached1 = fabs(luma->end_one.luma) >= luma->gradscaled;
 	reached2 = fabs(luma->end_two.luma) >= luma->gradscaled;
-	center_delta = get_luma(get_pixel_xy(pixels, currentuv, size));
 	reachedboth = reached1 && reached2;
 	if (!reached1)
 		luma->end_one.uv -= offset;
 	if (!reached2)
 		luma->end_two.uv += offset;
-			if (config->mouse_pxl_id == get_global_id(0))
-				printf("\n####one = %f:%f %f || two = %f:%f %f## rb: %d cd: %f%d\n", luma->end_one.uv.x, luma->end_one.uv.y, luma->end_one.luma,
-				luma->end_two.uv.x, luma->end_two.uv.y, luma->end_two.luma, reachedboth, center_delta);
+	if (config->mouse_pxl_id == get_global_id(0))
+		printf("\n####one = %f:%f %f || two = %f:%f %f## rb: %d\n", luma->end_one.uv.x, luma->end_one.uv.y, luma->end_one.luma,
+				luma->end_two.uv.x, luma->end_two.uv.y, luma->end_two.luma, reachedboth);
 	if (!reachedboth)
 	{
 		while (i < FXAA_SEARCH_STEPS && !reachedboth)
 		{
+			if (!reached1)
+				luma->end_one.luma = get_luma(get_pixel_xy(pixels, luma->end_one.uv, size)) - luma->local_average;
+			if (!reached2)
+				luma->end_two.luma = get_luma(get_pixel_xy(pixels, luma->end_two.uv, size)) - luma->local_average;
 			if (config->mouse_pxl_id == get_global_id(0))
 			{
 				printf("\n****one = %f:%f %f || two = %f:%f %f****off%f\n", luma->end_one.uv.x, luma->end_one.uv.y, luma->end_one.luma,
@@ -160,10 +164,6 @@ void		find_edges(global t_config const *const config, t_anti_aliasing *luma, flo
 				if (i == FXAA_SEARCH_STEPS)
 					printf("\nSTOP\n");
 			}
-			if (!reached1)
-				luma->end_one.luma = get_luma(get_pixel_xy(pixels, luma->end_one.uv, size)) - luma->local_average;
-			if (!reached2)
-				luma->end_two.luma = get_luma(get_pixel_xy(pixels, luma->end_two.uv, size)) - luma->local_average;
 			reached1 = fabs(luma->end_one.luma) >= luma->gradscaled;
 			reached2 = fabs(luma->end_two.luma) >= luma->gradscaled;
 			reachedboth = reached1 && reached2;
@@ -198,8 +198,18 @@ float		get_final_offset(global t_config const *const config, t_anti_aliasing *lu
 		correct_var = 1;
 	else
 		correct_var = 0;
-//	correct_var = ((is_directionx ? lumaend1 : lumaend2) < 0.0);// != is_center_underavr;
+//	correct_var = ((is_directionx ? lumaend1 : lumaend2) < 0.0) != is_center_underavr;
 	return (correct_var == is_center_underavr ? pixel_offset : 0.0);
+}
+
+float		sub_pixel_aa(t_anti_aliasing *luma)
+{
+	float	luma_average = (1.f / 12.f) * (2.f * (luma->x_axis + luma->y_axis) + luma->corners.west + luma->corners.east);
+	float	sub_pixel_offset1 = clamp((float)(fabs(luma_average - luma->center) / luma->range), 0.f, 1.f);
+	float	sub_pixel_offset2 = (-2.f * sub_pixel_offset1 + 3.f) * sub_pixel_offset1 * sub_pixel_offset1;
+	float	sub_pixel_final_offset = sub_pixel_offset2 * sub_pixel_offset2 * SUB_PIXEL_QUALITY;
+
+	return (fmax(luma->final_offset, sub_pixel_final_offset));
 }
 
 #endif

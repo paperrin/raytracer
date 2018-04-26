@@ -19,9 +19,11 @@ float4			detect_aa(global t_config const *const config, global float4 const *pix
 
 	luma.center = get_luma(get_pixel_offset(pixels, uv, (float2)(0, 0), size));
 	luma.orig.west = get_luma(get_pixel_offset(pixels, uv, (float2)(-1, 0), size));
-	luma.orig.east = get_luma(get_pixel_offset(pixels, uv, (float2)(1, 0), size));
+	if (uv.x != config->screen_size.x)
+		luma.orig.east = get_luma(get_pixel_offset(pixels, uv, (float2)(1, 0), size));
 	luma.orig.north = get_luma(get_pixel_offset(pixels, uv, (float2)(0, 1), size));
-	luma.orig.south = get_luma(get_pixel_offset(pixels, uv, (float2)(0, -1), size));
+	if (gid < (config->screen_size.x * config->screen_size.y) - config->screen_size.x - 2)
+		luma.orig.south = get_luma(get_pixel_offset(pixels, uv, (float2)(0, -1), size));
 	lmin = fmin(luma.center, fmin(fmin(luma.orig.south, luma.orig.north), fmin(luma.orig.west, luma.orig.east)));
 	lmax = fmax(luma.center, fmax(fmax(luma.orig.south, luma.orig.north), fmax(luma.orig.west, luma.orig.east)));
 	luma.range = lmax - lmin;

@@ -4,12 +4,15 @@
 float4		get_pixel_xy(global float4 const *pixels, float2 uv, int2 size);
 float4		get_pixel_offset(global float4 const *pixels, float2 uv, float2 offset, int2 size);
 float4		get_pixel(uint x, uint y, global float4 const *pixels, int2 size);
-float4		bilinear_interpolation(global float4 const *pixels, float2 uv, int2 size);
+float4		bilinear_interpolation(global float4 const *pixels, float2 uv, int2 size, float linear_x, float linear_y);
 
 float4		get_pixel_xy(global float4 const *pixels, float2 uv, int2 size)
 {
-	if (fmod(uv.x, 1.f) || fmod(uv.y, 1.f))
-		return(bilinear_interpolation(pixels, uv, size));
+	float x_isdecimal = fmod(uv.x, 1.f);
+	float y_isdecimal = fmod(uv.y, 1.f);
+
+	if (x_isdecimal || y_isdecimal)
+		return(bilinear_interpolation(pixels, uv, size, x_isdecimal, y_isdecimal));
 	if (uv.x + (uv.y * (float)size.x) > (float)size.x * (float)size.y || uv.x + (uv.y * (float)size.x) < 0)
 		return ((float4)(0, 0, 0, 0));
 	return(get_pixel(uv.x, uv.y, pixels, size));
@@ -29,7 +32,7 @@ float4		get_pixel(uint x, uint y, global float4 const *pixels, int2 size)
 	return(pixels[x + (y * size.x)]);
 }
 
-float4		bilinear_interpolation(global float4 const *pixels, float2 uv, int2 size)
+float4		bilinear_interpolation(global float4 const *pixels, float2 uv, int2 size, float linear_x, float linear_y)
 {
 	float4	area[4];
 	int2	area_rect[2];
@@ -38,17 +41,38 @@ float4		bilinear_interpolation(global float4 const *pixels, float2 uv, int2 size
 
 	pos = (int2)(uv.x, uv.y);
 	area_rect[0] = (int2)(pos.x, pos.y);
-	area_rect[1] = (int2)(pos.x + (pos.x + 1 < size.x), pos.y + (pos.y + 1 < size.y));
-	interp = (float2)(uv.x - (float)pos.x, uv.y - (float)pos.y);
+	if (linear_x && linear_y)
+	{
+		area_rect[1] = (int2)(pos.x + (pos.x + 1 < size.x), pos.y + (pos.y + 1 < size.y));
+		interp = (float2)(uv.x - (float)pos.x, uv.y - (float)pos.y);
 
-	area[0] = get_pixel(area_rect[0].x, area_rect[0].y, pixels, size);
-	area[1] = get_pixel(area_rect[1].x, area_rect[0].y, pixels, size);
-	area[2] = get_pixel(area_rect[0].x, area_rect[1].y, pixels, size);
-	area[3] = get_pixel(area_rect[1].x, area_rect[1].y, pixels, size);
+		area[0] = get_pixel(area_rect[0].x, area_rect[0].y, pixels, size);
+		area[1] = get_pixel(area_rect[1].x, area_rect[0].y, pixels, size);
+		area[2] = get_pixel(area_rect[0].x, area_rect[1].y, pixels, size);
+		area[3] = get_pixel(area_rect[1].x, area_rect[1].y, pixels, size);
 
-	area[1] = area[1] * interp.x + area[0] * (1.f - interp.x);
-	area[2] = area[3] * interp.x + area[2] * (1.f - interp.x);
-	return (area[2] * interp.y + area[1] * (1.f - interp.y));
+		area[1] = area[1] * interp.x + area[0] * (1.f - interp.x);
+		area[2] = area[3] * interp.x + area[2] * (1.f - interp.x);
+		return (area[2] * interp.y + area[1] * (1.f - interp.y));
+	}
+	else if (linear_x)
+	{
+		area_rect[1] = (int2)(pos.x + (pos.x + 1 < size.x), pos.y);
+		interp = (float2)(uv.x - (float)pos.x, 0);
+		area[0] = get_pixel(area_rect[0].x, area_rect[0].y, pixels, size);
+		area[1] = get_pixel(area_rect[1].x, area_rect[0].y, pixels, size);
+
+		return(area[1] * interp.x + area[0] * (1.f - interp.x));
+	}
+	else
+	{
+		area_rect[1] = (int2)(pos.x, pos.y + (pos.y + 1 < size.y));
+		interp = (float2)(0, uv.y - (float)pos.y);
+		area[2] = get_pixel(area_rect[0].x, area_rect[1].y, pixels, size);
+		area[3] = get_pixel(area_rect[1].x, area_rect[1].y, pixels, size);
+
+		return(area[3] * interp.x + area[2] * (1.f - interp.x));
+	}
 }
 
 #endif
