@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/13 14:25:38 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/25 01:29:21 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/26 04:20:47 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,8 @@ typedef cl_float16		t_real16;
 
 typedef cl_short		t_obj_type;
 typedef cl_int			t_obj_id;
-typedef cl_short		t_mat_id;
+typedef cl_int			t_mat_id;
+typedef cl_int			t_tex_id;
 
 typedef	struct s_material	t_material;
 typedef	struct s_ray		t_ray;
@@ -215,6 +216,7 @@ struct					s_material
 	cl_float			refraction_index;
 	cl_uint				projection;
 	cl_int				texture_id;
+	cl_int				refraction_map_id;
 };
 
 typedef enum			e_filter

@@ -11,6 +11,13 @@ float3		obj_surface_color(
 		global uchar *texture_pixels, ulong n_texture_pixels,
 		t_real3 point);
 
+float		obj_surface_refraction(
+		t_obj *obj,
+		constant t_material *materials,
+		constant t_texture *textures, uint textures_size,
+		global uchar *texture_pixels, ulong n_texture_pixels,
+		t_real3 point);
+
 float3		texture_get_color(
 		constant t_texture *texture,
 		global uchar *texture_pixels,
@@ -31,6 +38,39 @@ float3		texture_default(t_real2 uv);
 
 float3		texture_sine_uv_color(t_texture *texture, t_real2 uv);
 
+float		obj_surface_refraction(
+		t_obj *obj,
+		constant t_material *materials,
+		constant t_texture *textures, uint textures_size,
+		global uchar *texture_pixels, ulong n_texture_pixels,
+		t_real3 point)
+{
+	t_texture		texture;
+	t_mat_id		mat_id;
+	t_tex_id		tex_id;
+	float3			color;
+	float			refraction;
+
+	mat_id = obj->material_id;
+	tex_id = materials[mat_id].refraction_map_id;
+	refraction = materials[mat_id].refraction;
+	if (tex_id > -1 && (uint)tex_id < textures_size)
+	{
+		texture = textures[tex_id];
+		if (texture.type == e_texture_type_image)
+		{
+			color = texture_image_uv_color(
+				&textures[tex_id], texture_pixels, n_texture_pixels,
+				obj_surface_uv_map(obj, point));
+		}
+		else if (texture.type == e_texture_type_checkerboard)
+			color = texture_checkerboard_uv_color(&texture, obj_surface_uv_map(obj, point));
+		else if (texture.type == e_texture_type_sine)
+			color = texture_sine_uv_color(&texture, obj_surface_uv_map(obj, point));
+		refraction = clamp(color.b, 0.f, 1.f);
+	}
+	return (refraction);
+}
 
 float3		obj_surface_color(
 		t_obj *obj,

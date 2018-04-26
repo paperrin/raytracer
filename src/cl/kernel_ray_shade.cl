@@ -37,6 +37,7 @@ kernel void			kernel_ray_shade(
 	int						block_size;
 	int						middle_pos;
 	int						n_screen_pixels;
+	float					surface_refraction;
 
 	state = ray_states[gid];
 	color = (cl_float3)(0, 0, 0);
@@ -49,9 +50,11 @@ kernel void			kernel_ray_shade(
 		obj = objs[state.obj_id];
 		hit_pos = state.ray.origin + state.t * state.ray.dir;
 		normal = obj_surface_normal(&obj, hit_pos, state.ray);
-		surface_color = obj_surface_color(&obj, mats, textures, textures_size,
-				texture_pixels, n_texture_pixels, hit_pos);
-		color = shade(config, obj, hit_pos, normal, surface_color, state.ray,
+		surface_color = obj_surface_color(&obj, mats, textures, *textures_size,
+				texture_pixels, *n_texture_pixels, hit_pos);
+		surface_refraction = obj_surface_refraction(&obj, mats, textures, *textures_size,
+				texture_pixels, *n_texture_pixels, hit_pos);
+		color = shade(config, obj, hit_pos, normal, surface_color, surface_refraction, state.ray,
 				objs, *objs_size,
 				mats, mats_size,
 				textures, *textures_size,
@@ -62,7 +65,7 @@ kernel void			kernel_ray_shade(
 		if (config->cur_depth < config->max_depth)
 		{
 				has_reflection = mats[obj.material_id].reflection > config->color_epsilon;
-				has_refraction = mats[obj.material_id].refraction > config->color_epsilon;
+				has_refraction = surface_refraction > config->color_epsilon;
 
 				if (has_refraction)
 				{
@@ -70,7 +73,7 @@ kernel void			kernel_ray_shade(
 					atomic_inc(n_new_rays);
 					state_refrac.ray = get_refracted_ray(config, &obj, state.ray, hit_pos, normal,
 								mats[obj.material_id].refraction_index);
-					state_refrac.importance = state.importance * mats[obj.material_id].refraction;
+					state_refrac.importance = state.importance * surface_refraction;
 					state_refrac.t = -1;
 					state_refrac.obj_id = -1;
 				}
@@ -91,7 +94,7 @@ kernel void			kernel_ray_shade(
 		color += get_light_glare_color(config, objs, *objs_size, lights, *lights_size, mats, mats_size, state.ray);
 
 	color *= state.color_factor;
-	color *= (state.importance - state.importance * (mats[obj.material_id].reflection + mats[obj.material_id].refraction));
+	color *= (state.importance - state.importance * (mats[obj.material_id].reflection + surface_refraction));
 	color /= config->samples_width * config->samples_width;
 	if (cam->is_anaglyph)
 		color = filter_anaglyph(config, state.pxl_id, color);

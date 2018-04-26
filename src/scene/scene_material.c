@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/15 19:49:09 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/21 01:45:59 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/26 04:21:08 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ static t_material	material_default(void)
 	material.refraction_index = 1;
 	material.projection = 0;
 	material.texture_id = -1;
+	material.refraction_map_id = -1;
 	return (material);
 }
 

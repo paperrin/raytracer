@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/21 01:50:48 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/21 02:04:50 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/26 04:13:44 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int				f_internal_material_method_color_map(
 			&interpreter->app->scene.m_texture, args.tokens[0].as.str.value);
 	if (material->texture_id < 0)
 	{
-		return (hook_error_str(&args, ERR_MATERIAL_NOT_FOUND
+		return (hook_error_str(&args, ERR_TEXTURE_NOT_FOUND
 				, args.tokens[0].as.str.value));
 	}
 	return (1);

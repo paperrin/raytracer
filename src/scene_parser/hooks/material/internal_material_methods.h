@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/18 23:48:11 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/21 19:53:01 by ilarbi           ###   ########.fr       */
+/*   Updated: 2018/04/26 04:13:26 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,11 @@ int		f_internal_material_method_projection(
 		t_token *const tk_return);
 
 int		f_internal_material_method_color_map(
+		t_interpreter *const interpreter,
+		t_token *const tk_this, t_hook_args const args,
+		t_token *const tk_return);
+
+int		f_internal_material_method_refraction_map(
 		t_interpreter *const interpreter,
 		t_token *const tk_this, t_hook_args const args,
 		t_token *const tk_return);

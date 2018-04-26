@@ -63,7 +63,8 @@ pos: (<num x{-0+}>, <num y{-0+}>, <num z{-0+}>)
 [x]		.specularExp(<num specularExponent>)
 [x]		.doProjection([bool do_projection])
 [x]		.colorMap(<str textureName>)
-	
+[x]		.refractionMap(<str textureName>)
+
 [x]	Texture(<str name>, <str imagePath>)
 [x]		.translate(<num x{-0+}>, <num y{-0+}>)
 [x]		.scale(<num xyScale{-0+}> || <<num x{-0+}>, <num y{-0+}>>)

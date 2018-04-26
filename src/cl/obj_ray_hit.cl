@@ -185,12 +185,12 @@ t_real			obj_aligned_cube_ray_hit(constant t_obj const *const obj, t_ray *ray)
 	t2 = (box_center.x + obj->as.aligned_cube.size.x - ray->origin.x) * invdir.x;
 	t_min = fmax(fmin(t1, t2), t_min);
 	t_max = fmin(fmax(t1, t2), t_max);
-		
+
 	t1 = (box_center.y - ray->origin.y) * invdir.y;
 	t2 = (box_center.y + obj->as.aligned_cube.size.y - ray->origin.y) * invdir.y;
 	t_min = fmax(fmin(t1, t2), t_min);
 	t_max = fmin(fmax(t1, t2), t_max);
-		
+
 	t1 = (box_center.z - ray->origin.z) * invdir.z;
 	t2 = (box_center.z + obj->as.aligned_cube.size.z - ray->origin.z) * invdir.z;
 	t_min = fmax(fmin(t1, t2), t_min);
