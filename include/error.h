@@ -19,6 +19,8 @@
 #  include <CL/cl.h>
 # endif
 
+# define ERR_MEMORY "not enough memory"
+
 int					error_cl_code(cl_int err_code);
 void				*perror_cl_code(cl_int err_code);
 int					error_string(char const *const error_str);

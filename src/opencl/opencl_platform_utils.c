@@ -29,13 +29,17 @@ cl_platform_id		*opencl_get_platform_ids(void)
 	int				err;
 	cl_uint			platform_number;
 
-	platform_number = opencl_get_platform_number();
+	if (!(platform_number = opencl_get_platform_number()))
+		return (NULL);
 	if (!(platforms = (cl_platform_id*)malloc(sizeof(cl_platform_id)
 					* platform_number)))
-		return (perror_cl_code(CL_OUT_OF_HOST_MEMORY));
+		return (perror_string(ERR_MEMORY));
 	if (CL_SUCCESS != (err = clGetPlatformIDs(platform_number,
 					platforms, NULL)))
+	{
+		ft_memdel((void**)&platforms);
 		return (perror_cl_code(err));
+	}
 	return (platforms);
 }
 

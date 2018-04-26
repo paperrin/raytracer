@@ -78,7 +78,6 @@ typedef cl_float16		t_real16;
 typedef cl_short		t_obj_type;
 typedef cl_int			t_obj_id;
 typedef cl_int			t_mat_id;
-typedef cl_int			t_tex_id;
 
 typedef	struct s_material	t_material;
 typedef	struct s_ray		t_ray;

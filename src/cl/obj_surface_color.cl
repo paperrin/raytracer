@@ -47,7 +47,7 @@ float		obj_surface_refraction(
 {
 	t_texture		texture;
 	t_mat_id		mat_id;
-	t_tex_id		tex_id;
+	cl_int			tex_id;
 	float3			color;
 	float			refraction;
 
@@ -205,8 +205,6 @@ float3		texture_sine_uv_color(t_texture *texture, t_real2 uv)
 	sine = (sine + 1.f) / 2;
 	colorx = texture->as.sine.color1 * sine.x + texture->as.sine.color2 * (1 - sine.x);
 	colory = texture->as.sine.color3 * sine.y + texture->as.sine.color4 * (1 - sine.y);
-	if (colory.r + colory.b < 0)
-		printf("%f\n", sine.y);
 	return (colorx * texture->as.sine.factors.x + colory * texture->as.sine.factors.y);
 }
 

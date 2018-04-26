@@ -89,7 +89,6 @@ float3			shade(
 		global uchar *texture_pixels, ulong n_texture_pixels,
 		constant t_light *lights, uint lights_size)
 {
-	t_real3			surface_normal;
 	t_ray			light_ray;
 	float3			light_color;
 	float3			color;

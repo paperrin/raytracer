@@ -30,13 +30,17 @@ cl_device_id	*opencl_get_device_ids(cl_platform_id platform)
 	cl_uint			device_number;
 	int				err;
 
-	device_number = opencl_get_device_number(platform);
+	if (!(device_number = opencl_get_device_number(platform)))
+		return (NULL);
 	if (!(devices = (cl_device_id*)malloc(
 					sizeof(cl_device_id) * device_number)))
-		return (0);
+		return (perror_string(ERR_MEMORY));
 	if (CL_SUCCESS != (err = clGetDeviceIDs(platform, CL_DEVICE_TYPE_ALL,
 						device_number, devices, NULL)))
+	{
+		ft_memdel((void**)&devices);
 		return (perror_cl_code(err));
+	}
 	return (devices);
 }
 

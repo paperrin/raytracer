@@ -10,12 +10,10 @@ kernel void			kernel_ray_gen_primary(
 	ulong			pxl_id = get_current_pxl_id(config);
 	t_real2			plane_pos = get_current_plane_pos(config, cam);
 	t_real3			eye_half_offset = cam->eye_offset / 2 * cam->right;
-	int				n_samples_per_pixel = get_pixel_samples_count(config);
 	int				n_screen_pixels = get_screen_pixels_count(config);
-	int				n_screen_samples = n_screen_pixels * n_samples_per_pixel;
 	int				is_right_eye;
 	t_real3			ray_origin;
-
+	
 	ray_states[gid].ray.dir = normalize(
 		cam->dir
 		+ cam->right * plane_pos.x
@@ -32,7 +30,7 @@ kernel void			kernel_ray_gen_primary(
 		}
 		else
 		{
-			is_right_eye = get_current_pxl_pos(config).x < config->screen_size.x / 2;
+			is_right_eye = get_current_pxl_pos(config).x < (int)config->screen_size.x / 2;
 			if (!is_right_eye)
 				eye_half_offset *= -1;
 		}

@@ -58,7 +58,7 @@ int				arg_dispatch(t_app *const app, int ac, const char *argv[])
 	arg_index = 1;
 	if (ac > 1 && argv[1][0] == '-' && argv[1][1] == 'd')
 	{
-		if (ac < 2 || !arg_device(app, argv, arg_index))
+		if (!arg_device(app, argv, arg_index))
 			return (0);
 		arg_index += 2;
 	}

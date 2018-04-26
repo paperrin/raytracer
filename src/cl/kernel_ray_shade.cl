@@ -61,6 +61,8 @@ kernel void			kernel_ray_shade(
 				texture_pixels, *n_texture_pixels,
 				lights, *lights_size);
 
+		color *= state.color_factor;
+		color *= (state.importance - state.importance * (mats[obj.material_id].reflection + surface_refraction));
 
 		if (config->cur_depth < config->max_depth)
 		{
@@ -93,8 +95,6 @@ kernel void			kernel_ray_shade(
 	if (config->cur_depth == 0)
 		color += get_light_glare_color(config, objs, *objs_size, lights, *lights_size, mats, mats_size, state.ray);
 
-	color *= state.color_factor;
-	color *= (state.importance - state.importance * (mats[obj.material_id].reflection + surface_refraction));
 	color /= config->samples_width * config->samples_width;
 	if (cam->is_anaglyph)
 		color = filter_anaglyph(config, state.pxl_id, color);
@@ -102,8 +102,8 @@ kernel void			kernel_ray_shade(
 	atomic_addf(&pixels[state.pxl_id % n_screen_pixels * 4 + 0], color.r);
 	atomic_addf(&pixels[state.pxl_id % n_screen_pixels * 4 + 1], color.g);
 	atomic_addf(&pixels[state.pxl_id % n_screen_pixels * 4 + 2], color.b);
-	state.color_factor *= surface_color;
-
+	if (state.obj_id > -1)
+		state.color_factor *= surface_color;
 
 	if (config->cur_depth < config->max_depth)
 	{

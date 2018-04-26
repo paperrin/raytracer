@@ -44,12 +44,12 @@ cl_char			*opencl_get_platform_info(cl_platform_id platform,
 	if (CL_SUCCESS != (err = clGetPlatformInfo(platform, param_name, 0, NULL
 			, &size)))
 		return ((cl_char*)perror_cl_code(err));
-	if (!(str = (cl_char *)ft_strnew(sizeof(char) * size)))
+	if (!(str = (cl_char*)malloc(sizeof(cl_char) * size)))
 		return ((cl_char*)perror_cl_code(CL_OUT_OF_HOST_MEMORY));
 	if (CL_SUCCESS != (err = clGetPlatformInfo(platform, param_name, size, str
-			, &size)))
+			, NULL)))
 	{
-		free(str);
+		ft_memdel((void**)&str);
 		return ((cl_char*)perror_cl_code(err));
 	}
 	return (str);

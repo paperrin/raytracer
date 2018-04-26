@@ -34,8 +34,6 @@
 # define ANAGLYPH_EYE_OFFSET_DEFAULT 0.5
 # define SBS_EYE_OFFSET_DEFAULT 0.5
 
-# define ERR_MEMORY "not enough memory"
-
 typedef struct		s_scene
 {
 	t_matrix		mx;
