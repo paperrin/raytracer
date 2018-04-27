@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/09 19:50:51 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/20 21:55:59 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/27 11:47:58 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,15 +53,15 @@ int			interpreter_class_add_method(
 	if (!(v_methods = interpreter_find_method_vector_class_type(
 					interpreter, class_type)))
 	{
-		return (error_string(
+		return (error_string_2(
 					"interpreter: failed to add method "
-					"to non-existant class"));
+					"to non-existant class", method->name));
 	}
 	if (interpreter_method_vector_find_method_name(v_methods, method->name))
 	{
-		return (error_string(
+		return (error_string_2(
 					"interpreter: could not add method, "
-					"method name already exists"));
+					"method name already exists", method->name));
 	}
 	method->class_type = class_type;
 	if (!method_vector_add_method(v_methods, method))

@@ -79,7 +79,6 @@ Material("mat_pluto")
 
 Camera()
 	.fov(70)
-	.sbs(0.5)
 	.pos(sun_r + earth_r, 0, earth_r * -1 - 2)
 	.moveSpeed(10)
 
@@ -95,7 +94,7 @@ ObjSphere()
 	.radius(sun_r)
 PointLight()
 	.color(1, 0.5, 0)
-	.glare(0.25)
+	.glare(0.45)
 	.intensity(0)
 	.dispersion(0)
 

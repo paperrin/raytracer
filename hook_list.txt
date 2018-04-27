@@ -6,6 +6,7 @@ pos: (<num x{-0+}>, <num y{-0+}>, <num z{-0+}>)
 ================================================
 
 [x] set(<str var_name>, <num new_var_value>)
+[x] loop(<num loop_n_times>, <instruction_1>, [instruction_2], [instruction_3], ...)
 
 [x]	push()
 [x]	pop()
@@ -39,10 +40,11 @@ pos: (<num x{-0+}>, <num y{-0+}>, <num z{-0+}>)
 [/]		.beamGradient(<num fractionOfBeamAperture{0-1}>)
 	
 [x]	WaveTexture(<str name>)
-[x]		.xWaveColors(<color firstColor>, <color secondColor>)
-[x]		.yWaveColors(<color firstColor>, <color secondColor>)
-[x]		.xWaveOpacity(<num opacity{0-1}>)
-[x]		.yWaveOpacity(<num opacity{0-1}>)
+[x]		.xColor1(<color color>)
+[x]		.xColor2(<color color>)
+[x]		.yColor1(<color color>)
+[x]		.yColor2(<color color>)
+[x]		.factors(<num opacity{0-1}>, <num opacity{0-1}>)
 [x]		.translate(<num x{-0+}>, <num y{-0+}>)
 [x]		.scale(<num xyScale{-0+}> || <<num x{-0+}>, <num y{-0+}>>)
 	

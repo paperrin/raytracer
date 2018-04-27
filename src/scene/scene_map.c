@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/15 19:07:09 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/15 19:42:16 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/27 13:09:56 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void			*scene_map_add(t_map *const map,
 	char		**key;
 
 	if (scene_map_search(map, name))
-		return (perror_string("could not add object, already exists"));
+		return (perror_string("could not add item, already exists"));
 	name_cpy = NULL;
 	if (name && !(name_cpy = ft_strdup(name)))
 		return (perror_string(ERR_MEMORY));

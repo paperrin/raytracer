@@ -6,7 +6,7 @@
 /*   By: ilarbi <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/23 22:52:41 by ilarbi            #+#    #+#             */
-/*   Updated: 2018/04/23 22:57:16 by ilarbi           ###   ########.fr       */
+/*   Updated: 2018/04/27 10:44:29 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int		f_internal_texture_method_x_wave_color1(
 	*tk_return = *tk_this;
 	texture = tk_this->as.class.ptr;
 	return (interpreter_method_stub_args_set_color(
-				&args, &texture->as.sine.color2));
+				&args, &texture->as.sine.color1));
 }
 
 int		f_internal_texture_method_x_wave_color2(

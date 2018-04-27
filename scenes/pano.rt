@@ -2,6 +2,7 @@ Texture("tex_pano", "../textures/church_pano.ppm")
 
 Camera()
 	.pos(0, 0, -2)
+	.moveSpeed(0.7)
 
 Material("mat_pano")
 	.colorMap("tex_pano")

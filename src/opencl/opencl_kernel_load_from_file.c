@@ -6,7 +6,7 @@
 /*   By: alngo <alngo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/17 17:17:06 by alngo             #+#    #+#             */
-/*   Updated: 2018/04/05 20:47:23 by tlernoul         ###   ########.fr       */
+/*   Updated: 2018/04/27 10:30:26 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static int				opencl_kernel_create_program_with_source(
 	char				*src;
 
 	if (!(src = ft_file_to_string(path)))
-		return (error_cl_code(CL_UNKNOWN_ERROR_CODE));
+		return (error_string("could not open source file"));
 	kernel->program = clCreateProgramWithSource(kernel->ocl->context
 					, 1, (char const **)&src, 0, &err);
 	free(src);

@@ -14,9 +14,11 @@ NAME		=	libft.a
 
 CC			=	gcc
 
-CFLAGS		=	-g -O3 -Wall -Wextra -Werror -std=c89 -pedantic \
+CFLAGS		=	-Wall -Wextra -Werror -std=c89 -pedantic \
 				-Wmissing-prototypes -Wstrict-prototypes \
 				-Wold-style-definition -Wno-long-long
+
+CFLAGS		+= -g -O3 -fsanitize=adress
 
 RM			=	rm -rf
 

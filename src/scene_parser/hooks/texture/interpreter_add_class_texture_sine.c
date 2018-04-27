@@ -6,7 +6,7 @@
 /*   By: ilarbi <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/22 22:11:13 by ilarbi            #+#    #+#             */
-/*   Updated: 2018/04/23 22:18:00 by ilarbi           ###   ########.fr       */
+/*   Updated: 2018/04/27 11:48:53 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,13 +36,13 @@ int			interpreter_add_class_texture_sine(t_interpreter *const interpreter)
 	if (!interpreter_class_add(interpreter, class_type,
 		interpreter_method_create("TextureSine", &f_class_texture_sine)))
 		return (0);
-	if (!interpreter_class_add_method_batch(interpreter, class_type, 9,
+	if (!interpreter_class_add_method_batch(interpreter, class_type, 7,
 		"translate", &f_internal_texture_method_translate,
 		"scale", &f_internal_texture_method_scale,
-		"xWaveColor1", &f_internal_texture_method_x_wave_color1,
-		"xWaveColor2", &f_internal_texture_method_x_wave_color2,
-		"yWaveColor3", &f_internal_texture_method_y_wave_color1,
-		"yWaveColor4", &f_internal_texture_method_y_wave_color2,
+		"xColor1", &f_internal_texture_method_x_wave_color1,
+		"xColor2", &f_internal_texture_method_x_wave_color2,
+		"yColor1", &f_internal_texture_method_y_wave_color1,
+		"yColor2", &f_internal_texture_method_y_wave_color2,
 		"factors", &f_internal_texture_method_factors))
 		return (0);
 	return (1);

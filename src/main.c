@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/09 16:14:42 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/24 23:21:14 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/27 11:33:50 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,5 +141,6 @@ int			main(int ac, const char **av)
 	if (!app_create(&app, ac, av))
 		return (EXIT_FAILURE);
 	app_destroy(&app, EXIT_SUCCESS);
+	while (1) ;
 	return (EXIT_SUCCESS);
 }

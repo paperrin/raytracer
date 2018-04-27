@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/21 15:09:38 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/23 04:44:55 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/27 11:38:44 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,12 @@ void		*perror_cl_code(cl_int err_code)
 int			error_string(char const *const str_error)
 {
 	ft_dprintf(STDERR_FILENO, "error: %s\n", str_error);
+	return (0);
+}
+
+int			error_string_2(char const *const str_error, char const *const str_error2)
+{
+	ft_dprintf(STDERR_FILENO, "error: %s: %s\n", str_error, str_error2);
 	return (0);
 }
 

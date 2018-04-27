@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/07 01:53:51 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/21 15:19:41 by ilarbi           ###   ########.fr       */
+/*   Updated: 2018/04/27 13:11:33 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,37 @@ static int			token_call_args_create(t_interpreter *const interpreter,
 	return (1);
 }
 
+static int			call_loop(
+	t_interpreter *const interpreter, t_token *const tk_this,
+	t_token const *const tk_expr, t_token *const tk_result)
+{
+	t_token		tk_res;
+	t_token		tk_that;
+	int			nb;
+	int			i;
+
+	(void)tk_this;
+	*tk_result = token_class(e_class_type_none, NULL);
+	if (tk_expr->as.call.args_len < 2)
+		return (error_string("invalid loop call"));
+	if (!token_eval(interpreter, &tk_that, tk_expr->as.call.args[0], &tk_res)
+			|| tk_res.type != token_type_num)
+		return (0);
+	nb = tk_res.as.num.value;
+	while (nb-- >= 1)
+	{
+		i = 0;
+		while (++i < tk_expr->as.call.args_len)
+		{
+			tk_that = token_class(e_class_type_none, NULL);
+			if (!token_eval(interpreter, &tk_that,
+					tk_expr->as.call.args[i], &tk_res))
+				return (0);
+		}
+	}
+	return (1);
+}
+
 static void			token_call_args_destroy(t_token **args_eval)
 {
 	ft_memdel((void**)args_eval);
@@ -50,6 +81,9 @@ int					token_call_eval(
 	t_hook_args			args;
 	t_method			*method;
 
+	if (tk_this->as.class.class_type == e_class_type_none &&
+			ft_strstr(tk_expr->as.call.func, "loop"))
+		return (call_loop(interpreter, tk_this, tk_expr, tk_result));
 	if (!token_call_args_create(interpreter, tk_expr, &args.tokens))
 		return (0);
 	if (!(method = interpreter_class_type_find_method_name(
