@@ -3,6 +3,7 @@
 
 #include "shared.h"
 #include "obj_surface_uv_map.cl"
+#include "noise.cl"
 
 float3		obj_surface_color(
 		t_obj *obj,
@@ -37,6 +38,9 @@ float3		texture_checkerboard_uv_color(
 float3		texture_default(t_real2 uv);
 
 float3		texture_sine_uv_color(t_texture *texture, t_real2 uv);
+
+float3		texture_noise_uv_color(
+			t_texture *texture, t_real2 uv);
 
 float		obj_surface_refraction(
 		t_obj *obj,
@@ -98,6 +102,8 @@ float3		obj_surface_color(
 			return (texture_checkerboard_uv_color(&texture, obj_surface_uv_map(obj, point)));
 		else if (texture.type == e_texture_type_sine)
 			return (texture_sine_uv_color(&texture, obj_surface_uv_map(obj, point)));
+		else if (texture.type == e_texture_type_noise)
+			return (texture_noise_uv_color(&texture, obj_surface_uv_map(obj, point)));
 	}
 	return (texture_default(obj_surface_uv_map(obj, point)));
 }
@@ -190,6 +196,17 @@ float3		texture_checkerboard_uv_color(
 		return(texture->as.checkerboard.color1);
 	else
 		return (texture->as.checkerboard.color2);
+}
+
+float3		texture_noise_uv_color(
+			t_texture *texture, t_real2 uv)
+{
+	float		noise;
+
+	uv = transform_uv(uv, texture->translate, texture->scale);
+	noise = smooth_noise_2d(uv.x, uv.y);
+	return (texture->as.noise.color1 * noise
+			+ texture->as.noise.color2 * (1.f - noise));
 }
 
 float3		texture_sine_uv_color(t_texture *texture, t_real2 uv)

@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/13 14:25:38 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/26 04:20:47 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/27 09:10:01 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -248,18 +248,26 @@ typedef struct			s_texture_sine
 	t_real2				factors;
 }						t_texture_sine;
 
+typedef struct			s_texture_noise
+{
+	cl_float3			color1;
+	cl_float3			color2;
+}						t_texture_noise;
+
 typedef union			u_texture_origin
 {
 	t_texture_image			image;
 	t_texture_checkerboard	checkerboard;
 	t_texture_sine			sine;
+	t_texture_noise			noise;
 }						t_u_texture_origin;
 
 typedef	enum			e_texture_type
 {
 	e_texture_type_image,
 	e_texture_type_checkerboard,
-	e_texture_type_sine
+	e_texture_type_sine,
+	e_texture_type_noise
 }						t_e_texture_type;
 
 typedef struct			s_texture

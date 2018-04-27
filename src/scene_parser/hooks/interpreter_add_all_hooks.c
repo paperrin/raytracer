@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/18 19:55:00 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/23 21:40:06 by ilarbi           ###   ########.fr       */
+/*   Updated: 2018/04/27 08:27:45 by paperrin         ###   ########.fr       */
 /*   Updated: 2018/04/21 19:05:23 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
@@ -34,6 +34,8 @@ int			interpreter_add_all_hooks(t_interpreter *const interpreter)
 	if (!interpreter_add_class_texture_checkerboard(interpreter))
 		return (0);
 	if (!interpreter_add_class_texture_sine(interpreter))
+		return (0);
+	if (!interpreter_add_class_texture_noise(interpreter))
 		return (0);
 	if (!interpreter_add_class_point_light(interpreter))
 		return (0);

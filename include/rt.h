@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/09 16:36:38 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/25 01:29:29 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/27 08:30:06 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,8 @@ t_texture			*scene_add_texture_wave(
 		t_scene *const scene, char const *const name);
 t_texture			*scene_add_texture_checkerboard(
 		t_scene *const scene, char const *const name);
+t_texture			*scene_add_texture_noise(t_scene *const scene,
+		char const *const name);
 void				scene_add_camera(
 		t_scene *const scene, t_app *const app);
 void				scene_camera_translate(

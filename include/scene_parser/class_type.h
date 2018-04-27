@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/10 16:42:38 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/23 22:08:56 by ilarbi           ###   ########.fr       */
+/*   Updated: 2018/04/27 08:26:21 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,8 @@ typedef enum			e_class_type
 	e_class_type_material,
 	e_class_type_texture,
 	e_class_type_texture_checkerboard,
-	e_class_type_texture_sine_wave
+	e_class_type_texture_sine_wave,
+	e_class_type_texture_noise
 }						t_e_class_type;
 
 #endif
