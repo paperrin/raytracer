@@ -1,7 +1,7 @@
 #ifndef GET_SECONDARY_RAY_CL
 # define GET_SECONDARY_RAY_CL
 
-# include "shared.h"
+# include "host.h"
 
 t_ray			get_reflected_ray(global t_config const *const config,
 		t_ray ray, t_real3 hit_pos, t_real3 normal);

@@ -6,14 +6,14 @@
 /*   By: ilarbi <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/20 19:27:24 by ilarbi            #+#    #+#             */
-/*   Updated: 2018/04/22 19:00:44 by ilarbi           ###   ########.fr       */
+/*   Updated: 2018/04/27 17:09:01 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "scene_parser/hooks.h"
 #include "./internal_obj_methods.h"
 
-static int	f_class_aligned_cube(t_interpreter *const interpreter, 
+static int	f_class_aligned_cube(t_interpreter *const interpreter,
 		t_token *const tk_this, t_hook_args const args,
 		t_token *const tk_return)
 {
@@ -28,7 +28,7 @@ static int	f_class_aligned_cube(t_interpreter *const interpreter,
 	return (1);
 }
 
-static int	f_method_size(t_interpreter *const interpreter, 
+static int	f_method_size(t_interpreter *const interpreter,
 		t_token *const tk_this, t_hook_args const args,
 		t_token *const tk_return)
 {
@@ -40,16 +40,24 @@ static int	f_method_size(t_interpreter *const interpreter,
 	if (hook_args_match(&args, 3,
 		token_type_num, token_type_num, token_type_num))
 	{
-		obj->as.aligned_cube.size = vec3r(fabs(args.tokens[0].as.num.value),
-			fabs(args.tokens[1].as.num.value), fabs(args.tokens[2].as.num.value));
+		obj->as.aligned_cube.size = vec3r(
+				fabs(args.tokens[0].as.num.value),
+				fabs(args.tokens[1].as.num.value),
+				fabs(args.tokens[2].as.num.value));
 	}
 	else if (hook_args_match(&args, 1, token_type_num))
-		obj->as.aligned_cube.size = vec3r(fabs(args.tokens[0].as.num.value), fabs(args.tokens[0].as.num.value), fabs(args.tokens[0].as.num.value));
+	{
+		obj->as.aligned_cube.size = vec3r(
+				fabs(args.tokens[0].as.num.value),
+				fabs(args.tokens[0].as.num.value),
+				fabs(args.tokens[0].as.num.value));
+	}
 	else
 		return (hook_error(&args, "invalid args"));
 	*tk_return = *tk_this;
 	return (1);
 }
+
 int			interpreter_add_class_obj_aligned_cube(
 		t_interpreter *const interpreter)
 {
@@ -63,6 +71,5 @@ int			interpreter_add_class_obj_aligned_cube(
 		"material", &f_internal_obj_method_material,
 		"pos", &f_internal_obj_method_pos))
 		return (0);
-	
-	return (1);	
+	return (1);
 }

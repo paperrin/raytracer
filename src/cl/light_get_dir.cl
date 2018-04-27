@@ -1,4 +1,4 @@
-#include "shared.h"
+#include "host.h"
 
 t_real3				light_get_dir(const global t_config *config, t_light light, t_real3 to_pos,
 		cl_float3 *color, t_real *dist);

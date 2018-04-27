@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/09 16:36:38 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/27 08:30:06 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/27 13:54:29 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,6 +146,7 @@ int					kernel_ray_trace_launch(t_app *app);
 void				kernel_ray_trace_destroy(t_app *app);
 
 int					kernel_ray_shade_create(t_app *app);
+int					kernel_ray_shade_args(t_app *app);
 int					kernel_ray_shade_launch(t_app *app);
 void				kernel_ray_shade_destroy(t_app *app);
 

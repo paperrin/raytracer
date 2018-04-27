@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/21 05:46:26 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/21 05:48:05 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/27 16:13:53 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@ int			f_internal_config_method_camera_light(
 
 	*tk_return = *tk_this;
 	config = &interpreter->app->config;
-	return (interpreter_method_stub_args_set_color(&args, &config->camera_light_c));
+	return (interpreter_method_stub_args_set_color(&args
+				, &config->camera_light_c));
 }
 
 int			f_internal_config_method_camera_light_intensity(

@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/21 16:15:05 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/24 23:04:11 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/27 16:13:28 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,6 @@ static int	f_method_rot(t_interpreter *const interpreter,
 			args.tokens[2].as.num.value / 180.f * M_PI);
 	return (1);
 }
-
 
 int			interpreter_add_class_camera(t_interpreter *const interpreter)
 {

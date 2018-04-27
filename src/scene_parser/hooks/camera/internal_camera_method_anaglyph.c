@@ -6,13 +6,12 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/24 22:52:08 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/24 23:07:20 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/27 16:12:55 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "scene_parser/hooks.h"
 #include "./internal_camera_methods.h"
-
 
 int			f_internal_camera_method_anaglyph(
 		t_interpreter *const interpreter,

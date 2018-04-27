@@ -1,7 +1,7 @@
 #ifndef OBJ_SURFACE_COLOR_CL
 # define OBJ_SURFACE_COLOR_CL
 
-#include "shared.h"
+#include "host.h"
 #include "obj_surface_uv_map.cl"
 #include "noise.cl"
 

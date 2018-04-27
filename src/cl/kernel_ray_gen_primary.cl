@@ -1,4 +1,4 @@
-#include "shared.h"
+#include "host.h"
 #include "utils.cl"
 
 kernel void			kernel_ray_gen_primary(
@@ -13,7 +13,7 @@ kernel void			kernel_ray_gen_primary(
 	int				n_screen_pixels = get_screen_pixels_count(config);
 	int				is_right_eye;
 	t_real3			ray_origin;
-	
+
 	ray_states[gid].ray.dir = normalize(
 		cam->dir
 		+ cam->right * plane_pos.x

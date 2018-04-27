@@ -1,7 +1,7 @@
 #ifndef GET_LIGHT_GLARE_COLOR_CL
 # define GET_LIGHT_GLARE_COLOR_CL
 
-# include "shared.h"
+# include "host.h"
 
 float3		get_light_glare_color(
 		global t_config *config,

@@ -1,7 +1,7 @@
 #ifndef OBJ_RAY_HIT_CL
 # define OBJ_RAY_HIT_CL
 
-# include "shared.h"
+# include "host.h"
 
 cl_int			ray_throw_get_first_hit_obj(global t_config const *const config, t_ray *ray,
 		constant t_obj *objs, cl_uint objs_size, t_real *t_nearest);

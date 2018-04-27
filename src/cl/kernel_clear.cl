@@ -1,5 +1,4 @@
-#include "shared.h"
-
+#include "host.h"
 
 kernel void		kernel_clear(
 	global write_only cl_float *pixels)

@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/20 16:55:11 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/23 03:59:53 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/27 16:21:37 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ static int		f_method_translate(
 		t_token *const tk_return)
 {
 	*tk_return = *tk_this;
-	if (!hook_valid_args(&args, 3, token_type_num, token_type_num, token_type_num))
+	if (!hook_valid_args(&args, 3
+				, token_type_num, token_type_num, token_type_num))
 		return (0);
 	scene_translate(&interpreter->app->scene
 			, args.tokens[0].as.num.value
@@ -34,7 +35,8 @@ static int		f_method_rotate(
 		t_token *const tk_return)
 {
 	*tk_return = *tk_this;
-	if (!hook_valid_args(&args, 3, token_type_num, token_type_num, token_type_num))
+	if (!hook_valid_args(&args, 3
+				, token_type_num, token_type_num, token_type_num))
 		return (0);
 	scene_rotate(&interpreter->app->scene
 			, args.tokens[0].as.num.value / 180. * M_PI

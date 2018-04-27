@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/21 01:32:03 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/21 01:41:22 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/27 16:22:34 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,5 +31,3 @@ int				f_internal_material_method_ignores_light(
 		material->ignores_light = args.tokens[0].as.boolean.value;
 	return (1);
 }
-
-

@@ -1,7 +1,6 @@
 #ifndef OBJ_SURFACE_UV_MAP_CL
 # define OBJ_SURFACE_UV_MAP_CL
 
-#include "shared.h"
 #include "host.h"
 #include "obj_surface_normal.cl"
 

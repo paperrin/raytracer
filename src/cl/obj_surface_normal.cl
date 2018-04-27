@@ -1,7 +1,6 @@
 #ifndef OBJ_SURFACE_NORMAL_CL
 # define OBJ_SURFACE_NORMAL_CL
 
-#include "shared.h"
 #include "host.h"
 
 t_real3			obj_surface_normal(t_obj const *const obj, t_real3 point, t_ray ray);

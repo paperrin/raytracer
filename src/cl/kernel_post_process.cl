@@ -1,4 +1,4 @@
-#include "shared.h"
+#include "host.h"
 
 void			to_sepia(global t_config const *const config, global float *pixels);
 void			to_grayscale(global t_config const *const config, global float *pixels);

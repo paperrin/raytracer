@@ -1,4 +1,4 @@
-#include "shared.h"
+#include "host.h"
 #include "obj_surface_normal.cl"
 #include "shade.cl"
 #include "atomic_add.cl"

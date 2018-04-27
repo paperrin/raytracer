@@ -6,7 +6,7 @@
 /*   By: tlernoul <tlernoul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/04 14:44:45 by tlernoul          #+#    #+#             */
-/*   Updated: 2018/04/18 03:57:18 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/27 17:07:07 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,6 @@ static int	check_ids(t_opencl *ocl, cl_uint platform_id, cl_uint device_id)
 	clReleaseDevice(device);
 	return (1);
 }
-
-/*
-** Potential leaks here (device/platform_info)
-*/
 
 static int	get_devices(cl_platform_id platform)
 {
@@ -71,7 +67,8 @@ static int	get_platforms(cl_uint pf_nb)
 		return (0);
 	while (++i < (int)pf_nb)
 	{
-		if (!(platform_n = opencl_get_platform_info(platforms[i], CL_PLATFORM_NAME)))
+		if (!(platform_n = opencl_get_platform_info(
+				platforms[i], CL_PLATFORM_NAME)))
 			break ;
 		ft_printf("\nPlatform %u: %s\n", i, platform_n);
 		ft_memdel((void**)platform_n);
@@ -90,7 +87,8 @@ int			arg_devices(t_opencl *ocl, const char *args)
 	cl_uint				platform_nb;
 	cl_char				*name_str;
 
-	if ((platform_nb = opencl_get_platform_number()) && (!args || !args[0]))
+	if ((platform_nb = opencl_get_platform_number())
+			&& (!args || !args[0]))
 	{
 		name_str = NULL;
 		if (get_platforms(platform_nb))

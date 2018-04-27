@@ -1,7 +1,7 @@
 #ifndef UTILS_CL
 # define UTILS_CL
 
-# include "shared.h"
+# include "host.h"
 
 t_real2				get_current_plane_pos(
 		global read_only t_config *config,

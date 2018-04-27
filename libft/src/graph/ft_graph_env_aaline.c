@@ -6,7 +6,7 @@
 /*   By: paperrin <paperrin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/09 02:36:07 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/19 01:30:44 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/27 18:33:05 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,10 @@ static int		step_x(t_graph_env *env, t_graph_aaline *l)
 		while (l->err2 <= l->ed * l->w && (l->b.y != l->c.y || l->d.x > l->d.y))
 		{
 			l->c.y += l->s.y;
-			plot(env, l->a.x, l->c.y, abs(l->err2) / l->ed - l->w + 1);
+			plot(env, l->a.x, l->c.y, ft_absf(l->err2) / l->ed - l->w + 1);
 			if (l->d.y == 0)
 				plot(env, l->a.x, l->a.y + (l->a.y - l->c.y)
-					, abs(l->err2) / l->ed - l->w + 1);
+					, ft_absf(l->err2) / l->ed - l->w + 1);
 			l->err2 += l->d.x;
 		}
 		if (l->a.x == l->b.x)
@@ -54,10 +54,10 @@ static int		step_y(t_graph_env *env, t_graph_aaline *l)
 		while (l->err2 < l->ed * l->w && (l->b.x != l->c.x || l->d.x < l->d.y))
 		{
 			l->c.x += l->s.x;
-			plot(env, l->c.x, l->a.y, abs(l->err2) / l->ed - l->w + 1);
+			plot(env, l->c.x, l->a.y, ft_absf(l->err2) / l->ed - l->w + 1);
 			if (l->d.x == 0)
 				plot(env, l->a.x + (l->a.x - l->c.x), l->a.y
-					, abs(l->err2) / l->ed - l->w + 1);
+					, ft_absf(l->err2) / l->ed - l->w + 1);
 			l->err2 += l->d.y;
 		}
 		if (l->a.y == l->b.y)
@@ -76,13 +76,14 @@ static void		draw_line(t_graph_env *env
 	l.a = a;
 	l.b = b;
 	l.w = (width + 1) / 2;
-	l.d = ft_vec2i(ABS(b.x - a.x), ABS(b.y - a.y));
+	l.d = ft_vec2i(ft_abs(b.x - a.x), ft_abs(b.y - a.y));
 	l.s = ft_vec2i(a.x < b.x ? 1 : -1, a.y < b.y ? 1 : -1);
 	l.err = l.d.x - l.d.y;
 	l.ed = l.d.x + l.d.y == 0 ? 1 : sqrt(l.d.x * l.d.x + l.d.y * l.d.y);
 	while (1)
 	{
-		plot(env, l.a.x, l.a.y, abs(l.err - l.d.x + l.d.y) / l.ed - l.w + 1);
+		plot(env, l.a.x, l.a.y, ft_absf(l.err - l.d.x + l.d.y)
+				/ l.ed - l.w + 1);
 		l.err2 = l.err;
 		l.c.x = l.a.x;
 		if (!step_x(env, &l) || !step_y(env, &l))

@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/09 15:17:25 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/19 01:26:04 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/27 18:29:32 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,8 +135,10 @@ t_vec2f			ft_vec2f_scale(t_vec2f vec, float scale);
 long double		ft_minf(long double a, long double b);
 long double		ft_maxf(long double a, long double b);
 long double		ft_clampf(long double val, long double min, long double max);
+long double		ft_absf(long double val);
 intmax_t		ft_min(intmax_t a, intmax_t b);
 intmax_t		ft_max(intmax_t a, intmax_t b);
 intmax_t		ft_clamp(intmax_t val, intmax_t min, intmax_t max);
+intmax_t		ft_abs(intmax_t val);
 
 #endif

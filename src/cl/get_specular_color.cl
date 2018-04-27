@@ -1,7 +1,7 @@
 #ifndef GET_SPECULAR_COLOR_CL
 # define GET_SPECULAR_COLOR_CL
 
-# include "shared.h"
+# include "host.h"
 # include "obj_ray_hit.cl"
 # include "get_secondary_ray.cl"
 

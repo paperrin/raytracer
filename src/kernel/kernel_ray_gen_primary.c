@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/18 21:50:02 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/24 21:56:00 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/27 13:37:11 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@ int			kernel_ray_gen_primary_create(t_app *app)
 			* app->config.samples_width * app->config.samples_width
 			* (app->cam.cam_data.is_anaglyph + 1);
 	if (!opencl_kernel_load_from_file(&app->kernel_ray_gen
-				, "./src/cl/kernel_ray_gen_primary.cl", "-I ./include/ -I ./src/cl/"))
+				, "./src/cl/kernel_ray_gen_primary.cl"
+				, "-I ./include/ -I ./src/cl/"))
 		return (0);
 	opencl_kernel_arg_select_id(&app->kernel_ray_gen, 0);
 	if (!opencl_kernel_arg_selected_create(&app->kernel_ray_gen

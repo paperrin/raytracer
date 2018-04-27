@@ -6,11 +6,12 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/05 19:15:21 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/11 01:17:28 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/27 18:30:12 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+#include "ft_math.h"
 #include <math.h>
 #include <stdlib.h>
 
@@ -80,7 +81,7 @@ char			*ft_ftoa(long double nb, unsigned int n_decimal,
 		if (n_decimal > 9)
 			n_decimal = 9;
 		mult = pow(10, n_decimal);
-		d_part = ABS((intmax_t)(nb * mult) % mult);
+		d_part = ft_abs((intmax_t)(nb * mult) % mult);
 	}
 	return (combine_nb(i_part, d_part, n_decimal, sep));
 }

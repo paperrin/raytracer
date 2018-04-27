@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/13 14:25:38 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/27 09:10:01 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/27 18:14:05 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,53 +17,7 @@
 ** Please care of data packing when changing data types / structure order
 */
 
-/*
-** The define blocks below can't be normed, because `cl_xxxx` can't be
-** prefixed by `t_`, otherwise, code won't work
-*/
-# ifdef IS_KERNEL
-typedef	float			cl_float;
-typedef	float2			cl_float2;
-typedef	float3			cl_float3;
-typedef	float4			cl_float4;
-typedef	float8			cl_float8;
-typedef	float16			cl_float16;
-typedef	double			cl_double;
-typedef	double2			cl_double2;
-typedef	double3			cl_double3;
-typedef	double4			cl_double4;
-typedef	double8			cl_double8;
-typedef	double16		cl_double16;
-typedef char			cl_uchar;
-typedef short			cl_short;
-typedef int				cl_int;
-typedef int2			cl_int2;
-typedef uint			cl_uint;
-typedef uint2			cl_uint2;
-typedef long			cl_long;
-typedef unsigned long	cl_ulong;
-typedef uchar3			cl_uchar3;
-# endif
-
-# ifdef DOUBLE_SUPPORT_AVAILABLE
-typedef cl_double		t_real;
-typedef cl_double2		t_real2;
-typedef cl_double3		t_real3;
-typedef cl_double4		t_real4;
-typedef cl_double8		t_real8;
-typedef cl_double16		t_real16;
-#define REAL_MAX DBL_MAX
-#define REAL_MIN DBL_MIN
-# else
-typedef cl_float		t_real;
-typedef cl_float2		t_real2;
-typedef cl_float3		t_real3;
-typedef cl_float4		t_real4;
-typedef cl_float8		t_real8;
-typedef cl_float16		t_real16;
-#define REAL_MAX FLT_MAX
-#define REAL_MIN FLT_MIN
-# endif
+# include "t_real.h"
 
 # ifdef CONFIG_USE_DOUBLE
 #  ifdef cl_khr_fp64
@@ -93,7 +47,8 @@ typedef struct			s_camera_data
 	int					is_anaglyph;
 }						t_camera_data;
 
-typedef cl_float3 (t_f_specular_model)(t_material, t_real3, t_ray, t_real3, t_real3, cl_float3);
+typedef cl_float3	(t_f_specular_model)(t_material, t_real3, t_ray, t_real3
+		, t_real3, cl_float3);
 
 typedef enum			e_shading_model
 {

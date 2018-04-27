@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/21 01:42:24 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/21 01:47:37 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/27 16:22:44 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,5 +31,3 @@ int				f_internal_material_method_projection(
 		material->projection = args.tokens[0].as.boolean.value;
 	return (1);
 }
-
-

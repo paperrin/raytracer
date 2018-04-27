@@ -1,7 +1,7 @@
 #ifndef SHADE_CL
 # define SHADE_CL
 
-#include "shared.h"
+#include "host.h"
 #include "obj_ray_hit.cl"
 #include "obj_surface_normal.cl"
 #include "obj_surface_color.cl"

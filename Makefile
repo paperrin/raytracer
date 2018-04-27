@@ -67,6 +67,7 @@ CFILES		=	\
 				kernel/kernel_ray_trace.c						\
 				kernel/kernel_clear.c							\
 				kernel/kernel_ray_shade.c						\
+				kernel/kernel_ray_shade_args.c					\
 				kernel/kernel_post_process.c					\
 				\
 				callbacks/callback_key.c						\
@@ -195,6 +196,7 @@ CFILES		=	\
 				scene/scene_camera.c									\
 				\
 				main.c											\
+				render.c										\
 				process_input.c									\
 				error.c
 
