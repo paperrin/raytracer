@@ -2,9 +2,11 @@
 Camera()
 	.pos(-2.5, -0.3, 2.8)
 	.rot(0, 90, 0)
+	.sbs(0.5)
 	.moveSpeed(0.7)
 
 Config()
+	.screenSize(960, 540)
 	.sampleLevel(1)
 	.camLightIntensity(1)
 

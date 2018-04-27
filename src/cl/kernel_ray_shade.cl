@@ -12,13 +12,13 @@ kernel void			kernel_ray_shade(
 		constant read_only t_material *mats,
 		read_only uint mats_size,
 		constant read_only t_light *lights,
-		global read_only uint *lights_size,
+		read_only uint lights_size,
 		constant read_only t_texture *textures,
-		global read_only uint *textures_size,
+		read_only uint textures_size,
 		global read_only uchar *texture_pixels,
-		global read_only ulong *n_texture_pixels,
+		read_only ulong n_texture_pixels,
 		global read_write t_ray_state *ray_states,
-		global read_write cl_uint *n_new_rays,
+		global read_write uint *n_new_rays,
 		global read_write float *pixels,
 		global read_only t_config *config,
 		constant read_only t_camera_data *cam)
@@ -50,16 +50,16 @@ kernel void			kernel_ray_shade(
 		obj = objs[state.obj_id];
 		hit_pos = state.ray.origin + state.t * state.ray.dir;
 		normal = obj_surface_normal(&obj, hit_pos, state.ray);
-		surface_color = obj_surface_color(&obj, mats, textures, *textures_size,
-				texture_pixels, *n_texture_pixels, hit_pos);
-		surface_refraction = obj_surface_refraction(&obj, mats, textures, *textures_size,
-				texture_pixels, *n_texture_pixels, hit_pos);
+		surface_color = obj_surface_color(&obj, mats, textures, textures_size,
+				texture_pixels, n_texture_pixels, hit_pos);
+		surface_refraction = obj_surface_refraction(&obj, mats, textures, textures_size,
+				texture_pixels, n_texture_pixels, hit_pos);
 		color = shade(config, obj, hit_pos, normal, surface_color, surface_refraction, state.ray,
 				objs, *objs_size,
 				mats, mats_size,
-				textures, *textures_size,
-				texture_pixels, *n_texture_pixels,
-				lights, *lights_size);
+				textures, textures_size,
+				texture_pixels, n_texture_pixels,
+				lights, lights_size);
 
 		color *= state.color_factor;
 		color *= (state.importance - state.importance * (mats[obj.material_id].reflection + surface_refraction));
@@ -93,7 +93,7 @@ kernel void			kernel_ray_shade(
 	}
 
 	if (config->cur_depth == 0)
-		color += get_light_glare_color(config, objs, *objs_size, lights, *lights_size, mats, mats_size, state.ray);
+		color += get_light_glare_color(config, objs, *objs_size, lights, lights_size, mats, mats_size, state.ray);
 
 	color /= config->samples_width * config->samples_width;
 	if (cam->is_anaglyph)
