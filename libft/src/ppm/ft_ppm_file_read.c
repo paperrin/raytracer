@@ -6,7 +6,7 @@
 /*   By: ilarbi <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/24 21:59:47 by ilarbi            #+#    #+#             */
-/*   Updated: 2018/03/25 16:59:15 by ilarbi           ###   ########.fr       */
+/*   Updated: 2018/04/27 18:54:09 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static int		read_raster(t_fstream *file, size_t const *const dim,
 	size_t		bytes_len;
 	ssize_t		bytes_left;
 
-	bytes_len = file->read_buf_n_bytes - file->read_offset;
+	bytes_len = file->read_buf_n_bytes - file->read_offset - 1;
 	bytes_left = dim[0] * dim[1] * bytes_per_color - bytes_len;
 	ft_memcpy(pixels, &file->read_buf[file->read_offset], bytes_len);
 	if (bytes_left <= 0)
@@ -45,7 +45,7 @@ unsigned char	*ft_ppm_file_read(char const *const path, size_t *const width,
 		return (NULL);
 	bytes_per_color = (*max_val > 255 ? 2 : 1) * 3 * sizeof(char);
 	if ((pixels = (unsigned char*)malloc(
-					sizeof(char) * bytes_per_color * *width * *height)))
+					bytes_per_color * *width * *height)))
 	{
 		dim[0] = *width;
 		dim[1] = *height;
