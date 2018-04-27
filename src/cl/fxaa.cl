@@ -2,7 +2,7 @@
 #ifndef FXAA_CL
 # define FXAA_CL
 # define SUB_PIXEL_QUALITY 0.75f
-# define FXAA_SEARCH_STEPS 29
+# define FXAA_SEARCH_STEPS 12
 # define FXAA_SEARCH_START 2
 
 float4		fast_approx_anti_aliasing(global t_config const *const config, t_anti_aliasing *luma, global float4 const *pixels);
@@ -142,13 +142,13 @@ void		find_edges(global t_config const *const config, t_anti_aliasing *luma, flo
 	reached1 = fabs(luma->end_one.luma) >= luma->gradscaled;
 	reached2 = fabs(luma->end_two.luma) >= luma->gradscaled;
 	reachedboth = reached1 && reached2;
+	if (config->mouse_pxl_id == get_global_id(0))
+		printf("\n####one = %f:%f %f || two = %f:%f %f## rb: %d\n", luma->end_one.uv.x, luma->end_one.uv.y, luma->end_one.luma,
+				luma->end_two.uv.x, luma->end_two.uv.y, luma->end_two.luma, reachedboth);
 	if (!reached1)
 		luma->end_one.uv -= offset;
 	if (!reached2)
 		luma->end_two.uv += offset;
-	if (config->mouse_pxl_id == get_global_id(0))
-		printf("\n####one = %f:%f %f || two = %f:%f %f## rb: %d\n", luma->end_one.uv.x, luma->end_one.uv.y, luma->end_one.luma,
-				luma->end_two.uv.x, luma->end_two.uv.y, luma->end_two.luma, reachedboth);
 	if (!reachedboth)
 	{
 		while (i < FXAA_SEARCH_STEPS && !reachedboth)

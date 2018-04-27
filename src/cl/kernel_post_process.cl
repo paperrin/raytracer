@@ -2,7 +2,7 @@
 #include "interpolation.cl"
 #include "fxaa.cl"
 #define EDGE_TRESHOLD_MIN 0.0312f
-#define EDGE_TRESHOLD_MAX 0.125f
+#define EDGE_TRESHOLD_MAX 0.0825f
 
 float4			to_sepia(global t_config const *const config, float const pixel);
 float4			to_grayscale(global t_config const *const config, float const pixel);
@@ -19,15 +19,15 @@ float4			detect_aa(global t_config const *const config, global float4 const *pix
 
 	luma.center = get_luma(get_pixel_offset(pixels, uv, (float2)(0, 0), size));
 	luma.orig.west = get_luma(get_pixel_offset(pixels, uv, (float2)(-1, 0), size));
-	if (uv.x != config->screen_size.x)
+	//if (uv.x != config->screen_size.x)
 		luma.orig.east = get_luma(get_pixel_offset(pixels, uv, (float2)(1, 0), size));
 	luma.orig.north = get_luma(get_pixel_offset(pixels, uv, (float2)(0, 1), size));
-	if (gid < (config->screen_size.x * config->screen_size.y) - config->screen_size.x - 2)
+	//if (gid < (config->screen_size.x * config->screen_size.y) - config->screen_size.x - 2)
 		luma.orig.south = get_luma(get_pixel_offset(pixels, uv, (float2)(0, -1), size));
 	lmin = fmin(luma.center, fmin(fmin(luma.orig.south, luma.orig.north), fmin(luma.orig.west, luma.orig.east)));
 	lmax = fmax(luma.center, fmax(fmax(luma.orig.south, luma.orig.north), fmax(luma.orig.west, luma.orig.east)));
 	luma.range = lmax - lmin;
-	if (luma.range < fmax(0.0312f, lmax * 0.125f))
+	if (luma.range < fmax(EDGE_TRESHOLD_MIN, lmax * EDGE_TRESHOLD_MAX))
 		return (pixels[gid]);
 	return (fast_approx_anti_aliasing(config, &luma, pixels));
 }
