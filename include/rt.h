@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/09 16:36:38 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/27 13:54:29 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/28 20:38:23 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,7 @@ t_light				*scene_add_point_light(
 		t_scene *const scene, char const *const name);
 t_texture			*scene_add_texture(
 		t_scene *const scene, char const *const name, char const *const path);
+int					scene_add_default_texture(t_scene *const scene);
 t_texture			*scene_add_texture_wave(
 		t_scene *const scene, char const *const name);
 t_texture			*scene_add_texture_checkerboard(

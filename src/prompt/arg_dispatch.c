@@ -6,7 +6,7 @@
 /*   By: tlernoul <tlernoul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/04 14:35:22 by tlernoul          #+#    #+#             */
-/*   Updated: 2018/04/21 20:32:08 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/28 21:09:21 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,10 @@ static int		arg_scene_file(t_app *const app, const char *argv[]
 		return (0);
 	ast_destroy(&ast);
 	interpreter_destroy(&interpreter);
+	if (!ft_map_size(&app->scene.m_obj))
+		return (error_string("scene file must contain at least 1 object"));
+	if (!ft_map_size(&app->scene.m_light))
+		return (error_string("scene file must contain at least 1 light"));
 	return (1);
 }
 

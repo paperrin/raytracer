@@ -8,7 +8,6 @@ Config()
 	.screenSize(960, 540)
 	.sampleLevel(1)
 
-Texture("null", "textures/max_val.ppm")
 TextureSine("tex_sine")
 	.scale(0.2, 1)
 	.xColor1(0.3, 0.3, 1)
