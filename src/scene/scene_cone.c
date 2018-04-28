@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/18 02:26:01 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/26 00:06:04 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/28 21:36:27 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static t_obj	cone_default(void)
 	t_obj	obj;
 
 	obj.type = e_type_cone;
-	obj.material_id = -1;
+	obj.material_id = 0;
 	obj.pos = vec3r(0, 0, 0);
 	obj.up = vec3r(0, 1, 0);
 	obj.normal = vec3r(0, 0, -1);

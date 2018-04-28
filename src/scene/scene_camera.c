@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/16 21:23:26 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/24 23:07:30 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/28 21:41:56 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static t_camera		camera_default(void)
 	camera.cam_data.fov = M_PI / 2;
 	camera.cam_data.eye_offset = 0;
 	camera.cam_data.is_anaglyph = 0;
-	camera.move_speed = 0.08;
+	camera.move_speed = 0.5;
 	camera.rot_speed = 3;
 	return (camera);
 }

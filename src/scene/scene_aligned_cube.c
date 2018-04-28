@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/11 22:33:43 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/22 20:47:03 by ilarbi           ###   ########.fr       */
+/*   Updated: 2018/04/28 21:35:57 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static t_obj	aligned_cube_default(void)
 	t_obj	obj;
 
 	obj.type = e_type_aligned_cube;
-	obj.material_id = -1;
+	obj.material_id = 0;
 	obj.pos = vec3r(0, 0, 0);
 	obj.up = vec3r(0, 1, 0);
 	obj.normal = vec3r(0, 0, 1);

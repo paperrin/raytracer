@@ -1,0 +1,20 @@
+
+Material("base")
+	.specular(1)
+
+translate(2, 0, 1)
+
+PointLight()
+	.dispersion(0)
+	.intensity(0.5)
+DistantLight()
+	.rot(-80, 90, 0)
+	.intensity(0.5)
+
+translate(0, -0.5, 0.3)
+
+ObjPlane()
+
+translate(-1, 0, 0)
+ObjCylinder()
+	.material("base")
