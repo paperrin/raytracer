@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/04 15:19:29 by paperrin          #+#    #+#             */
-/*   Updated: 2017/07/29 15:34:14 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/28 19:00:35 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ char	*ft_strncpy(char *dst, const char *src, size_t n)
 	size_t	i;
 
 	i = 0;
-	while (src[i] && i < n)
+	while (i < n && src[i])
 	{
 		dst[i] = src[i];
 		i++;
