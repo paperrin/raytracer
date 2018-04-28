@@ -6,7 +6,7 @@
 /*   By: ilarbi <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/24 21:59:47 by ilarbi            #+#    #+#             */
-/*   Updated: 2018/04/27 18:54:09 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/28 20:11:19 by ilarbi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,15 @@
 static int		read_raster(t_fstream *file, size_t const *const dim,
 				int bytes_per_color, unsigned char *const pixels)
 {
-	long		ret;
-	size_t		bytes_len;
-	ssize_t		bytes_left;
+	long			ret;
+	ssize_t			bytes_len;
+	ssize_t			bytes_left;
+	const size_t	image_bytes_len = dim[0] * dim[1] * bytes_per_color;
 
-	bytes_len = file->read_buf_n_bytes - file->read_offset - 1;
-	bytes_left = dim[0] * dim[1] * bytes_per_color - bytes_len;
+	bytes_len = file->read_buf_n_bytes - file->read_offset;
+	if (bytes_len > (ssize_t)image_bytes_len)
+		bytes_len = image_bytes_len;
+	bytes_left = image_bytes_len - bytes_len;
 	ft_memcpy(pixels, &file->read_buf[file->read_offset], bytes_len);
 	if (bytes_left <= 0)
 		return (1);
