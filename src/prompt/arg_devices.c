@@ -6,7 +6,7 @@
 /*   By: tlernoul <tlernoul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/04 14:44:45 by tlernoul          #+#    #+#             */
-/*   Updated: 2018/04/27 17:07:07 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/28 19:25:58 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ static int	get_devices(cl_platform_id platform)
 		device_name = opencl_get_device_info(devices[i]
 				, CL_DEVICE_NAME);
 		printf("\tDevice %u: %s\n", i, device_name);
-		ft_memdel((void**)device_name);
+		ft_memdel((void**)&device_name);
 	}
 	free(devices);
 	return (1);
@@ -71,11 +71,11 @@ static int	get_platforms(cl_uint pf_nb)
 				platforms[i], CL_PLATFORM_NAME)))
 			break ;
 		ft_printf("\nPlatform %u: %s\n", i, platform_n);
-		ft_memdel((void**)platform_n);
+		ft_memdel((void**)&platform_n);
 		if (!get_devices(platforms[i]))
 			break ;
 	}
-	ft_memdel((void**)platforms);
+	ft_memdel((void**)&platforms);
 	if (i < (int)pf_nb)
 		return (0);
 	ft_printf("\n" APP_USAGE);
