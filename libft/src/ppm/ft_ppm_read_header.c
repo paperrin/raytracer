@@ -6,7 +6,7 @@
 /*   By: ilarbi <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/22 19:11:15 by ilarbi            #+#    #+#             */
-/*   Updated: 2018/03/24 21:26:48 by ilarbi           ###   ########.fr       */
+/*   Updated: 2018/04/28 19:58:32 by ilarbi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,12 +45,8 @@ static int		skip_comment(t_fstream *const file, char **line)
 	if (!new_line)
 	{
 		ft_strdel(line);
-		ft_printf("freeing ...1\n");
 		if ((ret = ft_fstream_sread_to_any_char(file, line, "\r\n", 1)) <= 0)
-		{
-			ft_printf("exit\n");
 			return (0);
-		}
 	}
 	ft_strdel(line);
 	if ((ret = ft_fstream_sread_to_any_char(file, line, "\v\f\n\t\r ", 1)) <= 0)

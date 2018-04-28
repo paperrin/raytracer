@@ -1,0 +1,4 @@
+Texture("tex_max_val", "textures/max_val.ppm")
+	.translate(0, 0)
+	.scale(1, 1)
+Light()
