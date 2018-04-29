@@ -1,0 +1,40 @@
+Config()
+	.ambientIntensity(0.2)
+Camera()
+	.moveSpeed(2)
+
+Material("red")
+	.color("0xFF0000")
+Material("green")
+	.color("0x00FF00")
+Material("blue")
+	.color("0x0000FF")
+Material("pink")
+	.color("0xFFAAAA")
+Material("yellow")
+	.color("0xFFFF00")
+
+DistantLight()
+	.rot(-90, 33, 45)
+
+translate(-4, -3, 6)
+
+ObjPlane()
+
+ObjSphere()
+	.material("red")
+translate(2, 1, 0)
+ObjSphere()
+	.material("green")
+
+translate(2, 0, 0)
+ObjCone()
+	.material("pink")
+
+translate(2, 0, 0)
+ObjCylinder()
+	.material("blue")
+
+translate(2, 0, 0)
+ObjAlignedCube()
+	.material("yellow")

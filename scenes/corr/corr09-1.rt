@@ -1,0 +1,31 @@
+
+Config()
+	.recursionDepth(1)
+	.projectionDepth(1)
+
+Texture("tex_gradient", "textures/gradient.ppm")
+	.scale(2, 2)
+Material("mat_gradient")
+	.refractionMap("tex_gradient")
+	.doProjection()
+Texture("tex_bg", "textures/landscape.ppm")
+	.scale(2, 2)
+Material("mat_bg")
+	.colorMap("tex_bg")
+	.emission(1)
+	.ignoresLight()
+
+DistantLight()
+	.rot(-90, 0, 0)
+
+translate(0, 0, 2)
+
+ObjPlane()
+	.material("mat_gradient")
+	.rot(90, 0, 0)
+
+translate(0, 0, 1)
+
+ObjPlane()
+	.material("mat_bg")
+	.rot(90, 90, 0)

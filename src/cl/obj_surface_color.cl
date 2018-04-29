@@ -171,8 +171,8 @@ float3		texture_image_uv_color(
 	float3	colors[4];
 	float2	interp;
 
-	uv -= floor(uv);
 	uv = transform_uv(uv, texture->translate, texture->scale);
+	uv -= floor(uv);
 	uv = (t_real2)(uv.x * texture->as.image.width, uv.y * texture->as.image.height);
 	pos = (uint2)(uv.x, uv.y);
 	colors[0] = texture_get_color(texture, texture_pixels, n_texture_pixels, pos.x, pos.y);

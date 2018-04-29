@@ -1,0 +1,53 @@
+
+Config()
+	.ambientIntensity(0.15)
+
+Camera()
+	.rot(30, 0, 0)
+
+Texture("tex_football", "textures/football.ppm")
+Texture("tex_crate", "textures/crate.ppm")
+Texture("tex_plank", "textures/plank.ppm")
+Texture("tex_wood", "textures/wood.ppm")
+Texture("tex_plaster", "textures/plaster.ppm")
+
+Material("mat_football")
+	.colorMap("tex_football")
+Material("mat_crate")
+	.colorMap("tex_crate")
+Material("mat_plank")
+	.colorMap("tex_plank")
+Material("mat_wood")
+	.colorMap("tex_wood")
+Material("mat_plaster")
+	.colorMap("tex_plaster")
+
+translate(0, -3, 3)
+
+push()
+	translate(0, 1.5, -1)
+	PointLight()
+pop()
+
+ObjPlane()
+	.material("mat_plank")
+
+translate(-2, 0.5, 0)
+
+ObjCone()
+	.material("mat_wood")
+
+translate(1, 0, 0)
+
+ObjSphere()
+	.material("mat_football")
+
+translate(1.5, 0, 0)
+
+ObjAlignedCube()
+	.material("mat_crate")
+
+translate(1.5, 0, 0)
+
+ObjCylinder()
+	.material("mat_plaster")

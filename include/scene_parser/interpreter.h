@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/09 19:01:28 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/27 13:36:12 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/28 23:33:05 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ struct				s_interpreter
 	t_app			*app;
 	t_vector		v_classes;
 	t_vector		v_vars;
+	t_vector		v_string_concats;
 };
 
 t_interpreter		*interpreter_create(t_app *app);

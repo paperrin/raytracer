@@ -34,11 +34,6 @@ float3			tone_map(float3 color)
 	return (color);
 }
 
-float3		mix_colors(float3 color1, float3 color2, float ratio)
-{
-	return (color1 * ratio + color2 * (1 - ratio));
-}
-
 int			is_in_shadow(global t_config const *const config, float3 *perceived_l_color, t_ray light_ray, float3 light_color, t_real light_dist,
 		constant t_obj *objs, uint objs_size,
 		constant t_material *mats, uint mats_size,
@@ -72,7 +67,7 @@ int			is_in_shadow(global t_config const *const config, float3 *perceived_l_colo
 				|| importance < config->color_epsilon)
 			return (1);
 		surface_color = obj_surface_color(&obj, mats, textures, textures_size, texture_pixels, n_texture_pixels, hit_pos);
-		*perceived_l_color = mix_colors(*perceived_l_color, surface_color, surface_refraction);
+		*perceived_l_color = *perceived_l_color * surface_color * surface_refraction;
 		p_depth++;
 	}
 	return (0);

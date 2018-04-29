@@ -1,0 +1,37 @@
+Texture("tex_pano", "../textures/church_pano.ppm")
+
+Camera()
+	.rot(20, 0, 0)
+	.moveSpeed(0.7)
+
+Material("mat_pano")
+	.colorMap("tex_pano")
+	.ignoresLight()
+	.emission(2)
+
+ObjSphere()
+	.radius(1000)
+	.material("mat_pano")
+
+translate(0.5, -1, 4.5)
+
+set("mat_index", 0)
+set("refraction", 0)
+loop(10,
+	Material("mat" + mat_index)
+		.specular(0.5)
+		.specularExp(10)
+		.refraction(refraction)
+		.color(1, 0, 0),
+	ObjSphere()
+		.material("mat" + mat_index),
+	set("refraction", refraction + 0.1),
+	set("mat_index", mat_index + 1),
+	rotate(0, 360 / 10, 0),
+	translate(1.1, 0, 0),
+)
+
+DistantLight()
+
+Config()
+	.recursionDepth(2)
