@@ -24,17 +24,17 @@ float		get_interval(int i)
 	if (i > 5)
 	{
 		if (i == 6)
-			return((float)i * 1.5);
+			return(1.5f);
 		if (i >= 19)
-			return((float)i * 16.0);
+			return(16.0f);
 		if (i >= 12)
-			return((float)i * 8.0);
+			return(8.0f);
 		if (i == 11)
-			return((float)i * 4.0);
+			return(4.0f);
 		if (i < 11)
-			return((float)i * 2.0);
+			return(2.0f);
 	}
-	return (i);
+	return (1.0f);
 }
 
 float4		fast_approx_anti_aliasing(global t_config const *const config, t_anti_aliasing *luma, global float4 const *pixels)
@@ -52,6 +52,7 @@ float4		fast_approx_anti_aliasing(global t_config const *const config, t_anti_al
 	dist1 = luma->is_horizontal ? (uv.x - luma->end_one.uv.x) : (uv.y - luma->end_one.uv.y);
 	dist2 = luma->is_horizontal ? (luma->end_two.uv.x - uv.x) : (luma->end_two.uv.y - uv.y);
 	luma->final_offset = get_final_offset(config, luma, luma->end_one.luma, luma->end_two.luma, dist1, dist2);
+	luma->final_offset = sub_pixel_aa(luma);
 	if (luma->is_horizontal)
 		finaluv.y += luma->final_offset * luma->step_length;
 	else
@@ -60,17 +61,6 @@ float4		fast_approx_anti_aliasing(global t_config const *const config, t_anti_al
 	lum.rgb = (float3)(luma->center);
 	lum.a = 1;
 	lum = lum * (1 + lum);
-	if (config->mouse_pxl_id == gid)
-	{
-		printf("////////\ncenter = %f:%f at %f\n",uv.x, uv.y, luma->center);
-		printf("north = %f:%f at %f, south = %f:%f at %f\n", uv.x, uv.y + 1, luma->orig.north, uv.x, uv.y - 1, luma->orig.south);
-		printf("west = %f:%f at %f, east = %f:%f at %f\n", uv.x - 1, uv.y, luma->orig.west, uv.x + 1, uv.y, luma->orig.east);
-		printf("end1 = %f:%f (%f) at %f\nend2 = %f:%f (%f) at %f\n",luma->end_one.uv.x, luma->end_one.uv.y, dist1, luma->end_one.luma,
-				luma->end_two.uv.x, luma->end_two.uv.y, dist2, luma->end_two.luma);
-		printf("-%f / %f + 0.5 = %f\n", fmin(dist1, dist2), dist1 + dist2, luma->final_offset);
-		printf("is horizontal ? %d gradscale = %f avg = %f\n////////", luma->is_horizontal, luma->gradscaled, luma->local_average);
-	}
-	luma->final_offset = sub_pixel_aa(luma);
 	//return (lum);
 	return (get_pixel_xy(pixels, finaluv, size));
 }
@@ -142,9 +132,6 @@ void		find_edges(global t_config const *const config, t_anti_aliasing *luma, flo
 	reached1 = fabs(luma->end_one.luma) >= luma->gradscaled;
 	reached2 = fabs(luma->end_two.luma) >= luma->gradscaled;
 	reachedboth = reached1 && reached2;
-	if (config->mouse_pxl_id == get_global_id(0))
-		printf("\n####one = %f:%f %f || two = %f:%f %f## rb: %d\n", luma->end_one.uv.x, luma->end_one.uv.y, luma->end_one.luma,
-				luma->end_two.uv.x, luma->end_two.uv.y, luma->end_two.luma, reachedboth);
 	if (!reached1)
 		luma->end_one.uv -= offset;
 	if (!reached2)
@@ -157,13 +144,6 @@ void		find_edges(global t_config const *const config, t_anti_aliasing *luma, flo
 				luma->end_one.luma = get_luma(get_pixel_xy(pixels, luma->end_one.uv, size)) - luma->local_average;
 			if (!reached2)
 				luma->end_two.luma = get_luma(get_pixel_xy(pixels, luma->end_two.uv, size)) - luma->local_average;
-			if (config->mouse_pxl_id == get_global_id(0))
-			{
-				printf("\n****one = %f:%f %f || two = %f:%f %f****off%f\n", luma->end_one.uv.x, luma->end_one.uv.y, luma->end_one.luma,
-				luma->end_two.uv.x, luma->end_two.uv.y, luma->end_two.luma, offset.x * get_interval(i));
-				if (i == FXAA_SEARCH_STEPS)
-					printf("\nSTOP\n");
-			}
 			reached1 = fabs(luma->end_one.luma) >= luma->gradscaled;
 			reached2 = fabs(luma->end_two.luma) >= luma->gradscaled;
 			reachedboth = reached1 && reached2;
@@ -190,16 +170,8 @@ float		get_final_offset(global t_config const *const config, t_anti_aliasing *lu
 	is_directionx = dist1 < dist2;
 	pixel_offset = -distfinal / edge_thick + 0.5;
 	is_center_underavr = luma->center < luma->local_average;
-	if (dist1 < dist2)
-		lumaend = lumaend1;
-	else
-		lumaend = lumaend2;
-	if ((lumaend < 0.0) != is_center_underavr)
-		correct_var = 1;
-	else
-		correct_var = 0;
-//	correct_var = ((is_directionx ? lumaend1 : lumaend2) < 0.0) != is_center_underavr;
-	return (correct_var == is_center_underavr ? pixel_offset : 0.0);
+	correct_var = ((is_directionx ? lumaend1 : lumaend2) < 0.0) != is_center_underavr;
+	return (correct_var ? pixel_offset : 0.0);
 }
 
 float		sub_pixel_aa(t_anti_aliasing *luma)
