@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/20 16:55:11 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/29 02:45:29 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/30 01:36:46 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,12 +75,14 @@ int				interpreter_add_hooks_transform(
 {
 	const t_e_class_type		class_type = e_class_type_none;
 
-	if (!(interpreter_class_add_method_batch(interpreter, class_type, 5,
+	if (!(interpreter_class_add_method_batch(interpreter, class_type, 7,
 					"translate", &f_method_translate,
 					"rotate", &f_method_rotate,
 					"push", &f_method_push,
 					"pop", &f_method_pop,
-					"set", &f_internal_global_method_set)))
+					"set", &f_internal_global_method_set,
+					"rand", &f_internal_global_method_rand,
+					"randInt", &f_internal_global_method_rand_int)))
 		return (0);
 	return (1);
 }

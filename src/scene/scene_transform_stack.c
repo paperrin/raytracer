@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/18 01:27:17 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/29 02:54:24 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/30 02:11:46 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static void		save_current_state(t_scene *const scene)
 	}
 }
 
-int		scene_transform_push(t_scene *const scene)
+int				scene_transform_push(t_scene *const scene)
 {
 	if (!ft_vector_push_back(&scene->v_mx, NULL))
 		return (error_string(ERR_MEMORY));
@@ -39,7 +39,7 @@ int		scene_transform_push(t_scene *const scene)
 	return (1);
 }
 
-void	scene_transform_pop(t_scene *const scene)
+void			scene_transform_pop(t_scene *const scene)
 {
 	if (!ft_vector_empty(&scene->v_mx))
 	{

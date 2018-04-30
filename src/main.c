@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/09 16:14:42 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/28 20:15:20 by ilarbi           ###   ########.fr       */
+/*   Updated: 2018/04/30 01:53:01 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 static void	app_init(t_app *const app)
 {
+	srand(time(NULL));
 	app->config.ambient_c = vec3f(1, 1, 1);
 	app->config.ambient_i = 0.05;
 	app->config.camera_light_c = vec3f(1, 1, 1);

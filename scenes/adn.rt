@@ -1,0 +1,54 @@
+
+Config()
+	.sampleLevel(1)
+	.ambientIntensity(0.2)
+
+DistantLight()
+	.rot(-45, -45, 50)
+
+Material("outside")
+	.specular(1)
+	.specularExp(50)
+	.color(0.7, 0.7, 0.7)
+Material("branch_0")
+	.specular(1)
+	.specularExp(50)
+	.color(0.3, 1, 0.4)
+Material("branch_1")
+	.specular(1)
+	.specularExp(50)
+	.color(1, 0.4, 0.3)
+Material("branch_2")
+	.specular(1)
+	.specularExp(50)
+	.color(0.3, 0.4, 1)
+Material("branch_3")
+	.specular(1)
+	.specularExp(50)
+	.color(1, 0.7, 0.3)
+
+set("branch_mat", 1)
+translate(0, -12, 22)
+loop(50,
+	rotate(0, 10, 0),
+	loop(2,
+		push(),
+		translate(0, 0, 2),
+		push(),
+		translate(0, 0, -0.4),
+		set("branch_mat", randInt(4)),
+		loop(7,
+			translate(0, 0, -0.2),
+			ObjSphere()
+				.material("branch_" + branch_mat)
+				.radius(0.15)
+		),
+		pop(),
+		ObjSphere()
+			.material("outside")
+		,
+		pop(),
+		rotate(0, 180, 0)
+	),
+	translate(0, 0.5, 0)
+)

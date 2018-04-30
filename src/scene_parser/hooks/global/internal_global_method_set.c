@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/23 03:58:10 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/23 04:27:35 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/30 01:50:14 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,5 +34,31 @@ int				f_internal_global_method_set(
 	}
 	else if (!interpreter_var_add(interpreter, var_name, args.tokens[1]))
 		return (0);
+	return (1);
+}
+
+int				f_internal_global_method_rand(
+		t_interpreter *const interpreter,
+		t_token *const tk_this, t_hook_args const args,
+		t_token *const tk_return)
+{
+	(void)interpreter;
+	*tk_return = *tk_this;
+	if (!hook_valid_args(&args, 0))
+		return (0);
+	*tk_return = token_num((float)rand() / (float)RAND_MAX);
+	return (1);
+}
+
+int				f_internal_global_method_rand_int(
+		t_interpreter *const interpreter,
+		t_token *const tk_this, t_hook_args const args,
+		t_token *const tk_return)
+{
+	(void)interpreter;
+	*tk_return = *tk_this;
+	if (!hook_valid_args(&args, 1, token_type_num))
+		return (0);
+	*tk_return = token_num(rand() % (int)args.tokens[0].as.num.value);
 	return (1);
 }

@@ -1,0 +1,55 @@
+
+Config()
+
+set("objs_nb", 6)
+set("objs_size", 0.5)
+set("objs_spacing", 2)
+set("area_size", objs_nb * objs_size * 2 + objs_spacing * objs_nb)
+
+Camera()
+	.moveSpeed(1)
+
+translate(0, 0, area_size)
+
+Material("bg")
+	.emission(1)
+	.ignoresLight()
+ObjSphere()
+	.radius(100)
+	.material("bg")
+
+PointLight()
+translate(area_size / 2 * -1, area_size / 2 * -1, area_size / 2 * -1)
+set("i", 0)
+loop(objs_nb,
+	push()
+	,
+	loop(objs_nb,
+		push()
+		,
+		loop(objs_nb,
+			Material("mat_" + i)
+				.color(rand(), rand(), rand())
+			,
+			push()
+			,
+			translate(rand() * objs_spacing, rand() * objs_spacing, rand() * objs_spacing),
+			ObjSphere()
+				.radius(rand() * objs_size)
+				.material("mat_" + i)
+			,
+			pop()
+			,
+			translate(objs_size + objs_spacing, 0, 0),
+			set("i", i + 1)
+		)
+		,
+		pop()
+		,
+		translate(0, objs_size + objs_spacing, 0)
+	)
+	,
+	pop()
+	,
+	translate(0, 0, objs_size + objs_spacing)
+)

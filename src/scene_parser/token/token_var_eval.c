@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/07 01:54:00 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/23 04:23:49 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/30 00:51:11 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int					token_var_eval(
 	(void)tk_this;
 	var = NULL;
 	if (!(var = interpreter_find_var_name(interpreter, tk_expr->as.var.name)))
-		return (error_string("unknown var"));
+		return (error_string_2("unknown var", tk_expr->as.var.name));
 	*tk_result = var->tk_value;
 	return (1);
 }
