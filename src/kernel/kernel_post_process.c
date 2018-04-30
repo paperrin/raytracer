@@ -6,7 +6,7 @@
 /*   By: tlernoul <tlernoul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/01 23:33:13 by tlernoul          #+#    #+#             */
-/*   Updated: 2018/04/30 17:48:21 by tlernoul         ###   ########.fr       */
+/*   Updated: 2018/04/30 21:56:23 by tlernoul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int			kernel_post_process_create(t_app *app)
 		return (0);
 	opencl_kernel_arg_select_id(&app->kernel_post_process, 2);
 	if (!opencl_kernel_arg_selected_create(&app->kernel_post_process
-			, CL_MEM_WRITE_ONLY
+			, CL_MEM_READ_WRITE
 			, sizeof(cl_float) * 4 * app->kernel_clear.work_size, NULL))
 		return (0);
 	return (1);
@@ -40,10 +40,10 @@ int			kernel_post_process_launch(t_app *app)
 {
 	cl_int	err;
 
-	if ((err = clEnqueueNDRangeKernel(app->ocl.cmd_queue,
-					app->kernel_post_process.kernel, 1, NULL
+	if ((err = clEnqueueNDRangeKernel(app->ocl.cmd_queue
+					, app->kernel_post_process.kernel, 1, NULL
 			, &app->kernel_post_process.work_size, NULL, 0, NULL, NULL))
-			!= CL_SUCCESS)
+					!= CL_SUCCESS)
 		return (error_cl_code(err));
 	return (1);
 }

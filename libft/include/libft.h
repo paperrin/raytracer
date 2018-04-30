@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/03 12:52:47 by paperrin          #+#    #+#             */
-/*   Updated: 2018/03/17 15:17:13 by ilarbi           ###   ########.fr       */
+/*   Updated: 2018/04/27 18:26:06 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,6 @@
 # include <string.h>
 # include <wchar.h>
 # include <stdint.h>
-
-# define ABS(Value) ((Value) >= 0 ? (Value) : -(Value))
 
 # define STRJOIN_FREE_S1 0
 # define STRJOIN_FREE_S2 1
@@ -109,6 +107,8 @@ int				ft_strnequ(char const *s1, char const *s2, size_t n);
 char			*ft_strsub(char const *s, unsigned int start, size_t len);
 char			*ft_strjoin(char const *s1, char const *s2);
 char			*ft_strjoin_free(char **a, char **b, int free);
+char			*ft_strjoin_char(char const *str, char c, int order);
+char			*ft_strjoin_char_free(char **str, char c, int order, int free);
 char			*ft_strnjoin(t_strnjoin_arg s1, t_strnjoin_arg s2);
 char			*ft_strnjoin_free(t_strnjoin_arg s1, t_strnjoin_arg s2
 		, int free);
@@ -130,6 +130,7 @@ char			*ft_uitoa_dec(uintmax_t nb, int alt, char prefix
 		, int precision);
 char			*ft_ftoa(long double nb, unsigned int n_decimal,
 		const char *sep);
+int				ft_putfloat(long double nb);
 void			ft_putchar(char c);
 void			ft_putchar(char c);
 void			ft_putwchar(wchar_t c);

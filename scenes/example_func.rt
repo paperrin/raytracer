@@ -1,0 +1,7 @@
+Console()
+	.print("5 + 3 * 2 = ")
+	.print(5 + 3 * 2)
+	.print("\n")
+	.print("Should equal: 11\n")
+	.print(false)
+	.print("\n")

@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/04 15:25:25 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/14 18:35:16 by ilarbi           ###   ########.fr       */
+/*   Updated: 2018/04/16 02:38:58 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@
 */
 typedef struct		s_image
 {
-	GLuint			textureID;
 	float			*pixels;
 	unsigned int	width;
 	unsigned int	height;

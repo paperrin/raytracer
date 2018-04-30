@@ -4,6 +4,7 @@
 # define SUB_PIXEL_QUALITY 0.75f
 # define FXAA_SEARCH_STEPS 12
 # define FXAA_SEARCH_START 2
+# undef FXAA_SHOW_BORDERS
 
 float4		fast_approx_anti_aliasing(global t_config const *const config, t_anti_aliasing *luma, global float4 const *pixels);
 float		get_luma(float4 const pixel);
@@ -57,12 +58,15 @@ float4		fast_approx_anti_aliasing(global t_config const *const config, t_anti_al
 		finaluv.y += luma->final_offset * luma->step_length;
 	else
 		finaluv.x += luma->final_offset * luma->step_length;
+# ifdef FXAA_SHOW_BORDERS
 	float4		lum;
 	lum.rgb = (float3)(luma->center);
 	lum.a = 1;
 	lum = lum * (1 + lum);
-	//return (lum);
+	return (lum);
+# else
 	return (get_pixel_xy(pixels, finaluv, size));
+#endif
 }
 
 int		is_horizontal(global t_config const *const config, t_anti_aliasing *luma, float2 uv, global float4 const *pixels, int2 size)
@@ -161,7 +165,6 @@ float		get_final_offset(global t_config const *const config, t_anti_aliasing *lu
 	float	distfinal = 0;
 	float	edge_thick = dist1 + dist2;
 	float	pixel_offset = 0;
-	float	lumaend;
 	int		is_center_underavr = 0;
 	int		correct_var = 0;
 	int		is_directionx;

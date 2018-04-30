@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/09 16:52:27 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/19 17:16:42 by tlernoul         ###   ########.fr       */
+/*   Updated: 2018/04/30 22:43:13 by tlernoul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,11 +52,15 @@ int			save_screenshot(t_app *app)
 	file.height = app->win.height;
 	file.max_val = 255;
 	file.color_depth_vector = ft_ppm_from_floats(&file, app->draw_buf.pixels);
-	if (!(name = get_unique_file_name(app->screenshot_path, "ppm")))
+	if (!(name = get_unique_file_name(APP_SCREENSHOT_PATH, "ppm")))
 		return (0);
 	if ((file.fd = open(name, O_CREAT | O_RDWR, S_IRWXU)) == -1
 		|| !(ft_ppm_file_write(&file)))
+	{
+		ft_strdel(&name);
 		return (0);
+	}
+	ft_printf("Saved screenshot at: \"%s\"\n", name);
 	ft_strdel(&name);
 	ft_memdel((void **)&file.color_depth_vector);
 	return (1);

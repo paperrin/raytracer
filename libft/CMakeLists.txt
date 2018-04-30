@@ -6,7 +6,7 @@
 #    By: paperrin <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/12/04 23:06:12 by paperrin          #+#    #+#              #
-#    Updated: 2018/02/14 18:37:24 by paperrin         ###   ########.fr        #
+#    Updated: 2018/02/17 17:40:26 by paperrin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -201,6 +201,7 @@ SET(SRC_FILES
 	src/file/ft_file_to_string.c
 	src/fstream/ft_fstream_read_open.c
 	src/fstream/ft_fstream_sread_to_any_char.c
+	src/fstream/ft_fstream_sread_char.c
 	src/fstream/internal_ft_fstream_read_more.c
 	src/ppm/ppm.c
 )

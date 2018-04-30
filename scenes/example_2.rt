@@ -1,0 +1,55 @@
+# planets radius in Km :
+#	sun		695'700.0
+#	mercury	  2'439.7
+#	venus	  6'051.8
+#	earth	  6'378.1
+#		earth-moon: 384'400
+#	moon	  1'738.1
+#	mars	  3'396.2
+#	jupiter	 71'492.0
+#	saturn	 60'268.0
+#	uranus	 25'559.0
+#	neptune	 24'764.0
+
+recursion_depth(0)
+move_speed(50)
+use_gpu(TRUE)
+
+distantLight("sun")
+	.color(255, 255, 255)
+	.dir(0, 135, 0)
+
+push()
+	rotate(0, animated(0, 360 / 24), 0)
+	
+	texture("tex_earth")
+		.ppm("textures/earth.ppm")
+		.filter(BILINEAR)
+	
+	sphere("earth")
+		.radius(6.3781)
+		.texture("tex_earth")
+pop()
+
+push()
+	rotate(0, animated(0, 360 / 27.322), 5.8)
+	translate(0, 0, 384.400)
+
+	rotate(0, animated(0, 360 / 27), 0)
+	
+	texture("tex_moon")
+		.ppm("textures/moon.ppm")
+		.filter(BILINEAR)
+	
+	sphere("moon")
+		.radius(1.7381)
+		.texture("tex_moon")
+pop()
+
+rotate(-30, 0, 0)
+translate(0, 0, -500)
+
+camera()
+	.view(0, 0, 720, 480)
+	.samples(1)
+	.filter(SEPIA)

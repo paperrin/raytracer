@@ -1,0 +1,28 @@
+Texture("null", "textures/max_val.ppm")
+Material("mat_1")
+	.colorMap("null")
+
+Config()
+	.camLightIntensity(0.3)
+
+Camera()
+	.moveSpeed(0.7)
+
+translate(0, 2, 0)
+PointLight()
+	.intensity(1)
+	.color(1, 1, 1)
+pop()
+
+translate(0, 0, 2)
+loop(6,
+	loop(12,
+		translate(0.5, 0, 0),
+		rotate(0, 30, 0),
+		ObjSphere()
+			.radius(0.5)
+			.material("mat_1")
+	),
+	translate(3, 0, 0),
+	rotate(0, 60, 0)
+)

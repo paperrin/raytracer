@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/03 21:00:05 by paperrin          #+#    #+#             */
-/*   Updated: 2018/01/17 00:04:10 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/19 01:31:23 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void		image_put(t_image *image, int x, int y)
 void		image_set_pixel(t_image *image, unsigned int x, unsigned int y,
 		t_clrf_rgb color)
 {
-	x = MIN(x, image->width - 1);
-	y = MIN(y, image->height - 1);
+	x = ft_min(x, image->width - 1);
+	y = ft_min(y, image->height - 1);
 	((t_clrf_rgb*)image->pixels)[y * image->width + x] = color;
 }

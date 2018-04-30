@@ -1,0 +1,2 @@
+ObjSphere()
+	.material("mat_brick")

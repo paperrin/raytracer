@@ -1,0 +1,132 @@
+
+color: (<num r{0-1}>, <num g{0-1}>, <num b{0-1}>) || (<str color{"0x000000"-"0xFFFFFF"}>)
+pos: (<num x{-0+}>, <num y{-0+}>, <num z{-0+}>)
+rot: (<num x{-0+}>, <num y{-0+}>, <num z{-0+}>)
+
+================================================
+
+<string> + <num> // concatenates string and number
+
+set(<str var_name>, <num new_var_value>)
+loop(<num loop_n_times>, <instruction_1>, [instruction_2], [instruction_3], ...)
+rand() // returns random number between 0. and 1. included
+randInt(<num max>) // returns random number between 0 and max excluded
+
+push()
+pop()
+
+translate(<num x>, <num y>, <num z>)
+rotate(<num x>, <num y>, <num z>)
+
+DistantLight([str name])
+	.color(<color lightColor>)
+	.intensity(<num lightStrength {0+}>)
+	.glare(<num lightGlare {0+}>)
+	.rot(<rot>)
+
+PointLight([str name])
+	.color(<color lightColor>)
+	.intensity(<num lightStrength {0+}>)
+	.dispersion(<num lightDispersion {0+}>)
+	.glare(<num lightGlare {0+}>)
+	.pos(<pos>)
+
+SpotLight([str name])
+	.color(<color lightColor>)
+	.intensity(<num lightStrength {0+}>)
+	.dispersion(<num lightDispersion {0+}>)
+	.glare(<num lightGlare {0+}>)
+	.fieldAperture(<num aperture{0-1}>)
+	.fieldIntensity(<num fractionOfIntensity{0-1}>)
+	.beamAperture(<num aperture{0-1}>)
+	.beamGradient(<num fractionOfBeamAperture{0-1}>)
+	.pos(<pos>)
+	.rot(<rot>)
+
+WaveTexture(<str name>)
+	.xColor1(<color color>)
+	.xColor2(<color color>)
+	.yColor1(<color color>)
+	.yColor2(<color color>)
+	.factors(<num opacity{0-1}>, <num opacity{0-1}>)
+	.translate(<num x{-0+}>, <num y{-0+}>)
+	.scale(<num xyScale{-0+}> || <<num x{-0+}>, <num y{-0+}>>)
+
+CheckerboardTexture(<str name>)
+	.color1(<color firstColor>)
+	.color2(<color secondColor>)
+	.translate(<num x{-0+}>, <num y{-0+}>)
+	.scale(<num xyScale{-0+}> || <<num x{-0+}>, <num y{-0+}>>)
+
+NoiseTexture(<str name>)
+	.color1(<color firstColor>)
+	.color2(<color secondColor>)
+	.translate(<num x{-0+}>, <num y{-0+}>)
+	.scale(<num xyScale{-0+}> || <<num x{-0+}>, <num y{-0+}>>)
+
+Material(<str name>)
+	.color(<color surfaceColor>)
+	.reflection(<num reflectionAmmount>)
+	.refraction(<num refractionAmmount>)
+	.refractionIndex(<num refractionIndex>)
+	.emission(<num emissionAmmount>)
+	.ignoresLight()
+	.specular(<num specularAmmount>)
+	.specularColor(<color specularColor>)
+	.specularExp(<num specularExponent>)
+	.doProjection([bool do_projection])
+	.colorMap(<str textureName>)
+	.refractionMap(<str textureName>)
+
+Texture(<str name>, <str imagePath>)
+	.translate(<num x{-0+}>, <num y{-0+}>)
+	.scale(<num xyScale{-0+}> || <<num x{-0+}>, <num y{-0+}>>)
+	.filter(<TEXTURE_FILTER_NEAREST | TEXTURE_FILTER_BILINEAR>)
+
+Sphere([str name])
+	.radius(<num radius>)
+	.material(<str material_name>)
+	.pos(<pos>)
+	.rot(<rot>)
+
+AlignedCube([str name])
+	.size(<num size> || <num xSize>, <num ySize>, <num zSize>)
+	.pos(<pos>)
+
+Cone([str name])
+	.angle(<num angle>)
+	.material(<str material_name>)
+	.pos(<pos>)
+	.rot(<rot>)
+
+Cylinder([str name])
+	.radius(<num radius>)
+	.material(<str material_name>)
+	.pos(<pos>)
+	.rot(<rot>)
+
+Plane([str name])
+	.material(<str material_name>)
+	.pos(<pos>)
+	.rot(<rot>)
+
+Camera()
+	.fov(angle)
+	.moveSpeed(<num move_speed>)
+	.rotSpeed(<num rot_speed_deg>)
+	.sbs([num eye_offset])
+	.anaglyph([num eye_offset])
+	.pos(<pos>)
+	.rot(<rot>)
+
+Config()
+	.ambientColor(<color>)
+	.ambientIntensity(<num intensity>)
+	.camLightColor(<color>)
+	.camLightIntensity(<num intensity>)
+	.recursionDepth(<num n_recursion_depths>)
+	.projectionDepth(<num n_projection_depths>)
+	.postFilter(POST_FILTER_NONE + POST_FILTER_GRAYSCALE + POST_FILTER_SEPIA)
+	.screenSize(<num width>, <num height>)
+	.sampleLevel(<num samples_width>)
+	.zFar(<num far_plane>)

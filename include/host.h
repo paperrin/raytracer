@@ -6,13 +6,14 @@
 /*   By: ilarbi <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/08 22:27:58 by ilarbi            #+#    #+#             */
-/*   Updated: 2018/04/14 17:38:47 by ilarbi           ###   ########.fr       */
+/*   Updated: 2018/04/27 18:13:48 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef HOST_H
 # define HOST_H
 
+# include "t_real.h"
 # include "shared.h"
 
 typedef union	u_real2s

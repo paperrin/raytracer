@@ -6,11 +6,12 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/06 13:58:47 by paperrin          #+#    #+#             */
-/*   Updated: 2016/11/07 17:26:51 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/27 18:30:51 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+#include "ft_math.h"
 
 void	ft_putnbr_fd(int n, int fd)
 {
@@ -18,7 +19,7 @@ void	ft_putnbr_fd(int n, int fd)
 	int		div;
 
 	nb = n;
-	nb = ABS(nb);
+	nb = ft_abs(nb);
 	if (n < 0)
 		ft_putchar_fd('-', fd);
 	div = 1;

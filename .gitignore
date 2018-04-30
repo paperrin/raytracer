@@ -6,4 +6,5 @@ glfw/build/
 bin/
 obj/
 !src/obj/
+!src/scene_parser/hooks/obj/
 rt

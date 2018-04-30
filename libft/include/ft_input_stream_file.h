@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/07 18:03:34 by paperrin          #+#    #+#             */
-/*   Updated: 2017/12/07 18:39:26 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/18 03:28:19 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,8 @@ typedef struct	s_in_stream_file
 	size_t		line;
 }				t_in_stream_file;
 
-int			ft_in_stream_file_open(t_in_stream *in_stream, const char *path);
-void		ft_in_stream_file_close(t_in_stream *in_stream);
+int				ft_in_stream_file_open(t_in_stream *in_stream
+		, const char *path);
+void			ft_in_stream_file_close(t_in_stream *in_stream);
 
 #endif

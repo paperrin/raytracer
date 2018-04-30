@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/13 14:25:38 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/23 19:41:26 by tlernoul         ###   ########.fr       */
+/*   Updated: 2018/04/30 22:43:47 by tlernoul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 /*
 ** Please care of data packing when changing data types / structure order
 */
+
+# include "t_real.h"
 
 # ifdef CONFIG_USE_DOUBLE
 #  ifdef cl_khr_fp64
@@ -27,53 +29,10 @@
 #  endif
 # endif
 
-# ifdef IS_KERNEL
-typedef	float			cl_float;
-typedef	float2			cl_float2;
-typedef	float3			cl_float3;
-typedef	float4			cl_float4;
-typedef	float8			cl_float8;
-typedef	float16			cl_float16;
-typedef	double			cl_double;
-typedef	double2			cl_double2;
-typedef	double3			cl_double3;
-typedef	double4			cl_double4;
-typedef	double8			cl_double8;
-typedef	double16		cl_double16;
-typedef char			cl_uchar;
-typedef short			cl_short;
-typedef int				cl_int;
-typedef int2			cl_int2;
-typedef uint			cl_uint;
-typedef uint2			cl_uint2;
-typedef long			cl_long;
-typedef unsigned long	cl_ulong;
-typedef uchar3			cl_uchar3;
-# endif
+typedef cl_short		t_obj_type;
+typedef cl_int			t_obj_id;
+typedef cl_int			t_mat_id;
 
-# ifdef DOUBLE_SUPPORT_AVAILABLE
-typedef cl_double		t_real;
-typedef cl_double2		t_real2;
-typedef cl_double3		t_real3;
-typedef cl_double4		t_real4;
-typedef cl_double8		t_real8;
-typedef cl_double16		t_real16;
-#define REAL_MAX DBL_MAX
-#define REAL_MIN DBL_MIN
-# else
-typedef cl_float		t_real;
-typedef cl_float2		t_real2;
-typedef cl_float3		t_real3;
-typedef cl_float4		t_real4;
-typedef cl_float8		t_real8;
-typedef cl_float16		t_real16;
-#define REAL_MAX FLT_MAX
-#define REAL_MIN FLT_MIN
-# endif
-
-typedef cl_short			t_obj_type;
-typedef cl_int				t_obj_id;
-typedef cl_short			t_mat_id;
 typedef	struct s_material	t_material;
 typedef	struct s_ray		t_ray;
 
@@ -83,10 +42,13 @@ typedef struct			s_camera_data
 	t_real3				dir;
 	t_real3				up;
 	t_real3				right;
-	t_real				pxl_ratio;
+	t_real				fov;
+	t_real				eye_offset;
+	int					is_anaglyph;
 }						t_camera_data;
 
-typedef cl_float3 (t_f_specular_model)(t_material, t_real3, t_ray, t_real3, t_real3, cl_float3);
+typedef cl_float3	(t_f_specular_model)(t_material, t_real3, t_ray, t_real3
+		, t_real3, cl_float3);
 
 typedef enum			e_shading_model
 {
@@ -119,6 +81,9 @@ typedef struct			s_config
 	cl_int				mouse_pxl_id;
 	cl_uint				post_filters;
 	cl_uint				fxaa;
+	cl_float3			anaglyph_r[2];
+	cl_float3			anaglyph_g[2];
+	cl_float3			anaglyph_b[2];
 }						t_config;
 
 /*
@@ -154,46 +119,29 @@ typedef enum			e_obj_type
 	e_type_aligned_cube
 }						t_e_obj_type;
 
-typedef struct			s_plane
-{
-	t_real3				pos;
-	t_real3				up;
-	t_real3				normal;
-}						t_plane;
-
 typedef struct			s_sphere
 {
-	t_real3				pos;
-	t_real3				up;
-	t_real3				front;
 	t_real				radius;
 }						t_sphere;
 
 typedef struct			s_cylinder
 {
-	t_real3				pos;
-	t_real3				up;
-	t_real3				normal;
 	t_real				radius;
+	t_real				caps[2];
 }						t_cylinder;
 
 typedef struct			s_cone
 {
-	t_real3				pos;
-	t_real3				up;
-	t_real3				normal;
-	t_real				radius;
+	t_real				angle;
 }						t_cone;
 
 typedef	struct			s_aligned_cube
 {
-	t_real3				pos;
 	t_real3				size;
 }						t_aligned_cube;
 
 typedef union			u_obj_container
 {
-	t_plane				plane;
 	t_sphere			sphere;
 	t_cylinder			cylinder;
 	t_cone				cone;
@@ -202,8 +150,11 @@ typedef union			u_obj_container
 
 typedef struct			s_obj
 {
-	t_obj_type			type;
 	t_mat_id			material_id;
+	t_obj_type			type;
+	t_real3				pos;
+	t_real3				up;
+	t_real3				normal;
 	t_obj_container		as;
 }						t_obj;
 
@@ -212,12 +163,15 @@ struct					s_material
 	cl_float3			color;
 	cl_float			reflection;
 	cl_float			refraction;
+	cl_float			emission;
+	cl_int				ignores_light;
 	cl_float			specular;
 	cl_float3			specular_color;
 	cl_float			specular_exp;
-	cl_float			indice_of_refraction;
+	cl_float			refraction_index;
 	cl_uint				projection;
 	cl_int				texture_id;
+	cl_int				refraction_map_id;
 };
 
 typedef enum			e_filter
@@ -226,16 +180,58 @@ typedef enum			e_filter
 	e_filter_bilinear
 }						t_filter;
 
-typedef struct			s_texture
+typedef	struct			s_texture_image
 {
 	cl_long				pixels_offset;
 	cl_uint				width;
 	cl_uint				height;
 	cl_uint				max_val;
+	t_filter			filter;
+}						t_texture_image;
+
+typedef struct			s_texture_checkerboard
+{
+	cl_float3			color1;
+	cl_float3			color2;
+}						t_texture_checkerboard;
+
+typedef struct			s_texture_sine
+{
+	cl_float3			color1;
+	cl_float3			color2;
+	cl_float3			color3;
+	cl_float3			color4;
+	t_real2				factors;
+}						t_texture_sine;
+
+typedef struct			s_texture_noise
+{
+	cl_float3			color1;
+	cl_float3			color2;
+}						t_texture_noise;
+
+typedef union			u_texture_origin
+{
+	t_texture_image			image;
+	t_texture_checkerboard	checkerboard;
+	t_texture_sine			sine;
+	t_texture_noise			noise;
+}						t_u_texture_origin;
+
+typedef	enum			e_texture_type
+{
+	e_texture_type_image,
+	e_texture_type_checkerboard,
+	e_texture_type_sine,
+	e_texture_type_noise
+}						t_e_texture_type;
+
+typedef struct			s_texture
+{
+	t_e_texture_type	type;
+	t_u_texture_origin	as;
 	t_real2				translate;
 	t_real2				scale;
-	t_filter			filter;
-
 }						t_texture;
 
 /*
@@ -258,10 +254,10 @@ typedef struct			s_light_spot
 {
 	t_real3				pos;
 	t_real3				dir;
-	t_real				beam_angle;
-	t_real				field_angle;
 	t_real				beam_aperture;
+	t_real				beam_gradient;
 	t_real				field_aperture;
+	t_real				field_intensity;
 }						t_light_spot;
 
 typedef struct			s_light_dir
@@ -281,10 +277,12 @@ typedef struct			s_light
 	t_light_type		type;
 	cl_float3			color;
 	cl_float			intensity;
+	cl_float			glare;
+	cl_float			dispersion;
 	t_light_container	as;
 }						t_light;
 
-/*t
+/*
 ** Anti-aliasing
 */
 

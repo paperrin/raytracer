@@ -1,0 +1,46 @@
+
+Config()
+	.ambientIntensity(0.2)
+
+PointLight()
+
+translate(-1, -1, 4)
+
+set("scale", 1)
+set("translate", 0)
+set("i", 0)
+loop(3,
+	push(),
+	loop(3,
+		Texture("tex_crate" + i, "textures/crate.ppm")
+			.translate(translate, translate)
+			.scale(scale, scale)
+		,
+		push()
+		,
+		translate(-1.75, 0, 0),
+		Material("mat_crate" + i)
+			.colorMap("tex_crate" + i)
+		,
+			ObjAlignedCube()
+				.material("mat_crate" + i)
+		,
+		pop()
+		,
+		push()
+		,
+			translate(1.75, 0, 0),
+			ObjSphere()
+				.material("mat_crate" + i)
+		,
+		pop()
+		,
+		translate(0, 1.2, 0)
+		,
+		set("i", i + 1),
+		set("translate", translate + 0.33)
+	),
+	pop(),
+	translate(1.2, 0, 0),
+	set("scale", scale / 2)
+)

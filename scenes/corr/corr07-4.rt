@@ -1,0 +1,31 @@
+Camera()
+	.rot(20, 0, 0)
+	.moveSpeed(0.7)
+
+translate(0.5, -1, 4.5)
+
+set("mat_index", 0)
+set("refraction", 0)
+loop(10,
+	Material("mat" + mat_index)
+		.specular(0.5)
+		.specularExp(10)
+		.refraction(refraction)
+		.doProjection()
+		.color(1, 1, 1),
+	ObjSphere()
+		.material("mat" + mat_index),
+	set("refraction", refraction + 0.109),
+	set("mat_index", mat_index + 1),
+	rotate(0, 360 / 10, 0),
+	translate(1.1, 0, 0),
+)
+
+translate(0, -1, 0)
+ObjPlane()
+
+DistantLight()
+
+Config()
+	.recursionDepth(2)
+	.projectionDepth(2)

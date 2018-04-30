@@ -1,4 +1,4 @@
-#include "shared.h"
+#include "host.h"
 #include "obj_ray_hit.cl"
 
 kernel void			kernel_ray_trace(

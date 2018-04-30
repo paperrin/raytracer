@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/22 16:48:00 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/05 20:46:54 by tlernoul         ###   ########.fr       */
+/*   Updated: 2018/04/18 03:14:44 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ int						opencl_kernel_arg_selected_use_kernel_arg_id(
 		t_ocl_kernel *kernel, t_ocl_kernel *kernel_src, size_t id)
 {
 	cl_int		err;
+
 	if ((err = clSetKernelArg(kernel->kernel, kernel->selected_arg_id,
 					sizeof(cl_mem), (void*)&kernel_src->args[id]))
 			!= CL_SUCCESS)

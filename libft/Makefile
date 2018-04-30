@@ -14,9 +14,11 @@ NAME		=	libft.a
 
 CC			=	gcc
 
-CFLAGS		=	-g -O3 -Wall -Wextra -Werror -std=c89 -pedantic \
+CFLAGS		=	-Wall -Wextra -Werror -std=c89 -pedantic \
 				-Wmissing-prototypes -Wstrict-prototypes \
 				-Wold-style-definition -Wno-long-long
+
+CFLAGS		+= -g -O3 -fsanitize=address
 
 RM			=	rm -rf
 
@@ -95,6 +97,7 @@ CFILES		=	ft_swap.c			\
 				ft_itoa_bin.c		\
 				ft_itoa_dec.c		\
 				ft_ftoa.c			\
+				ft_putfloat.c		\
 				ft_putchar.c		\
 				ft_putwchar.c		\
 				ft_putnchar.c		\
@@ -159,6 +162,8 @@ CFILES		=	ft_swap.c			\
 				math/ft_vec2f_add.c			\
 				math/ft_vec2f_mag.c			\
 				math/ft_vec2f_rot_scale.c	\
+				math/ft_clampf.c			\
+				math/ft_clamp.c				\
 				printf/ft_printf_field.c			\
 				printf/ft_printf_core.c				\
 				printf/ft_printf_parse.c			\
@@ -196,6 +201,9 @@ CFILES		=	ft_swap.c			\
 				vector/ft_vector_pop_at.c					\
 				vector/ft_vector_erase.c					\
 				vector/internal_ft_vector_range.c			\
+				map/ft_map.c							\
+				map/ft_map_insert.c						\
+				map/ft_map_at.c							\
 				graph/ft_graph_create_edge_table.c	\
 				graph/ft_graph_poly_fill.c			\
 				graph/ft_graph_env_rect.c			\
@@ -210,6 +218,7 @@ CFILES		=	ft_swap.c			\
 				file/ft_file_to_string.c		\
 				fstream/internal_ft_fstream_read_more.c			\
 				fstream/ft_fstream_sread_to_any_char.c			\
+				fstream/ft_fstream_sread_char.c					\
 				fstream/ft_fstream_read_open.c					\
 				ppm/ft_ppm_file_write.c \
 				ppm/ft_ppm_file_read.c \

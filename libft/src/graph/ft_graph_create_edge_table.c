@@ -6,7 +6,7 @@
 /*   By: paperrin <paperrin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/29 20:56:34 by paperrin          #+#    #+#             */
-/*   Updated: 2017/12/05 15:33:08 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/27 18:31:34 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,8 @@ static t_edge	*create_edge(t_vec3f *va, t_color_rgb *ca
 	edge->color_min = *ca;
 	edge->color = *ca;
 	edge->sign = (vb->x > va->x ? 1 : -1);
-	edge->dx = ABS(va->x - vb->x);
-	edge->dy = ABS(va->y - vb->y);
+	edge->dx = ft_absf(va->x - vb->x);
+	edge->dy = ft_absf(va->y - vb->y);
 	edge->sum = 0;
 	return (edge);
 }

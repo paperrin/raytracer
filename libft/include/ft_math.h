@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/09 15:17:25 by paperrin          #+#    #+#             */
-/*   Updated: 2017/12/05 15:02:37 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/27 18:29:32 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,7 @@
 # include "libft.h"
 # include <math.h>
 
-# define MAX(A, B) ((A) > (B) ? (A) : (B))
-# define MIN(A, B) ((A) < (B) ? (A) : (B))
-
 # define MATH_MX_SIZE 4
-# define MATH_TO_RAD(deg) (deg * M_PI / 180)
-# define MATH_TO_DEG(rad) (rad * 180 / M_PI)
 
 typedef struct	s_vec2i
 {
@@ -75,9 +70,12 @@ void			ft_matrix_multiply(t_matrix *dest, t_matrix const *const a
 		, t_matrix const *const b);
 void			ft_matrix_translate(t_matrix *mx, float x, float y, float z);
 void			ft_matrix_scale(t_matrix *mx, float x, float y, float z);
+void			ft_matrix_rot(t_matrix *mx, float x, float y, float z);
 void			ft_matrix_rot_x(t_matrix *mx, float alpha);
 void			ft_matrix_rot_y(t_matrix *mx, float alpha);
 void			ft_matrix_rot_z(t_matrix *mx, float alpha);
+void			ft_matrix_rot_axis(t_matrix *const mx, t_vec3f axis
+		, float alpha);
 
 t_vec3f			ft_vec3f(float x, float y, float z);
 t_vec3f			*ft_vec3f_new(float x, float y, float z);
@@ -94,6 +92,8 @@ t_vec3f			ft_vec3f_rot_y(t_vec3f vec, float angle);
 t_vec3f			ft_vec3f_rot_z(t_vec3f vec, float angle);
 t_vec3f			ft_vec3f_rot(t_vec3f vec, float x, float y, float z);
 t_vec3f			ft_vec3f_scale(t_vec3f vec, float scale);
+t_vec3f			ft_vec3f_matrix_rot(t_vec3f const *const vec
+		, t_matrix const *const mx);
 
 t_vec3d			ft_vec3d(double x, double y, double z);
 t_vec3d			*ft_vec3d_new(double x, double y, double z);
@@ -131,5 +131,14 @@ float			ft_vec2f_mag(t_vec2f vec);
 float			ft_vec2f_dot(t_vec2f a, t_vec2f b);
 t_vec2f			ft_vec2f_rot(t_vec2f vec, float angle);
 t_vec2f			ft_vec2f_scale(t_vec2f vec, float scale);
+
+long double		ft_minf(long double a, long double b);
+long double		ft_maxf(long double a, long double b);
+long double		ft_clampf(long double val, long double min, long double max);
+long double		ft_absf(long double val);
+intmax_t		ft_min(intmax_t a, intmax_t b);
+intmax_t		ft_max(intmax_t a, intmax_t b);
+intmax_t		ft_clamp(intmax_t val, intmax_t min, intmax_t max);
+intmax_t		ft_abs(intmax_t val);
 
 #endif
