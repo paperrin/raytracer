@@ -18,7 +18,7 @@ CFLAGS		=	-Wall -Wextra -Werror -std=c89 -pedantic \
 				-Wmissing-prototypes -Wstrict-prototypes \
 				-Wold-style-definition -Wno-long-long
 
-CFLAGS		+=	-g -O3 -fsanitize=address
+#CFLAGS		+=	-g -O3 -fsanitize=address
 
 RM			=	rm -rf
 
@@ -71,7 +71,6 @@ CFILES		=	\
 				kernel/kernel_post_process.c					\
 				\
 				callbacks/callback_key.c						\
-				callbacks/callback_mouse_motion.c				\
 				\
 				camera/camera_rotation.c						\
 				camera/matrix_real16.c							\

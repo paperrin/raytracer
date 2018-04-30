@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/09 16:14:42 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/30 22:42:49 by tlernoul         ###   ########.fr       */
+/*   Updated: 2018/04/30 23:43:13 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,6 @@ int			app_create(t_app *app, int ac, const char **argv)
 	app->config.screen_size.s[0] = app->win.width;
 	app->config.screen_size.s[1] = app->win.height;
 	window_callback_key(&app->win, &callback_key);
-	window_callback_mouse_motion(&app->win, &callback_mouse_motion);
 	glfwSetInputMode(app->win.glfw_win, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 	app->mouse_captured = 1;
 	window_callback_loop(&app->win, &render, app);

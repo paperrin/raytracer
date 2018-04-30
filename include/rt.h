@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/09 16:36:38 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/28 20:38:23 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/04/30 23:40:51 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,7 +131,6 @@ int					arg_dispatch(t_app *const app, int ac, const char *argv[]);
 int					arg_devices(t_opencl *ocl, const char *args);
 
 void				callback_key(void *user_ptr, int key, int action);
-void				callback_mouse_motion(void *user_ptr, double x, double y);
 void				process_input(t_app *app, double elapsed);
 
 void				render(void *user_ptr, double elapsed);
