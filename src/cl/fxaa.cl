@@ -88,10 +88,10 @@ int		is_horizontal(global t_config const *const config, t_anti_aliasing *luma, f
 	luma->corners.south = luma_sw + luma_se;
 	luma->corners.west = luma_sw + luma_nw;
 	luma->corners.east = luma_ne + luma_se;
-	edge_u = fabs(-2.0 * luma->orig.west + luma->corners.west) + fabs(-2.0 * luma->center + luma->y_axis)
-														* 2.0 + fabs(-2.0 * luma->orig.east + luma->corners.east);
-	edge_v = fabs(-2.0 * luma->orig.north + luma->corners.north) + fabs(-2.0 * luma->center + luma->x_axis)
-													* 2.0 + fabs(-2.0 * luma->orig.south + luma->corners.south);
+	edge_u = fabs(-2.0f * luma->orig.west + luma->corners.west) + fabs(-2.0f * luma->center + luma->y_axis)
+				* 2.0f + fabs(-2.0f * luma->orig.east + luma->corners.east);
+	edge_v = fabs(-2.0f * luma->orig.north + luma->corners.north) + fabs(-2.0f * luma->center + luma->x_axis)
+				* 2.0f + fabs(-2.0f * luma->orig.south + luma->corners.south);
 	if (edge_u >= edge_v)
 		return (1);
 	return (0);
