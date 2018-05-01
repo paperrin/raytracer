@@ -6,7 +6,7 @@
 /*   By: paperrin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/09 16:14:42 by paperrin          #+#    #+#             */
-/*   Updated: 2018/04/30 23:43:13 by paperrin         ###   ########.fr       */
+/*   Updated: 2018/05/01 20:19:09 by paperrin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static void	app_init(t_app *const app)
 	app->config.z_far = 20000;
 	app->config.samples_width = 1;
 	app->config.max_depth = 0;
-	app->config.fxaa = 0;
+	app->config.fxaa = 1;
 	app->config.projection_depth = 2;
 	app->config.post_filters = e_post_filter_none;
 	app->config.anaglyph_r[0] = vec3f(0.0, 0.7, 0.3);
